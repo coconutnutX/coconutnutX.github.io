@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>来到Hexo的第一天！</title>
+    <url>/2020/03/10/hello-hexo/</url>
+    <content><![CDATA[<p>从下午开始搭建，调主题，一直到晚上搬运完了正在写的笔记，心情舒畅</p>
+<p>先尝试的是Jekyll，我的老天鹅啊，折腾了一整天，不是配置有问题就是资源有问题，本地好不容易成功了提交到github又崩了，build成功了css又不渲染…<br>您是Hyde吧</p>
+<p>总之，现在拥有一个带侧边栏目录的小仓库了～<br><img src="/images/2020/8586786.png" width=200></p>
+<p>开启探索进度条<br>[|||||·············································]10%</p>
+<p>(deprecated)<a href="https://blog.csdn.net/weixin_42319408" title="" target="">老家</a></p>
+]]></content>
+      <categories>
+        <category>Memo</category>
+      </categories>
+  </entry>
+  <entry>
     <title>一些有趣的网站</title>
     <url>/2020/03/10/bookmark/</url>
     <content><![CDATA[<h1 id="配色"><a href="#配色" class="headerlink" title="配色"></a>配色</h1><h2 id=""><a href="#" class="headerlink" title=""></a><a href="http://zhongguose.com/" title="" target="">中国色</a></h2><p>中国传统颜色，每一个都有CMYK、RGB值(包括16进制字符串形式～好用！)<br><img src="/images/2020/2020-03-10.8.30.50.jpg"><br>#5dbe8a 超爱的蔻梢绿～</p>
@@ -14,6 +27,12 @@
 <h2 id="-6"><a href="#-6" class="headerlink" title=""></a><a href="https://color.hailpixel.com/" title="" target="">Colordot</a></h2><p>这个也很有趣！挪动光标调色，点击固定<br><img src="/images/2020/2020-03-10.9.15.21.jpg"><br><img src="/images/2020/2020-03-10.9.17.15.jpg"></p>
 <h1 id="图标"><a href="#图标" class="headerlink" title="图标"></a>图标</h1><h2 id="-7"><a href="#-7" class="headerlink" title=""></a><a href="https://thenounproject.com/" title="" target="">thenounproject</a></h2><p>常用的图标网站<br><img src="/images/2020/2020-03-10.9.22.23.jpg"></p>
 ]]></content>
+      <categories>
+        <category>Fun</category>
+      </categories>
+      <tags>
+        <tag>tool</tag>
+      </tags>
   </entry>
   <entry>
     <title>Spring笔记09 事务控制的问题&amp;动态代理</title>
@@ -84,8 +103,10 @@
 ]]></content>
       <categories>
         <category>Note</category>
-        <category>Spring</category>
       </categories>
+      <tags>
+        <tag>spring</tag>
+      </tags>
   </entry>
   <entry>
     <title>Vue笔记02 Spring Boot+Vue前后端分离开发基本流程</title>
@@ -131,8 +152,10 @@
 ]]></content>
       <categories>
         <category>Note</category>
-        <category>Vue</category>
       </categories>
+      <tags>
+        <tag>vue</tag>
+      </tags>
   </entry>
   <entry>
     <title>Vue笔记01 @vue_cli环境搭建</title>
@@ -173,8 +196,10 @@
 ]]></content>
       <categories>
         <category>Note</category>
-        <category>Vue</category>
       </categories>
+      <tags>
+        <tag>vue</tag>
+      </tags>
   </entry>
   <entry>
     <title>Spring笔记08 Spring整合Junit</title>
@@ -208,8 +233,10 @@
 ]]></content>
       <categories>
         <category>Note</category>
-        <category>Spring</category>
       </categories>
+      <tags>
+        <tag>spring</tag>
+      </tags>
   </entry>
   <entry>
     <title>Spring笔记06 基于xml的IoC案例（实现CRUD）</title>
@@ -282,8 +309,10 @@ Account{id=3, name=&apos;ccc&apos;, money=1000.0}
 Process finished with exit code 0</code></pre>]]></content>
       <categories>
         <category>Note</category>
-        <category>Spring</category>
       </categories>
+      <tags>
+        <tag>spring</tag>
+      </tags>
   </entry>
   <entry>
     <title>Spring笔记07 基于注解的IoC案例（实现CRUD）</title>
@@ -327,8 +356,10 @@ Process finished with exit code 0</code></pre>]]></content>
 ]]></content>
       <categories>
         <category>Note</category>
-        <category>Spring</category>
       </categories>
+      <tags>
+        <tag>spring</tag>
+      </tags>
   </entry>
   <entry>
     <title>Spring笔记05 IoC</title>
@@ -520,8 +551,10 @@ Process finished with exit code 0</code></pre>]]></content>
 ]]></content>
       <categories>
         <category>Note</category>
-        <category>Spring</category>
       </categories>
+      <tags>
+        <tag>spring</tag>
+      </tags>
   </entry>
   <entry>
     <title>Spring笔记04 应用分层</title>
@@ -588,8 +621,10 @@ Process finished with exit code 0</code></pre>]]></content>
 ]]></content>
       <categories>
         <category>Note</category>
-        <category>Spring</category>
       </categories>
+      <tags>
+        <tag>spring</tag>
+      </tags>
   </entry>
   <entry>
     <title>Spring笔记03 工厂模式</title>
@@ -692,8 +727,10 @@ Process finished with exit code 0</code></pre>]]></content>
 ]]></content>
       <categories>
         <category>Note</category>
-        <category>Spring</category>
       </categories>
+      <tags>
+        <tag>spring</tag>
+      </tags>
   </entry>
   <entry>
     <title>Spring笔记02 Idea运行示例项目的坑</title>
@@ -733,8 +770,10 @@ Process finished with exit code 0</code></pre>]]></content>
 ]]></content>
       <categories>
         <category>Note</category>
-        <category>Spring</category>
       </categories>
+      <tags>
+        <tag>spring</tag>
+      </tags>
   </entry>
   <entry>
     <title>Spring笔记01 jdbc常用操作</title>
@@ -769,8 +808,10 @@ Process finished with exit code 0</code></pre>]]></content>
 ]]></content>
       <categories>
         <category>Note</category>
-        <category>Spring</category>
       </categories>
+      <tags>
+        <tag>spring</tag>
+      </tags>
   </entry>
   <entry>
     <title>IntelliJ IDEA 入门笔记</title>
@@ -824,7 +865,10 @@ Process finished with exit code 0</code></pre>]]></content>
 ]]></content>
       <categories>
         <category>Note</category>
-        <category>Idea</category>
       </categories>
+      <tags>
+        <tag>idea</tag>
+        <tag>tool</tag>
+      </tags>
   </entry>
 </search>
