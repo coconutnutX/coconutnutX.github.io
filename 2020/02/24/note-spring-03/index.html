@@ -48,7 +48,7 @@
 
     
     <div class="article-meta">
-      <a href="/2020-02-24-note-spring-03/" class="article-date">
+      <a href="/2020/02/24/note-spring-03/" class="article-date">
   <time datetime="2020-02-24T09:58:53.000Z" itemprop="datePublished">2020-02-24</time>
 </a>
       
@@ -112,8 +112,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Error:(26, 56) java: 程序包com.mysql.jdbc不存在</span><br></pre></td></tr></table></figure>
 <p>而方法2报Exception，可以通过编译（无法运行）</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Exception in thread &quot;main&quot; java.lang.ClassNotFoundException: com.mysql.jdbc.Driver</span><br></pre></td></tr></table></figure>
-<p>因为方法1依赖一个具体的驱动类，而方法2用反射，依赖的只是一个字符串</p>
-<p>但是这个字符串仍是写死在代码里的。应该写到配置文件里去，进一步减少耦合</p>
+<p>因为方法1依赖一个具体的驱动类，而方法2用反射，依赖的只是一个字符串<br>但是这个字符串仍是写死在代码里的。应该写到配置文件里去，进一步减少耦合</p>
 <p>实际开发中应该做到：</p>
 <p><strong>编译期不依赖，运行时才依赖</strong></p>
 <p>解耦的思路：</p>
@@ -133,17 +132,14 @@
 <ol>
 <li>表现层调用业务层时<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        IAccountService as = <span class="keyword">new</span> AccountServiceImpl();</span><br><span class="line">        as.saveAccount();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
 <li>业务层调用持久层时<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AccountServiceImpl</span> <span class="keyword">implements</span> <span class="title">IAccountService</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> IAccountDao accountDao = <span class="keyword">new</span> AccountDaoImpl();</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span>  <span class="title">saveAccount</span><span class="params">()</span></span>&#123;</span><br><span class="line">        accountDao.saveAccount();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-都用到了new，耦合度高</li>
+都用到了new，耦合度高<br>如果此时把AccountDaoImpl的代码删了，Service就报错了。和前面jdbc中编译期的错误一样</li>
 </ol>
-<p>如果此时把AccountDaoImpl的代码删了，Service就报错了。和前面jdbc中编译期的错误一样</p>
 <p>如何解除这种依赖？</p>
 <h2 id="Bean-amp-BeanFactory"><a href="#Bean-amp-BeanFactory" class="headerlink" title="Bean &amp; BeanFactory"></a>Bean &amp; BeanFactory</h2><p><strong>Bean</strong> —— 可重用组件<br>eg：一个Dao可能被多个Service使用，一个Service可能被多个Servlet使用，它们是可重用的</p>
 <p><strong>JavaBean</strong> —— 用java语言编写的可重用组件</p>
 <p><strong>BeanFactory</strong> —— 创建Bean对象的工厂<br>eg：创建Dao和Service对象</p>
 <p>要实现这个工厂，类似前面jdbc，</p>
-<p>1.需要一个==配置文件==来配置service和dao</p>
-<p>内容：唯一标识=全限定类名（key=value)</p>
-<p>配置文件可以是xml也可以是properties</p>
+<p>1.需要一个==配置文件==来配置service和dao<br>内容：唯一标识=全限定类名（key=value)<br>配置文件可以是xml也可以是properties</p>
 <p>2.读取配置文件中配置的内容，通过==反射==创建对象</p>
 <h2 id="工厂模式解耦"><a href="#工厂模式解耦" class="headerlink" title="工厂模式解耦"></a>工厂模式解耦</h2><p>在resources中新建beans.properties配置文件（此处用properties因为简单，Spring中用的是xml）</p>
 <figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">accountService</span> = <span class="string">com.itheima.service.impl.AccountServiceImpl</span></span><br><span class="line"><span class="attr">accountDao</span> = <span class="string">com.itheima.dao.impl.AccountDaoImpl</span></span><br></pre></td></tr></table></figure>
@@ -220,7 +216,7 @@
   <nav class="article-nav">
     
     
-      <a href="/2020-02-24-note-spring-02/" class="article-nav-link">
+      <a href="/2020/02/24/note-spring-02/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
         <div class="article-nav-title">Spring笔记02 Idea运行示例项目的坑</div>
       </a>

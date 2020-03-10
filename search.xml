@@ -2,7 +2,7 @@
 <search>
   <entry>
     <title>Spring笔记03 工厂模式</title>
-    <url>/2020-02-24-note-spring-03/</url>
+    <url>/2020/02/24/note-spring-03/</url>
     <content><![CDATA[<blockquote>
 <p><a href="https://www.bilibili.com/video/av47952931" target="_blank" rel="noopener">https://www.bilibili.com/video/av47952931</a><br>p9~14</p>
 </blockquote>
@@ -16,8 +16,7 @@
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Error:(26, 56) java: 程序包com.mysql.jdbc不存在</span><br></pre></td></tr></table></figure>
 <p>而方法2报Exception，可以通过编译（无法运行）</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Exception in thread &quot;main&quot; java.lang.ClassNotFoundException: com.mysql.jdbc.Driver</span><br></pre></td></tr></table></figure>
-<p>因为方法1依赖一个具体的驱动类，而方法2用反射，依赖的只是一个字符串</p>
-<p>但是这个字符串仍是写死在代码里的。应该写到配置文件里去，进一步减少耦合</p>
+<p>因为方法1依赖一个具体的驱动类，而方法2用反射，依赖的只是一个字符串<br>但是这个字符串仍是写死在代码里的。应该写到配置文件里去，进一步减少耦合</p>
 <p>实际开发中应该做到：</p>
 <p><strong>编译期不依赖，运行时才依赖</strong></p>
 <p>解耦的思路：</p>
@@ -37,17 +36,14 @@
 <ol>
 <li>表现层调用业务层时<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        IAccountService as = <span class="keyword">new</span> AccountServiceImpl();</span><br><span class="line">        as.saveAccount();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
 <li>业务层调用持久层时<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AccountServiceImpl</span> <span class="keyword">implements</span> <span class="title">IAccountService</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> IAccountDao accountDao = <span class="keyword">new</span> AccountDaoImpl();</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span>  <span class="title">saveAccount</span><span class="params">()</span></span>&#123;</span><br><span class="line">        accountDao.saveAccount();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-都用到了new，耦合度高</li>
+都用到了new，耦合度高<br>如果此时把AccountDaoImpl的代码删了，Service就报错了。和前面jdbc中编译期的错误一样</li>
 </ol>
-<p>如果此时把AccountDaoImpl的代码删了，Service就报错了。和前面jdbc中编译期的错误一样</p>
 <p>如何解除这种依赖？</p>
 <h2 id="Bean-amp-BeanFactory"><a href="#Bean-amp-BeanFactory" class="headerlink" title="Bean &amp; BeanFactory"></a>Bean &amp; BeanFactory</h2><p><strong>Bean</strong> —— 可重用组件<br>eg：一个Dao可能被多个Service使用，一个Service可能被多个Servlet使用，它们是可重用的</p>
 <p><strong>JavaBean</strong> —— 用java语言编写的可重用组件</p>
 <p><strong>BeanFactory</strong> —— 创建Bean对象的工厂<br>eg：创建Dao和Service对象</p>
 <p>要实现这个工厂，类似前面jdbc，</p>
-<p>1.需要一个==配置文件==来配置service和dao</p>
-<p>内容：唯一标识=全限定类名（key=value)</p>
-<p>配置文件可以是xml也可以是properties</p>
+<p>1.需要一个==配置文件==来配置service和dao<br>内容：唯一标识=全限定类名（key=value)<br>配置文件可以是xml也可以是properties</p>
 <p>2.读取配置文件中配置的内容，通过==反射==创建对象</p>
 <h2 id="工厂模式解耦"><a href="#工厂模式解耦" class="headerlink" title="工厂模式解耦"></a>工厂模式解耦</h2><p>在resources中新建beans.properties配置文件（此处用properties因为简单，Spring中用的是xml）</p>
 <figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">accountService</span> = <span class="string">com.itheima.service.impl.AccountServiceImpl</span></span><br><span class="line"><span class="attr">accountDao</span> = <span class="string">com.itheima.dao.impl.AccountDaoImpl</span></span><br></pre></td></tr></table></figure>
@@ -110,7 +106,7 @@
   </entry>
   <entry>
     <title>Spring笔记02 Idea运行示例项目的坑</title>
-    <url>/2020-02-24-note-spring-02/</url>
+    <url>/2020/02/24/note-spring-02/</url>
     <content><![CDATA[<blockquote>
 <p><a href="https://www.bilibili.com/video/av47952931?p=8" target="_blank" rel="noopener">https://www.bilibili.com/video/av47952931?p=8</a></p>
 </blockquote>
@@ -122,8 +118,7 @@
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;usr&#x2F;local&#x2F;Cellar&#x2F;maven&#x2F;3.6.2&#x2F;libexec</span><br><span class="line">&#x2F;Users&#x2F;coconutnut&#x2F;.m2&#x2F;settings.xml</span><br><span class="line">&#x2F;Users&#x2F;coconutnut&#x2F;.m2&#x2F;repository</span><br></pre></td></tr></table></figure>
 <p>解决Driver问题</p>
 <hr>
-<p>下一个bug</p>
-<p>Idea中点运行</p>
+<p>下一个bug<br>Idea中点运行</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">MySQLNonTransientConnectionException: Client does not support authentication protocol requested by server</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p><a href="https://www.cnblogs.com/inconceivable/p/9186822.html" target="_blank" rel="noopener">https://www.cnblogs.com/inconceivable/p/9186822.html</a></p>
@@ -141,10 +136,8 @@
 <hr>
 <p>总结：</p>
 <ol>
-<li><p>修改Preference-&gt;Build, Execution, Deployment-&gt;Build Tools-&gt;Maven中路径</p>
-</li>
-<li><p>在连接数据库的url后加上编码方式</p>
-</li>
+<li>修改Preference-&gt;Build, Execution, Deployment-&gt;Build Tools-&gt;Maven中路径</li>
+<li>在连接数据库的url后加上编码方式</li>
 </ol>
 ]]></content>
       <categories>
@@ -154,17 +147,13 @@
   </entry>
   <entry>
     <title>Spring笔记01 jdbc常用操作</title>
-    <url>/2020-02-24-note-spring-01/</url>
+    <url>/2020/02/24/note-spring-01/</url>
     <content><![CDATA[<blockquote>
 <p><a href="https://www.bilibili.com/video/av47952931?p=8" target="_blank" rel="noopener">https://www.bilibili.com/video/av47952931?p=8</a></p>
 </blockquote>
-<p>之前学数据库的时候mysql踩了好多坑，主要是版本问题</p>
-<p>不同版本语法有些不兼容</p>
-<p>记录一下Apply生成的语句备用</p>
+<p>之前学数据库的时候mysql踩了好多坑，主要是版本问题<br>不同版本语法有些不兼容<br>记录一下Apply生成的语句备用</p>
 <hr>
-<p>版本</p>
-<p>mysql-8.0.19-macos10.15-x86_64</p>
-<p>MySQL Workbench 8.0.16</p>
+<p>版本:<br>mysql-8.0.19-macos10.15-x86_64<br>MySQL Workbench 8.0.16</p>
 <hr>
 <h1 id="MySQL-Workbench操作"><a href="#MySQL-Workbench操作" class="headerlink" title="MySQL Workbench操作"></a>MySQL Workbench操作</h1><h2 id="创建schema"><a href="#创建schema" class="headerlink" title="创建schema"></a>创建schema</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">SCHEMA</span> <span class="string">`groot`</span> ;</span><br></pre></td></tr></table></figure>
 
@@ -194,7 +183,7 @@
   </entry>
   <entry>
     <title>IntelliJ IDEA 入门笔记</title>
-    <url>/2020-02-24-note-idea/</url>
+    <url>/2020/02/24/note-idea/</url>
     <content><![CDATA[<blockquote>
 <p><a href="https://www.bilibili.com/video/av71609179?from=search&amp;seid=7606544420555480673" target="_blank" rel="noopener">https://www.bilibili.com/video/av71609179?from=search&amp;seid=7606544420555480673</a></p>
 </blockquote>

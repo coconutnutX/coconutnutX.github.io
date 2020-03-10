@@ -6,7 +6,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-    IntelliJ IDEA 入门笔记 |  CoCoNutNut&#39;s NoteBook
+    Spring笔记01 jdbc常用操作 |  CoCoNutNut&#39;s NoteBook
   </title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   
@@ -31,7 +31,7 @@
   <div id="app">
     <main class="content">
       <section class="outer">
-  <article id="post-note-idea" class="article article-type-post" itemscope
+  <article id="post-note-spring-01" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
   <div class="article-inner">
@@ -39,7 +39,7 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  IntelliJ IDEA 入门笔记
+  Spring笔记01 jdbc常用操作
 </h1>
   
 
@@ -48,12 +48,12 @@
 
     
     <div class="article-meta">
-      <a href="/2020-02-24-note-idea/" class="article-date">
-  <time datetime="2020-02-24T08:07:48.000Z" itemprop="datePublished">2020-02-24</time>
+      <a href="/2020/02/24/note-spring-01/" class="article-date">
+  <time datetime="2020-02-24T08:36:04.000Z" itemprop="datePublished">2020-02-24</time>
 </a>
       
   <div class="article-category">
-    <a class="article-category-link" href="/categories/Note/">Note</a> / <a class="article-category-link" href="/categories/Note/Idea/">Idea</a>
+    <a class="article-category-link" href="/categories/Note/">Note</a> / <a class="article-category-link" href="/categories/Note/Spring/">Spring</a>
   </div>
 
       
@@ -63,7 +63,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">908字</span>
+            <span class="post-count">303字</span>
         </span>
     </span>
 
@@ -72,7 +72,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">4分钟</span>
+            <span class="post-count">1分钟</span>
         </span>
     </span>
 </div>
@@ -100,51 +100,32 @@
 
       
       <blockquote>
-<p><a href="https://www.bilibili.com/video/av71609179?from=search&amp;seid=7606544420555480673" target="_blank" rel="noopener">https://www.bilibili.com/video/av71609179?from=search&amp;seid=7606544420555480673</a></p>
+<p><a href="https://www.bilibili.com/video/av47952931?p=8" target="_blank" rel="noopener">https://www.bilibili.com/video/av47952931?p=8</a></p>
 </blockquote>
+<p>之前学数据库的时候mysql踩了好多坑，主要是版本问题<br>不同版本语法有些不兼容<br>记录一下Apply生成的语句备用</p>
 <hr>
-<p>版本<br>ideaIU-2019.3.3 (学生License)<br>macOS Catalina 10.15.3</p>
+<p>版本:<br>mysql-8.0.19-macos10.15-x86_64<br>MySQL Workbench 8.0.16</p>
 <hr>
-<h1 id="设置"><a href="#设置" class="headerlink" title="设置"></a>设置</h1><p>鼠标悬浮提示<br>Preferences-&gt;Editor-&gt;General-&gt;Show quick documentation on mouse move</p>
-<p>自动导包<br>Preferences-&gt;Editor-&gt;General-&gt;AutoImport-&gt;Add unambiguous imports on the fly<br>Preferences-&gt;Editor-&gt;General-&gt;AutoImport-&gt;Optimize imports on the fly (for current project)</p>
-<p>方法间分隔符<br>Preferences-&gt;Editor-&gt;General-&gt;Appearance-&gt;Show method separators</p>
-<p>忽略大小写提示<br>Preferences-&gt;Editor-&gt;General-&gt;Code Completion-&gt;Match case (不勾选)</p>
-<p>文件多行显示栏<br>Preferences-&gt;Editor-&gt;General-&gt;Editor Tabs-&gt;Show tabs in one row (不勾选)</p>
-<p>修改注释颜色<br>Preferences-&gt;Editor-&gt;Color Scheme-&gt;Language Defaults-&gt;Comments中</p>
-<p>项目工程编码<br>Preferences-&gt;Editor-&gt;File Encodings中</p>
-<p>自动编译<br>Preferences-&gt;Build,Execution,Deployment-&gt;Compiler-&gt;Build project automatically<br>Preferences-&gt;Build,Execution,Deployment-&gt;Compiler-&gt;Compile independent modules in parallel</p>
+<h1 id="MySQL-Workbench操作"><a href="#MySQL-Workbench操作" class="headerlink" title="MySQL Workbench操作"></a>MySQL Workbench操作</h1><h2 id="创建schema"><a href="#创建schema" class="headerlink" title="创建schema"></a>创建schema</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">SCHEMA</span> <span class="string">`groot`</span> ;</span><br></pre></td></tr></table></figure>
+
 <hr>
-<h1 id="快捷键"><a href="#快捷键" class="headerlink" title="快捷键"></a>快捷键</h1><h2 id="常用快捷键"><a href="#常用快捷键" class="headerlink" title="常用快捷键"></a>常用快捷键</h2><p>补全提示：^+/<br>自动生成：^+Enter<br>单行补全：Command+Shift+Enter<br>方法参数提示：Command+P<br>重新排版：Option+Command+L<br>Surround With：Option+Command+T<br>复制行或选中区域：Command+D<br>删除行：Command+Delete</p>
-<h2 id="Live-Templates-amp-Postfix-Completion"><a href="#Live-Templates-amp-Postfix-Completion" class="headerlink" title="Live Templates &amp; Postfix Completion"></a>Live Templates &amp; Postfix Completion</h2><p>查询实时代码模版：Command+J<br>Preferences-&gt;Editor-&gt;LiveTemplates和Preferences-&gt;Editor-&gt;General-&gt;Postfix Completion中修改</p>
+<h2 id="创建table"><a href="#创建table" class="headerlink" title="创建table"></a>创建table</h2><p>这是b站教程给的sql</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> <span class="keyword">account</span>(</span><br><span class="line">	<span class="keyword">id</span> <span class="built_in">int</span> primary <span class="keyword">key</span> auto_increment,</span><br><span class="line">	<span class="keyword">name</span> <span class="built_in">varchar</span>(<span class="number">40</span>),</span><br><span class="line">	money <span class="built_in">float</span></span><br><span class="line">)<span class="built_in">character</span> <span class="keyword">set</span> utf8 <span class="keyword">collate</span> utf8_general_ci;</span><br></pre></td></tr></table></figure>
+
+<p>这是Workbench里生成的sql</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`groot`</span>.<span class="string">`account`</span> (</span><br><span class="line">  <span class="string">`id`</span> <span class="built_in">INT</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</span><br><span class="line">  <span class="string">`name`</span> <span class="built_in">VARCHAR</span>(<span class="number">45</span>) <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`money`</span> <span class="built_in">FLOAT</span> <span class="literal">NULL</span>,</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`id`</span>));</span><br></pre></td></tr></table></figure>
+
 <hr>
-<h1 id="对普通Java项目打包"><a href="#对普通Java项目打包" class="headerlink" title="对普通Java项目打包"></a>对普通Java项目打包</h1><p>File-&gt;Project Structure (或工具栏直接打开)<br>Project Settings-&gt;Artifacts中加入当前项目</p>
-<p>Build-&gt;Build Artifacts<br>在工程目录中out-&gt;artifacts中创建jar包<br>测试时，输入java -cp 包名+类名</p>
+<h2 id="插入记录"><a href="#插入记录" class="headerlink" title="插入记录"></a>插入记录</h2><p>b站教程给的sql</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> <span class="keyword">account</span>(<span class="keyword">name</span>,money) <span class="keyword">values</span>(<span class="string">'aaa'</span>,<span class="number">1000</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> <span class="keyword">account</span>(<span class="keyword">name</span>,money) <span class="keyword">values</span>(<span class="string">'bbb'</span>,<span class="number">1000</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> <span class="keyword">account</span>(<span class="keyword">name</span>,money) <span class="keyword">values</span>(<span class="string">'ccc'</span>,<span class="number">1000</span>);</span><br></pre></td></tr></table></figure>
+<p>Workbench里生成的sql</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`groot`</span>.<span class="string">`account`</span> (<span class="string">`name`</span>, <span class="string">`money`</span>) <span class="keyword">VALUES</span> (<span class="string">'aaa'</span>, <span class="string">'1000'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`groot`</span>.<span class="string">`account`</span> (<span class="string">`name`</span>, <span class="string">`money`</span>) <span class="keyword">VALUES</span> (<span class="string">'bbb'</span>, <span class="string">'1000'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`groot`</span>.<span class="string">`account`</span> (<span class="string">`name`</span>, <span class="string">`money`</span>) <span class="keyword">VALUES</span> (<span class="string">'ccc'</span>, <span class="string">'1000'</span>);</span><br></pre></td></tr></table></figure>
+
 <hr>
-<h1 id="Maven"><a href="#Maven" class="headerlink" title="Maven"></a>Maven</h1><h2 id="Idea配置Maven"><a href="#Idea配置Maven" class="headerlink" title="Idea配置Maven"></a>Idea配置Maven</h2><p>Preferences-&gt;Build,Execution,Deployment-&gt;Build Tools-&gt;Maven<br>Maven home directory中导入</p>
-<p>Preferences-&gt;Build,Execution,Deployment-&gt;Build Tools-&gt;Maven-&gt;Importing-&gt;Import Maven projects automatically勾上</p>
-<h2 id="创建Maven项目"><a href="#创建Maven项目" class="headerlink" title="创建Maven项目"></a>创建Maven项目</h2><p>New Project-&gt;Maven-&gt;Create from archetype勾上<br>可以选择maven-archetype-quickstart<br>运行默认的Hello World项目</p>
-<h2 id="打包Maven项目"><a href="#打包Maven项目" class="headerlink" title="打包Maven项目"></a>打包Maven项目</h2><p>Idea的Terminal中输入 (或系统Terminal切到工程目录下输入)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn clean package</span><br></pre></td></tr></table></figure>
-<p>打包完在target目录下<br>运行输入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -cp target&#x2F;xxx.jar 包名+类名</span><br></pre></td></tr></table></figure>
-<h2 id="排查依赖包冲突"><a href="#排查依赖包冲突" class="headerlink" title="排查依赖包冲突"></a>排查依赖包冲突</h2><p>pom文件中，右键Diagram-&gt;show Dependencies<br>结构图显示依赖关系<br>红色虚线标明重复<br>有时候重复不删掉也不会报错，默认使用路径短的<br>如果报错，排除掉即可，代码中自动<exclusion>…</exclusion></p>
+<h2 id="查看记录"><a href="#查看记录" class="headerlink" title="查看记录"></a>查看记录</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> groot.account;</span><br></pre></td></tr></table></figure>
+
 <hr>
-<h1 id="项目目录-amp-文件夹类型"><a href="#项目目录-amp-文件夹类型" class="headerlink" title="项目目录&amp;文件夹类型"></a>项目目录&amp;文件夹类型</h1><h2 id="对项目类型手动标注"><a href="#对项目类型手动标注" class="headerlink" title="对项目类型手动标注"></a>对项目类型手动标注</h2><p>在目录上右键Mark Directory as-&gt;选择类型</p>
-<p>Test：可编译的单元测试目录<br>Resources：资源文件目录<br>Test Resources：单元测试资源文件目录<br>Excluded：排除目录（相当于被废弃掉）<br>Generated Sources：类似src（只有这种可以新建java类和包）</p>
-<hr>
-<h1 id="多模块Maven项目"><a href="#多模块Maven项目" class="headerlink" title="多模块Maven项目"></a>多模块Maven项目</h1><h2 id="构建多模块Maven项目"><a href="#构建多模块Maven项目" class="headerlink" title="构建多模块Maven项目"></a>构建多模块Maven项目</h2><p>新建一个Maven项目<br>再新建Module，它也会有src、main的目录结构</p>
-<h2 id="设置模块间依赖关系"><a href="#设置模块间依赖关系" class="headerlink" title="设置模块间依赖关系"></a>设置模块间依赖关系</h2><p>Project Structure-&gt;Modules-&gt;选中一个模块-&gt;Dependencies中添加，然后勾选上<br>pom.xml中也许添加</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.xxx<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>xxx<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">version</span>&gt;</span>xxx<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>添加依赖后可以直接引用被依赖模块中的代码</p>
-<hr>
-<h1 id="Maven-Web项目"><a href="#Maven-Web项目" class="headerlink" title="Maven Web项目"></a>Maven Web项目</h1><h2 id="创建Maven-Web项目"><a href="#创建Maven-Web项目" class="headerlink" title="创建Maven Web项目"></a>创建Maven Web项目</h2><p>New Project-&gt;Maven-&gt;Create from archetype<br>可以选择maven-archetype-webapp</p>
-<h2 id="配置Tomcat"><a href="#配置Tomcat" class="headerlink" title="配置Tomcat"></a>配置Tomcat</h2><p>工具栏中build(绿色锤子)旁边，Add Configuration<br>新加Tomcat-&gt;Local （需先下载放在本地，配置路径）</p>
-<p>Server中可以修改默认浏览器，可以修改端口号</p>
-<p>Deployment中添加Artifact<br>xxx:war exploded</p>
-<p>即可启动运行<br>默认index.jsp显示Hello World!</p>
-<h2 id="打包运行"><a href="#打包运行" class="headerlink" title="打包运行"></a>打包运行</h2><p>右侧Maven工具栏中<br>Lifecycle-&gt;package-&gt;Run Maven Build<br>install-&gt;Run ‘xxx [install]’<br>打包成功后，在target文件夹下</p>
-<p>war包可以部署到服务器上</p>
-<p>也可以拷贝到本地Tomcat的webapp目录下<br>运行Tomcat的bin目录下的startup，启动tomcat<br>即可浏览器访问<br>结束后shutdown关闭Tomcat</p>
+<h1 id="Idea中连接数据库"><a href="#Idea中连接数据库" class="headerlink" title="Idea中连接数据库"></a>Idea中连接数据库</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1.注册驱动</span></span><br><span class="line">Class.forName(<span class="string">"com.mysql.jdbc.Driver"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//2.获取连接</span></span><br><span class="line">Connection conn = DriverManager.getConnection(<span class="string">"jdbc:mysql://localhost:3306/groot?useUnicode=true&amp;characterEncoding=utf8"</span>,<span class="string">"root"</span>,<span class="string">"iamgroot"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//3.获取操作数据库的预处理对象</span></span><br><span class="line">PreparedStatement pstm = conn.prepareStatement(<span class="string">"select * from account"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//4.执行SQL，得到结果集</span></span><br><span class="line">ResultSet rs = pstm.executeQuery();</span><br><span class="line"></span><br><span class="line"><span class="comment">//5.遍历结果集</span></span><br><span class="line"><span class="keyword">while</span>(rs.next())&#123;</span><br><span class="line">    System.out.println(rs.getString(<span class="string">"name"</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//6.释放资源</span></span><br><span class="line">rs.close();</span><br><span class="line">pstm.close();</span><br><span class="line">conn.close();</span><br></pre></td></tr></table></figure>
 
       
       <!-- reward -->
@@ -166,15 +147,20 @@
   
   <nav class="article-nav">
     
-      <a href="/2020-02-24-note-spring-01/" class="article-nav-link">
+      <a href="/2020/02/24/note-spring-02/" class="article-nav-link">
         <strong class="article-nav-caption">上一篇</strong>
         <div class="article-nav-title">
           
-            Spring笔记01 jdbc常用操作
+            Spring笔记02 Idea运行示例项目的坑
           
         </div>
       </a>
     
+    
+      <a href="/2020/02/24/note-idea/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">IntelliJ IDEA 入门笔记</div>
+      </a>
     
   </nav>
 
