@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    Vue笔记02 Spring Boot+Vue前后端分离开发基本流程 |  CoCoNutNut&#39;s NoteBook
+  </title>
+  <meta name="generator" content="hexo-theme-yilia-plus">
+  
+  <link rel="shortcut icon" href="/images/1949347-2001.png" />
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="CoCoNutNut's NoteBook" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    <main class="content">
+      <section class="outer">
+  <article id="post-note-vue-02" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  Vue笔记02 Spring Boot+Vue前后端分离开发基本流程
+</h1>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/03/06/note-vue-02/" class="article-date">
+  <time datetime="2020-03-06T11:01:29.000Z" itemprop="datePublished">2020-03-06</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Note/">Note</a> / <a class="article-category-link" href="/categories/Note/Vue/">Vue</a>
+  </div>
+
+      
+    </div>
+    
+
+    
+    
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <blockquote>
+<p><a href="https://www.bilibili.com/video/av85793766?p=1" target="_blank" rel="noopener">https://www.bilibili.com/video/av85793766?p=1</a></p>
+</blockquote>
+<hr>
+<h1 id="Vue工程"><a href="#Vue工程" class="headerlink" title="Vue工程"></a>Vue工程</h1><h2 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h2><p>vue ui创建工程，导入Idea<br>(js版本太低可能有语法报错，配置中改为6即可)</p>
+<p>启动：npm run serve<br>停止：ctrl+C</p>
+<h2 id="引入页面-amp-配置路径"><a href="#引入页面-amp-配置路径" class="headerlink" title="引入页面&amp;配置路径"></a>引入页面&amp;配置路径</h2><p>router/index.js中引入.vue<br>App.vue中配置router</p>
+<h2 id="Book-vue"><a href="#Book-vue" class="headerlink" title="Book.vue"></a>Book.vue</h2><p>template就是html，script就是js，style就是css<br>template中只允许有一个根节点<br>前端可以先用假数据，写在script里面</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div id=<span class="string">"showcase"</span>&gt;</span><br><span class="line">        &lt;table&gt;</span><br><span class="line">            &lt;tr&gt;</span><br><span class="line">                &lt;td&gt;编号&lt;<span class="regexp">/td&gt;</span></span><br><span class="line"><span class="regexp">                &lt;td&gt;名称&lt;/</span>td&gt;</span><br><span class="line">                &lt;td&gt;作者&lt;<span class="regexp">/td&gt;</span></span><br><span class="line"><span class="regexp">            &lt;/</span>tr&gt;</span><br><span class="line">            &lt;tr v-<span class="keyword">for</span>=<span class="string">"item in books"</span>&gt;</span><br><span class="line">                &lt;td&gt;&#123;&#123;item.id&#125;&#125;&lt;<span class="regexp">/td&gt;</span></span><br><span class="line"><span class="regexp">                &lt;td&gt;&#123;&#123;item.name&#125;&#125;&lt;/</span>td&gt;</span><br><span class="line">                &lt;td&gt;&#123;&#123;item.author&#125;&#125;&lt;<span class="regexp">/td&gt;</span></span><br><span class="line"><span class="regexp">            &lt;/</span>tr&gt;</span><br><span class="line">        &lt;<span class="regexp">/table&gt;</span></span><br><span class="line"><span class="regexp">        &#123;&#123;msg&#125;&#125;</span></span><br><span class="line"><span class="regexp">    &lt;/</span>div&gt;</span><br><span class="line">&lt;<span class="regexp">/template&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">&lt;script&gt;</span></span><br><span class="line"><span class="regexp">    export default &#123;</span></span><br><span class="line"><span class="regexp">        name: "Book",</span></span><br><span class="line"><span class="regexp">        data()&#123;</span></span><br><span class="line"><span class="regexp">            return&#123;</span></span><br><span class="line"><span class="regexp">                msg:'2019999999999999',</span></span><br><span class="line"><span class="regexp">                books:[</span></span><br><span class="line"><span class="regexp">                    &#123;</span></span><br><span class="line"><span class="regexp">                        id: 20200001,</span></span><br><span class="line"><span class="regexp">                        name: '病毒星球',</span></span><br><span class="line"><span class="regexp">                        author: '卡尔·齐默'</span></span><br><span class="line"><span class="regexp">                    &#125;,</span></span><br><span class="line"><span class="regexp">                    &#123;</span></span><br><span class="line"><span class="regexp">                        id:20200002,</span></span><br><span class="line"><span class="regexp">                        name: '洛基启示录',</span></span><br><span class="line"><span class="regexp">                        author: '乔安妮·M·哈里斯'</span></span><br><span class="line"><span class="regexp">                    &#125;,</span></span><br><span class="line"><span class="regexp">                    &#123;</span></span><br><span class="line"><span class="regexp">                        id:20200003,</span></span><br><span class="line"><span class="regexp">                        name: '增强人类',</span></span><br><span class="line"><span class="regexp">                        author: '海伦·帕帕扬尼斯'</span></span><br><span class="line"><span class="regexp">                    &#125;</span></span><br><span class="line"><span class="regexp">                ]</span></span><br><span class="line"><span class="regexp">            &#125;</span></span><br><span class="line"><span class="regexp">        &#125;</span></span><br><span class="line"><span class="regexp">    &#125;</span></span><br><span class="line"><span class="regexp">&lt;/</span>script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style scoped&gt;</span><br><span class="line"></span><br><span class="line">&lt;<span class="regexp">/style&gt;</span></span><br></pre></td></tr></table></figure>
+<p>vue可以动态加载，改完代码不需要重启，直接访问即可<br>试了下可以正常访问～</p>
+<h1 id="Spring工程"><a href="#Spring工程" class="headerlink" title="Spring工程"></a>Spring工程</h1><h2 id="创建-1"><a href="#创建-1" class="headerlink" title="创建"></a>创建</h2><p>Idea中Spring Initializr默认模版创建<br>依赖勾上：Lombok、Spring Web、Spring Data JPA、MySQL Driver</p>
+<h2 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h2><p>这里没有用application.properties，删掉<br>新建application.yml，存放连接数据库的信息</p>
+<h2 id="数据库建表"><a href="#数据库建表" class="headerlink" title="数据库建表"></a>数据库建表</h2><p>用提供的book.sql建book表</p>
+<h2 id="Book"><a href="#Book" class="headerlink" title="Book"></a>Book</h2><p>和book表对应，加@Entity后，根据类名和表名对应绑定<br>再加一个@Data，是lombok的注解，自动生成get/set<br>属性名和变量名对应，自动绑定<br>id要加一个@Id，它是主键</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Book</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Id</span></span><br><span class="line">    <span class="keyword">private</span> Integer id;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> String author;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="BookRepository"><a href="#BookRepository" class="headerlink" title="BookRepository"></a>BookRepository</h2><p>继承JpaRepository，&lt;&gt;中第一个是实体类，第二个是主键类型<br>接口中findAll等方法都有，直接用就行</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">BookRepository</span> <span class="keyword">extends</span> <span class="title">JpaRepository</span>&lt;<span class="title">Book</span>,<span class="title">Integer</span>&gt; </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="测试BookRepository"><a href="#测试BookRepository" class="headerlink" title="测试BookRepository"></a>测试BookRepository</h2><p>然后测试一下<br>建立的Spring工程自带一个测试类BookstoreServerApplicationTests<br>或者自己创建，在接口名上右键-&gt;Go To-&gt;Test-&gt;Create New Test<br>给生成的测试类加一个@SpringBootTest，要测试的类@Autowired自动注入，写的方法加一个@Test，就可以运行了</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BookRepositoryTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> BookRepository bookRepository;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">findAll</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(bookRepository.findAll());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>试一下<br><img src="/images/2020/20200306180717607.png"><br>成功<br>且打印了sql语句，因为yml里面配了jpa: show-sql: true和格式化</p>
+<p>每写一个repository先测一下，保证没问题再继续写controller</p>
+<h2 id="BookHandler"><a href="#BookHandler" class="headerlink" title="BookHandler"></a>BookHandler</h2><p>配上对应的注解和mapping</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(<span class="string">"/book"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BookHandler</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> BookRepository bookRepository;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/findAll"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;Book&gt; <span class="title">findAll</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> bookRepository.findAll();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>运行BookstoreServerApplication启动类<br>注意此时端口是8181<br><img src="/images/2020/20200306181433240.png"><br>没有问题，后端就搞定了<br>接下来前后端对接就行</p>
+<h1 id="对接"><a href="#对接" class="headerlink" title="对接"></a>对接</h1><p>vue中ajax请求用axios组件<br>（先在命令行把服务停掉，安装，vue add axios）<br>装好之后自动有了src/plugins/axios.js</p>
+<p>刷新页面时读取数据，可以写到初始化函数中，比如这样：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">		created() &#123;</span><br><span class="line">            alert(<span class="number">123</span>)</span><br><span class="line">            axios.get(<span class="string">'http://localhost:8181/book/findAll/'</span>).then(<span class="function"><span class="keyword">function</span> (<span class="params">resp</span>)</span>&#123;</span><br><span class="line">                <span class="built_in">console</span>.log(resp)</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
+<p>刷新，看浏览器的控制台<br>有个跨域问题（8181访问8080），前端后端都可以解决<br>这里在SpringBoot中解决<br>只需添加一个配置类，重写addCorsMappings方法即可（不用记，固定的，要用的时候复制就行）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CrosConfig</span> <span class="keyword">implements</span> <span class="title">WebMvcConfigurer</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addCorsMappings</span><span class="params">(CorsRegistry registry)</span> </span>&#123;</span><br><span class="line">        registry.addMapping(<span class="string">"/**"</span>)</span><br><span class="line">                .allowedOrigins(<span class="string">"*"</span>)</span><br><span class="line">                .allowedMethods(<span class="string">"GET"</span>, <span class="string">"HEAD"</span>, <span class="string">"POST"</span>, <span class="string">"PUT"</span>, <span class="string">"DELETE"</span>, <span class="string">"OPTIONS"</span>)</span><br><span class="line">                .allowCredentials(<span class="keyword">true</span>)</span><br><span class="line">                .maxAge(<span class="number">3600</span>)</span><br><span class="line">                .allowedHeaders(<span class="string">"*"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>重启，再访问就好了<br><img src="https://img-blog.csdnimg.cn/20200306185233941.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MjMxOTQwOA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>然后再回调函数中把data拿到就行<br>注意：不能直接用this，回调函数中this指的是回调，而不是外面，要先在外面拿到this</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div id=<span class="string">"showcase"</span>&gt;</span><br><span class="line">        &lt;table&gt;</span><br><span class="line">            &lt;tr&gt;</span><br><span class="line">                &lt;td&gt;编号&lt;/td&gt;</span><br><span class="line">                &lt;td&gt;名称&lt;/td&gt;</span><br><span class="line">                &lt;td&gt;作者&lt;/td&gt;</span><br><span class="line">            &lt;/tr&gt;</span><br><span class="line">            &lt;tr v-<span class="keyword">for</span>=<span class="string">"item in books"</span>&gt;</span><br><span class="line">                &lt;td&gt;&#123;&#123;item.id&#125;&#125;&lt;/td&gt;</span><br><span class="line">                &lt;td&gt;&#123;&#123;item.name&#125;&#125;&lt;/td&gt;</span><br><span class="line">                &lt;td&gt;&#123;&#123;item.author&#125;&#125;&lt;/td&gt;</span><br><span class="line">            &lt;/tr&gt;</span><br><span class="line">        &lt;/table&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">    export <span class="keyword">default</span> &#123;</span><br><span class="line">        name: <span class="string">"Book"</span>,</span><br><span class="line">        data()&#123;</span><br><span class="line">            <span class="keyword">return</span>&#123;</span><br><span class="line">                books:[]</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        created() &#123;</span><br><span class="line">            <span class="keyword">const</span> _this = <span class="keyword">this</span></span><br><span class="line">            axios.get(<span class="string">'http://localhost:8181/book/findAll'</span>).then(function (resp)&#123;</span><br><span class="line">                _this.books = resp.data</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style scoped&gt;</span><br><span class="line"></span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+<p>这样前后端就连上了<br><img src="/images/2020/20200306185851937.png"></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ol>
+<li>写前端，用加数据测试</li>
+<li>写后端，保证接口能访问</li>
+<li>调后端（后端解决跨域问题）</li>
+</ol>
+
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+
+    </footer>
+
+  </div>
+
+  
+  
+  <nav class="article-nav">
+    
+      <a href="/2020/03/09/note-spring-09/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            Spring笔记09 事务控制的问题&amp;动态代理
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2020/03/06/note-vue-01/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">Vue笔记01 @vue_cli环境搭建</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+
+  
+  
+  
+
+</article>
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>
+        &copy;
+        2020
+        coconutnut
+      </li>
+      <li>
+        
+        Powered by
+        
+        
+        <a href="https://hexo.io" target="_blank">Hexo</a> Theme <a href="https://github.com/Shen-Yu/hexo-theme-ayer" target="_blank">Ayer</a>
+        
+      </li>
+    </ul>
+    <ul class="list-inline">
+      <li>
+        
+        
+        <span>
+  <i>PV:<span id="busuanzi_value_page_pv"></span></i>
+  <i>UV:<span id="busuanzi_value_site_uv"></span></i>
+</span>
+        
+      </li>
+      
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="to_top">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+      </div>
+    </main>
+    <aside class="sidebar">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/1949347-2001.png" alt="CoCoNutNut&#39;s NoteBook"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/note-catalogs">笔记</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/share.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script>
+  try {
+    var typed = new Typed("#subtitle", {
+      strings: ['咫尺千里 江山如画', 'Nothing is impossible, the word itself says &#39;I&#39;m possible&#39;!', ''],
+      startDelay: 0,
+      typeSpeed: 200,
+      loop: true,
+      backSpeed: 100,
+      showCursor: true
+    });
+  } catch (err) {
+  }
+
+</script>
+
+
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: 'main',
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto',
+    onClick: (e) => {
+      $('.toc-link').removeClass('is-active-link');
+      $(`a[href=${e.target.hash}]`).addClass('is-active-link');
+      $(e.target.hash).scrollIntoView();
+      return false;
+    }
+  });
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/js/ayer.js"></script>
+
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+
+<script type="text/javascript" src="https://js.users.51.la/20544303.js"></script>
+
+
+
+    
+  </div>
+</body>
+
+</html>
