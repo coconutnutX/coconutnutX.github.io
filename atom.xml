@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-03-10T10:56:54.837Z</updated>
+  <updated>2020-03-10T13:23:11.908Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>一些有趣的网站</title>
+    <link href="http://yoursite.com/2020/03/10/bookmark/"/>
+    <id>http://yoursite.com/2020/03/10/bookmark/</id>
+    <published>2020-03-10T12:15:56.000Z</published>
+    <updated>2020-03-10T13:23:11.908Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="配色"><a href="#配色" class="headerlink" title="配色"></a>配色</h1><h2 id=""><a href="#" class="headerlink" title=""></a><a href="http://zhongguose.com/" title="" target="">中国色</a></h2><p>中国传统颜色，每一个都有CMYK、RGB值(包括16进制字符串形式～好用！)<br><img src="/images/2020/2020-03-10.8.30.50.jpg"><br>#5dbe8a 超爱的蔻梢绿～</p><h2 id="-1"><a href="#-1" class="headerlink" title=""></a><a href="https://brandcolors.net/" title="" target="">brandcolors</a></h2><p>品牌配色，可以发现各种眼熟的颜色</p><p>这是百度<br><img src="/images/2020/2020-03-10.8.44.30.jpg"><br>这是NASA<br><img src="/images/2020/2020-03-10.8.48.06.jpg"><br>这是谷歌<br><img src="/images/2020/2020-03-10.8.46.18.jpg"><br>这是微软<br><img src="/images/2020/2020-03-10.8.47.35.jpg"><br>那么问题来了，它们是谁？<br><img src="/images/2020/2020-03-10.8.24.22.jpg"></p><p><a href="/images/2020/2020-03-10.8.24.21.jpg">我是答案</a></p><h2 id="-2"><a href="#-2" class="headerlink" title=""></a><a href="https://webgradients.com/" title="" target="">webgradients</a></h2><p>一颗一颗超仙的渐变色，也可以全屏查看，舒适<br><img src="/images/2020/2020-03-10.8.26.24.jpg"></p><h2 id="-3"><a href="#-3" class="headerlink" title=""></a><a href="https://uigradients.com/" title="" target="">uigradients</a></h2><p>也是美丽的渐变色<br><img src="/images/2020/2020-03-10.8.30.23.jpg"></p><h2 id="-4"><a href="#-4" class="headerlink" title=""></a><a href="https://www.webdesignrankings.com/resources/lolcolors/" title="" target="">LOLCOLORS</a></h2><p>水滴形的配色<br><img src="/images/2020/2020-03-10.9.13.18.jpg"></p><h2 id="-5"><a href="#-5" class="headerlink" title=""></a><a href="https://color.adobe.com/zh/create/color-wheel/" title="" target="">色轮</a></h2><p>adobe出品，不会用，但是很好玩<br><img src="/images/2020/2020-03-10.9.10.41.jpg"></p><h2 id="-6"><a href="#-6" class="headerlink" title=""></a><a href="https://color.hailpixel.com/" title="" target="">Colordot</a></h2><p>这个也很有趣！挪动光标调色，点击固定<br><img src="/images/2020/2020-03-10.9.15.21.jpg"><br><img src="/images/2020/2020-03-10.9.17.15.jpg"></p><h1 id="图标"><a href="#图标" class="headerlink" title="图标"></a>图标</h1><h2 id="-7"><a href="#-7" class="headerlink" title=""></a><a href="https://thenounproject.com/" title="" target="">thenounproject</a></h2><p>常用的图标网站<br><img src="/images/2020/2020-03-10.9.22.23.jpg"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;配色&quot;&gt;&lt;a href=&quot;#配色&quot; class=&quot;headerlink&quot; title=&quot;配色&quot;&gt;&lt;/a&gt;配色&lt;/h1&gt;&lt;h2 id=&quot;&quot;&gt;&lt;a href=&quot;#&quot; class=&quot;headerlink&quot; title=&quot;&quot;&gt;&lt;/a&gt;&lt;a href=&quot;http://zho
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
   
   <entry>
     <title>Spring笔记09 事务控制的问题&amp;动态代理</title>
