@@ -1,6 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Vue笔记03 Element UI使用&amp;动态路由导航栏</title>
+    <url>/2020/03/11/note-vue-03/</url>
+    <content><![CDATA[<blockquote>
+<p><a href="https://www.bilibili.com/video/av85793766" target="_blank" rel="noopener">https://www.bilibili.com/video/av85793766</a></p>
+<p>p2～3</p>
+</blockquote>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>和上次一样创建项目，在vue ui中添加Element UI插件</p>
+<p>Idea中导入工程</p>
+<p>如果插件在刚才UI中没有装成功，可以在命令行装</p>
+<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><p>Element UI的使用可以看官网手册</p>
+<a href="https://element.eleme.cn/2.0/#/zh-CN" title="" target="">Elemnt UI 中文官网</a>
+
+<p>有一些常见的布局方式</p>
+<h2 id="导入实例"><a href="#导入实例" class="headerlink" title="导入实例"></a>导入实例</h2><p>直接把官网实例复制到App.vue中（html复制到div标签之间）</p>
+<p>刷新网页就能看到效果</p>
+<h2 id="一些标签说明"><a href="#一些标签说明" class="headerlink" title="一些标签说明"></a>一些标签说明</h2><p>el-container: 构建整个⻚面框架</p>
+<p>el-menu: 左侧菜单</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">// :default-openeds默认展开的菜单 :default-active默认选中的菜单</span><br><span class="line"><span class="tag">&lt;<span class="name">el-menu</span> <span class="attr">:default-openeds</span>=<span class="string">"['1', '3']"</span> <span class="attr">:default-active</span>=<span class="string">"1-2"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>视频里说这个”1-2”必须写成”[1-2]”或则”‘1-2’”才能识别</p>
+<p>但是试了一下直接写也识别了</p>
+<p>el-submenu: 可展开的菜单</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">// 菜单的下标，文本类型，不能是数值类型</span><br><span class="line"><span class="tag">&lt;<span class="name">el-submenu</span> <span class="attr">index</span>=<span class="string">"1"</span>&gt;</span></span><br><span class="line">  // template:对应 el-submenu 的菜单名 i:设置菜单图标，具体在文档找</span><br><span class="line">	<span class="tag">&lt;<span class="name">template</span> <span class="attr">slot</span>=<span class="string">"title"</span>&gt;</span><span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"el-icon-message"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span>导航一<span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>需要的话还可以嵌套多级submenu</p>
+<h2 id="通过vue-router动态构建左侧菜单"><a href="#通过vue-router动态构建左侧菜单" class="headerlink" title="通过vue router动态构建左侧菜单"></a>通过vue router动态构建左侧菜单</h2><h3 id="配置页面"><a href="#配置页面" class="headerlink" title="配置页面"></a>配置页面</h3><p>新建4个页面，在router中配置</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> Page1 <span class="keyword">from</span> <span class="string">'../views/Page1'</span></span><br><span class="line"><span class="keyword">import</span> Page2 <span class="keyword">from</span> <span class="string">'../views/Page2'</span></span><br><span class="line"><span class="keyword">import</span> Page3 <span class="keyword">from</span> <span class="string">'../views/Page3'</span></span><br><span class="line"><span class="keyword">import</span> Page4 <span class="keyword">from</span> <span class="string">'../views/Page4'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> routes = [</span><br><span class="line">  &#123;</span><br><span class="line">    path: <span class="string">'/page1'</span>,</span><br><span class="line">    name: <span class="string">'页面1'</span>,</span><br><span class="line">    component: Page1</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    path: <span class="string">'/page2'</span>,</span><br><span class="line">    name: <span class="string">'页面2'</span>,</span><br><span class="line">    component: Page2</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    path: <span class="string">'/page3'</span>,</span><br><span class="line">    name: <span class="string">'页面3'</span>,</span><br><span class="line">    component: Page3</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    path: <span class="string">'/page4'</span>,</span><br><span class="line">    name: <span class="string">'页面4'</span>,</span><br><span class="line">    component: Page4</span><br><span class="line">  &#125;,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>但是这样还不会显示，要在App.vue中加上router对应的页面</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">        ...</span><br><span class="line">      <span class="tag">&lt;/<span class="name">el-container</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-container</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">router-view</span>&gt;</span><span class="tag">&lt;/<span class="name">router-view</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<img src="/images/2020/screencapture2020-03-11AM10.59.18.jpg">
+
+<p>此时相当于App中的内容是本来就显示的，下面的view是附加上去的</p>
+<p>这样放显然是有问题的</p>
+<p>把它放到main里面</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">				...</span><br><span class="line">				<span class="tag">&lt;<span class="name">el-main</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">router-view</span>&gt;</span><span class="tag">&lt;/<span class="name">router-view</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">el-main</span>&gt;</span></span><br><span class="line"></span><br><span class="line">      <span class="tag">&lt;/<span class="name">el-container</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-container</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<img src="/images/2020/screencapture2020-03-11AM11.03.53.jpg">
+
+<p>这样就放进去了，下一步把它们连上</p>
+<h3 id="遍历router"><a href="#遍历router" class="headerlink" title="遍历router"></a>遍历router</h3><p>需要修改router的层级结构</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> routes = [</span><br><span class="line">  &#123;</span><br><span class="line">    path: <span class="string">'/'</span>,</span><br><span class="line">    name: <span class="string">'导航1'</span>,</span><br><span class="line">    component:App,</span><br><span class="line">    children:[</span><br><span class="line">      &#123;</span><br><span class="line">        path: <span class="string">'/page1'</span>,</span><br><span class="line">        name: <span class="string">'页面1'</span>,</span><br><span class="line">        component: Page1</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        path: <span class="string">'/page2'</span>,</span><br><span class="line">        name: <span class="string">'页面2'</span>,</span><br><span class="line">        component: Page2</span><br><span class="line">      &#125;,</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    path:<span class="string">'/navigation'</span>,</span><br><span class="line">    name: <span class="string">'导航2'</span>,</span><br><span class="line">    component:App,</span><br><span class="line">    children:[</span><br><span class="line">      &#123;</span><br><span class="line">        path: <span class="string">'/page3'</span>,</span><br><span class="line">        name: <span class="string">'页面3'</span>,</span><br><span class="line">        component: Page3</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        path: <span class="string">'/page4'</span>,</span><br><span class="line">        name: <span class="string">'页面4'</span>,</span><br><span class="line">        component: Page4</span><br><span class="line">      &#125;,</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>然后在App.vue中读取</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-aside</span> <span class="attr">width</span>=<span class="string">"200px"</span> <span class="attr">style</span>=<span class="string">"background-color: rgb(238, 241, 246)"</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">el-menu</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">el-submenu</span> <span class="attr">v-for</span>=<span class="string">"item in $router.options.routes"</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">template</span> <span class="attr">slot</span>=<span class="string">"title"</span>&gt;</span><span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"el-icon-setting"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span>&#123;&#123;item.name&#125;&#125;<span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">el-submenu</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">el-menu</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">el-aside</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>就显示出来了</p>
+<img src="/images/2020/screencapture2020-03-11AM11.14.49.jpf">
+
+<hr>
+<p>一个小bug</p>
+<p>页面一开始是空白的，发现是App没有引入，router中要加</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'vue-router'</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>把内层的元素也读出来</p>
+<p>现在点一个导航时，两个会一起展开、合上，因为没有加index</p>
+<p>再加上index属性（通过item的下标，item在前，index在后），需要字符串属性，拼一个’’</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-aside</span> <span class="attr">width</span>=<span class="string">"200px"</span> <span class="attr">style</span>=<span class="string">"background-color: rgb(238, 241, 246)"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-menu</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">el-submenu</span> <span class="attr">v-for</span>=<span class="string">"(item,index) in $router.options.routes"</span> <span class="attr">:index</span>=<span class="string">"index+''"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">template</span> <span class="attr">slot</span>=<span class="string">"title"</span>&gt;</span><span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"el-icon-setting"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span>&#123;&#123;index&#125;&#125;-&#123;&#123;item.name&#125;&#125;<span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">el-menu-item</span> <span class="attr">v-for</span>=<span class="string">"(item2,index2) in item.children"</span> <span class="attr">:index</span>=<span class="string">"index+'-'+index2"</span>&gt;</span>&#123;&#123;item2.name&#125;&#125;<span class="tag">&lt;/<span class="name">el-menu-item</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">el-submenu</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">el-menu</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">el-aside</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>就可以定位到每一个了</p>
+<img src="/images/2020/screencapture2020-03-11AM11.29.49.jpg">
+
+<h2 id="menu与router绑定"><a href="#menu与router绑定" class="headerlink" title="menu与router绑定"></a>menu与router绑定</h2><p>把App中的内容放到Index页面中</p>
+<p>1、给 el-menu 标签添加 router 属性</p>
+<p>2、在⻚面中添加 router-view 标签（它是一个容器，可以动态渲染选择的router）</p>
+<p>3、el-menu-item 标签的 index 值就是要跳转的 router</p>
+<p>默认页面，在router中写redirect</p>
+<p>并初始化选中，如果选择则加is-active状态。用route.path获取当前路径</p>
+<img src="/images/2020/screencapture2020-03-11PM4.09.10.jpg">
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><h2 id="文件结构"><a href="#文件结构" class="headerlink" title="文件结构"></a>文件结构</h2><img src="/images/2020/screencapture2020-03-11PM4.10.22.jpg" width=300>
+
+<h2 id="App-vue"><a href="#App-vue" class="headerlink" title="App.vue"></a>App.vue</h2><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"app"</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--    这个router对应的即为/，也就是Index页面--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">router-view</span>&gt;</span><span class="tag">&lt;/<span class="name">router-view</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Index-vue"><a href="#Index-vue" class="headerlink" title="Index.vue"></a>Index.vue</h2><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-container</span> <span class="attr">style</span>=<span class="string">"height: 500px; border: 1px solid #eee"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-aside</span> <span class="attr">width</span>=<span class="string">"200px"</span> <span class="attr">style</span>=<span class="string">"background-color: rgb(238, 241, 246)"</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--            这里添加router标签，el-menu-item的index就会被作为router路径--&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">el-menu</span> <span class="attr">router</span> <span class="attr">:default-openeds</span>=<span class="string">"['0','1']"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">el-submenu</span> <span class="attr">v-for</span>=<span class="string">"(item,index) in $router.options.routes"</span> <span class="attr">:index</span>=<span class="string">"index+''"</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">template</span> <span class="attr">slot</span>=<span class="string">"title"</span>&gt;</span><span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"el-icon-setting"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span>&#123;&#123;index&#125;&#125;-&#123;&#123;item.name&#125;&#125;<span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--                    条件判断当前路径是否等于index，更改选中状态，主要是在初始化时增加默认的选中状态--&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">el-menu-item</span> <span class="attr">v-for</span>=<span class="string">"item2 in item.children"</span> <span class="attr">:index</span>=<span class="string">"item2.path"</span> <span class="attr">:class</span>=<span class="string">"$route.path==item2.path ? 'is-active' : ''"</span>&gt;</span>&#123;&#123;item2.path&#125;&#125;-&#123;&#123;item2.name&#125;&#125;<span class="tag">&lt;/<span class="name">el-menu-item</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">el-submenu</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">el-menu</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">el-aside</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-main</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--            上面又index确定的router被显示在这里，也就是main区域中--&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">router-view</span>&gt;</span><span class="tag">&lt;/<span class="name">router-view</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">el-main</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-container</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="index-js"><a href="#index-js" class="headerlink" title="index.js"></a>index.js</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> routes = [</span><br><span class="line">  &#123;</span><br><span class="line">    path: <span class="string">'/'</span>,</span><br><span class="line">    name: <span class="string">'导航1'</span>,</span><br><span class="line">    component:Index,</span><br><span class="line">    redirect:<span class="string">'page1'</span>,</span><br><span class="line">    children:[</span><br><span class="line">      &#123;</span><br><span class="line">        path: <span class="string">'/page1'</span>,</span><br><span class="line">        name: <span class="string">'页面1'</span>,</span><br><span class="line">        component: Page1</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        path: <span class="string">'/page2'</span>,</span><br><span class="line">        name: <span class="string">'页面2'</span>,</span><br><span class="line">        component: Page2</span><br><span class="line">      &#125;,</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    path:<span class="string">'/navigation'</span>,</span><br><span class="line">    name: <span class="string">'导航2'</span>,</span><br><span class="line">    component:Index,</span><br><span class="line">    children:[</span><br><span class="line">      &#123;</span><br><span class="line">        path: <span class="string">'/page3'</span>,</span><br><span class="line">        name: <span class="string">'页面3'</span>,</span><br><span class="line">        component: Page3</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        path: <span class="string">'/page4'</span>,</span><br><span class="line">        name: <span class="string">'页面4'</span>,</span><br><span class="line">        component: Page4</span><br><span class="line">      &#125;,</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>注意区别：router/route/routes</p>
+]]></content>
+      <tags>
+        <tag>vue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>maxOS截图设置</title>
+    <url>/2020/03/11/mac-screencapture/</url>
+    <content><![CDATA[<p>问题：以前插入截图得先改文件名，要时间戳不含中文，而且png特别大，最好转成jpg，很麻烦</p>
+<p>目标：文件名时间戳不含中文 &amp; jpg格式</p>
+<hr>
+<h1 id="一通操作"><a href="#一通操作" class="headerlink" title="一通操作"></a>一通操作</h1><h2 id="改格式"><a href="#改格式" class="headerlink" title="改格式"></a>改格式</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">defaults write com.apple.screencapture type jpg</span><br></pre></td></tr></table></figure>
+
+<h2 id="改名"><a href="#改名" class="headerlink" title="改名"></a>改名</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">defaults write com.apple.screencapture name screencapture</span><br></pre></td></tr></table></figure>
+
+<h2 id="改时间戳格式"><a href="#改时间戳格式" class="headerlink" title="改时间戳格式"></a>改时间戳格式</h2><p>系统偏好设置-&gt;语言与地区-&gt;高级-&gt;时间</p>
+<p>正午前和中午后框中：上午/下午改成AM/PM </p>
+<h2 id="完工"><a href="#完工" class="headerlink" title="完工"></a>完工</h2><p>Before:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">截屏2020-03-11上午9.50.34</span><br></pre></td></tr></table></figure>
+
+<p>After:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">screencapture2020-03-11AM10.05.30</span><br></pre></td></tr></table></figure>
+
+
+
+<hr>
+<h1 id="命令备忘"><a href="#命令备忘" class="headerlink" title="命令备忘"></a>命令备忘</h1><h2 id="修改格式"><a href="#修改格式" class="headerlink" title="修改格式"></a>修改格式</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">defaults write com.apple.screencapture type jpg</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改文件名"><a href="#修改文件名" class="headerlink" title="修改文件名"></a>修改文件名</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">defaults write com.apple.screencapture name XXX</span><br></pre></td></tr></table></figure>
+
+<h2 id="时间戳"><a href="#时间戳" class="headerlink" title="时间戳"></a>时间戳</h2><h3 id="移除时间戳"><a href="#移除时间戳" class="headerlink" title="移除时间戳"></a>移除时间戳</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">defaults write com.apple.screencapture &quot;include-date&quot; 0</span><br></pre></td></tr></table></figure>
+
+<h3 id="加时间戳"><a href="#加时间戳" class="headerlink" title="加时间戳"></a>加时间戳</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">defaults write com.apple.screencapture &quot;include-date&quot; 1</span><br></pre></td></tr></table></figure>
+
+<h2 id="其它帮助"><a href="#其它帮助" class="headerlink" title="其它帮助"></a>其它帮助</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">screencapture -h</span><br></pre></td></tr></table></figure>
+
+
+
+<blockquote>
+<p>ref:</p>
+<p><a href="https://zhuanlan.zhihu.com/p/73725126" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/73725126</a></p>
+<p><a href="https://www.maketecheasier.com/remove-time-stamp-screenshot-mac/" target="_blank" rel="noopener">https://www.maketecheasier.com/remove-time-stamp-screenshot-mac/</a></p>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>tool</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>来到Hexo的第一天！</title>
     <url>/2020/03/10/hello-hexo/</url>
     <content><![CDATA[<p>从下午开始搭建，调主题，一直到晚上搬运完了正在写的笔记，心情舒畅</p>
