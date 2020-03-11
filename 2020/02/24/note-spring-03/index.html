@@ -78,9 +78,7 @@
       
 
       
-      <blockquote>
-<p><a href="https://www.bilibili.com/video/av47952931" target="_blank" rel="noopener">https://www.bilibili.com/video/av47952931</a><br>p9~14</p>
-</blockquote>
+      <p><a href="https://www.bilibili.com/video/av47952931" target="_blank" rel="noopener">https://www.bilibili.com/video/av47952931</a><br>p9~14</p>
 <hr>
 <h1 id="程序的耦合与解耦-以jdbc注册驱动为例"><a href="#程序的耦合与解耦-以jdbc注册驱动为例" class="headerlink" title="程序的耦合与解耦 (以jdbc注册驱动为例)"></a>程序的耦合与解耦 (以jdbc注册驱动为例)</h1><p>jdbc操作中，注册数据库驱动时，有2种方法</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 方法1</span></span><br><span class="line">DriverManager.registerDriver(<span class="keyword">new</span> com.mysql.jdbc.Driver());</span><br><span class="line"><span class="comment">// 方法2</span></span><br><span class="line">Class.forName(<span class="string">"com.mysql.jdbc.Driver"</span>);</span><br></pre></td></tr></table></figure>
