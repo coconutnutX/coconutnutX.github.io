@@ -1,6 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>常用终端命令</title>
+    <url>/2020/03/12/terminal-commands/</url>
+    <content><![CDATA[<h1 id="Hexo"><a href="#Hexo" class="headerlink" title="Hexo"></a>Hexo</h1><h2 id="New"><a href="#New" class="headerlink" title="New"></a>New</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ hexo new [layout] &lt;title&gt;</span><br></pre></td></tr></table></figure>
+
+<p>layout: post、page、draft</p>
+<h2 id="publish"><a href="#publish" class="headerlink" title="publish"></a>publish</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ hexo publish [layout] &lt;filename&gt;</span><br></pre></td></tr></table></figure>
+
+<p>发表草稿</p>
+<h2 id="generate"><a href="#generate" class="headerlink" title="generate"></a>generate</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ hexo g</span><br><span class="line">$ hexo g -d       &#x2F;&#x2F; 立即部署</span><br><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<h2 id="server"><a href="#server" class="headerlink" title="server"></a>server</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ hexo s</span><br><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<h2 id="deploy"><a href="#deploy" class="headerlink" title="deploy"></a>deploy</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ hexo d</span><br><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<h2 id="clean"><a href="#clean" class="headerlink" title="clean"></a>clean</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ hexo clean</span><br></pre></td></tr></table></figure>
+
+<h1 id="Vue"><a href="#Vue" class="headerlink" title="Vue"></a>Vue</h1><h2 id="Project-setup"><a href="#Project-setup" class="headerlink" title="Project setup"></a>Project setup</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ npm install</span><br></pre></td></tr></table></figure>
+
+<h2 id="Compiles-and-hot-reloads-for-development"><a href="#Compiles-and-hot-reloads-for-development" class="headerlink" title="Compiles and hot-reloads for development"></a>Compiles and hot-reloads for development</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ npm run serve</span><br></pre></td></tr></table></figure>
+
+<h2 id="Compiles-and-minifies-for-production"><a href="#Compiles-and-minifies-for-production" class="headerlink" title="Compiles and minifies for production"></a>Compiles and minifies for production</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ npm run build</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="服务器相关"><a href="#服务器相关" class="headerlink" title="服务器相关"></a>服务器相关</h1><h2 id="ssh连接阿里云服务器"><a href="#ssh连接阿里云服务器" class="headerlink" title="ssh连接阿里云服务器"></a>ssh连接阿里云服务器</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ ssh root@xxx.xxx</span><br></pre></td></tr></table></figure>
+
+<h2 id="服务器上运行jar"><a href="#服务器上运行jar" class="headerlink" title="服务器上运行jar"></a>服务器上运行jar</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ java -jar XXX.jar</span><br></pre></td></tr></table></figure>
+
+<h2 id="服务器上后台始终运行jar"><a href="#服务器上后台始终运行jar" class="headerlink" title="服务器上后台始终运行jar"></a>服务器上后台始终运行jar</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ nohup java -jar XXX.jar</span><br></pre></td></tr></table></figure>
+
+<h2 id="服务器上后台运行jar并将输出保存到文件"><a href="#服务器上后台运行jar并将输出保存到文件" class="headerlink" title="服务器上后台运行jar并将输出保存到文件"></a>服务器上后台运行jar并将输出保存到文件</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ nohup java -jar XXX.jar &gt;XXX.txt &amp;</span><br></pre></td></tr></table></figure>
+
+<h2 id="查看服务器上java进程"><a href="#查看服务器上java进程" class="headerlink" title="查看服务器上java进程"></a>查看服务器上java进程</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ ps aux | grep java</span><br></pre></td></tr></table></figure>
+
+<h2 id="关闭服务器上进程"><a href="#关闭服务器上进程" class="headerlink" title="关闭服务器上进程"></a>关闭服务器上进程</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ kill XXX(pid)</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>tool</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Spring笔记10 AOP</title>
     <url>/2020/03/12/note-spring-10/</url>
     <content><![CDATA[<blockquote>
