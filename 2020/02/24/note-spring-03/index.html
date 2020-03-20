@@ -116,7 +116,7 @@
 <p><strong>JavaBean</strong> —— 用java语言编写的可重用组件</p>
 <p><strong>BeanFactory</strong> —— 创建Bean对象的工厂<br>eg：创建Dao和Service对象</p>
 <p>要实现这个工厂，类似前面jdbc，</p>
-<p>1.需要一个==配置文件==来配置service和dao<br>内容：唯一标识=全限定类名（key=value)<br>配置文件可以是xml也可以是properties</p>
+<p>1.需要一个<strong>配置文件</strong>来配置service和dao<br>内容：唯一标识=全限定类名（key=value)<br>配置文件可以是xml也可以是properties</p>
 <p>2.读取配置文件中配置的内容，通过==反射==创建对象</p>
 <h2 id="工厂模式解耦"><a href="#工厂模式解耦" class="headerlink" title="工厂模式解耦"></a>工厂模式解耦</h2><p>在resources中新建beans.properties配置文件（此处用properties因为简单，Spring中用的是xml）</p>
 <figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">accountService</span> = <span class="string">com.itheima.service.impl.AccountServiceImpl</span></span><br><span class="line"><span class="attr">accountDao</span> = <span class="string">com.itheima.dao.impl.AccountDaoImpl</span></span><br></pre></td></tr></table></figure>
@@ -237,7 +237,7 @@
   <i>PV:<span id="busuanzi_value_page_pv"></span></i>
   <i>UV:<span id="busuanzi_value_site_uv"></span></i>
 </span>
-        109k
+        124k
         
       </li>
       <li>

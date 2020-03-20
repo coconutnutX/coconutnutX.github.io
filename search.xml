@@ -1,6 +1,299 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Spring笔记15 总结</title>
+    <url>/2020/03/20/note-spring-15/</url>
+    <content><![CDATA[<img src="/images/2020/spring.png">]]></content>
+      <categories>
+        <category>Note</category>
+      </categories>
+      <tags>
+        <tag>spring</tag>
+        <tag>mindmap</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Spring笔记14 Spring5的新特性</title>
+    <url>/2020/03/20/note-spring-14/</url>
+    <content><![CDATA[<blockquote>
+<p><a href="https://www.bilibili.com/video/av47952931?p=82" target="_blank" rel="noopener">https://www.bilibili.com/video/av47952931?p=82</a></p>
+</blockquote>
+<p>基于jdk1.8，tomcat版本要求8.5以上</p>
+<h1 id="利用jdk8版本更新的内容"><a href="#利用jdk8版本更新的内容" class="headerlink" title="利用jdk8版本更新的内容"></a>利用jdk8版本更新的内容</h1><h2 id="基于jdk8的反射增强"><a href="#基于jdk8的反射增强" class="headerlink" title="基于jdk8的反射增强"></a>基于jdk8的反射增强</h2><p> <strong>一个测试</strong></p>
+<p>三种操作：</p>
+<p>1.创建新对象并赋值</p>
+<p>2.创建一个对象赋值多次</p>
+<p>3.通过反射创建对象并赋值</p>
+<p>分别执行10亿次，比较用时(ms)</p>
+<p>jdk8：8、31、2417</p>
+<p>jdk7：6212、3025、290400</p>
+<h2 id="NonNull-和-Nullable-的使用"><a href="#NonNull-和-Nullable-的使用" class="headerlink" title="@NonNull 和@Nullable 的使用"></a>@NonNull 和@Nullable 的使用</h2><p>用 @Nullable 和 @NotNull 注解来表明可为空的参数和以及返回值</p>
+<p>这样就够在编译的时候处理空值而不是在运行时抛出 NullPointerExceptions</p>
+<h2 id="日志记录方面"><a href="#日志记录方面" class="headerlink" title="日志记录方面"></a>日志记录方面</h2><p>封装 Commons Logging 桥接模块（叫做 spring-jcl）</p>
+<h1 id="核心容器的更新"><a href="#核心容器的更新" class="headerlink" title="核心容器的更新"></a>核心容器的更新</h1><p>支持候选组件索引作为类路径扫描的替代方案</p>
+<p>从索引读取实体而不是扫描类路径对于小于 200 个类的小型项目没有明显差异</p>
+<p>对于大型项目，应用程序的启动时间将被大大缩减</p>
+<h1 id="JetBrains-Kotlin-语言支持"><a href="#JetBrains-Kotlin-语言支持" class="headerlink" title="JetBrains Kotlin 语言支持"></a>JetBrains Kotlin 语言支持</h1><h1 id="响应式编程风格"><a href="#响应式编程风格" class="headerlink" title="响应式编程风格"></a>响应式编程风格</h1><p>响应式堆栈 WEB 框架</p>
+<p>这个堆栈完全的响应式且非阻塞，适合于事件循环风格的处理，可以进行少量线程的扩展</p>
+<p>（有一个响应式编程实战示例，建议学完Spring Boot之后搭建  –MARK–）</p>
+<h1 id="Junit5-支持"><a href="#Junit5-支持" class="headerlink" title="Junit5 支持"></a>Junit5 支持</h1>]]></content>
+      <categories>
+        <category>Note</category>
+      </categories>
+      <tags>
+        <tag>spring</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Spring笔记13 Spring中的事务控制</title>
+    <url>/2020/03/19/note-spring-13/</url>
+    <content><![CDATA[<blockquote>
+<p><a href="https://www.bilibili.com/video/av47952931" target="_blank" rel="noopener">https://www.bilibili.com/video/av47952931</a><br>p75-78</p>
+</blockquote>
+<p>几个点：</p>
+<ul>
+<li>JavaEE体系进行分层开发，事务处理位于业务层</li>
+<li>Spring提供事务控制的接口，在spring-tx-5.0.2.RELEASE.jar中</li>
+<li>Spring的事务控制基于AOP。它既可以用配置方式实现，也可以用编程方式实现（重点是配置实现）</li>
+</ul>
+<h1 id="Spring中事务控制的API"><a href="#Spring中事务控制的API" class="headerlink" title="Spring中事务控制的API"></a>Spring中事务控制的API</h1><h2 id="PlatformTransactionManager"><a href="#PlatformTransactionManager" class="headerlink" title="PlatformTransactionManager"></a>PlatformTransactionManager</h2><p>该接口提供事务操作的方法：</p>
+<ul>
+<li>获取状态 getTransaction()</li>
+<li>提交 commit()</li>
+<li>回滚 rollback()</li>
+</ul>
+<p>常用实现类：</p>
+<ul>
+<li>org.springframework.jdbc.datasource.DataSourceTransactionManager </li>
+<li>org.springframework.orm.hibernate5.HibernateTransactionManager </li>
+</ul>
+<h2 id="TransactionDefinition"><a href="#TransactionDefinition" class="headerlink" title="TransactionDefinition"></a>TransactionDefinition</h2><p>该接口是事务的定义信息对象，可以获取事务对象名称、隔离级别、传播行为、超时时间、是否只读</p>
+<p>Spring默认使用数据库的隔离级别</p>
+<p>传播行为指什么情况下必须有事务、什么情况可有可无</p>
+<h2 id="TransactionStatus"><a href="#TransactionStatus" class="headerlink" title="TransactionStatus"></a>TransactionStatus</h2><p>该接口提供事务的运行状态，可以刷新事务、获取是否存在存储点（可以理解为按步提交，回滚可以回滚到当前点，不用全部回滚）、是否完成、是否为新的事务、是否回滚、设置回滚</p>
+<h1 id="Spring的事务控制"><a href="#Spring的事务控制" class="headerlink" title="Spring的事务控制"></a>Spring的事务控制</h1><h2 id="代码准备"><a href="#代码准备" class="headerlink" title="代码准备"></a>代码准备</h2><p>pom.xml中需要导入aspectj的依赖，因为事务控制基于AOP</p>
+<p>准备数据库表和实体类（还是账户）</p>
+<p>实现三个方法：根据Id查询账户、根据名称查询账户、转账</p>
+<p>编写Dao层和业务层接口和实现类</p>
+<h2 id="基于XML的声明式事务控制"><a href="#基于XML的声明式事务控制" class="headerlink" title="基于XML的声明式事务控制"></a>基于XML的声明式事务控制</h2><p>配置步骤</p>
+<p>1、配置事务管理器</p>
+<p>2、配置事务的通知</p>
+<p>此时需要导入事务的约束（文档首页点Data Access，搜xmlns:tx，同时也会导入AOP的约束）</p>
+<p>使用tx:advice标签配置事务通知<br>属性：id：事务通知的唯一标识   transaction-manager：给事务通知提供一个事务管理器引用</p>
+<p>3、配置AOP中的通用切入点表达式</p>
+<p>4、建立事务通知和切入点表达式的对应关系</p>
+<p>5、配置事务的属性（在事务的通知tx:advice标签的内部）</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 配置事务管理器 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"transactionManager"</span> <span class="attr">class</span>=<span class="string">"org.springframework.jdbc.datasource.DataSourceTransactionManager"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"dataSource"</span> <span class="attr">ref</span>=<span class="string">"dataSource"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 配置事务的通知--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">tx:advice</span> <span class="attr">id</span>=<span class="string">"txAdvice"</span> <span class="attr">transaction-manager</span>=<span class="string">"transactionManager"</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 配置事务的属性</span></span><br><span class="line"><span class="comment">                isolation：用于指定事务的隔离级别。默认值是DEFAULT，表示使用数据库的默认隔离级别。</span></span><br><span class="line"><span class="comment">                propagation：用于指定事务的传播行为。默认值是REQUIRED，表示一定会有事务，增删改的选择。查询方法可以选择SUPPORTS。</span></span><br><span class="line"><span class="comment">                read-only：用于指定事务是否只读。只有查询方法才能设置为true。默认值是false，表示读写。</span></span><br><span class="line"><span class="comment">                timeout：用于指定事务的超时时间，默认值是-1，表示永不超时。如果指定了数值，以秒为单位。</span></span><br><span class="line"><span class="comment">                rollback-for：用于指定一个异常，当产生该异常时，事务回滚，产生其他异常时，事务不回滚。没有默认值。表示任何异常都回滚。</span></span><br><span class="line"><span class="comment">                no-rollback-for：用于指定一个异常，当产生该异常时，事务不回滚，产生其他异常时事务回滚。没有默认值。表示任何异常都回滚。</span></span><br><span class="line"><span class="comment">        --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">tx:attributes</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tx:method</span> <span class="attr">name</span>=<span class="string">"*"</span> <span class="attr">propagation</span>=<span class="string">"REQUIRED"</span> <span class="attr">read-only</span>=<span class="string">"false"</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 后面写查询方法都以find开头 这样两行配置就够了--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tx:method</span> <span class="attr">name</span>=<span class="string">"find*"</span> <span class="attr">propagation</span>=<span class="string">"SUPPORTS"</span> <span class="attr">read-only</span>=<span class="string">"true"</span>&gt;</span><span class="tag">&lt;/<span class="name">tx:method</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">tx:attributes</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">tx:advice</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 配置aop--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">aop:config</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 配置切入点表达式--&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">aop:pointcut</span> <span class="attr">id</span>=<span class="string">"pt1"</span> <span class="attr">expression</span>=<span class="string">"execution(* com.itheima.service.impl.*.*(..))"</span>&gt;</span><span class="tag">&lt;/<span class="name">aop:pointcut</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!--建立切入点表达式和事务通知的对应关系 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">aop:advisor</span> <span class="attr">advice-ref</span>=<span class="string">"txAdvice"</span> <span class="attr">pointcut-ref</span>=<span class="string">"pt1"</span>&gt;</span><span class="tag">&lt;/<span class="name">aop:advisor</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">aop:config</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这样service.impl下的实现类就都配置好事务控制了</p>
+<h2 id="基于注解的声明式事务控制"><a href="#基于注解的声明式事务控制" class="headerlink" title="基于注解的声明式事务控制"></a>基于注解的声明式事务控制</h2><p>导名称空间时要多一个context，以及对应的约束</p>
+<p>业务层</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Service</span>(<span class="string">"accountService"</span>)</span><br><span class="line"><span class="meta">@Transactional</span>(propagation= Propagation.SUPPORTS,readOnly=<span class="keyword">true</span>) <span class="comment">// 只读型事务的配置</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AccountServiceImpl</span> <span class="keyword">implements</span> <span class="title">IAccountService</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> IAccountDao accountDao;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Account <span class="title">findAccountById</span><span class="params">(Integer accountId)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> accountDao.findAccountById(accountId);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 需要的是读写型事务配置</span></span><br><span class="line">    <span class="meta">@Transactional</span>(propagation= Propagation.REQUIRED,readOnly=<span class="keyword">false</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">transfer</span><span class="params">(String sourceName, String targetName, Float money)</span> </span>&#123;</span><br><span class="line">            <span class="comment">// 2.1根据名称查询转出账户</span></span><br><span class="line">            Account source = accountDao.findAccountByName(sourceName);</span><br><span class="line">            <span class="comment">// 2.2根据名称查询转入账户</span></span><br><span class="line">            Account target = accountDao.findAccountByName(targetName);</span><br><span class="line">            <span class="comment">// 2.3转出账户减钱</span></span><br><span class="line">            source.setMoney(source.getMoney()-money);</span><br><span class="line">            <span class="comment">// 2.4转入账户加钱</span></span><br><span class="line">            target.setMoney(target.getMoney()+money);</span><br><span class="line">            <span class="comment">// 2.5更新转出账户</span></span><br><span class="line">            accountDao.updateAccount(source);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">int</span> i=<span class="number">1</span>/<span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 2.6更新转入账户</span></span><br><span class="line">            accountDao.updateAccount(target);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Dao层</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Repository</span>(<span class="string">"accountDao"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AccountDaoImpl</span> <span class="keyword">implements</span> <span class="title">IAccountDao</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> JdbcTemplate jdbcTemplate;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此时不能再继承JdbcDaoSupport了（因为没法给jdbcTemplate加注解），必须自己定义一个jdbcTemplate，并在xml中配置（并注入dataSource，还要配置Spring在创建容器时需要扫描的包）</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 配置spring创建容器时要扫描的包--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">"com.itheima"</span>&gt;</span><span class="tag">&lt;/<span class="name">context:component-scan</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 配置JdbcTemplate--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"jdbcTemplate"</span> <span class="attr">class</span>=<span class="string">"org.springframework.jdbc.core.JdbcTemplate"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"dataSource"</span> <span class="attr">ref</span>=<span class="string">"dataSource"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 配置数据源--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"dataSource"</span> <span class="attr">class</span>=<span class="string">"org.springframework.jdbc.datasource.DriverManagerDataSource"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"driverClassName"</span> <span class="attr">value</span>=<span class="string">"com.mysql.jdbc.Driver"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"url"</span> <span class="attr">value</span>=<span class="string">"jdbc:mysql://localhost:3306/eesy"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"username"</span> <span class="attr">value</span>=<span class="string">"root"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"password"</span> <span class="attr">value</span>=<span class="string">"1234"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- spring中基于注解 的声明式事务控制配置步骤</span></span><br><span class="line"><span class="comment">            1、配置事务管理器</span></span><br><span class="line"><span class="comment">            2、开启spring对注解事务的支持</span></span><br><span class="line"><span class="comment">            3、在需要事务支持的地方使用@Transactional注解</span></span><br><span class="line"><span class="comment">         --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 配置事务管理器 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"transactionManager"</span> <span class="attr">class</span>=<span class="string">"org.springframework.jdbc.datasource.DataSourceTransactionManager"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"dataSource"</span> <span class="attr">ref</span>=<span class="string">"dataSource"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 开启spring对注解事务的支持--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">tx:annotation-driven</span> <span class="attr">transaction-manager</span>=<span class="string">"transactionManager"</span>&gt;</span><span class="tag">&lt;/<span class="name">tx:annotation-driven</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>属性在@Transactional中配置</p>
+<p>一个问题是，如果有十个事务，一半只读一半读写，就都得单独配置属性</p>
+<p>而用xml配置时一次就解决了</p>
+]]></content>
+      <categories>
+        <category>Note</category>
+      </categories>
+      <tags>
+        <tag>spring</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Spring笔记12 基于XML和注解的事务控制</title>
+    <url>/2020/03/19/note-spring-12/</url>
+    <content><![CDATA[<blockquote>
+<p><a href="https://www.bilibili.com/video/av47952931" target="_blank" rel="noopener">https://www.bilibili.com/video/av47952931</a><br>p72-74</p>
+</blockquote>
+<h1 id="基于XML的事务控制"><a href="#基于XML的事务控制" class="headerlink" title="基于XML的事务控制"></a>基于XML的事务控制</h1><p>2个工具类：ConnectionUtils 和 TransactionManager</p>
+<p>见 <a href="/2020/03/09/note-spring-09/">Spring笔记09 事务控制的问题&amp;动态代理</a></p>
+<p>主要配置</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 配置Connection的工具类 ConnectionUtils --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"connectionUtils"</span> <span class="attr">class</span>=<span class="string">"com.itheima.utils.ConnectionUtils"</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 注入数据源--&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"dataSource"</span> <span class="attr">ref</span>=<span class="string">"dataSource"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 配置事务管理器--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"txManager"</span> <span class="attr">class</span>=<span class="string">"com.itheima.utils.TransactionManager"</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 注入ConnectionUtils --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"connectionUtils"</span> <span class="attr">ref</span>=<span class="string">"connectionUtils"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--配置aop--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">aop:config</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!--配置通用切入点表达式--&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">aop:pointcut</span> <span class="attr">id</span>=<span class="string">"pt1"</span> <span class="attr">expression</span>=<span class="string">"execution(* com.itheima.service.impl.*.*(..))"</span>&gt;</span><span class="tag">&lt;/<span class="name">aop:pointcut</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">aop:aspect</span> <span class="attr">id</span>=<span class="string">"txAdvice"</span> <span class="attr">ref</span>=<span class="string">"txManager"</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--配置前置通知：开启事务--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">aop:before</span> <span class="attr">method</span>=<span class="string">"beginTransaction"</span> <span class="attr">pointcut-ref</span>=<span class="string">"pt1"</span>&gt;</span><span class="tag">&lt;/<span class="name">aop:before</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--配置后置通知：提交事务--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">aop:after-returning</span> <span class="attr">method</span>=<span class="string">"commit"</span> <span class="attr">pointcut-ref</span>=<span class="string">"pt1"</span>&gt;</span><span class="tag">&lt;/<span class="name">aop:after-returning</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--配置异常通知：回滚事务--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">aop:after-throwing</span> <span class="attr">method</span>=<span class="string">"rollback"</span> <span class="attr">pointcut-ref</span>=<span class="string">"pt1"</span>&gt;</span><span class="tag">&lt;/<span class="name">aop:after-throwing</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--配置最终通知：释放连接--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">aop:after</span> <span class="attr">method</span>=<span class="string">"release"</span> <span class="attr">pointcut-ref</span>=<span class="string">"pt1"</span>&gt;</span><span class="tag">&lt;/<span class="name">aop:after</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">aop:aspect</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">aop:config</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="基于注解的AOP配置"><a href="#基于注解的AOP配置" class="headerlink" title="基于注解的AOP配置"></a>基于注解的AOP配置</h1><p>xml中要开启对注解的支持</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Service</span>(<span class="string">"accountService"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AccountServiceImpl</span> <span class="keyword">implements</span> <span class="title">IAccountService</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> IAccountDao accountDao;</span><br><span class="line">  </span><br><span class="line">  	<span class="comment">// ...</span></span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Repository</span>(<span class="string">"accountDao"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AccountDaoImpl</span> <span class="keyword">implements</span> <span class="title">IAccountDao</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> QueryRunner runner;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> ConnectionUtils connectionUtils;</span><br><span class="line">  </span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Component</span>(<span class="string">"connectionUtils"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConnectionUtils</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> DataSource dataSource;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Component</span>(<span class="string">"txManager"</span>)</span><br><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TransactionManager</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> ConnectionUtils connectionUtils;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Pointcut</span>(<span class="string">"execution(* com.itheima.service.impl.*.*(..))"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">pt1</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">  </span><br><span class="line">  	<span class="meta">@Around</span>(<span class="string">"pt1()"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">aroundAdvice</span><span class="params">(ProceedingJoinPoint pjp)</span></span>&#123;</span><br><span class="line">        Object rtValue = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 1.获取参数</span></span><br><span class="line">            Object[] args = pjp.getArgs();</span><br><span class="line">            <span class="comment">// 2.开启事务</span></span><br><span class="line">            <span class="keyword">this</span>.beginTransaction();</span><br><span class="line">            <span class="comment">// 3.执行方法</span></span><br><span class="line">            rtValue = pjp.proceed(args);</span><br><span class="line">            <span class="comment">// 4.提交事务</span></span><br><span class="line">            <span class="keyword">this</span>.commit();</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 返回结果</span></span><br><span class="line">            <span class="keyword">return</span>  rtValue;</span><br><span class="line"></span><br><span class="line">        &#125;<span class="keyword">catch</span> (Throwable e)&#123;</span><br><span class="line">            <span class="comment">// 5.回滚事务</span></span><br><span class="line">            <span class="keyword">this</span>.rollback();</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(e);</span><br><span class="line">        &#125;<span class="keyword">finally</span> &#123;</span><br><span class="line">            <span class="comment">// 6.释放资源</span></span><br><span class="line">            <span class="keyword">this</span>.release();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果分别在开启事务、提交事务、回滚事务、释放连接的函数上分别加@Before(“pt1()”)、@AfterReturning(“pt1()”)、@AfterThrowing(“pt1()”)、@After(“pt1()”)</p>
+<p>理论上没毛病。但是！Spring实际的执行顺序是有问题的（同 见笔记9）</p>
+<p>最终通知在后置通知之前执行了，于是根本没有提交就释放了，连接已经变成了新的连接</p>
+<p>所以不要分别用。用一个环绕通知，里面try-catch，自己控制顺序</p>
+]]></content>
+      <categories>
+        <category>Note</category>
+      </categories>
+      <tags>
+        <tag>spring</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>学习Spring的一点感想</title>
+    <url>/2020/03/19/note-spring/</url>
+    <content><![CDATA[<p>Spring学到这里，记录一点点感想</p>
+<hr>
+<p>这个教程一个经常的操作就是</p>
+<p>噼里啪啦噼里啪啦写了一大堆，然后灵魂质问：<strong>你都能写出来的东西Spring会没有吗？</strong></p>
+<p>🥶🥶🥶</p>
+<p>fine</p>
+<p>不过这种过程解释了这些设计的用意，也难怪评论很多都说这个教程是看过最好的</p>
+<p>然鹅，用Spring Boot的时候现在的这一堆也不用写啊！</p>
+<p>最初接触java web这一大趴的时候特别迷惑，Tomcat、Spring、Spring MVC、Spring Boot…一😳脸😳懵😳逼</p>
+<p>看到大多的建议是从Spring开始，不然Spring Boot能用但是不懂为什么</p>
+<p>于是学了一些Spring（估计是一个四小时版本），用的时候为了方便还是直接上了Spring Boot</p>
+<p>现在重新学一遍，没之前那么😳😳😳了，教程里说到Spring可以简化手撕代码的时候，也知道Spring Boot还能再简化一些</p>
+<p>对它们的理解也慢慢清晰了一点点，感觉就是一个不断封装、约定&gt;配置的简化过程，和计算机中许许多多的进化过程一样，都是一层一层的抽(tou)象(lan)</p>
+<hr>
+<img src="/images/2020/1949370-200.png" width=100>
+
+
+<p>说起来，春天到了呢</p>
+<p>今天湖北已经0新增了，希望能赶快开门…</p>
+<p>🦢</p>
+]]></content>
+      <categories>
+        <category>Memo</category>
+      </categories>
+      <tags>
+        <tag>spring</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Spring笔记11 Spring中的JdbcTemplate</title>
+    <url>/2020/03/19/note-spring-11/</url>
+    <content><![CDATA[<blockquote>
+<p><a href="https://www.bilibili.com/video/av47952931" target="_blank" rel="noopener">https://www.bilibili.com/video/av47952931</a></p>
+<p>p67~71</p>
+</blockquote>
+<p>持久层总图</p>
+<img src="/images/2020/20200319.jpg">
+
+<p>Spring中的JdbcTemplate</p>
+<p>作用：和数据库交互，实现对表的CRUD操作</p>
+<h1 id="JdbcTemplate与DbUtils"><a href="#JdbcTemplate与DbUtils" class="headerlink" title="JdbcTemplate与DbUtils"></a>JdbcTemplate与DbUtils</h1><p>DbUtils是Apache提供的一个对JDBC进行简单封装的开源工具类库，主要有</p>
+<ul>
+<li>org.apache.commons.dbutils.QueryRunner — 核心类，执行SQL查询以处理结果集（线程安全）</li>
+<li>org.apache.commons.dbutils.ResultSetHandler — 结果集封装器</li>
+<li>org.apache.commons.dbutils.DbUtils — 提供如加载驱动、关闭连接、事务提交、回滚等常规工作的工具类</li>
+</ul>
+<p>JdbcTemplate是Spring提供的一个对象，是对原始Jdbc API对象的简单封装，基本方法：</p>
+<ul>
+<li>execute方法</li>
+<li>update与batchUpdate方法</li>
+<li>query与queryXXX方法</li>
+<li>call方法</li>
+</ul>
+<p>DbUtils导的依赖：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--        dbutils--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>commons-dbutils<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>commons-dbutils<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.4<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--        mysql驱动--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>mysql<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mysql-connector-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>8.0.16<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--        jdbc连接池--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.mchange<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>c3p0<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.9.5.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>JdbcTemplate导的依赖：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--        JdbcTemplate--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-jdbc<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.0.2.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--        和事务相关--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-tx<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.0.2.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--        mysql驱动--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>mysql<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mysql-connector-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.1.6<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="表的实体类"><a href="#表的实体类" class="headerlink" title="表的实体类"></a>表的实体类</h1><p>实现Serializable接口</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 账户的实体类</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Account</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Integer id;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> Float money;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// get set toString</span></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="JdbcTemplate的最基本用法"><a href="#JdbcTemplate的最基本用法" class="headerlink" title="JdbcTemplate的最基本用法"></a>JdbcTemplate的最基本用法</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JdbcTemplateDemo1</span> </span>&#123;</span><br><span class="line">  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 准备数据源：spring的内置数据源</span></span><br><span class="line">        DriverManagerDataSource ds = <span class="keyword">new</span> DriverManagerDataSource();</span><br><span class="line">        ds.setDriverClassName(<span class="string">"com.mysql.jdbc.Driver"</span>);</span><br><span class="line">        ds.setUrl(<span class="string">"jdbc:mysql://localhost:3306/groot?characterEncoding=utf8"</span>);</span><br><span class="line">        ds.setUsername(<span class="string">"root"</span>);</span><br><span class="line">        ds.setPassword(<span class="string">"iamgroot"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 1.创建JdbcTemplate对象</span></span><br><span class="line">        JdbcTemplate jt = <span class="keyword">new</span> JdbcTemplate();</span><br><span class="line">        <span class="comment">// 给jt设置数据源</span></span><br><span class="line">        jt.setDataSource(ds);</span><br><span class="line">        <span class="comment">// 2.执行操作</span></span><br><span class="line">        jt.execute(<span class="string">"insert into account(name,money) values('ccc',1000)"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行，没有问题</p>
+<img src="/images/2020/screencapture2020-03-19PM3.57.43.jpg" width=200>
+
+<p>但是这样写数据库的配置都写死了，而且用了很多set、new</p>
+<p>都可以通过IoC配置</p>
+<h2 id="IoC配置"><a href="#IoC配置" class="headerlink" title="IoC配置"></a>IoC配置</h2><p>这里dataSource暂时先用Spring内置的（id=”dataSource”）</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JdbcTemplateDemo2</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 1.获取容器</span></span><br><span class="line">        ApplicationContext ac = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">"bean.xml"</span>);</span><br><span class="line">        <span class="comment">// 2.获取对象</span></span><br><span class="line">        JdbcTemplate jt = ac.getBean(<span class="string">"jdbcTemplate"</span>,JdbcTemplate<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">        <span class="comment">// 3.执行操作</span></span><br><span class="line">        jt.execute(<span class="string">"insert into account(name,money)values('ddd',2222)"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>也没问题</p>
+<img src="/images/2020/screencapture2020-03-19PM4.04.17.jpg" width=200>
+
+<h1 id="使用JdbcTemplate实现基本的CRUD"><a href="#使用JdbcTemplate实现基本的CRUD" class="headerlink" title="使用JdbcTemplate实现基本的CRUD"></a>使用JdbcTemplate实现基本的CRUD</h1><p>增删改都是update方法</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 保存</span></span><br><span class="line">jt.update(<span class="string">"insert into account(name,money)values(?,?)"</span>,<span class="string">"eee"</span>,<span class="number">3333f</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 更新</span></span><br><span class="line">jt.update(<span class="string">"update account set name=?,money=? where id=?"</span>,<span class="string">"test"</span>,<span class="number">4567</span>,<span class="number">7</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 删除</span></span><br><span class="line">jt.update(<span class="string">"delete from account where id=?"</span>,<span class="number">8</span>);</span><br></pre></td></tr></table></figure>
+
+<p>查询是query</p>
+<p>query有很多很多很多重载的方法，找的时候关注两个点：我们有什么（参数）、我们要什么（返回值）</p>
+<p>比如有sql语句、参数，要返回一个List，筛选出来基本就剩2个了，它们一个要传Object[] args，一个是Object… args，是针对不同版本的（前者所有版本可用，后者jdk5之后支持可变参数可用）</p>
+<p>第一个方法：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 查询所有</span></span><br><span class="line">List&lt;Account&gt; accounts = jt.query(<span class="string">"select * from account where money &gt; ?"</span>,<span class="keyword">new</span> AccountRowMapper(),<span class="number">1000f</span>);</span><br></pre></td></tr></table></figure>
+
+<p>需要写一个AccountRowMapper类</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 定义Account的封装策略</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AccountRowMapper</span> <span class="keyword">implements</span> <span class="title">RowMapper</span>&lt;<span class="title">Account</span>&gt; </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 把结果集中的数据封装到Account中，然后由spring把每个Account加到集合中</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> rs</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> rowNum</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> SQLException</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Account <span class="title">mapRow</span><span class="params">(ResultSet rs, <span class="keyword">int</span> rowNum)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">        Account account = <span class="keyword">new</span> Account();</span><br><span class="line">        account.setId(rs.getInt(<span class="string">"id"</span>));</span><br><span class="line">        account.setName(rs.getString(<span class="string">"name"</span>));</span><br><span class="line">        account.setMoney(rs.getFloat(<span class="string">"money"</span>));</span><br><span class="line">        <span class="keyword">return</span> account;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此时问题来了，对比dbutils中的QueryRunner</p>
+<img src="/images/2020/2020031902.png">
+
+<p>不同的只有ResultSetHandler和AccountRowMapper，从封装的角度作用是一样的</p>
+<p>以前是用的dbutils提供的beanListHandler实现的</p>
+<p>难道机智的Spring没有这个实现吗还要自己写？</p>
+<p>显然必须有 -&gt; BeanPropertyRowMapper</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 查询所有</span></span><br><span class="line"><span class="comment">// List&lt;Account&gt; accounts = jt.query("select * from account where money &gt; ?",new AccountRowMapper(),1000f);</span></span><br><span class="line">List&lt;Account&gt; accounts = jt.query(<span class="string">"select * from account where money &gt; ?"</span>,<span class="keyword">new</span> BeanPropertyRowMapper&lt;Account&gt;(Account<span class="class">.<span class="keyword">class</span>),1000<span class="title">f</span>)</span>;</span><br><span class="line"><span class="keyword">for</span>(Account account : accounts)&#123;</span><br><span class="line">  System.out.println(account);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>能查所有了，查一个也差不多（实际使用BeanPropertyRowMapper比较多）</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 查询一个</span></span><br><span class="line">List&lt;Account&gt; accounts = jt.query(<span class="string">"select * from account where id = ?"</span>,<span class="keyword">new</span> BeanPropertyRowMapper&lt;Account&gt;(Account<span class="class">.<span class="keyword">class</span>),3)</span>;</span><br><span class="line">System.out.println(accounts.isEmpty()? <span class="string">"没有内容"</span> :accounts.get(<span class="number">0</span>));</span><br></pre></td></tr></table></figure>
+
+<p>还有聚合</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 查询返回一行一列（使用聚合函数，但不加group by子句）</span></span><br><span class="line">Long count = jt.queryForObject(<span class="string">"select count(*) from account where money &gt; ?"</span>,Long<span class="class">.<span class="keyword">class</span>,1000<span class="title">f</span>)</span>;</span><br><span class="line">System.out.println(count);</span><br></pre></td></tr></table></figure>
+
+<p>第二个参数用来指定返回类型（前提是能转，为防溢出一般用Long接收）</p>
+<h1 id="JdbcTemplate在Dao中的使用"><a href="#JdbcTemplate在Dao中的使用" class="headerlink" title="JdbcTemplate在Dao中的使用"></a>JdbcTemplate在Dao中的使用</h1><p>写一个IAccountDao接口，实现类中用上面的方法完成功能即可</p>
+<h2 id="JdbcDaoSupport的使用"><a href="#JdbcDaoSupport的使用" class="headerlink" title="JdbcDaoSupport的使用"></a>JdbcDaoSupport的使用</h2><p>有一个问题是，如果实际开发中有多个Dao，每个实现类中都要获取JdbcTemplate</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> JdbcTemplate jdbcTemplate;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setJdbcTemplate</span><span class="params">(JdbcTemplate jdbcTemplate)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.jdbcTemplate = jdbcTemplate;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这段代码会重复很多次</p>
+<p>可以写一个JdbcDaoSupport类用于抽取这段重复代码</p>
+<p>其它DaoImp继承这个类，get其中的jdbcTemplate，dataSource也在其中设置好</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 此类用于抽取dao中的重复代码</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JdbcDaoSupport</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> JdbcTemplate jdbcTemplate;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setJdbcTemplate</span><span class="params">(JdbcTemplate jdbcTemplate)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.jdbcTemplate = jdbcTemplate;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> JdbcTemplate <span class="title">getJdbcTemplate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> jdbcTemplate;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setDataSource</span><span class="params">(DataSource dataSource)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(jdbcTemplate == <span class="keyword">null</span>)&#123;</span><br><span class="line">            jdbcTemplate = createJdbcTemplate(dataSource);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> JdbcTemplate <span class="title">createJdbcTemplate</span><span class="params">(DataSource dataSource)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> JdbcTemplate(dataSource);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>显然，setDataSource的时候JdbcTemplate也有了</p>
+<p>于是配置的时候就不用配JdbcTemplate了</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 配置账户的持久层--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"accountDao"</span> <span class="attr">class</span>=<span class="string">"com.itheima.dao.impl.AccountDaoImpl"</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!--        &lt;property name="jdbcTemplate" ref="jdbcTemplate"&gt;&lt;/property&gt;--&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"dataSource"</span> <span class="attr">ref</span>=<span class="string">"dataSource"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--配置JdbcTemplate--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--    &lt;bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate"&gt;--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--        &lt;property name="dataSource" ref="dataSource"&gt;&lt;/property&gt;--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--    &lt;/bean&gt;--&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>那么问题又来了</p>
+<p>自己都能写出来的东西Spring显然必须有</p>
+<p>把这个自己写的JdbcDaoSupport注释掉，还能跑，为啥呢</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.jdbc.core.support.JdbcDaoSupport;</span><br></pre></td></tr></table></figure>
+
+<p>自动导入了Spring的JdbcDaoSupport</p>
+<p>打开这个类看一下，就有JdbcTemplate，有setDataSource方法，有上面一堆</p>
+<p>所以不需要自己写，继承就完事</p>
+<p>继承它的目的就是在有多个Dao时去除重复代码</p>
+<p>但是由于源码不能动，就不好通过注解配置了，自己写和直接继承的区别就在于这里，需要权衡</p>
+]]></content>
+      <categories>
+        <category>Note</category>
+      </categories>
+      <tags>
+        <tag>spring</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>记录那些让我心动的设计</title>
+    <url>/2020/03/18/aha/</url>
+    <content><![CDATA[<h1 id="Trello的列表完成最后一个时会扭动～还有不同的摇摆方式！"><a href="#Trello的列表完成最后一个时会扭动～还有不同的摇摆方式！" class="headerlink" title="Trello的列表完成最后一个时会扭动～还有不同的摇摆方式！"></a>Trello的列表完成最后一个时会扭动～还有不同的摇摆方式！</h1><img src="/images/2020/Mar-18-2020 22-56-56.gif" width=400>
+<img src="/images/2020/Mar-18-2020 22-56-19.gif" width=400>
+<img src="/images/2020/Mar-18-2020 22-57-26.gif" width=400>
+啊Trello我的❤️！
+
+<h1 id="企鹅岛里的企鹅会把花田里的花叼出来种～戳它会摔倒"><a href="#企鹅岛里的企鹅会把花田里的花叼出来种～戳它会摔倒" class="headerlink" title="企鹅岛里的企鹅会把花田里的花叼出来种～戳它会摔倒~"></a>企鹅岛里的企鹅会把花田里的花叼出来种～戳它会摔倒~</h1><img src="/images/2020/20200318_233535.gif" width=300>
+天呐我需要一个高清的录屏app --MARK--]]></content>
+      <categories>
+        <category>Resource</category>
+      </categories>
+      <tags>
+        <tag>aha</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Vue笔记07 总结</title>
     <url>/2020/03/17/note-vue-07/</url>
     <content><![CDATA[<p>这个教程6p学完了～总结一下这个图书增删改查的demo</p>
@@ -702,13 +995,22 @@
 <h2 id="-4"><a href="#-4" class="headerlink" title=""></a><a href="https://www.webdesignrankings.com/resources/lolcolors/" title="" target="">LOLCOLORS</a></h2><p>水滴形的配色<br><img src="/images/2020/2020-03-10.9.13.18.jpg"></p>
 <h2 id="-5"><a href="#-5" class="headerlink" title=""></a><a href="https://color.adobe.com/zh/create/color-wheel/" title="" target="">色轮</a></h2><p>adobe出品，不会用，但是很好玩<br><img src="/images/2020/2020-03-10.9.10.41.jpg"></p>
 <h2 id="-6"><a href="#-6" class="headerlink" title=""></a><a href="https://color.hailpixel.com/" title="" target="">Colordot</a></h2><p>这个也很有趣！挪动光标调色，点击固定<br><img src="/images/2020/2020-03-10.9.15.21.jpg"><br><img src="/images/2020/2020-03-10.9.17.15.jpg"></p>
-<h1 id="图标"><a href="#图标" class="headerlink" title="图标"></a>图标</h1><h2 id="-7"><a href="#-7" class="headerlink" title=""></a><a href="https://thenounproject.com/" title="" target="">thenounproject</a></h2><p>常用的图标网站<br><img src="/images/2020/2020-03-10.9.22.23.jpg"></p>
+<h1 id="图标"><a href="#图标" class="headerlink" title="图标"></a>图标</h1><h2 id="-7"><a href="#-7" class="headerlink" title=""></a><a href="https://thenounproject.com/" title="" target="">thenounproject</a></h2><p>常用的图标网站</p>
+<img src="/images/2020/2020-03-10.9.22.23.jpg">
+
+
+
+<h1 id="设计"><a href="#设计" class="headerlink" title="设计"></a>设计</h1><h2 id="-8"><a href="#-8" class="headerlink" title=""></a><a href="https://dribbble.com/" title="" target="">dribbble</a></h2><img src="/images/2020/screencapture2020-03-18PM11.47.55.jpg">
+
+<h2 id="-9"><a href="#-9" class="headerlink" title=""></a><a href="https://tympanus.net/codrops/" title="" target="">codrops</a></h2><p>发现酷炫的页面</p>
+<img src="/images/2020/screencapture2020-03-18PM11.49.26.jpg">
+
 ]]></content>
       <categories>
         <category>Resource</category>
       </categories>
       <tags>
-        <tag>tool</tag>
+        <tag>aha</tag>
       </tags>
   </entry>
   <entry>
@@ -1259,10 +1561,10 @@ Process finished with exit code 0</code></pre>]]></content>
 <h1 id="三层架构与MVC的区别与联系"><a href="#三层架构与MVC的区别与联系" class="headerlink" title="三层架构与MVC的区别与联系"></a>三层架构与MVC的区别与联系</h1><h4 id="1-关注点"><a href="#1-关注点" class="headerlink" title="1. 关注点"></a>1. 关注点</h4><ul>
 <li>三层架构是为了解决整个应用程序中各个业务操作过程中的==不同阶段的代码封装==问题，使程序员更加专注的处理某阶段的业务逻辑</li>
 <li>MVC架构模式将应用程序分为三个主要组成部分，有助于实现关注点分离。分离关注点是开发时的指导原则，此原则主张应根据==软件执行的工作类型==将软件分离<h4 id="2-切分方向"><a href="#2-切分方向" class="headerlink" title="2. 切分方向"></a>2. 切分方向</h4></li>
-<li>三层架构是一种软件抽象的层次结构，是对复杂系统的一种==纵向切分==</li>
-<li>MVC更像是==横向切分==，每块都可以独立测试<h4 id="3-依赖关系"><a href="#3-依赖关系" class="headerlink" title="3. 依赖关系"></a>3. 依赖关系</h4></li>
-<li>三层架构中，层次之间一般是==向下依赖==的。下层在未确定接口（契约）规范前，上层代码无法开发，下层代码接口的变化将使上层一起变化</li>
-<li>MVC中，三者并==不存在明显的层次结构==，没有明显的向下依赖的关系。相反的是View和Model往往是比较独立的，而Controller则是两者的桥梁</li>
+<li>三层架构是一种软件抽象的层次结构，是对复杂系统的一种<strong>纵向切分</strong></li>
+<li>MVC更像是<strong>横向切分</strong>，每块都可以独立测试<h4 id="3-依赖关系"><a href="#3-依赖关系" class="headerlink" title="3. 依赖关系"></a>3. 依赖关系</h4></li>
+<li>三层架构中，层次之间一般是<strong>向下依赖</strong>的。下层在未确定接口（契约）规范前，上层代码无法开发，下层代码接口的变化将使上层一起变化</li>
+<li>MVC中，三者并<strong>不存在明显的层次结构</strong>，没有明显的向下依赖的关系。相反的是View和Model往往是比较独立的，而Controller则是两者的桥梁</li>
 </ul>
 <p><strong>都是为了解耦</strong></p>
 <hr>
@@ -1342,7 +1644,7 @@ Process finished with exit code 0</code></pre>]]></content>
 <p><strong>JavaBean</strong> —— 用java语言编写的可重用组件</p>
 <p><strong>BeanFactory</strong> —— 创建Bean对象的工厂<br>eg：创建Dao和Service对象</p>
 <p>要实现这个工厂，类似前面jdbc，</p>
-<p>1.需要一个==配置文件==来配置service和dao<br>内容：唯一标识=全限定类名（key=value)<br>配置文件可以是xml也可以是properties</p>
+<p>1.需要一个<strong>配置文件</strong>来配置service和dao<br>内容：唯一标识=全限定类名（key=value)<br>配置文件可以是xml也可以是properties</p>
 <p>2.读取配置文件中配置的内容，通过==反射==创建对象</p>
 <h2 id="工厂模式解耦"><a href="#工厂模式解耦" class="headerlink" title="工厂模式解耦"></a>工厂模式解耦</h2><p>在resources中新建beans.properties配置文件（此处用properties因为简单，Spring中用的是xml）</p>
 <figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">accountService</span> = <span class="string">com.itheima.service.impl.AccountServiceImpl</span></span><br><span class="line"><span class="attr">accountDao</span> = <span class="string">com.itheima.dao.impl.AccountDaoImpl</span></span><br></pre></td></tr></table></figure>
@@ -1538,7 +1840,6 @@ Process finished with exit code 0</code></pre>]]></content>
         <category>Note</category>
       </categories>
       <tags>
-        <tag>idea</tag>
         <tag>tool</tag>
       </tags>
   </entry>
