@@ -6,7 +6,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-    Spring笔记02 Idea运行示例项目的坑 |  CoCoNutNut&#39;s NoteBook
+    买卖股票的最佳时机问题 |  CoCoNutNut&#39;s NoteBook
   </title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   
@@ -31,7 +31,7 @@
   <div id="app">
     <main class="content">
       <section class="outer">
-  <article id="post-note-spring-02" class="article article-type-post" itemscope
+  <article id="post-exercise" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
   <div class="article-inner">
@@ -39,7 +39,7 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  Spring笔记02 Idea运行示例项目的坑
+  买卖股票的最佳时机问题
 </h1>
   
 
@@ -48,12 +48,12 @@
 
     
     <div class="article-meta">
-      <a href="/2020/02/24/note-spring-02/" class="article-date">
-  <time datetime="2020-02-24T09:25:11.000Z" itemprop="datePublished">2020-02-24</time>
+      <a href="/2020/02/29/exercise/" class="article-date">
+  <time datetime="2020-02-29T04:51:30.000Z" itemprop="datePublished">2020-02-29</time>
 </a>
       
   <div class="article-category">
-    <a class="article-category-link" href="/categories/Note/">Note</a>
+    <a class="article-category-link" href="/categories/Exercise/">Exercise</a>
   </div>
 
       
@@ -76,36 +76,23 @@
       
 
       
-      <p>表建好之后，Idea里面直接打开示例工程跑不起来，mysql的依赖有问题</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Exception in thread &quot;main&quot; java.lang.ClassNotFoundException: com.mysql.jdbc.Driver</span><br></pre></td></tr></table></figure>
-<p>对比发现Maven路径不对</p>
-<p>这是自己创建的可以运行的Maven项目配置<br><img src="/images/2020/20200224170149695.png" alt="img"></p>
-<p>这是导入工程的配置<br><img src="/images/2020/20200224170322871.png" alt="img"></p>
-<p>修改路径</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;usr&#x2F;local&#x2F;Cellar&#x2F;maven&#x2F;3.6.2&#x2F;libexec</span><br><span class="line">&#x2F;Users&#x2F;coconutnut&#x2F;.m2&#x2F;settings.xml</span><br><span class="line">&#x2F;Users&#x2F;coconutnut&#x2F;.m2&#x2F;repository</span><br></pre></td></tr></table></figure>
-<p>解决Driver问题</p>
+      <p>思路：动态规划</p>
+<p>dp[ i ][ j ][ k ]<br>i - 到第 i 天<br>j - 最多交易 j 次<br>k - 0:当前持股 / 1:当前不持股</p>
+<p>状态转移方程</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 第i天，最多交易j次，当前不持股</span><br><span class="line">dp[i][j][0] &#x3D; MAX&#123;</span><br><span class="line">	dp[i-1][j][0],                 &#x2F;&#x2F; 本次不持-上次就不持</span><br><span class="line">	dp[i-1][j-1][1] + 差价          &#x2F;&#x2F; 本次不持-本次卖</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F; 第i天，最多交易j次，当前持股</span><br><span class="line">dp[i][j][1] &#x3D; MAX&#123;</span><br><span class="line">	dp[i-1][j][0],                &#x2F;&#x2F; 本次持-本次买</span><br><span class="line">	dp[i-1][j][1] + 差价           &#x2F;&#x2F; 本次持-上次就持</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>实现</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getdp</span><span class="params">(<span class="keyword">int</span> i,<span class="keyword">int</span> j,<span class="keyword">int</span> k,<span class="keyword">int</span>[][][] dp,<span class="keyword">int</span>[] prices)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(dp[i][j][k]==-<span class="number">1</span>)&#123;</span><br><span class="line">		<span class="keyword">if</span>(i&lt;<span class="number">1</span>)&#123;</span><br><span class="line">			dp[i][j][<span class="number">0</span>]=<span class="number">0</span>;</span><br><span class="line">			dp[i][j][<span class="number">1</span>]=<span class="number">0</span>;</span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			<span class="comment">// 本次不持-上次就不持</span></span><br><span class="line">			<span class="keyword">int</span> dp1 = getdp(i-<span class="number">1</span>,j,<span class="number">0</span>,dp,prices);</span><br><span class="line">			<span class="comment">// 本次不持-本次卖</span></span><br><span class="line">			<span class="keyword">int</span> dp2 = j&gt;<span class="number">0</span> ? getdp(i-<span class="number">1</span>,j-<span class="number">1</span>,<span class="number">1</span>,dp,prices)+prices[i]-prices[i-<span class="number">1</span>] : <span class="number">0</span>;</span><br><span class="line">			dp[i][j][<span class="number">0</span>] = Math.max(dp1,dp2);</span><br><span class="line">           </span><br><span class="line">			<span class="comment">// 本次持-本次买</span></span><br><span class="line">			<span class="keyword">int</span> dp3 = getdp(i-<span class="number">1</span>,j,<span class="number">0</span>,dp,prices);</span><br><span class="line">			<span class="comment">// 本次持-上次就持</span></span><br><span class="line">			<span class="keyword">int</span> dp4 = getdp(i-<span class="number">1</span>,j,<span class="number">1</span>,dp,prices)+prices[i]-prices[i-<span class="number">1</span>];</span><br><span class="line">			dp[i][j][<span class="number">1</span>] = Math.max(dp3,dp4);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">	<span class="keyword">return</span> dp[i][j][k];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>坑：当k很大时，内存会爆，此时相当于不限制交易次数，直接用贪心解决</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxProfit</span><span class="params">(<span class="keyword">int</span> k, <span class="keyword">int</span>[] prices)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(prices.length&lt;<span class="number">2</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(k &gt; prices.length/<span class="number">2</span>)&#123;</span><br><span class="line">            <span class="comment">// 相当于不限制次数，贪心</span></span><br><span class="line">            <span class="keyword">int</span> value = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;prices.length;i++)&#123;</span><br><span class="line">                value += prices[i]&gt;prices[i-<span class="number">1</span>] ? prices[i]-prices[i-<span class="number">1</span>] : <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> value;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span>[][][] dp = <span class="keyword">new</span> <span class="keyword">int</span>[prices.length][k+<span class="number">1</span>][<span class="number">2</span>];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;prices.length;i++)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;k+<span class="number">1</span>;j++)&#123;</span><br><span class="line">                Arrays.fill(dp[i][j],-<span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> getdp(prices.length-<span class="number">1</span>,k,<span class="number">0</span>,dp,prices);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getdp</span><span class="params">(<span class="keyword">int</span> i,<span class="keyword">int</span> j,<span class="keyword">int</span> k,<span class="keyword">int</span>[][][] dp,<span class="keyword">int</span>[] prices)</span></span>&#123;...&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <hr>
-<p>下一个bug<br>Idea中点运行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MySQLNonTransientConnectionException: Client does not support authentication protocol requested by server</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p><a href="https://www.cnblogs.com/inconceivable/p/9186822.html" target="_blank" rel="noopener">https://www.cnblogs.com/inconceivable/p/9186822.html</a></p>
-</blockquote>
-<p>在MySQL Workbench中输入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">USE mysql;</span><br><span class="line">ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED WITH mysql_native_password BY &#39;iamgroot&#39;;</span><br><span class="line">FLUSH PRIVILEGES;</span><br></pre></td></tr></table></figure>
-<p>Idea中提示变成了</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Exception in thread &quot;main&quot; java.sql.SQLException: Unknown initial character set index &#39;255&#39; received from server. Initial client character set can be forced via the &#39;characterEncoding&#39; property.</span><br><span class="line">	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:1055)</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p><a href="https://blog.csdn.net/qq1515312832/article/details/85614733" target="_blank" rel="noopener">https://blog.csdn.net/qq1515312832/article/details/85614733</a></p>
-</blockquote>
-<p>在连接数据库的url后加上编码方式</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Connection conn = DriverManager.getConnection(<span class="string">"jdbc:mysql://localhost:3306/groot?useUnicode=true&amp;characterEncoding=utf8"</span>,<span class="string">"root"</span>,<span class="string">"iamgroot"</span>);</span><br></pre></td></tr></table></figure>
-<p>成功</p>
-<hr>
-<p>总结：</p>
-<ol>
-<li>修改Preference-&gt;Build, Execution, Deployment-&gt;Build Tools-&gt;Maven中路径</li>
-<li>在连接数据库的url后加上编码方式</li>
-</ol>
+<p>用这一套解法干掉4题</p>
+<p>Leetcode 121 买卖股票的最佳时机 —— 最多交易1次<br>令 k = 1</p>
+<p>Leetcode 122 买卖股票的最佳时机 II —— 不限次数<br>直接贪心</p>
+<p>Leetcode 123 买卖股票的最佳时机 III —— 最多交易2次<br>令 k = 2</p>
+<p>Leetcode 188 买卖股票的最佳时机 IV —— 最多交易k次</p>
 
       
       <!-- reward -->
@@ -118,7 +105,7 @@
     <footer class="article-footer">
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spring/" rel="tag">spring</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/" rel="tag">algorithm</a></li></ul>
 
 
     </footer>
@@ -129,19 +116,19 @@
   
   <nav class="article-nav">
     
-      <a href="/2020/02/24/note-spring-03/" class="article-nav-link">
+      <a href="/2020/03/04/note-spring-06/" class="article-nav-link">
         <strong class="article-nav-caption">上一篇</strong>
         <div class="article-nav-title">
           
-            Spring笔记03 工厂模式
+            Spring笔记06 基于xml的IoC案例（实现CRUD）
           
         </div>
       </a>
     
     
-      <a href="/2020/02/24/note-spring-01/" class="article-nav-link">
+      <a href="/2020/02/28/note-spring-05/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">Spring笔记01 jdbc常用操作</div>
+        <div class="article-nav-title">Spring笔记05 IoC</div>
       </a>
     
   </nav>
