@@ -79,7 +79,7 @@
 
       
       <blockquote>
-<p><a href="https://www.bilibili.com/video/av47952553" target="_blank" rel="noopener">https://www.bilibili.com/video/av47952553</a><br>p21～27</p>
+<p><a href="https://www.bilibili.com/video/av47952553" target="_blank" rel="noopener">https://www.bilibili.com/video/av47952553</a><br>p21～27, 44</p>
 </blockquote>
 <h1 id="用户的持久层接口"><a href="#用户的持久层接口" class="headerlink" title="用户的持久层接口"></a>用户的持久层接口</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IUserDao</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 增</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">saveUser</span><span class="params">(User user)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 删</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">deleteUser</span><span class="params">(Integer userId)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 改</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">updateUser</span><span class="params">(User user)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 查</span></span><br><span class="line">    <span class="function">List&lt;User&gt; <span class="title">findAll</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function">User <span class="title">findById</span><span class="params">(Integer userId)</span></span>;</span><br><span class="line">    <span class="function">List&lt;User&gt; <span class="title">findByName</span><span class="params">(String username)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">findTotal</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -114,6 +114,19 @@
 </li>
 </ol>
 <p>前者用的是PrepareStatement的参数占位符（更好），而后者用的是字符串拼接</p>
+<h1 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h1><p>MyBatis通过sqlsession对象的commit和rollback方法实现事务的提交和回滚</p>
+<p>最终用到的都是connection.commit()和connection.rollback()</p>
+<p><strong>自动提交</strong></p>
+<p>创建SqlSession时可以设置自动提交</p>
+<img src="/images/2020/screencapture2020-03-30AM10.53.57.jpg">
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlSession = factory.openSession(<span class="keyword">true</span>);</span><br></pre></td></tr></table></figure>
+
+<p>这样后面就不用手动提交了</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// sqlSession.commit();</span></span><br></pre></td></tr></table></figure>
+
+<p>但是实际上能这样用不多</p>
+<p>如转账操作，还是需要手动控制提交时间</p>
 
       
       <!-- reward -->
@@ -180,7 +193,7 @@
   <i>PV:<span id="busuanzi_value_page_pv"></span></i>
   <i>UV:<span id="busuanzi_value_site_uv"></span></i>
 </span>
-        136k
+        145k
         
       </li>
       <li>
