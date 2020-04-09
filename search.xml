@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>SpringCloud笔记02 Ribbon服务消费者</title>
+    <title>SpringCloud笔记02 Ribbon负载均衡</title>
     <url>/2020/04/09/note-springcloud-02/</url>
     <content><![CDATA[<blockquote>
 <p><a href="https://blog.csdn.net/ThinkWon/article/details/103729080" target="_blank" rel="noopener">https://blog.csdn.net/ThinkWon/article/details/103729080</a></p>
@@ -228,7 +228,7 @@
       </tags>
   </entry>
   <entry>
-    <title>SpringCloud笔记01 Eureka服务注册与发现</title>
+    <title>SpringCloud笔记01 Eureka注册中心</title>
     <url>/2020/04/08/note-springcloud-01/</url>
     <content><![CDATA[<blockquote>
 <p><a href="https://blog.csdn.net/ThinkWon/article/details/103726655" target="_blank" rel="noopener">https://blog.csdn.net/ThinkWon/article/details/103726655</a></p>
