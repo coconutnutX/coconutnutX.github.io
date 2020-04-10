@@ -37,6 +37,14 @@
 <ol start="2">
 <li>调用接口进行测试</li>
 </ol>
+<img src="/images/2020/screencapture2020-04-10 AM10.28.54.jpg">
+
+<p>8201</p>
+<img src="/images/2020/screencapture2020-04-10 AM10.32.24.jpg">
+
+<p>8202</p>
+<img src="/images/2020/screencapture2020-04-10 AM10.32.33.jpg">
+
 <h2 id="DEBUG：运行后没有注册"><a href="#DEBUG：运行后没有注册" class="headerlink" title="DEBUG：运行后没有注册"></a>DEBUG：运行后没有注册</h2><p>启动几个服务后</p>
 <img src="/images/2020/screencapture2020-04-09 PM7.59.13.jpg">
 
@@ -157,7 +165,7 @@
 </blockquote>
 <p>…</p>
 <p>试一下重新创建</p>
-<img src="/images/2020/screencapture2020-04-09 PM10.00.26.jpg">
+<img src="/images/2020/screencapture2020-04-09 PM10.00.26.jpg" width=400>
 
 <p>就没有冲突了</p>
 <p>运行</p>
@@ -211,14 +219,63 @@
 <p>…</p>
 <p>试试源码能不能跑</p>
 <p>漫长的下载依赖</p>
-<p>下次继续</p>
-<p>–TODO–</p>
+<p><strong>第二天</strong></p>
+<p>运行源码</p>
+<img src="/images/2020/screencapture2020-04-10 AM10.05.19.jpg">
+
+<img src="/images/2020/screencapture2020-04-10 AM10.05.28.jpg">
+
+<p>没有问题</p>
+<p>而且Maven一个都没红</p>
+<img src="/images/2020/screencapture2020-04-10 AM10.06.09.jpg" width=300>
+
+<p>对比一下依赖版本</p>
+<p>源码eureka-server</p>
+<img src="/images/2020/screencapture2020-04-10 AM10.08.50.jpg">
+
+<p>项目eureka-server</p>
+<img src="/images/2020/screencapture2020-04-10 AM10.08.58.jpg">
+
+<p>spring-cloud-starter-netflix-eureka-server版本不一样</p>
+<p>diff一下pom文件</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">8c8</span><br><span class="line">&lt;         &lt;version&gt;2.2.2.RELEASE&lt;&#x2F;version&gt;</span><br><span class="line">---</span><br><span class="line">&gt;         &lt;version&gt;2.2.6.RELEASE&lt;&#x2F;version&gt;</span><br><span class="line">11c11</span><br><span class="line">&lt;     &lt;groupId&gt;com.jourwon.springcloud&lt;&#x2F;groupId&gt;</span><br><span class="line">---</span><br><span class="line">&gt;     &lt;groupId&gt;com.coconutnut&lt;&#x2F;groupId&gt;</span><br><span class="line">19c19</span><br><span class="line">&lt;         &lt;spring-cloud.version&gt;Hoxton.RELEASE&lt;&#x2F;spring-cloud.version&gt;</span><br><span class="line">---</span><br><span class="line">&gt;         &lt;spring-cloud.version&gt;Hoxton.SR3&lt;&#x2F;spring-cloud.version&gt;</span><br></pre></td></tr></table></figure>
+
+<p>一个是spring-boot-starter-parent的版本不一样</p>
+<p>一个是spring-cloud的版本不一样</p>
+<p>修改spring-cloud的版本，Maven的冲突就没有了</p>
+<p>于是把其它pom的版本也改了</p>
+<p>spring-boot-starter-parent的版本暂时没改，保持最新</p>
+<img src="/images/2020/screencapture2020-04-10 AM10.22.11.jpg">
+
+<p>启动</p>
+<img src="/images/2020/screencapture2020-04-10 AM10.22.23.jpg">
+
+<p>注册上了</p>
+<img src="/images/2020/screencapture2020-04-10 AM10.22.18.jpg">
+
+<p>又崩了</p>
+<p>但是这次控制台没有Error了</p>
+<p>错误信息变成了</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">There was an unexpected error (type&#x3D;Internal Server Error, status&#x3D;500).</span><br><span class="line">No instances available for user-service</span><br></pre></td></tr></table></figure>
+
+<p>单独访问<a href="http://localhost:8201/user/1或者http://localhost:8202/user/1都是可以的" target="_blank" rel="noopener">http://localhost:8201/user/1或者http://localhost:8202/user/1都是可以的</a></p>
+<blockquote>
+<p><a href="https://blog.csdn.net/choice_of_door/article/details/85467105" target="_blank" rel="noopener">https://blog.csdn.net/choice_of_door/article/details/85467105</a></p>
+</blockquote>
+<p>按照这个加了个依赖</p>
+<p>（源码里并没有 但是可以正常运行，为什么呢？-MARK- ）</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.netflix.ribbon<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>ribbon-eureka<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>成功了！</p>
+<p>嗷！</p>
 <h2 id="问题总结"><a href="#问题总结" class="headerlink" title="问题总结"></a>问题总结</h2><p><strong>Eureka注册不上的坑</strong></p>
 <p>创建Module时，使用Spring Initializer导入依赖（Eureka Discovery Client），可以运行</p>
 <p>如果不导入，后面自己在pom.xml中添加，没有版本号会无法解析，要手动添加版本号</p>
 <p>但是！</p>
 <p>这样导入的依赖会有很多冲突，又有一堆毛病</p>
 <p>所以最好<strong>一开始就用Spring Initializer导入依赖！！！</strong></p>
+<p><strong>版本导致的一堆问题</strong></p>
+<p>检查右侧Maven栏有没有红色波浪线，根据源码版本解决冲突</p>
 ]]></content>
       <categories>
         <category>Note</category>
@@ -1461,14 +1518,14 @@
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IAccountDao</span> </span>&#123;</span><br><span class="line">  </span><br><span class="line">  	<span class="comment">// 查询所有账户，同时还要获取到当前账户的所属用户信息</span></span><br><span class="line">    <span class="function">List&lt;Account&gt; <span class="title">findAll</span><span class="params">()</span></span>;</span><br><span class="line">  </span><br><span class="line">  	<span class="comment">// 查询所有账户，并且带有用户名称和地址信息</span></span><br><span class="line">    <span class="function">List&lt;AccountUser&gt; <span class="title">findAllAccount</span><span class="params">()</span></span>;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h1 id="一对一查询"><a href="#一对一查询" class="headerlink" title="一对一查询"></a>一对一查询</h1><p>查询所有账户，和账户对应的用户信息</p>
-<h3 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h3><p>新建一个AccountUser类，保存用户信息</p>
+<h2 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h2><p>新建一个AccountUser类，保存用户信息</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AccountUser</span> <span class="keyword">extends</span> <span class="title">Account</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String username;</span><br><span class="line">    <span class="keyword">private</span> String address;</span><br><span class="line"></span><br><span class="line">  	<span class="comment">// get set ...</span></span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>IAccountDao.xml中</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"findAllAccount"</span> <span class="attr">resultType</span>=<span class="string">"accountuser"</span>&gt;</span></span><br><span class="line">  select a.*,u.username,u.address from account a , user u where u.id = a.uid;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>这种写一个子类的方式实际用得不多</p>
-<h3 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h3><p>更常用 -&gt; Account中User对象引用</p>
+<h2 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h2><p>更常用 -&gt; Account中User对象引用</p>
 <p>配置IAccountDao.xml时使用association标签</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 定义封装account和user的resultMap --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">"accountUserMap"</span> <span class="attr">type</span>=<span class="string">"account"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">"id"</span> <span class="attr">column</span>=<span class="string">"aid"</span>&gt;</span><span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">"uid"</span> <span class="attr">column</span>=<span class="string">"uid"</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">"money"</span> <span class="attr">column</span>=<span class="string">"money"</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 一对一的关系映射：配置封装user的内容--&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">association</span> <span class="attr">property</span>=<span class="string">"user"</span> <span class="attr">column</span>=<span class="string">"uid"</span> <span class="attr">javaType</span>=<span class="string">"user"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">"id"</span> <span class="attr">column</span>=<span class="string">"id"</span>&gt;</span><span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">"username"</span> <span class="attr">property</span>=<span class="string">"username"</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">"address"</span> <span class="attr">property</span>=<span class="string">"address"</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">"sex"</span> <span class="attr">property</span>=<span class="string">"sex"</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">"birthday"</span> <span class="attr">property</span>=<span class="string">"birthday"</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">association</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 查询所有 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"findAll"</span> <span class="attr">resultMap</span>=<span class="string">"accountUserMap"</span>&gt;</span></span><br><span class="line">  select u.*,a.id as aid,a.uid,a.money from account a , user u where u.id = a.uid;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
@@ -1978,7 +2035,7 @@
 <p>对于大型项目，应用程序的启动时间将被大大缩减</p>
 <h1 id="JetBrains-Kotlin-语言支持"><a href="#JetBrains-Kotlin-语言支持" class="headerlink" title="JetBrains Kotlin 语言支持"></a>JetBrains Kotlin 语言支持</h1><h1 id="响应式编程风格"><a href="#响应式编程风格" class="headerlink" title="响应式编程风格"></a>响应式编程风格</h1><p>响应式堆栈 WEB 框架</p>
 <p>这个堆栈完全的响应式且非阻塞，适合于事件循环风格的处理，可以进行少量线程的扩展</p>
-<p>（有一个响应式编程实战示例，建议学完Spring Boot之后搭建  –MARK–）</p>
+<p>（有一个响应式编程实战示例，建议学完Spring Boot之后搭建  -MARK- ）</p>
 <h1 id="Junit5-支持"><a href="#Junit5-支持" class="headerlink" title="Junit5 支持"></a>Junit5 支持</h1>]]></content>
       <categories>
         <category>Note</category>
@@ -2228,7 +2285,7 @@
 啊Trello我的❤️！
 
 <h1 id="企鹅岛里的企鹅会把花田里的花叼出来种～"><a href="#企鹅岛里的企鹅会把花田里的花叼出来种～" class="headerlink" title="企鹅岛里的企鹅会把花田里的花叼出来种～"></a>企鹅岛里的企鹅会把花田里的花叼出来种～</h1><img src="/images/2020/20200318_233535.gif" width=300>
-天呐我需要一个高清的录屏app --MARK--]]></content>
+天呐我需要一个高清的录屏app -MARK-]]></content>
       <categories>
         <category>Memo</category>
       </categories>
