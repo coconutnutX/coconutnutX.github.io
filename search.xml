@@ -1,6 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>SpringCloud笔记03 Hystrix断路器</title>
+    <url>/2020/04/12/note-springcloud-03/</url>
+    <content><![CDATA[<blockquote>
+<p><a href="https://blog.csdn.net/ThinkWon/article/details/103732497" target="_blank" rel="noopener">https://blog.csdn.net/ThinkWon/article/details/103732497</a></p>
+</blockquote>
+<p>Hystrix功能：服务降级、服务熔断、线程隔离、请求缓存、请求合并、服务监控等</p>
+<h1 id="创建一个hystrix-service模块"><a href="#创建一个hystrix-service模块" class="headerlink" title="创建一个hystrix-service模块"></a>创建一个hystrix-service模块</h1><p>经过前面一系列扎心操作，这次创建的时候没有用Spring Initializer加依赖，直接改的pom.xml并修改版本</p>
+<p>@EnableCircuitBreaker开启断路器功能</p>
+<p>pom中还要加一个依赖</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">&lt;groupId&gt;cn.hutool&lt;&#x2F;groupId&gt;</span><br><span class="line">&lt;artifactId&gt;hutool-all&lt;&#x2F;artifactId&gt;</span><br><span class="line">&lt;version&gt;5.1.0&lt;&#x2F;version&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<p>这个模块也添加了Ribbon的负载均衡功能</p>
+<p>但是pom中并没有配置这个依赖</p>
+<p>看了下依赖图发现是eureka-client依赖的</p>
+<img src="/images/2020/screencapture2020-04-12 PM4.24.37.jpg">
+
+<h2 id="服务降级"><a href="#服务降级" class="headerlink" title="服务降级"></a>服务降级</h2><p>在UserHystrixController中添加用于测试服务降级的接口</p>
+<p>在UserService中添加调用方法与服务降级方法，并添加@HystrixCommand注解</p>
+<p>启动eureka-server、user-service、hystrix-service服务</p>
+<img src="/images/2020/screencapture2020-04-12 PM5.16.10.jpg">
+
+<p>关闭user-service服务重新测试该接口</p>
+<img src="/images/2020/screencapture2020-04-12 PM5.16.42.jpg">
+
+<p>后面测试忽略某些异常降级、缓存、请求合并表现均和教程一样</p>
+<img src="/images/2020/screencapture2020-04-12 PM5.35.06.jpg">
+
+<h2 id="DEBUG：调用服务失败"><a href="#DEBUG：调用服务失败" class="headerlink" title="DEBUG：调用服务失败"></a>DEBUG：调用服务失败</h2><p>启动后注册中心</p>
+<img src="/images/2020/screencapture2020-04-12 PM4.31.04.jpg">
+
+<p>调用测试方法后</p>
+<img src="/images/2020/screencapture2020-04-12 PM4.31.10.jpg">
+
+<p>直接失败了？</p>
+<p>试试原服务地址</p>
+<img src="/images/2020/screencapture2020-04-12 PM4.32.40.jpg">
+
+<p>没问题</p>
+<p>这个bug似曾相识</p>
+<p>上次在ribbon-service中添加了依赖</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.netflix.ribbon<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>ribbon-eureka<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>hystrix-service中也加一个试试</p>
+<p>注册中心多了警告</p>
+<img src="/images/2020/screencapture2020-04-12 PM4.35.28.jpg">
+
+<p>运行*2</p>
+<p>还是失败了</p>
+<p>看下Maven</p>
+<img src="/images/2020/screencapture2020-04-12 PM4.43.25.jpg">
+
+<p>加个版本</p>
+<p>ribbon模块用的是2.3.0</p>
+<p>运行*3</p>
+<p>还是挂了</p>
+<p>拿源码的这三个模块试试</p>
+<img src="/images/2020/screencapture2020-04-12 PM4.47.14.jpg">
+
+<p>是可以的</p>
+<p>对比版本</p>
+<img src="/images/2020/screencapture2020-04-12 PM4.49.02.jpg">
+
+<p>全部改成一样的</p>
+<p>发现源码pom中还多了一个</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-actuator<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>以及</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencyManagement</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-dependencies<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;spring-cloud.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">type</span>&gt;</span>pom<span class="tag">&lt;/<span class="name">type</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">scope</span>&gt;</span>import<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencyManagement</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>难怪前面springframework-cloud的模块总是没有版本号，原来是没加这个</p>
+<p>（解决了前面笔记02中一个MARK）</p>
+<p>运行*4</p>
+<p>还🥶是🥶挂🥶了</p>
+<p>再来一个个比代码</p>
+<p>没差啊？</p>
+<p>难道是其它模块的依赖也要改？改吧</p>
+<p>发现前面大部分都是有dependencyManagement的，所以其实也没什么变动</p>
+<p>运行*5</p>
+<p>挂</p>
+<p>刚才把spring-boot-starter-actuator删了，重新加上</p>
+<p>运行*6</p>
+<p>！成功了</p>
+<p>可是这个时候其它版本都和源码一样了，但是源码没有用这个啊？-MARK-</p>
+<h2 id="问题总结"><a href="#问题总结" class="headerlink" title="问题总结"></a>问题总结</h2><ol>
+<li><p>版本 版本 版本</p>
+</li>
+<li><p>注册中心有，但找不到服务，试试加上</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-actuator<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><img src="/images/2020/screencapture2020-04-12 PM5.36.45.jpg">
+
+]]></content>
+      <categories>
+        <category>Note</category>
+      </categories>
+      <tags>
+        <tag>springcloud</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SpringCloud笔记02 Ribbon负载均衡</title>
     <url>/2020/04/09/note-springcloud-02/</url>
     <content><![CDATA[<blockquote>
@@ -263,19 +365,17 @@
 <p><a href="https://blog.csdn.net/choice_of_door/article/details/85467105" target="_blank" rel="noopener">https://blog.csdn.net/choice_of_door/article/details/85467105</a></p>
 </blockquote>
 <p>按照这个加了个依赖</p>
-<p>（源码里并没有 但是可以正常运行，为什么呢？-MARK- ）</p>
+<p>（源码里并没有 但是可以正常运行，为什么呢？<del>MARK</del> (笔记03中解决)）</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.netflix.ribbon<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>ribbon-eureka<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>成功了！</p>
 <p>嗷！</p>
-<h2 id="问题总结"><a href="#问题总结" class="headerlink" title="问题总结"></a>问题总结</h2><p><strong>Eureka注册不上的坑</strong></p>
-<p>创建Module时，使用Spring Initializer导入依赖（Eureka Discovery Client），可以运行</p>
-<p>如果不导入，后面自己在pom.xml中添加，没有版本号会无法解析，要手动添加版本号</p>
-<p>但是！</p>
-<p>这样导入的依赖会有很多冲突，又有一堆毛病</p>
-<p>所以最好<strong>一开始就用Spring Initializer导入依赖！！！</strong></p>
-<p><strong>版本导致的一堆问题</strong></p>
-<p>检查右侧Maven栏有没有红色波浪线，根据源码版本解决冲突</p>
+<h2 id="问题总结"><a href="#问题总结" class="headerlink" title="问题总结"></a>问题总结</h2><p>都是版本的坑</p>
+<p>创建时用Spring Initializer加还是后期在pom.xml中加不重要</p>
+<p>但最好和教程保持一致</p>
+<p>至少检查右边Maven栏中没有红线</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><img src="/images/2020/screencapture2020-04-10 AM10.51.52.jpg">
+
 ]]></content>
       <categories>
         <category>Note</category>

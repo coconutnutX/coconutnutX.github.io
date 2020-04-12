@@ -338,19 +338,17 @@
 <p><a href="https://blog.csdn.net/choice_of_door/article/details/85467105" target="_blank" rel="noopener">https://blog.csdn.net/choice_of_door/article/details/85467105</a></p>
 </blockquote>
 <p>按照这个加了个依赖</p>
-<p>（源码里并没有 但是可以正常运行，为什么呢？-MARK- ）</p>
+<p>（源码里并没有 但是可以正常运行，为什么呢？<del>MARK</del> (笔记03中解决)）</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.netflix.ribbon<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>ribbon-eureka<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>成功了！</p>
 <p>嗷！</p>
-<h2 id="问题总结"><a href="#问题总结" class="headerlink" title="问题总结"></a>问题总结</h2><p><strong>Eureka注册不上的坑</strong></p>
-<p>创建Module时，使用Spring Initializer导入依赖（Eureka Discovery Client），可以运行</p>
-<p>如果不导入，后面自己在pom.xml中添加，没有版本号会无法解析，要手动添加版本号</p>
-<p>但是！</p>
-<p>这样导入的依赖会有很多冲突，又有一堆毛病</p>
-<p>所以最好<strong>一开始就用Spring Initializer导入依赖！！！</strong></p>
-<p><strong>版本导致的一堆问题</strong></p>
-<p>检查右侧Maven栏有没有红色波浪线，根据源码版本解决冲突</p>
+<h2 id="问题总结"><a href="#问题总结" class="headerlink" title="问题总结"></a>问题总结</h2><p>都是版本的坑</p>
+<p>创建时用Spring Initializer加还是后期在pom.xml中加不重要</p>
+<p>但最好和教程保持一致</p>
+<p>至少检查右边Maven栏中没有红线</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><img src="/images/2020/screencapture2020-04-10 AM10.51.52.jpg">
+
 
       
       <!-- reward -->
@@ -373,6 +371,15 @@
   
   
   <nav class="article-nav">
+    
+      <a href="/2020/04/12/note-springcloud-03/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            SpringCloud笔记03 Hystrix断路器
+          
+        </div>
+      </a>
     
     
       <a href="/2020/04/08/note-springcloud-01/" class="article-nav-link">
@@ -408,7 +415,7 @@
   <i>PV:<span id="busuanzi_value_page_pv"></span></i>
   <i>UV:<span id="busuanzi_value_site_uv"></span></i>
 </span>
-        220k
+        222k
         
       </li>
       <li>
