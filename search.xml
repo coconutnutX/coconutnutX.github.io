@@ -1,6 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>axios请求跨域问题</title>
+    <url>/2020/04/18/debug/</url>
+    <content><![CDATA[<img src="/images/2020/screencapture2020-04-18 PM12.01.36">
+
+<p>发现有跨域问题</p>
+<p>查到</p>
+<blockquote>
+<p><a href="https://www.cnblogs.com/l-y-h/p/11815452.html" target="_blank" rel="noopener">https://www.cnblogs.com/l-y-h/p/11815452.html</a></p>
+</blockquote>
+<p>照着改了一下</p>
+<p>但是又出现了</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Cannot set property $http of #&lt;Vue&gt; which has only a getter at eval axios</span><br></pre></td></tr></table></figure>
+
+<p>最后解决方法</p>
+<p>vue.config.js</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">module.exports &#x3D; &#123;</span><br><span class="line">    devServer: &#123;</span><br><span class="line">        proxy: &#123;</span><br><span class="line">            &#39;&#x2F;api&#39;: &#123;</span><br><span class="line">                target: &#39;http:&#x2F;&#x2F;***:3000&#x2F;&#39;,</span><br><span class="line">                &#x2F;&#x2F; 允许跨域</span><br><span class="line">                changeOrigin: true,</span><br><span class="line">                ws: true,</span><br><span class="line">                pathRewrite: &#123;</span><br><span class="line">                    &#39;^&#x2F;api&#39;: &#39;&#39;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>调用</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">this</span>.$axios.get(<span class="string">'/api/findall'</span>).then(<span class="function"><span class="params">response</span> =&gt;</span> &#123;</span><br><span class="line">                <span class="built_in">console</span>.log(response.data)</span><br><span class="line">            &#125;).catch(<span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">                alert(<span class="string">'请求失败'</span>)</span><br><span class="line">            &#125;).catch(<span class="function"><span class="keyword">function</span> (<span class="params">error</span>) </span>&#123;</span><br><span class="line">                alert(error);</span><br><span class="line">            &#125;);</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Debug</category>
+      </categories>
+      <tags>
+        <tag>vue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Axure笔记</title>
+    <url>/2020/04/16/note-axure/</url>
+    <content><![CDATA[<blockquote>
+<p><a href="https://www.bilibili.com/video/BV1Yx411f7d6" target="_blank" rel="noopener">https://www.bilibili.com/video/BV1Yx411f7d6</a></p>
+</blockquote>
+<h1 id="标尺"><a href="#标尺" class="headerlink" title="标尺"></a>标尺</h1><p>按住尺子拖下来</p>
+<img src="/images/2020/screencapture2020-04-16 AM11.19.53.jpg">
+
+<p>左侧也是</p>
+<h1 id="圆角"><a href="#圆角" class="headerlink" title="圆角"></a>圆角</h1><p>按住黄色三角拖动</p>
+<img src="/images/2020/screencapture2020-04-16 AM11.34.03.jpg">
+
+<h1 id="平均排布"><a href="#平均排布" class="headerlink" title="平均排布"></a>平均排布</h1><p>选中几个元素，点水平</p>
+<img src="/images/2020/screencapture2020-04-16 AM11.37.11.jpg">
+
+<h1 id="切割顶栏"><a href="#切割顶栏" class="headerlink" title="切割顶栏"></a>切割顶栏</h1><p>右键-&gt;分割图片</p>
+<img src="/images/2020/screencapture2020-04-16 PM12.08.32.jpg">
+
+<h1 id="动作"><a href="#动作" class="headerlink" title="动作"></a>动作</h1><p>先建一个文件夹，一个页面对应一页，大小、位置相同</p>
+<p>用热区罩在点击区域上</p>
+<p>添加交互</p>
+<img src="/images/2020/screencapture2020-04-16 PM12.27.48.jpg">
+
+<p>跳转页面 可选择打开链接</p>
+<hr>
+<p>上手完成</p>
+<img src="/images/2020/screencapture2020-04-16 PM12.31.48.jpg">
+
+<img src="/images/2020/screencapture2020-04-16 PM12.31.52.jpg">
+
+]]></content>
+      <categories>
+        <category>Note</category>
+      </categories>
+      <tags>
+        <tag>axure</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SpringCloud笔记03 Hystrix断路器</title>
     <url>/2020/04/12/note-springcloud-03/</url>
     <content><![CDATA[<blockquote>
