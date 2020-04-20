@@ -1,6 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>SpringCloud笔记04 Consul服务治理实现</title>
+    <url>/2020/04/20/note-springcloud-04/</url>
+    <content><![CDATA[<blockquote>
+<p><a href="https://www.consul.io/" target="_blank" rel="noopener">https://www.consul.io/</a></p>
+</blockquote>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><blockquote>
+<p><a href="https://learn.hashicorp.com/consul/getting-started/install.html" target="_blank" rel="noopener">https://learn.hashicorp.com/consul/getting-started/install.html</a></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">% brew install consul</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">% consul version</span><br><span class="line">Consul v1.6.3</span><br><span class="line">Protocol 2 spoken by default, understands 2 to 3 (agent will automatically use protocol &gt;2 when speaking to compatible agents)</span><br></pre></td></tr></table></figure>
+
+<h1 id="官方教程"><a href="#官方教程" class="headerlink" title="官方教程"></a>官方教程</h1><blockquote>
+<p><a href="https://learn.hashicorp.com/consul/getting-started/agent" target="_blank" rel="noopener">https://learn.hashicorp.com/consul/getting-started/agent</a></p>
+</blockquote>
+<h2 id="启动服务器"><a href="#启动服务器" class="headerlink" title="启动服务器"></a>启动服务器</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ consul agent -dev</span><br></pre></td></tr></table></figure>
+
+<h2 id="查看节点"><a href="#查看节点" class="headerlink" title="查看节点"></a>查看节点</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ consul members</span><br></pre></td></tr></table></figure>
+
+<p><strong>尝试</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">% consul members</span><br><span class="line">Node                  Address         Status  Type    Build  Protocol  DC   Segment</span><br><span class="line">Ss-MacBook-Pro.local  127.0.0.1:8301  alive   server  1.6.3  2         dc1  &lt;all&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">coconutnut@Ss-MacBook-Pro ~ % consul members -detailed</span><br><span class="line">Node                  Address         Status  Tags</span><br><span class="line">Ss-MacBook-Pro.local  127.0.0.1:8301  alive   acls&#x3D;0,build&#x3D;1.6.3:7f3b5f3+,dc&#x3D;dc1,id&#x3D;d9c5a17b-cc6b-1ca6-7c72-07304fbcccdc,port&#x3D;8300,raft_vsn&#x3D;3,role&#x3D;consul,segment&#x3D;&lt;all&gt;,vsn&#x3D;2,vsn_max&#x3D;3,vsn_min&#x3D;2,wan_join_port&#x3D;8302</span><br></pre></td></tr></table></figure>
+
+<p>但是member命令获取的信息只是eventually consistent的</p>
+<p>一致性更强的方式是使用http api</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">curl localhost:8500&#x2F;v1&#x2F;catalog&#x2F;nodes</span><br></pre></td></tr></table></figure>
+
+<p><strong>尝试</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">% curl localhost:8500&#x2F;v1&#x2F;catalog&#x2F;nodes</span><br><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        &quot;ID&quot;: &quot;d9c5a17b-cc6b-1ca6-7c72-07304fbcccdc&quot;,</span><br><span class="line">        &quot;Node&quot;: &quot;Ss-MacBook-Pro.local&quot;,</span><br><span class="line">        &quot;Address&quot;: &quot;127.0.0.1&quot;,</span><br><span class="line">        &quot;Datacenter&quot;: &quot;dc1&quot;,</span><br><span class="line">        &quot;TaggedAddresses&quot;: &#123;</span><br><span class="line">            &quot;lan&quot;: &quot;127.0.0.1&quot;,</span><br><span class="line">            &quot;wan&quot;: &quot;127.0.0.1&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;Meta&quot;: &#123;</span><br><span class="line">            &quot;consul-network-segment&quot;: &quot;&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;CreateIndex&quot;: 10,</span><br><span class="line">        &quot;ModifyIndex&quot;: 11</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>也可以用dns</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">% dig @127.0.0.1 -p 8600 Judiths-MBP.node.consul</span><br><span class="line"></span><br><span class="line">; &lt;&lt;&gt;&gt; DiG 9.10.6 &lt;&lt;&gt;&gt; @127.0.0.1 -p 8600 Judiths-MBP.node.consul</span><br><span class="line">; (1 server found)</span><br><span class="line">;; global options: +cmd</span><br><span class="line">;; Got answer:</span><br><span class="line">;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NXDOMAIN, id: 33684</span><br><span class="line">;; flags: qr aa rd; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1</span><br><span class="line">;; WARNING: recursion requested but not available</span><br><span class="line"></span><br><span class="line">;; OPT PSEUDOSECTION:</span><br><span class="line">; EDNS: version: 0, flags:; udp: 4096</span><br><span class="line">;; QUESTION SECTION:</span><br><span class="line">;Judiths-MBP.node.consul.	IN	A</span><br><span class="line"></span><br><span class="line">;; AUTHORITY SECTION:</span><br><span class="line">consul.			0	IN	SOA	ns.consul. hostmaster.consul. 1587353730 3600 600 86400 0</span><br><span class="line"></span><br><span class="line">;; Query time: 0 msec</span><br><span class="line">;; SERVER: 127.0.0.1#8600(127.0.0.1)</span><br><span class="line">;; WHEN: Mon Apr 20 11:35:30 CST 2020</span><br><span class="line">;; MSG SIZE  rcvd: 102</span><br></pre></td></tr></table></figure>
+
+<h2 id="优雅的关闭节点"><a href="#优雅的关闭节点" class="headerlink" title="优雅的关闭节点"></a>优雅的关闭节点</h2><p>ctrl+C 暂停服务器</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ consul leave</span><br></pre></td></tr></table></figure>
+
+<h1 id="注册到consul"><a href="#注册到consul" class="headerlink" title="注册到consul"></a>注册到consul</h1><blockquote>
+<p><a href="https://juejin.im/post/5db05582f265da4d4c20180f" target="_blank" rel="noopener">https://juejin.im/post/5db05582f265da4d4c20180f</a></p>
+</blockquote>
+<p>将以前注册到euruka的服务改到consul</p>
+<p>user-service模块</p>
+<p>修改依赖</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--        &lt;dependency&gt;--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--            &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--            &lt;artifactId&gt;spring-cloud-starter-netflix-eureka-client&lt;/artifactId&gt;--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--        &lt;/dependency&gt;--&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-consul-discovery<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>修改配置</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment">#eureka:</span></span><br><span class="line"><span class="comment">#  client:</span></span><br><span class="line"><span class="comment">#    register-with-eureka: true</span></span><br><span class="line"><span class="comment">#    fetch-registry: true</span></span><br><span class="line"><span class="comment">#    service-url:</span></span><br><span class="line"><span class="comment">#      defaultZone: http://localhost:8001/eureka/</span></span><br><span class="line"></span><br><span class="line"><span class="attr">cloud:</span></span><br><span class="line">  <span class="attr">consul:</span></span><br><span class="line">    <span class="attr">host:</span> <span class="string">localhost</span></span><br><span class="line">    <span class="attr">port:</span> <span class="number">8500</span></span><br><span class="line">    <span class="attr">discovery:</span></span><br><span class="line">      <span class="attr">service-name:</span> <span class="string">$&#123;spring.application.name&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>ribbon-service模块也是</p>
+<img src="/images/2020/screencapture2020-04-20 AM11.50.55.jpg">
+
+<p> Service Checks是X，但是可以访问？</p>
+<img src="/images/2020/screencapture2020-04-20 AM11.51.51.jpg">
+
+<p>但是<a href="http://localhost:8301/user/1获取不了" target="_blank" rel="noopener">http://localhost:8301/user/1获取不了</a></p>
+<p>报错信息</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">java.lang.IllegalStateException: No instances available for user-service</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><a href="https://blog.csdn.net/kxj19980524/article/details/86935415" target="_blank" rel="noopener">https://blog.csdn.net/kxj19980524/article/details/86935415</a></p>
+</blockquote>
+<p>还需要加一个监控中心的依赖</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;spring-boot-starter-actuator&lt;&#x2F;artifactId&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<p>重启</p>
+<img src="/images/2020/screencapture2020-04-20 AM11.58.30.jpg">
+
+<p>访问<a href="http://localhost:8301/user/1四次" target="_blank" rel="noopener">http://localhost:8301/user/1四次</a></p>
+<p>控制台输出</p>
+<img src="/images/2020/screencapture2020-04-20 AM11.58.49.jpg">
+
+<p>交替调用</p>
+<img src="/images/2020/screencapture2020-04-20 AM11.58.58.jpg">
+
+<p>成功</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>终端启动consul服务器</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ consul agent -dev</span><br></pre></td></tr></table></figure>
+
+<p>Idea模块 consul客户端</p>
+<p>依赖</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.springframework.cloud&lt;&#x2F;groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;spring-cloud-starter-consul-discovery&lt;&#x2F;artifactId&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br><span class="line"></span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;spring-boot-starter-actuator&lt;&#x2F;artifactId&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<p>配置</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cloud:</span><br><span class="line">  consul:</span><br><span class="line">    host: localhost</span><br><span class="line">    port: 8500</span><br><span class="line">    discovery:</span><br><span class="line">      service-name: $&#123;spring.application.name&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Note</category>
+      </categories>
+      <tags>
+        <tag>springcloud</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>axios请求跨域问题</title>
     <url>/2020/04/18/debug/</url>
     <content><![CDATA[<img src="/images/2020/screencapture2020-04-18 PM12.01.36.jpg">
@@ -21,6 +115,13 @@
 <p>调用</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">this</span>.$axios.get(<span class="string">'/api/findall'</span>).then(<span class="function"><span class="params">response</span> =&gt;</span> &#123;</span><br><span class="line">                <span class="built_in">console</span>.log(response.data)</span><br><span class="line">            &#125;).catch(<span class="function"><span class="keyword">function</span> (<span class="params">error</span>) </span>&#123;</span><br><span class="line">                alert(error);</span><br><span class="line">            &#125;);</span><br></pre></td></tr></table></figure>
 
+<hr>
+<p>部署到Github Page之后，又不行了</p>
+<img src="/images/2020/screencapture2020-04-20 AM10.35.46.jpg">
+
+
+
+<p>–TODO–</p>
 ]]></content>
       <categories>
         <category>Debug</category>
