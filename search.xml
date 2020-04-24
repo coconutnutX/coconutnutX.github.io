@@ -1,7 +1,550 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>SpringCloud笔记04 Consul服务治理实现</title>
+    <title>MyBatisPlus笔记06 自动填充、逻辑删除、通用枚举等</title>
+    <url>/2020/04/24/note-mybatisplus-06/</url>
+    <content><![CDATA[<blockquote>
+<p><a href="https://www.bilibili.com/video/BV1rE41197jR" target="_blank" rel="noopener">https://www.bilibili.com/video/BV1rE41197jR</a></p>
+<p>P55~62</p>
+</blockquote>
+<h1 id="sql注入器"><a href="#sql注入器" class="headerlink" title="sql注入器"></a>sql注入器</h1><p>默认的Mapper中方法不够用时，自己扩充BaseMapper中的方法</p>
+<blockquote>
+<p><a href="https://www.bilibili.com/video/BV1rE41197jR?p=55" target="_blank" rel="noopener">https://www.bilibili.com/video/BV1rE41197jR?p=55</a></p>
+</blockquote>
+<h1 id="自动填充"><a href="#自动填充" class="headerlink" title="自动填充"></a>自动填充</h1><p>插入或者更新数据时，希望有些字段可以自动填充数据，比如密码、version 等</p>
+<h2 id="添加-TableField注解"><a href="#添加-TableField注解" class="headerlink" title="添加@TableField注解"></a>添加@TableField注解</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Version</span></span><br><span class="line"><span class="meta">@TableField</span>(fill = FieldFill.INSERT)</span><br><span class="line"><span class="keyword">private</span> Integer version;</span><br></pre></td></tr></table></figure>
+
+<p>FieldFill可选：</p>
+<ul>
+<li>DEFAULT 默认不处理</li>
+<li>INSERT 插入试填充字段</li>
+<li>UPDATE 更新时填充字段</li>
+<li>INSERT_UPDATE 插入和更新时填充字段</li>
+</ul>
+<h2 id="编写MyMetaObjectHandler"><a href="#编写MyMetaObjectHandler" class="headerlink" title="编写MyMetaObjectHandler"></a>编写MyMetaObjectHandler</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyMetaObjectHandler</span> <span class="keyword">implements</span> <span class="title">MetaObjectHandler</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insertFill</span><span class="params">(MetaObject metaObject)</span> </span>&#123;</span><br><span class="line">        Object version = getFieldValByName(<span class="string">"version"</span>, metaObject);</span><br><span class="line">        <span class="keyword">if</span>(version == <span class="keyword">null</span>)&#123;</span><br><span class="line">            setFieldValByName(<span class="string">"version"</span>, <span class="number">1</span>, metaObject);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testInsertFill</span><span class="params">()</span></span>&#123;</span><br><span class="line">  User user = <span class="keyword">new</span> User();</span><br><span class="line">  user.setName(<span class="string">"张四"</span>);</span><br><span class="line">  user.setUserName(<span class="string">"zhangsi"</span>);</span><br><span class="line">  user.setPassword(<span class="string">"123123"</span>);</span><br><span class="line">  user.setAge(<span class="number">30</span>);</span><br><span class="line">  user.setEmail(<span class="string">"zhangsi@itast.cn"</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">int</span> result = <span class="keyword">this</span>.userMapper.insert(user);</span><br><span class="line">  System.out.println(<span class="string">"result = "</span> + result);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> Time：9 ms - ID：com.coconutnut.demo.mapper.UserMapper.insert</span><br><span class="line">Execute SQL：</span><br><span class="line">    INSERT </span><br><span class="line">    INTO</span><br><span class="line">        tb_user</span><br><span class="line">        ( user_name, password, name, age, email, version ) </span><br><span class="line">    VALUES</span><br><span class="line">        ( &#39;zhangsi&#39;, &#39;123123&#39;, &#39;张四&#39;, 30, &#39;zhangsi@itast.cn&#39;, 1 )</span><br><span class="line"></span><br><span class="line">result &#x3D; 1</span><br></pre></td></tr></table></figure>
+
+<h1 id="逻辑删除"><a href="#逻辑删除" class="headerlink" title="逻辑删除"></a>逻辑删除</h1><p>将数据标记为删除，而并非真正删除</p>
+<p>查询时需要携带状态条件，确保被标记的数据不被查询到</p>
+<h2 id="修改表结构"><a href="#修改表结构" class="headerlink" title="修改表结构"></a>修改表结构</h2><p>为tb_user表增加deleted字段，用于表示数据是否被删除，1代表删除，0代表未删除</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> <span class="string">`tb_user`</span></span><br><span class="line"><span class="keyword">ADD</span> <span class="keyword">COLUMN</span> <span class="string">`deleted`</span> <span class="built_in">int</span>(<span class="number">1</span>) <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span> <span class="keyword">COMMENT</span> <span class="string">'1代表删除，0代表未删除'</span> <span class="keyword">AFTER</span> <span class="string">`version`</span>;</span><br></pre></td></tr></table></figure>
+
+<p>修改User实体，增加deleted属性并且添加@TableLogic注解</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@TableLogic</span></span><br><span class="line"><span class="keyword">private</span> Integer deleted;</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>application.properties中</p>
+<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 逻辑已删除值(默认为 1) mybatis-plus.global-config.db-config.logic-delete-value=1</span></span><br><span class="line"><span class="comment"># 逻辑未删除值(默认为 0) mybatis-plus.global-config.db-config.logic-not-delete-value=0</span></span><br></pre></td></tr></table></figure>
+
+<p>直接用默认值可以省略</p>
+<h2 id="测试-1"><a href="#测试-1" class="headerlink" title="测试"></a>测试</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testDelete</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  User user = <span class="keyword">new</span> User(); user.setId(<span class="number">2L</span>);</span><br><span class="line">  <span class="keyword">boolean</span> delete = user.deleteById();</span><br><span class="line">  System.out.println(delete);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> Time：2 ms - ID：com.coconutnut.demo.mapper.UserMapper.deleteById</span><br><span class="line">Execute SQL：</span><br><span class="line">    UPDATE</span><br><span class="line">        tb_user </span><br><span class="line">    SET</span><br><span class="line">        deleted&#x3D;1 </span><br><span class="line">    WHERE</span><br><span class="line">        id&#x3D;2 </span><br><span class="line">        AND deleted&#x3D;0</span><br><span class="line"></span><br><span class="line">true</span><br></pre></td></tr></table></figure>
+
+<p>实际上变成了UPDATE</p>
+<img src="/images/2020/screencapture2020-04-24 PM7.42.26.jpg">
+
+<p>然后查询</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSelectById</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  User user = <span class="keyword">new</span> User();</span><br><span class="line">  user.setId(<span class="number">2L</span>);</span><br><span class="line">  User user2 = user.selectById();</span><br><span class="line">  System.out.println(user2);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> Time：5 ms - ID：com.coconutnut.demo.mapper.UserMapper.selectById</span><br><span class="line">Execute SQL：</span><br><span class="line">    SELECT</span><br><span class="line">        id,</span><br><span class="line">        user_name,</span><br><span class="line">        password,</span><br><span class="line">        name,</span><br><span class="line">        age,</span><br><span class="line">        email,</span><br><span class="line">        version,</span><br><span class="line">        deleted </span><br><span class="line">    FROM</span><br><span class="line">        tb_user </span><br><span class="line">    WHERE</span><br><span class="line">        id&#x3D;2 </span><br><span class="line">        AND deleted&#x3D;0</span><br><span class="line"></span><br><span class="line">null</span><br></pre></td></tr></table></figure>
+
+<p>SQL中添加了deleted=0的条件，没有查到数据</p>
+<h1 id="通用枚举"><a href="#通用枚举" class="headerlink" title="通用枚举"></a>通用枚举</h1><h2 id="修改表结构-1"><a href="#修改表结构-1" class="headerlink" title="修改表结构"></a>修改表结构</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> <span class="string">`tb_user`</span></span><br><span class="line"><span class="keyword">ADD</span> <span class="keyword">COLUMN</span> <span class="string">`sex`</span> <span class="built_in">int</span>(<span class="number">1</span>) <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">1</span> <span class="keyword">COMMENT</span> <span class="string">'1-男，2-女'</span> <span class="keyword">AFTER</span> <span class="string">`deleted`</span>;</span><br></pre></td></tr></table></figure>
+
+<p>修改User实体类</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> SexEnum sex;</span><br></pre></td></tr></table></figure>
+
+<h2 id="定义枚举"><a href="#定义枚举" class="headerlink" title="定义枚举"></a>定义枚举</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.coconutnut.demo.enums;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.baomidou.mybatisplus.core.enums.IEnum;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> SexEnum implements IEnum&lt;Integer&gt; &#123;</span><br><span class="line"></span><br><span class="line">    MAN(<span class="number">1</span>,<span class="string">"男"</span>),</span><br><span class="line">    WOMAN(<span class="number">2</span>,<span class="string">"女"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> value;</span><br><span class="line">    <span class="keyword">private</span> String desc;</span><br><span class="line"></span><br><span class="line">    SexEnum(<span class="keyword">int</span> value, String desc) &#123;</span><br><span class="line">        <span class="keyword">this</span>.value = value;</span><br><span class="line">        <span class="keyword">this</span>.desc = desc;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Integer <span class="title">getValue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.desc;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置-1"><a href="#配置-1" class="headerlink" title="配置"></a>配置</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 枚举包扫描</span><br><span class="line">mybatis-plus.type-enums-package&#x3D;com.coconutnut.demo.enums</span><br></pre></td></tr></table></figure>
+
+<h2 id="测试-2"><a href="#测试-2" class="headerlink" title="测试"></a>测试</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testInsert</span><span class="params">()</span></span>&#123;</span><br><span class="line">  User user = <span class="keyword">new</span> User();</span><br><span class="line">  user.setName(<span class="string">"张五"</span>);</span><br><span class="line">  user.setAge(<span class="number">30</span>);</span><br><span class="line">  user.setPassword(<span class="string">"123456"</span>);</span><br><span class="line">  user.setUserName(<span class="string">"zhangwu"</span>);</span><br><span class="line">  user.setEmail(<span class="string">"zhangwu@itcast.cn"</span>);</span><br><span class="line">  user.setSex(SexEnum.WOMAN);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">boolean</span> insert = user.insert();</span><br><span class="line">  System.out.println(insert);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> Time：6 ms - ID：com.coconutnut.demo.mapper.UserMapper.insert</span><br><span class="line">Execute SQL：</span><br><span class="line">    INSERT </span><br><span class="line">    INTO</span><br><span class="line">        tb_user</span><br><span class="line">        ( user_name, password, name, age, email, sex, version ) </span><br><span class="line">    VALUES</span><br><span class="line">        ( &#39;zhangwu&#39;, &#39;123456&#39;, &#39;张五&#39;, 30, &#39;zhangwu@itcast.cn&#39;, 2, 1 )</span><br><span class="line"></span><br><span class="line">true</span><br></pre></td></tr></table></figure>
+
+<img src="/images/2020/screencapture2020-04-24 PM7.51.09.jpg">
+
+<h1 id="代码生成器"><a href="#代码生成器" class="headerlink" title="代码生成器"></a>代码生成器</h1><p>AutoGenerator 是 MyBatis-Plus 的代码生成器，通过 AutoGenerator 可以快速生成 Entity、Mapper、MapperXML、Service、Controller 等各个模块的代码，提升开发效率</p>
+<blockquote>
+<p><a href="https://www.bilibili.com/video/BV1rE41197jR?p=60" target="_blank" rel="noopener">https://www.bilibili.com/video/BV1rE41197jR?p=60</a></p>
+</blockquote>
+<h1 id="MyBatisX快速开发插件"><a href="#MyBatisX快速开发插件" class="headerlink" title="MyBatisX快速开发插件"></a>MyBatisX快速开发插件</h1><p>基于 IDEA 的快速开发插件</p>
+<p>安装：File -&gt; Settings -&gt; Plugins，搜索并安装</p>
+<p>功能：Java和对应XML跳转；Mapper方法自动生成 XML</p>
+]]></content>
+      <categories>
+        <category>Note</category>
+      </categories>
+      <tags>
+        <tag>mybatis_plus</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MyBatisPlus笔记05 插件</title>
+    <url>/2020/04/24/note-mybatisplus-05/</url>
+    <content><![CDATA[<blockquote>
+<p><a href="https://www.bilibili.com/video/BV1rE41197jR" target="_blank" rel="noopener">https://www.bilibili.com/video/BV1rE41197jR</a></p>
+<p>P49~54</p>
+</blockquote>
+<h1 id="mybatis的插件机制"><a href="#mybatis的插件机制" class="headerlink" title="mybatis的插件机制"></a>mybatis的插件机制</h1><p>MyBatis 允许在已映射语句执行过程中的某一点进行拦截</p>
+<p>默认情况下，MyBatis 允许使用插件来拦截的方法调用包括:</p>
+<ul>
+<li><p>Executor (update, query, flushStatements, commit, rollback, getTransaction, close, isClosed) </p>
+</li>
+<li><p>ParameterHandler (getParameterObject, setParameters)</p>
+</li>
+<li><p>ResultSetHandler (handleResultSets, handleOutputParameters)</p>
+</li>
+<li><p>StatementHandler (prepare, parameterize, batch, update, query)</p>
+</li>
+</ul>
+<p>可以拦截：</p>
+<ul>
+<li>执行器的方法</li>
+<li>参数的处理</li>
+<li>结果集的处理</li>
+<li>Sql语法构建的处理</li>
+</ul>
+<p>自定义拦截器可以实现Interceptor接口，注入到Spring容器</p>
+<h1 id="执行分析插件"><a href="#执行分析插件" class="headerlink" title="执行分析插件"></a>执行分析插件</h1><p>可用作阻断全表更新、删除的操作</p>
+<p>注意:该插件仅适用于开发环境，不适用于生产环境（性能问题）</p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>MybatisPlusConfig中配置</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> SqlExplainInterceptor <span class="title">sqlExplainInterceptor</span><span class="params">()</span></span>&#123;</span><br><span class="line">  SqlExplainInterceptor sqlExplainInterceptor = <span class="keyword">new</span> SqlExplainInterceptor();</span><br><span class="line">  List&lt;ISqlParser&gt; sqlParserList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">  sqlParserList.add(<span class="keyword">new</span> BlockAttackSqlParser());</span><br><span class="line">  sqlExplainInterceptor.setSqlParserList(sqlParserList);</span><br><span class="line">  <span class="keyword">return</span> sqlExplainInterceptor;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> UserMapper userMapper;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testUpdateAll</span><span class="params">()</span></span>&#123;</span><br><span class="line">  User user = <span class="keyword">new</span> User();</span><br><span class="line">  user.setAge(<span class="number">20</span>);</span><br><span class="line">  <span class="keyword">int</span> result = <span class="keyword">this</span>.userMapper.update(user, <span class="keyword">null</span>);</span><br><span class="line">  System.out.println(<span class="string">"result = "</span> + result);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果：全表更新被阻断</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Prohibition of table update operation</span><br></pre></td></tr></table></figure>
+
+<img src="/images/2020/screencapture2020-04-24 PM6.51.47.jpg">
+
+<h1 id="性能分析插件"><a href="#性能分析插件" class="headerlink" title="性能分析插件"></a>性能分析插件</h1><p>用于输出每条 SQL 语句及其执行时间，可以设置最大执行时间，超过时间会抛出异常</p>
+<h2 id="配置-1"><a href="#配置-1" class="headerlink" title="配置"></a>配置</h2><p>两种方式，可以像上面一样在Config中配置，也可以在xml中配置</p>
+<p>这里用xml方式</p>
+<p>mybatis-config.xml中</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span> <span class="meta">&lt;!DOCTYPE <span class="meta-keyword">configuration</span></span></span><br><span class="line"><span class="meta">        <span class="meta-keyword">PUBLIC</span> <span class="meta-string">"-//mybatis.org//DTD Config 3.0//EN"</span></span></span><br><span class="line"><span class="meta">        <span class="meta-string">"http://mybatis.org/dtd/mybatis-3-config.dtd"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- SQL 执行性能分析，开发环境使用，线上不推荐。 maxTime 指的是 sql 最大执行时长 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugin</span> <span class="attr">interceptor</span>=<span class="string">"com.baomidou.mybatisplus.extension.plugins.PerformanceInterceptor"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"maxTime"</span> <span class="attr">value</span>=<span class="string">"100"</span> /&gt;</span></span><br><span class="line">            <span class="comment">&lt;!--SQL是否格式化 默认false--&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"format"</span> <span class="attr">value</span>=<span class="string">"true"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="测试-1"><a href="#测试-1" class="headerlink" title="测试"></a>测试</h2><p>执行testSelectById()</p>
+<p>输出</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Time：10 ms - ID：com.coconutnut.demo.mapper.UserMapper.selectById</span><br><span class="line">Execute SQL：</span><br><span class="line">    SELECT</span><br><span class="line">        id,</span><br><span class="line">        user_name,</span><br><span class="line">        password,</span><br><span class="line">        name,</span><br><span class="line">        age,</span><br><span class="line">        email </span><br><span class="line">    FROM</span><br><span class="line">        tb_user </span><br><span class="line">    WHERE</span><br><span class="line">        id&#x3D;2 </span><br><span class="line"></span><br><span class="line">User(id&#x3D;2, userName&#x3D;lisi, password&#x3D;123456, name&#x3D;李四, age&#x3D;20, email&#x3D;test2@itcast.cn)</span><br></pre></td></tr></table></figure>
+
+<h1 id="乐观锁插件"><a href="#乐观锁插件" class="headerlink" title="乐观锁插件"></a>乐观锁插件</h1><p>当要更新一条记录的时候，希望这条记录没有被别人更新</p>
+<p>实现方式:</p>
+<ul>
+<li>取出记录时，获取当前version</li>
+<li>更新时，带上这个version</li>
+<li>执行更新时， set version = newVersion where version = oldVersion</li>
+<li>如果version不对，就更新失败</li>
+</ul>
+<h2 id="配置-2"><a href="#配置-2" class="headerlink" title="配置"></a>配置</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> OptimisticLockerInterceptor <span class="title">optimisticLockerInterceptor</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> OptimisticLockerInterceptor();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Version字段"><a href="#Version字段" class="headerlink" title="Version字段"></a>Version字段</h2><p>为表添加version字段，并且设置初始值为1</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> <span class="string">`tb_user`</span></span><br><span class="line"><span class="keyword">ADD</span> <span class="keyword">COLUMN</span> <span class="string">`version`</span> <span class="built_in">int</span>(<span class="number">10</span>) <span class="literal">NULL</span> <span class="keyword">AFTER</span> <span class="string">`email`</span>;</span><br><span class="line"><span class="keyword">UPDATE</span> <span class="string">`tb_user`</span> <span class="keyword">SET</span> <span class="string">`version`</span>=<span class="string">'1'</span>;</span><br></pre></td></tr></table></figure>
+
+<p>为User实体类添加version字段和注解</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Version</span></span><br><span class="line"><span class="keyword">private</span> Integer version;</span><br></pre></td></tr></table></figure>
+
+<h2 id="测试-2"><a href="#测试-2" class="headerlink" title="测试"></a>测试</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testUpdateVersion</span><span class="params">()</span></span>&#123;</span><br><span class="line">  User user = <span class="keyword">new</span> User();</span><br><span class="line">  user.setAge(<span class="number">30</span>);</span><br><span class="line">  user.setId(<span class="number">2L</span>);</span><br><span class="line">  user.setVersion(<span class="number">1</span>); <span class="comment">// 当前version为1</span></span><br><span class="line">  <span class="keyword">int</span> result = <span class="keyword">this</span>.userMapper.updateById(user);</span><br><span class="line">  System.out.println(<span class="string">"result = "</span> + result);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> Time：2 ms - ID：com.coconutnut.demo.mapper.UserMapper.updateById</span><br><span class="line">Execute SQL：</span><br><span class="line">    UPDATE</span><br><span class="line">        tb_user </span><br><span class="line">    SET</span><br><span class="line">        age&#x3D;30,</span><br><span class="line">        version&#x3D;2 </span><br><span class="line">    WHERE</span><br><span class="line">        id&#x3D;2 </span><br><span class="line">        AND version&#x3D;1</span><br><span class="line"></span><br><span class="line">result &#x3D; 1</span><br></pre></td></tr></table></figure>
+
+<p>乐观锁插件添加了version条件，并设置新的version为2</p>
+<img src="/images/2020/screencapture2020-04-24 PM7.07.07.jpg">
+
+<p>如果再执行一次</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> Time：1 ms - ID：com.coconutnut.demo.mapper.UserMapper.updateById</span><br><span class="line">Execute SQL：</span><br><span class="line">    UPDATE</span><br><span class="line">        tb_user </span><br><span class="line">    SET</span><br><span class="line">        age&#x3D;30,</span><br><span class="line">        version&#x3D;2 </span><br><span class="line">    WHERE</span><br><span class="line">        id&#x3D;2 </span><br><span class="line">        AND version&#x3D;1</span><br><span class="line"></span><br><span class="line">result &#x3D; 0</span><br></pre></td></tr></table></figure>
+
+<p>此时version已经是2，不能执行了</p>
+<p>正常的使用方式</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testUpdateVersion</span><span class="params">()</span></span>&#123;</span><br><span class="line">  User user = <span class="keyword">new</span> User();</span><br><span class="line">  user.setId(<span class="number">2L</span>); <span class="comment">// 查询条件</span></span><br><span class="line"></span><br><span class="line">  User userVersion = user.selectById(); <span class="comment">// 当前版本</span></span><br><span class="line">  user.setAge(<span class="number">30</span>);  <span class="comment">// 更新的数据</span></span><br><span class="line">  user.setVersion(userVersion.getVersion()); <span class="comment">// 版本信息</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">int</span> result = <span class="keyword">this</span>.userMapper.updateById(user);</span><br><span class="line">  System.out.println(<span class="string">"result = "</span> + result);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="特别说明"><a href="#特别说明" class="headerlink" title="特别说明"></a>特别说明</h2><ul>
+<li>支持的数据类型只有:int,Integer,long,Long,Date,Timestamp,LocalDateTime</li>
+<li>整数类型下 newVersion = oldVersion + 1</li>
+<li>newVersion 会回写到 entity 中</li>
+<li>仅支持 updateById(id) 与 update(entity, wrapper) 方法</li>
+<li>在 update(entity, wrapper) 方法下, wrapper 不能复用</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Note</category>
+      </categories>
+      <tags>
+        <tag>mybatis_plus</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MyBatisPlus笔记04 ActiveRecord</title>
+    <url>/2020/04/24/note-mybatisplus-04/</url>
+    <content><![CDATA[<blockquote>
+<p><a href="https://www.bilibili.com/video/BV1rE41197jR" target="_blank" rel="noopener">https://www.bilibili.com/video/BV1rE41197jR</a></p>
+<p>P40~45</p>
+</blockquote>
+<p>属于ORM(对象关系映射)层</p>
+<p>主要思想:</p>
+<ul>
+<li>每一个数据库表对应创建一个类，类的每一个对象实例对应于数据库中表的一行记录;通常表的每个字段在类中都有相应的Field;</li>
+<li>ActiveRecord同时负责把自己持久化，在ActiveRecord中封装了对数据库的访问，即CURD;</li>
+<li>ActiveRecord是一种领域模型(Domain Model)，封装了部分业务逻辑;</li>
+</ul>
+<h1 id="开启AR"><a href="#开启AR" class="headerlink" title="开启AR"></a>开启AR</h1><p>实体对象继承Model即可</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@NoArgsConstructor</span></span><br><span class="line"><span class="meta">@AllArgsConstructor</span></span><br><span class="line"><span class="meta">@TableName</span>(<span class="string">"tb_user"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> <span class="keyword">extends</span> <span class="title">Model</span>&lt;<span class="title">User</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@TableId</span>(type = IdType.AUTO)</span><br><span class="line">    <span class="keyword">private</span> Long id;</span><br><span class="line">    <span class="keyword">private</span> String userName;</span><br><span class="line">    <span class="keyword">private</span> String password;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> Integer age;</span><br><span class="line">    <span class="keyword">private</span> String email;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h1><p>不需要UserMapper了，直接查询</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSelectById</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  User user = <span class="keyword">new</span> User();</span><br><span class="line">  user.setId(<span class="number">2L</span>);</span><br><span class="line">  User user2 = user.selectById();</span><br><span class="line">  System.out.println(user2);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行输出</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">User(id&#x3D;2, userName&#x3D;lisi, password&#x3D;123456, name&#x3D;李四, age&#x3D;20, email&#x3D;test2@itcast.cn)</span><br></pre></td></tr></table></figure>
+
+<p>对比以前的查询方式</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> UserMapper userMapper;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSelectById</span><span class="params">()</span> </span>&#123; </span><br><span class="line">  User user = <span class="keyword">this</span>.userMapper.selectById(<span class="number">2L</span>);</span><br><span class="line">  System.out.println(<span class="string">"result = "</span> + user);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用AR后，不需要显示的注入UserMapper，但是这个类还是需要的</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserMapper</span> <span class="keyword">extends</span> <span class="title">BaseMapper</span>&lt;<span class="title">User</span>&gt; </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果把这个删了就运行不了了</p>
+<h1 id="CRUD"><a href="#CRUD" class="headerlink" title="CRUD"></a>CRUD</h1><h2 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h2><p>方法一：同上</p>
+<p>方法二：条件查询</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSelect</span><span class="params">()</span></span>&#123;</span><br><span class="line">  User user = <span class="keyword">new</span> User();</span><br><span class="line">  QueryWrapper&lt;User&gt; userQueryWrapper = <span class="keyword">new</span> QueryWrapper&lt;&gt;();</span><br><span class="line">  userQueryWrapper.le(<span class="string">"age"</span>,<span class="string">"20"</span>);</span><br><span class="line">  List&lt;User&gt; users = user.selectList(userQueryWrapper);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (User user1 : users) &#123;</span><br><span class="line">    System.out.println(user1);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="新增"><a href="#新增" class="headerlink" title="新增"></a>新增</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testInsert</span><span class="params">()</span></span>&#123;</span><br><span class="line">  User user = <span class="keyword">new</span> User();</span><br><span class="line">  user.setName(<span class="string">"刘备"</span>);</span><br><span class="line">  user.setAge(<span class="number">30</span>);</span><br><span class="line">  user.setPassword(<span class="string">"123456"</span>);</span><br><span class="line">  user.setUserName(<span class="string">"liubei"</span>);</span><br><span class="line">  user.setEmail(<span class="string">"liubei@itcast.cn"</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">boolean</span> insert = user.insert();</span><br><span class="line"></span><br><span class="line">  System.out.println(insert);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>返回插入是否成功</p>
+<img src="/images/2020/screencapture2020-04-24 PM6.15.09.jpg" width=500>
+
+<h2 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testUpdate</span><span class="params">()</span></span>&#123;</span><br><span class="line">  User user = <span class="keyword">new</span> User();</span><br><span class="line">  user.setId(<span class="number">5L</span>);</span><br><span class="line">  user.setAge(<span class="number">35</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">boolean</span> update = user.updateById();</span><br><span class="line">  System.out.println(update);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<img src="/images/2020/screencapture2020-04-24 PM6.16.55.jpg" width=500>
+
+<p>也可以根据条件（用Wrapper）更新</p>
+<h2 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testDelete</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  User user = <span class="keyword">new</span> User(); user.setId(<span class="number">7L</span>);</span><br><span class="line">  <span class="keyword">boolean</span> delete = user.deleteById();</span><br><span class="line">  System.out.println(delete);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<img src="/images/2020/screencapture2020-04-24 PM6.18.54.jpg" width=500>
+
+]]></content>
+      <categories>
+        <category>Note</category>
+      </categories>
+      <tags>
+        <tag>mybatis_plus</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MyBatisPlus笔记03 条件构造器</title>
+    <url>/2020/04/22/note-mybatisplus-03/</url>
+    <content><![CDATA[<blockquote>
+<p><a href="https://www.bilibili.com/video/BV1rE41197jR" target="_blank" rel="noopener">https://www.bilibili.com/video/BV1rE41197jR</a></p>
+<p>p33~39</p>
+</blockquote>
+<p>Wrapper接口实现类重点有AbstractWrapper和AbstractChainWrapper</p>
+<p>区别在于AbstractChainWrapper采用lambda表达式编写</p>
+<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><p>以allEq为例</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"> QueryWrapper&lt;User&gt; wrapper = <span class="keyword">new</span> QueryWrapper&lt;&gt;();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置条件</span></span><br><span class="line">Map&lt;String,Object&gt; params = <span class="keyword">new</span> HashMap&lt;&gt;(); </span><br><span class="line">params.put(<span class="string">"name"</span>, <span class="string">"张三"</span>);</span><br><span class="line">params.put(<span class="string">"age"</span>, <span class="string">"20"</span>); </span><br><span class="line">params.put(<span class="string">"password"</span>, <span class="keyword">null</span>);</span><br><span class="line"></span><br><span class="line">wrapper.allEq(params);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 查询</span></span><br><span class="line">List&lt;User&gt; users = <span class="keyword">this</span>.userMapper.selectList(wrapper);</span><br><span class="line"><span class="keyword">for</span> (User user : users) &#123;</span><br><span class="line">	System.out.println(user); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样生成的sql语句为</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> tb_user <span class="keyword">WHERE</span> <span class="keyword">password</span> <span class="keyword">IS</span> <span class="literal">NULL</span> <span class="keyword">AND</span> <span class="keyword">name</span> = ? <span class="keyword">AND</span> age = ?</span><br></pre></td></tr></table></figure>
+
+<p>第二个参数为false时忽略值为null的</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">wrapper.allEq(params,<span class="keyword">false</span>);</span><br></pre></td></tr></table></figure>
+
+<p>生成的sql语句为</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> tb_user <span class="keyword">WHERE</span> <span class="keyword">name</span> = ? <span class="keyword">AND</span> age = ?</span><br></pre></td></tr></table></figure>
+
+<p>还可以设置过滤器</p>
+<h1 id="基本比较操作"><a href="#基本比较操作" class="headerlink" title="基本比较操作"></a>基本比较操作</h1><p><a href="https://mybatis.plus/guide/wrapper.html#abstractwrapper" target="_blank" rel="noopener">官方文档</a></p>
+<h1 id="模糊查询"><a href="#模糊查询" class="headerlink" title="模糊查询"></a>模糊查询</h1><p>like、notLike、likeLeft、likeRight</p>
+<p>例如</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">QueryWrapper&lt;User&gt; wrapper = <span class="keyword">new</span> QueryWrapper&lt;&gt;();</span><br><span class="line"></span><br><span class="line">wrapper.like(<span class="string">"name"</span>, <span class="string">"曹"</span>); <span class="comment">// %曹%</span></span><br><span class="line"></span><br><span class="line">List&lt;User&gt; users = <span class="keyword">this</span>.userMapper.selectList(wrapper);</span><br><span class="line"><span class="keyword">for</span> (User user : users) &#123;</span><br><span class="line">	System.out.println(user); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h1><p>orderBy（默认Asc）、orderByAsc、orderByDesc</p>
+<p>例如</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">QueryWrapper&lt;User&gt; wrapper = <span class="keyword">new</span> QueryWrapper&lt;&gt;();</span><br><span class="line"></span><br><span class="line"><span class="comment">// SELECT id,user_name,password,name,age,email FROM tb_user ORDER BY age DESC</span></span><br><span class="line">wrapper.orderByDesc(<span class="string">"age"</span>);</span><br><span class="line"></span><br><span class="line">List&lt;User&gt; users = <span class="keyword">this</span>.userMapper.selectList(wrapper);</span><br><span class="line"><span class="keyword">for</span> (User user : users) &#123;</span><br><span class="line">	System.out.println(user); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="逻辑查询"><a href="#逻辑查询" class="headerlink" title="逻辑查询"></a>逻辑查询</h1><p>or、and</p>
+<p>例如</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">QueryWrapper&lt;User&gt; wrapper = <span class="keyword">new</span> QueryWrapper&lt;&gt;();</span><br><span class="line"></span><br><span class="line"><span class="comment">// SELECT id,user_name,password,name,age,email FROM tb_user WHERE name = ? OR age = ?</span></span><br><span class="line">wrapper.eq(<span class="string">"name"</span>,<span class="string">"李四"</span>).or().eq(<span class="string">"age"</span>, <span class="number">24</span>);</span><br><span class="line"></span><br><span class="line">List&lt;User&gt; users = <span class="keyword">this</span>.userMapper.selectList(wrapper);</span><br><span class="line"><span class="keyword">for</span> (User user : users) &#123;</span><br><span class="line">	System.out.println(user); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="指定查询字段"><a href="#指定查询字段" class="headerlink" title="指定查询字段"></a>指定查询字段</h1><p>select</p>
+<p>例如</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">QueryWrapper&lt;User&gt; wrapper = <span class="keyword">new</span> QueryWrapper&lt;&gt;();</span><br><span class="line"></span><br><span class="line"><span class="comment">// SELECT id,name,age FROM tb_user WHERE name = ? OR age = ?</span></span><br><span class="line">wrapper.eq(<span class="string">"name"</span>, <span class="string">"李四"</span>)</span><br><span class="line">.or()</span><br><span class="line">.eq(<span class="string">"age"</span>, <span class="number">24</span>)</span><br><span class="line">.select(<span class="string">"id"</span>, <span class="string">"name"</span>, <span class="string">"age"</span>);</span><br><span class="line"></span><br><span class="line">List&lt;User&gt; users = <span class="keyword">this</span>.userMapper.selectList(wrapper);</span><br><span class="line"><span class="keyword">for</span> (User user : users) &#123;</span><br><span class="line">	System.out.println(user); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Note</category>
+      </categories>
+      <tags>
+        <tag>mybatis_plus</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MyBatisPlus笔记02 配置</title>
+    <url>/2020/04/22/note-mybatisplus-02/</url>
+    <content><![CDATA[<blockquote>
+<p><a href="https://www.bilibili.com/video/BV1rE41197jR" target="_blank" rel="noopener">https://www.bilibili.com/video/BV1rE41197jR</a></p>
+<p>p27~32</p>
+</blockquote>
+<p><a href="https://mybatis.plus/config/#基本配置" target="_blank" rel="noopener">官方文档</a></p>
+<h1 id="基本配置"><a href="#基本配置" class="headerlink" title="基本配置"></a>基本配置</h1><h2 id="configLocation"><a href="#configLocation" class="headerlink" title="configLocation"></a>configLocation</h2><p>MyBatis 配置文件位置</p>
+<p>eg：resources文件夹下有mybatis-config.xml，要将其作为MyBatis配置文件</p>
+<p>则需在applications.properties中配置</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 指定全局的配置文件</span><br><span class="line">mybatis-plus.config-location &#x3D; classpath:mybatis-config.xml</span><br></pre></td></tr></table></figure>
+
+<h2 id="mapperLocations"><a href="#mapperLocations" class="headerlink" title="mapperLocations"></a>mapperLocations</h2><p>指定mapper文件位置</p>
+<p>当默认的Mapper不够用（如需要多表查询时），可以指定自定义的mapper，在里面写sql语句</p>
+<p>例如resources中新建mybatis文件夹，新建一个UserMapper.xml</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mybatis-plus.mapper-locations &#x3D; classpath*:mybatis&#x2F;*.xml</span><br></pre></td></tr></table></figure>
+
+<p>Maven多模块项目的扫描路径需以classpath*开头（即加在多个jar包下的xml文件）</p>
+<h2 id="typeAliasesPackage"><a href="#typeAliasesPackage" class="headerlink" title="typeAliasesPackage"></a>typeAliasesPackage</h2><p>给包中的类注册别名，注册后在 Mapper 对应的 XML 文件中可以直接使用类名，而不用使用全限定的类名</p>
+<p>例如</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mybatis-plus.type-aliases-package &#x3D; cn.itcast.mp.pojo</span><br></pre></td></tr></table></figure>
+
+<h1 id="进阶配置"><a href="#进阶配置" class="headerlink" title="进阶配置"></a>进阶配置</h1><p>大都为 MyBatis 原生支持的配置</p>
+<p>注意：如果制定了全局配置文件，需要在全局配置文件中配置，和application.properties不能共存</p>
+<h2 id="mapUnderscoreToCamelCase"><a href="#mapUnderscoreToCamelCase" class="headerlink" title="mapUnderscoreToCamelCase"></a>mapUnderscoreToCamelCase</h2><p>是否开启自动驼峰命名规则映射</p>
+<h2 id="cacheEnabled"><a href="#cacheEnabled" class="headerlink" title="cacheEnabled"></a>cacheEnabled</h2><p>开启Mybatis二级缓存，默认为 true</p>
+<h1 id="DB-策略配置"><a href="#DB-策略配置" class="headerlink" title="DB 策略配置"></a>DB 策略配置</h1><h2 id="idType"><a href="#idType" class="headerlink" title="idType"></a>idType</h2><p>全局默认主键类型，设置后，即可省略实体对象中的@TableId(type = IdType.AUTO)配置</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mybatis-plus.global-config.db-config.id-type &#x3D; auto</span><br></pre></td></tr></table></figure>
+
+<h2 id="tablePrefix"><a href="#tablePrefix" class="headerlink" title="tablePrefix"></a>tablePrefix</h2><p>指定表名前缀，全局配置后可省略@TableName()配置</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mybatis-plus.global-config.db-config.table-prefix &#x3D; tb_</span><br></pre></td></tr></table></figure>
+
+<p>如，User类默认会去找user表，如果要找tb_user表，需要使用注解，或者全局配置前缀</p>
+]]></content>
+      <categories>
+        <category>Note</category>
+      </categories>
+      <tags>
+        <tag>mybatis_plus</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MyBatisPlus笔记01 CRUD</title>
+    <url>/2020/04/21/note-mybatisplus-01/</url>
+    <content><![CDATA[<blockquote>
+<p><a href="https://www.bilibili.com/video/BV1rE41197jR" target="_blank" rel="noopener">https://www.bilibili.com/video/BV1rE41197jR</a></p>
+<p>p1~25</p>
+</blockquote>
+<h1 id="数据库准备"><a href="#数据库准备" class="headerlink" title="数据库准备"></a>数据库准备</h1><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 创建测试表</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`tb_user`</span> (</span><br><span class="line"><span class="string">`id`</span> <span class="built_in">bigint</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT <span class="keyword">COMMENT</span> <span class="string">'主键ID'</span>, <span class="string">`user_name`</span> <span class="built_in">varchar</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'用户名'</span>, <span class="string">`password`</span> <span class="built_in">varchar</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'密码'</span>,</span><br><span class="line"><span class="string">`name`</span> <span class="built_in">varchar</span>(<span class="number">30</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'姓名'</span>,</span><br><span class="line"><span class="string">`age`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'年龄'</span>, <span class="string">`email`</span> <span class="built_in">varchar</span>(<span class="number">50</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'邮箱'</span>, PRIMARY <span class="keyword">KEY</span> (<span class="string">`id`</span>)</span><br><span class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span> AUTO_INCREMENT=<span class="number">1</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 插入测试数据</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`tb_user`</span> (<span class="string">`id`</span>, <span class="string">`user_name`</span>, <span class="string">`password`</span>, <span class="string">`name`</span>, <span class="string">`age`</span>, <span class="string">`email`</span>) <span class="keyword">VALUES</span> (<span class="string">'1'</span>, <span class="string">'zhangsan'</span>, <span class="string">'123456'</span>, <span class="string">'张三'</span>, <span class="string">'18'</span>, <span class="string">'test1@itcast.cn'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`tb_user`</span> (<span class="string">`id`</span>, <span class="string">`user_name`</span>, <span class="string">`password`</span>, <span class="string">`name`</span>, <span class="string">`age`</span>, <span class="string">`email`</span>) <span class="keyword">VALUES</span> (<span class="string">'2'</span>, <span class="string">'lisi'</span>, <span class="string">'123456'</span>, <span class="string">'李四'</span>, <span class="string">'20'</span>, <span class="string">'test2@itcast.cn'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`tb_user`</span> (<span class="string">`id`</span>, <span class="string">`user_name`</span>, <span class="string">`password`</span>, <span class="string">`name`</span>, <span class="string">`age`</span>, <span class="string">`email`</span>) <span class="keyword">VALUES</span> (<span class="string">'3'</span>, <span class="string">'wangwu'</span>, <span class="string">'123456'</span>, <span class="string">'王五'</span>, <span class="string">'28'</span>, <span class="string">'test3@itcast.cn'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`tb_user`</span> (<span class="string">`id`</span>, <span class="string">`user_name`</span>, <span class="string">`password`</span>, <span class="string">`name`</span>, <span class="string">`age`</span>, <span class="string">`email`</span>) <span class="keyword">VALUES</span> (<span class="string">'4'</span>, <span class="string">'zhaoliu'</span>, <span class="string">'123456'</span>, <span class="string">'赵六'</span>, <span class="string">'21'</span>, <span class="string">'test4@itcast.cn'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`tb_user`</span> (<span class="string">`id`</span>, <span class="string">`user_name`</span>, <span class="string">`password`</span>, <span class="string">`name`</span>, <span class="string">`age`</span>, <span class="string">`email`</span>) <span class="keyword">VALUES</span> (<span class="string">'5'</span>, <span class="string">'sunqi'</span>, <span class="string">'123456'</span>, <span class="string">'孙七'</span>, <span class="string">'24'</span>, <span class="string">'test5@itcast.cn'</span>);</span><br></pre></td></tr></table></figure>
+
+<h1 id="创建工程"><a href="#创建工程" class="headerlink" title="创建工程"></a>创建工程</h1><h2 id="导入依赖"><a href="#导入依赖" class="headerlink" title="导入依赖"></a>导入依赖</h2><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!--mybatis-plus的springboot支持--&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.baomidou<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis-plus-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.1.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!--mysql驱动--&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>mysql<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mysql-connector-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.1.47<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!--简化bean代码的工具包--&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.projectlombok<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>lombok<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">optional</span>&gt;</span>true<span class="tag">&lt;/<span class="name">optional</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">exclusions</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.junit.vintage<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>junit-vintage-engine<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">exclusions</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h2><h3 id="log4j-properties"><a href="#log4j-properties" class="headerlink" title="log4j.properties"></a>log4j.properties</h3><figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="meta">log4j.rootLogger</span>=<span class="string">DEBUG,A1</span></span><br><span class="line"><span class="meta">log4j.appender.A1</span>=<span class="string">org.apache.log4j.ConsoleAppender</span></span><br><span class="line"><span class="meta">log4j.appender.A1.layout</span>=<span class="string">org.apache.log4j.PatternLayout</span></span><br><span class="line"><span class="meta">log4j.appender.A1.layout.ConversionPattern</span>=<span class="string">[%t] [%c]-[%p] %m%n</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="application-properties"><a href="#application-properties" class="headerlink" title="application.properties"></a>application.properties</h3><figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="meta">spring.application.name</span> = <span class="string">itcast-mp-springboot</span></span><br><span class="line"><span class="meta">spring.datasource.driver-class-name</span>=<span class="string">com.mysql.jdbc.Driver</span></span><br><span class="line"><span class="meta">spring.datasource.url</span>=<span class="string">jdbc:mysql://127.0.0.1:3306/groot? useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true&amp;allowMultiQueries=true&amp;useSSL=false</span></span><br><span class="line"><span class="meta">spring.datasource.username</span>=<span class="string">root</span></span><br><span class="line"><span class="meta">spring.datasource.password</span>=<span class="string">iamgroot</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="实体类"><a href="#实体类" class="headerlink" title="实体类"></a>实体类</h2><p>使用lombok注解生成get、set方法</p>
+<p>使用MybatisPlus注解指定表名</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.coconutnut.demo.pojo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.baomidou.mybatisplus.annotation.TableName;</span><br><span class="line"><span class="keyword">import</span> lombok.AllArgsConstructor;</span><br><span class="line"><span class="keyword">import</span> lombok.Data;</span><br><span class="line"><span class="keyword">import</span> lombok.NoArgsConstructor;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@NoArgsConstructor</span></span><br><span class="line"><span class="meta">@AllArgsConstructor</span></span><br><span class="line"><span class="meta">@TableName</span>(<span class="string">"tb_user"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">  	<span class="meta">@TableId</span>(type = IdType.AUTO)</span><br><span class="line">    <span class="keyword">private</span> Long id;</span><br><span class="line">    <span class="keyword">private</span> String userName;</span><br><span class="line">    <span class="keyword">private</span> String password;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> Integer age;</span><br><span class="line">    <span class="keyword">private</span> String email;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>用@TableId指定id的增长策略</p>
+<h3 id="TableField"><a href="#TableField" class="headerlink" title="@TableField"></a>@TableField</h3><p>可解决的问题：</p>
+<ol>
+<li><p>对象中的属性名和字段名不一致的问题(非驼峰)</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@TableField</span>(value = <span class="string">"email"</span>)</span><br><span class="line"><span class="keyword">private</span> String mail;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>对象中的属性字段在表中不存在的问题</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@TableField</span>(exist = <span class="keyword">false</span>)</span><br><span class="line"><span class="keyword">private</span> String address;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查询时不返回该字段的值</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@TableField</span>(select = <span class="keyword">false</span>)</span><br><span class="line"><span class="keyword">private</span> String password;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="Mapper接口"><a href="#Mapper接口" class="headerlink" title="Mapper接口"></a>Mapper接口</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.coconutnut.demo.mapper;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.baomidou.mybatisplus.core.mapper.BaseMapper;</span><br><span class="line"><span class="keyword">import</span> com.coconutnut.demo.pojo.User;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserMapper</span> <span class="keyword">extends</span> <span class="title">BaseMapper</span>&lt;<span class="title">User</span>&gt; </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="SpringBoot启动类"><a href="#SpringBoot启动类" class="headerlink" title="SpringBoot启动类"></a>SpringBoot启动类</h2><p>使用@MapperScan设置mapper接口的扫描包</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.coconutnut.demo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.mybatis.spring.annotation.MapperScan;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"></span><br><span class="line"><span class="meta">@MapperScan</span>(<span class="string">"com.coconutnut.demo.mapper"</span>) </span><br><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DemoApplication</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SpringApplication.run(DemoApplication<span class="class">.<span class="keyword">class</span>, <span class="title">args</span>)</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h2><img src="/images/2020/screencapture2020-04-21 PM12.22.59.jpg" width=300>
+
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.coconutnut.demo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.coconutnut.demo.mapper.UserMapper;</span><br><span class="line"><span class="keyword">import</span> com.coconutnut.demo.pojo.User;</span><br><span class="line"><span class="keyword">import</span> org.junit.jupiter.api.Test;</span><br><span class="line"><span class="keyword">import</span> org.junit.runner.RunWith;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.test.context.SpringBootTest;</span><br><span class="line"><span class="keyword">import</span> org.springframework.test.context.junit4.SpringRunner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RunWith</span>(SpringRunner<span class="class">.<span class="keyword">class</span>)</span></span><br><span class="line"><span class="class">@<span class="title">SpringBootTest</span></span></span><br><span class="line"><span class="class"><span class="title">class</span> <span class="title">DemoApplicationTests</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> UserMapper userMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSelect</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        List&lt;User&gt; userList = userMapper.selectList(<span class="keyword">null</span>);</span><br><span class="line">        <span class="keyword">for</span> (User user : userList) &#123;</span><br><span class="line">            System.out.println(user);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出</p>
+<img src="/images/2020/screencapture2020-04-21 PM12.19.07.jpg">
+
+<h2 id="DEBUG-依赖重复"><a href="#DEBUG-依赖重复" class="headerlink" title="DEBUG 依赖重复"></a>DEBUG 依赖重复</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">SLF4J: Class path contains multiple SLF4J bindings.</span><br></pre></td></tr></table></figure>
+
+<p>删除依赖中的</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.slf4j&lt;&#x2F;groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;slf4j-log4j12&lt;&#x2F;artifactId&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<h1 id="CRUD"><a href="#CRUD" class="headerlink" title="CRUD"></a>CRUD</h1><p>查看UserMapper继承的BaseMapper源码</p>
+<img src="/images/2020/screencapture2020-04-21 PM12.28.46.jpg">
+
+<p>CRUD方法都有了</p>
+<p>官网文档</p>
+<blockquote>
+<p><a href="https://mybatis.plus/guide/crud-interface.html#mapper-crud-接口" target="_blank" rel="noopener">https://mybatis.plus/guide/crud-interface.html#mapper-crud-%E6%8E%A5%E5%8F%A3</a></p>
+</blockquote>
+<p>直接测试</p>
+<h2 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 插入一条记录</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">insert</span><span class="params">(T entity)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.coconutnut.demo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.coconutnut.demo.mapper.UserMapper;</span><br><span class="line"><span class="keyword">import</span> com.coconutnut.demo.pojo.User;</span><br><span class="line"><span class="keyword">import</span> org.junit.Test;</span><br><span class="line"><span class="keyword">import</span> org.junit.runner.RunWith;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.test.context.SpringBootTest;</span><br><span class="line"><span class="keyword">import</span> org.springframework.test.context.junit4.SpringRunner;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RunWith</span>(SpringRunner<span class="class">.<span class="keyword">class</span>)</span></span><br><span class="line"><span class="class">@<span class="title">SpringBootTest</span></span></span><br><span class="line"><span class="class"><span class="title">public</span> <span class="title">class</span> <span class="title">TestUserMapper</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> UserMapper userMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testInsert</span><span class="params">()</span></span>&#123;</span><br><span class="line">        User user = <span class="keyword">new</span> User();</span><br><span class="line">        user.setAge(<span class="number">20</span>);</span><br><span class="line">        user.setUserName(<span class="string">"zhangsi"</span>);</span><br><span class="line">        user.setName(<span class="string">"张四"</span>);</span><br><span class="line">        user.setEmail(<span class="string">"zhangsi@163.com"</span>);</span><br><span class="line">        user.setPassword(<span class="string">"123456"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> result = <span class="keyword">this</span>.userMapper.insert(user); <span class="comment">// 返回的result是受影响的行数，并不是自增后的id</span></span><br><span class="line">        System.out.println(<span class="string">"result = "</span> + result);</span><br><span class="line">        System.out.println(user.getId()); <span class="comment">// 自增后的id会回填到对象中</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行后，数据库变化</p>
+<img src="/images/2020/screencapture2020-04-21 PM12.57.42.jpg">
+
+<p>输出</p>
+<img src="/images/2020/screencapture2020-04-21 PM12.57.29.jpg">
+
+<h2 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 根据 whereEntity 条件，更新记录</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">update</span><span class="params">(@Param(Constants.ENTITY)</span> T entity, @<span class="title">Param</span><span class="params">(Constants.WRAPPER)</span> Wrapper&lt;T&gt; updateWrapper)</span>;</span><br><span class="line"><span class="comment">// 根据 ID 修改</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">updateById</span><span class="params">(@Param(Constants.ENTITY)</span> T entity)</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="根据id更新"><a href="#根据id更新" class="headerlink" title="根据id更新"></a>根据id更新</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testUpdateById</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  User user = <span class="keyword">new</span> User();</span><br><span class="line">  user.setId(<span class="number">1L</span>);</span><br><span class="line">  user.setAge(<span class="number">21</span>);</span><br><span class="line">  <span class="comment">//根据id更新，更新不为null的字段</span></span><br><span class="line">  <span class="keyword">this</span>.userMapper.updateById(user);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行后</p>
+<img src="/images/2020/screencapture2020-04-21 PM2.29.48.jpg">
+
+<h3 id="根据条件更新"><a href="#根据条件更新" class="headerlink" title="根据条件更新"></a>根据条件更新</h3><h4 id="QueryWrapper"><a href="#QueryWrapper" class="headerlink" title="QueryWrapper"></a>QueryWrapper</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testUpdate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  User user = <span class="keyword">new</span> User();</span><br><span class="line">  user.setAge(<span class="number">22</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 更新的条件</span></span><br><span class="line">  QueryWrapper&lt;User&gt; wrapper = <span class="keyword">new</span> QueryWrapper&lt;&gt;();</span><br><span class="line">  <span class="comment">// wrapper.eq("id", 6);</span></span><br><span class="line">  wrapper.eq(<span class="string">"user_name"</span>,<span class="string">"zhangsan"</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 执行更新操作</span></span><br><span class="line">  <span class="keyword">int</span> result = <span class="keyword">this</span>.userMapper.update(user, wrapper);</span><br><span class="line">  System.out.println(<span class="string">"result = "</span> + result);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>wrapper中设置属性用的是mysql表中的名称</p>
+<p>执行后</p>
+<img src="/images/2020/screencapture2020-04-21 PM2.35.03.jpg">
+
+<h4 id="UpdateWrapper"><a href="#UpdateWrapper" class="headerlink" title="UpdateWrapper"></a>UpdateWrapper</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testUpdate2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="comment">//更新的条件以及字段</span></span><br><span class="line">  UpdateWrapper&lt;User&gt; wrapper = <span class="keyword">new</span> UpdateWrapper&lt;&gt;();</span><br><span class="line">  wrapper.eq(<span class="string">"id"</span>, <span class="number">6</span>).set(<span class="string">"age"</span>, <span class="number">23</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">//执行更新操作</span></span><br><span class="line">  <span class="keyword">int</span> result = <span class="keyword">this</span>.userMapper.update(<span class="keyword">null</span>, wrapper);</span><br><span class="line">  System.out.println(<span class="string">"result = "</span> + result);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行后</p>
+<img src="/images/2020/screencapture2020-04-21 PM2.37.47.jpg">
+
+<h2 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 根据 entity 条件，删除记录</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">delete</span><span class="params">(@Param(Constants.WRAPPER)</span> Wrapper&lt;T&gt; wrapper)</span>;</span><br><span class="line"><span class="comment">// 删除（根据ID 批量删除）</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">deleteBatchIds</span><span class="params">(@Param(Constants.COLLECTION)</span> Collection&lt;? extends Serializable&gt; idList)</span>;</span><br><span class="line"><span class="comment">// 根据 ID 删除</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">deleteById</span><span class="params">(Serializable id)</span></span>;</span><br><span class="line"><span class="comment">// 根据 columnMap 条件，删除记录</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">deleteByMap</span><span class="params">(@Param(Constants.COLUMN_MAP)</span> Map&lt;String, Object&gt; columnMap)</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="deleteById"><a href="#deleteById" class="headerlink" title="deleteById"></a>deleteById</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testDeleteById</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> result = <span class="keyword">this</span>.userMapper.deleteById(<span class="number">6L</span>);</span><br><span class="line">  System.out.println(<span class="string">"result = "</span> + result);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行后</p>
+<img src="/images/2020/screencapture2020-04-21 PM2.41.34.jpg">
+
+<h3 id="deleteByMap"><a href="#deleteByMap" class="headerlink" title="deleteByMap"></a>deleteByMap</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testDeleteByMap</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 将columnMap中的元素设置为删除的条件，多个之间为and关系</span></span><br><span class="line">  Map&lt;String, Object&gt; columnMap = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">  columnMap.put(<span class="string">"age"</span>,<span class="number">20</span>);</span><br><span class="line">  columnMap.put(<span class="string">"name"</span>,<span class="string">"张三"</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">int</span> result = <span class="keyword">this</span>.userMapper.deleteByMap(columnMap);</span><br><span class="line">  System.out.println(<span class="string">"result = "</span> + result);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行后</p>
+<img src="/images/2020/screencapture2020-04-21 PM2.43.36.jpg">
+
+<p>没有符合条件的</p>
+<h3 id="delete"><a href="#delete" class="headerlink" title="delete"></a>delete</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testDelete</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="comment">// 用法1</span></span><br><span class="line"><span class="comment">//        QueryWrapper&lt;User&gt; wrapper = new QueryWrapper&lt;&gt;();</span></span><br><span class="line"><span class="comment">//        wrapper.eq("user_name","zhangsan");</span></span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 用法2</span></span><br><span class="line">  User user = <span class="keyword">new</span> User();</span><br><span class="line">  user.setAge(<span class="number">20</span>);</span><br><span class="line">  user.setName(<span class="string">"张三"</span>);</span><br><span class="line">  <span class="comment">// 将实体对象进行包装，包装为操作条件</span></span><br><span class="line">  QueryWrapper&lt;User&gt; wrapper = <span class="keyword">new</span> QueryWrapper&lt;&gt;(user);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">int</span> result = <span class="keyword">this</span>.userMapper.delete(wrapper);</span><br><span class="line">  System.out.println(<span class="string">"result = "</span> + result);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>推荐使用用法2</p>
+<h3 id="deleteByIds"><a href="#deleteByIds" class="headerlink" title="deleteByIds"></a>deleteByIds</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testDeleteByIds</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> result = <span class="keyword">this</span>.userMapper.deleteBatchIds(Arrays.asList(<span class="number">1L</span>,<span class="number">10L</span>,<span class="number">20L</span>)); </span><br><span class="line">  System.out.println(<span class="string">"result = "</span> + result);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 根据 ID 查询</span></span><br><span class="line"><span class="function">T <span class="title">selectById</span><span class="params">(Serializable id)</span></span>;</span><br><span class="line"><span class="comment">// 根据 entity 条件，查询一条记录</span></span><br><span class="line"><span class="function">T <span class="title">selectOne</span><span class="params">(@Param(Constants.WRAPPER)</span> Wrapper&lt;T&gt; queryWrapper)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 查询（根据ID 批量查询）</span></span><br><span class="line"><span class="function">List&lt;T&gt; <span class="title">selectBatchIds</span><span class="params">(@Param(Constants.COLLECTION)</span> Collection&lt;? extends Serializable&gt; idList)</span>;</span><br><span class="line"><span class="comment">// 根据 entity 条件，查询全部记录</span></span><br><span class="line"><span class="function">List&lt;T&gt; <span class="title">selectList</span><span class="params">(@Param(Constants.WRAPPER)</span> Wrapper&lt;T&gt; queryWrapper)</span>;</span><br><span class="line"><span class="comment">// 查询（根据 columnMap 条件）</span></span><br><span class="line"><span class="function">List&lt;T&gt; <span class="title">selectByMap</span><span class="params">(@Param(Constants.COLUMN_MAP)</span> Map&lt;String, Object&gt; columnMap)</span>;</span><br><span class="line"><span class="comment">// 根据 Wrapper 条件，查询全部记录</span></span><br><span class="line">List&lt;Map&lt;String, Object&gt;&gt; selectMaps(<span class="meta">@Param</span>(Constants.WRAPPER) Wrapper&lt;T&gt; queryWrapper);</span><br><span class="line"><span class="comment">// 根据 Wrapper 条件，查询全部记录。注意： 只返回第一个字段的值</span></span><br><span class="line"><span class="function">List&lt;Object&gt; <span class="title">selectObjs</span><span class="params">(@Param(Constants.WRAPPER)</span> Wrapper&lt;T&gt; queryWrapper)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 根据 entity 条件，查询全部记录（并翻页）</span></span><br><span class="line"><span class="function">IPage&lt;T&gt; <span class="title">selectPage</span><span class="params">(IPage&lt;T&gt; page, @Param(Constants.WRAPPER)</span> Wrapper&lt;T&gt; queryWrapper)</span>;</span><br><span class="line"><span class="comment">// 根据 Wrapper 条件，查询全部记录（并翻页）</span></span><br><span class="line">IPage&lt;Map&lt;String, Object&gt;&gt; selectMapsPage(IPage&lt;T&gt; page, <span class="meta">@Param</span>(Constants.WRAPPER) Wrapper&lt;T&gt; queryWrapper);</span><br><span class="line"><span class="comment">// 根据 Wrapper 条件，查询总记录数</span></span><br><span class="line"><span class="function">Integer <span class="title">selectCount</span><span class="params">(@Param(Constants.WRAPPER)</span> Wrapper&lt;T&gt; queryWrapper)</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="selectById"><a href="#selectById" class="headerlink" title="selectById"></a>selectById</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSelectById</span><span class="params">()</span> </span>&#123; </span><br><span class="line">  User user = <span class="keyword">this</span>.userMapper.selectById(<span class="number">2L</span>);</span><br><span class="line">  System.out.println(<span class="string">"result = "</span> + user);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行后</p>
+<img src="/images/2020/screencapture2020-04-21 PM2.52.44.jpg">
+
+<p>没查到为null</p>
+<h3 id="selectOne"><a href="#selectOne" class="headerlink" title="selectOne"></a>selectOne</h3><p>不存在返回null</p>
+<p>查到多条报错</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSelectOne</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  QueryWrapper&lt;User&gt; wrapper = <span class="keyword">new</span> QueryWrapper&lt;User&gt;();</span><br><span class="line">  wrapper.eq(<span class="string">"name"</span>, <span class="string">"李四"</span>);</span><br><span class="line">  User user = <span class="keyword">this</span>.userMapper.selectOne(wrapper);</span><br><span class="line">  System.out.println(user);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">User(id&#x3D;2, userName&#x3D;lisi, password&#x3D;123456, name&#x3D;李四, age&#x3D;20, email&#x3D;test2@itcast.cn)</span><br></pre></td></tr></table></figure>
+
+<h3 id="selectBatchIds"><a href="#selectBatchIds" class="headerlink" title="selectBatchIds"></a>selectBatchIds</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSelectBatchIds</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  List&lt;User&gt; users = <span class="keyword">this</span>.userMapper.selectBatchIds(Arrays.asList(<span class="number">2L</span>, <span class="number">3L</span>, <span class="number">100L</span>));</span><br><span class="line">  <span class="keyword">for</span> (User user : users) &#123;</span><br><span class="line">    System.out.println(user);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行后</p>
+<img src="/images/2020/screencapture2020-04-21 PM2.54.08.jpg">
+
+<h3 id="selectCount"><a href="#selectCount" class="headerlink" title="selectCount"></a>selectCount</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSelectCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  QueryWrapper&lt;User&gt; wrapper = <span class="keyword">new</span> QueryWrapper&lt;User&gt;();</span><br><span class="line">  wrapper.gt(<span class="string">"age"</span>, <span class="number">23</span>); <span class="comment">// 年龄大于23岁</span></span><br><span class="line">  Integer count = <span class="keyword">this</span>.userMapper.selectCount(wrapper);</span><br><span class="line">  System.out.println(<span class="string">"count = "</span> + count);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">count &#x3D; 2</span><br></pre></td></tr></table></figure>
+
+<h3 id="selectList"><a href="#selectList" class="headerlink" title="selectList"></a>selectList</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSelectList</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  QueryWrapper&lt;User&gt; wrapper = <span class="keyword">new</span> QueryWrapper&lt;User&gt;();</span><br><span class="line">  wrapper.gt(<span class="string">"age"</span>, <span class="number">23</span>); <span class="comment">// 年龄大于23岁</span></span><br><span class="line">  <span class="comment">//根据条件查询数据</span></span><br><span class="line">  List&lt;User&gt; users = <span class="keyword">this</span>.userMapper.selectList(wrapper);</span><br><span class="line">  <span class="keyword">for</span> (User user : users) &#123;</span><br><span class="line">    System.out.println(<span class="string">"user = "</span> + user);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行后</p>
+<img src="/images/2020/screencapture2020-04-21 PM3.03.34.jpg">
+
+<h3 id="selectPage"><a href="#selectPage" class="headerlink" title="selectPage"></a>selectPage</h3><p>配置分页插件</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;</span><br><span class="line"><span class="keyword">import</span> org.mybatis.spring.annotation.MapperScan;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@MapperScan</span>(<span class="string">"com.coconutnut.demo.mapper"</span>) <span class="comment">// 设置mapper接口的扫描包</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MybatisPlusConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> PaginationInterceptor <span class="title">paginationInterceptor</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> PaginationInterceptor();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>有了这个配置类之后，DemoApplication中的@MapperScan可以去掉</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSelectPage</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  QueryWrapper&lt;User&gt; wrapper = <span class="keyword">new</span> QueryWrapper&lt;User&gt;();</span><br><span class="line">  wrapper.gt(<span class="string">"age"</span>, <span class="number">20</span>); <span class="comment">// 年龄大于20岁</span></span><br><span class="line">  Page&lt;User&gt; page = <span class="keyword">new</span> Page&lt;&gt;(<span class="number">2</span>,<span class="number">2</span>);</span><br><span class="line">  IPage&lt;User&gt; iPage = <span class="keyword">this</span>.userMapper.selectPage(page, wrapper);</span><br><span class="line"></span><br><span class="line">  System.out.println(<span class="string">"数据总条数:"</span> + iPage.getTotal());</span><br><span class="line">  System.out.println(<span class="string">"总页数:"</span> + iPage.getPages());</span><br><span class="line">  List&lt;User&gt; users = iPage.getRecords();</span><br><span class="line">  <span class="keyword">for</span> (User user : users) &#123;</span><br><span class="line">    System.out.println(<span class="string">"user = "</span> + user);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行后</p>
+<img src="/images/2020/screencapture2020-04-21 PM3.11.25.jpg">
+
+]]></content>
+      <categories>
+        <category>Note</category>
+      </categories>
+      <tags>
+        <tag>mybatis_plus</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SpringCloud笔记05 OpenFeign服务消费者</title>
+    <url>/2020/04/21/note-springcloud-05/</url>
+    <content><![CDATA[<blockquote>
+<p><a href="https://blog.csdn.net/ThinkWon/article/details/103735751" target="_blank" rel="noopener">https://blog.csdn.net/ThinkWon/article/details/103735751</a></p>
+</blockquote>
+<p>Spring Cloud OpenFeign 是声明式的服务调用工具，它整合了Ribbon和Hystrix，拥有负载均衡和服务容错功能</p>
+<h1 id="创建feign-service模块"><a href="#创建feign-service模块" class="headerlink" title="创建feign-service模块"></a>创建feign-service模块</h1><h2 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h2><p>教程给的依赖是</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-netflix-eureka-client<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-openfeign<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>换成consul注册中心，改成</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-consul-discovery<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-actuator<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-openfeign<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>发现没有spring cloud版本和依赖管理，加上</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">spring-cloud.version</span>&gt;</span>Hoxton.RELEASE<span class="tag">&lt;/<span class="name">spring-cloud.version</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencyManagement</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-dependencies<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;spring-cloud.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">type</span>&gt;</span>pom<span class="tag">&lt;/<span class="name">type</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">scope</span>&gt;</span>import<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencyManagement</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>查看右侧Maven栏中没有红线</p>
+<p>下一步</p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>教程给的配置</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8701</span></span><br><span class="line"></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">feign-service</span></span><br><span class="line"></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line">  <span class="attr">client:</span></span><br><span class="line">    <span class="attr">register-with-eureka:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">fetch-registry:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">service-url:</span></span><br><span class="line">      <span class="attr">defaultZone:</span> <span class="string">http://localhost:8001/eureka/</span></span><br></pre></td></tr></table></figure>
+
+<p>换成consul</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment">#eureka:</span></span><br><span class="line"><span class="comment">#  client:</span></span><br><span class="line"><span class="comment">#    register-with-eureka: true</span></span><br><span class="line"><span class="comment">#    fetch-registry: true</span></span><br><span class="line"><span class="comment">#    service-url:</span></span><br><span class="line"><span class="comment">#      defaultZone: http://localhost:8001/eureka/</span></span><br><span class="line"></span><br><span class="line"><span class="attr">cloud:</span></span><br><span class="line">  <span class="attr">consul:</span></span><br><span class="line">    <span class="attr">host:</span> <span class="string">localhost</span></span><br><span class="line">    <span class="attr">port:</span> <span class="number">8500</span></span><br><span class="line">    <span class="attr">discovery:</span></span><br><span class="line">      <span class="attr">service-name:</span> <span class="string">$&#123;spring.application.name&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="EnableFeignClients启动功能"><a href="#EnableFeignClients启动功能" class="headerlink" title="@EnableFeignClients启动功能"></a>@EnableFeignClients启动功能</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">@EnableFeignClients</span><br><span class="line">@EnableDiscoveryClient</span><br><span class="line">@SpringBootApplication</span><br><span class="line">public class FeignServiceApplication &#123;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        SpringApplication.run(FeignServiceApplication.class, args);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="接口和控制器"><a href="#接口和控制器" class="headerlink" title="接口和控制器"></a>接口和控制器</h2><p>根据源码补齐其它代码</p>
+<img src="/images/2020/screencapture2020-04-21 AM9.49.59.jpg" width=300>
+
+<h1 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h1><p>启动consul服务器，两个user-service，feign-service服务</p>
+<img src="/images/2020/screencapture2020-04-21 AM9.52.28.jpg">
+
+<p>调用<a href="http://localhost:8701/user/1四次" target="_blank" rel="noopener">http://localhost:8701/user/1四次</a></p>
+<img src="/images/2020screencapture2020-04-21 AM9.53.09.jpg">
+
+<p>交替打印</p>
+<img src="/images/2020/screencapture2020-04-21 AM9.53.16.jpg">
+
+<h1 id="服务降级"><a href="#服务降级" class="headerlink" title="服务降级"></a>服务降级</h1><p>前面UserFallbackService也拷过来了</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@FeignClient</span>(value = <span class="string">"user-service"</span>, fallback = UserFallbackService<span class="class">.<span class="keyword">class</span>)</span></span><br><span class="line"><span class="class"><span class="title">public</span> <span class="title">interface</span> <span class="title">UserService</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注释也加了</p>
+<p>修改application.yml，开启Hystrix功能</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment">#在Feign中开启Hystrix</span></span><br><span class="line"><span class="attr">feign:</span></span><br><span class="line">  <span class="attr">hystrix:</span></span><br><span class="line">    <span class="attr">enabled:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>关闭两个user-service服务，重新启动feign-service</p>
+<p>调用<a href="http://localhost:8701/user/1进行测试" target="_blank" rel="noopener">http://localhost:8701/user/1进行测试</a></p>
+<p>发现被降级</p>
+<img src="/images/2020/screencapture2020-04-21 AM9.57.28.jpg">
+
+<h1 id="日志打印功能"><a href="#日志打印功能" class="headerlink" title="日志打印功能"></a>日志打印功能</h1><p>用FeignConfig配置类</p>
+<p>在application.yml中配置需要开启日志的Feign客户端</p>
+<p>可设置日志级别</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><img src="/images/2020/screencapture2020-04-21 AM10.11.43.jpg">
+
+]]></content>
+      <categories>
+        <category>Note</category>
+      </categories>
+      <tags>
+        <tag>springcloud</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SpringCloud笔记04 Consul服务治理</title>
     <url>/2020/04/20/note-springcloud-04/</url>
     <content><![CDATA[<blockquote>
 <p><a href="https://www.consul.io/" target="_blank" rel="noopener">https://www.consul.io/</a></p>
@@ -41,7 +584,7 @@
 <h1 id="注册到consul"><a href="#注册到consul" class="headerlink" title="注册到consul"></a>注册到consul</h1><blockquote>
 <p><a href="https://juejin.im/post/5db05582f265da4d4c20180f" target="_blank" rel="noopener">https://juejin.im/post/5db05582f265da4d4c20180f</a></p>
 </blockquote>
-<p>将以前注册到euruka的服务改到consul</p>
+<p>将以前注册到eureka的服务改到consul</p>
 <p>user-service模块</p>
 <p>修改依赖</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--        &lt;dependency&gt;--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--            &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--            &lt;artifactId&gt;spring-cloud-starter-netflix-eureka-client&lt;/artifactId&gt;--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--        &lt;/dependency&gt;--&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-consul-discovery<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
@@ -114,14 +657,6 @@
 
 <p>调用</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">this</span>.$axios.get(<span class="string">'/api/findall'</span>).then(<span class="function"><span class="params">response</span> =&gt;</span> &#123;</span><br><span class="line">                <span class="built_in">console</span>.log(response.data)</span><br><span class="line">            &#125;).catch(<span class="function"><span class="keyword">function</span> (<span class="params">error</span>) </span>&#123;</span><br><span class="line">                alert(error);</span><br><span class="line">            &#125;);</span><br></pre></td></tr></table></figure>
-
-<hr>
-<p>部署到Github Page之后，又不行了</p>
-<img src="/images/2020/screencapture2020-04-20 AM10.35.46.jpg">
-
-
-
-<p>–TODO–</p>
 ]]></content>
       <categories>
         <category>Debug</category>
