@@ -13,30 +13,6 @@
       </tags>
   </entry>
   <entry>
-    <title>课程总结 压力与情绪管理</title>
-    <url>/2020/05/02/mindmap-stress/</url>
-    <content><![CDATA[<img src="/images/2020/stress.png">]]></content>
-      <categories>
-        <category>Other</category>
-      </categories>
-      <tags>
-        <tag>mindmap</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>课程总结 信息素养与实践</title>
-    <url>/2020/05/02/mindmap-paper/</url>
-    <content><![CDATA[<img src="/images/2020/paper.png">
-
-]]></content>
-      <categories>
-        <category>Other</category>
-      </categories>
-      <tags>
-        <tag>mindmap</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>git笔记</title>
     <url>/2020/05/02/note-git/</url>
     <content><![CDATA[<blockquote>
@@ -5018,6 +4994,30 @@ Process finished with exit code 0</code></pre>]]></content>
       </categories>
       <tags>
         <tag>tool</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>课程总结 压力与情绪管理</title>
+    <url>/2020/02/22/mindmap-stress/</url>
+    <content><![CDATA[<img src="/images/2020/stress.png">]]></content>
+      <categories>
+        <category>Other</category>
+      </categories>
+      <tags>
+        <tag>mindmap</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>课程总结 信息素养与实践</title>
+    <url>/2020/02/22/mindmap-paper/</url>
+    <content><![CDATA[<img src="/images/2020/paper.png">
+
+]]></content>
+      <categories>
+        <category>Other</category>
+      </categories>
+      <tags>
+        <tag>mindmap</tag>
       </tags>
   </entry>
 </search>
