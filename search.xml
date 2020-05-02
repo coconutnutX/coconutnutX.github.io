@@ -1,6 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>读书笔记 深度工作</title>
+    <url>/2020/05/02/deepwork/</url>
+    <content><![CDATA[<img src="/images/2020/deepwork.png">]]></content>
+      <categories>
+        <category>Memo</category>
+      </categories>
+      <tags>
+        <tag>mindmap</tag>
+        <tag>excerpt</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>课程总结 压力与情绪管理</title>
+    <url>/2020/05/02/mindmap-stress/</url>
+    <content><![CDATA[<img src="/images/2020/stress.png">]]></content>
+      <categories>
+        <category>Other</category>
+      </categories>
+      <tags>
+        <tag>mindmap</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>课程总结 信息素养与实践</title>
+    <url>/2020/05/02/mindmap-paper/</url>
+    <content><![CDATA[<img src="/images/2020/paper.png">
+
+]]></content>
+      <categories>
+        <category>Other</category>
+      </categories>
+      <tags>
+        <tag>mindmap</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>git笔记</title>
+    <url>/2020/05/02/note-git/</url>
+    <content><![CDATA[<blockquote>
+<p><a href="https://github.com/pcottle/learnGitBranching" target="_blank" rel="noopener">https://github.com/pcottle/learnGitBranching</a></p>
+</blockquote>
+<img src="/images/2020/git.png">
+
+]]></content>
+      <categories>
+        <category>Note</category>
+      </categories>
+      <tags>
+        <tag>tool</tag>
+        <tag>mindmap</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>四月每日一题打卡完工纪念</title>
     <url>/2020/04/30/memo/</url>
     <content><![CDATA[<img src="/images/2020/screencapture2020-04-30 PM4.03.43.jpg" width=300>
@@ -994,7 +1047,7 @@
         <category>Note</category>
       </categories>
       <tags>
-        <tag>axure</tag>
+        <tag>tool</tag>
       </tags>
   </entry>
   <entry>
@@ -2011,7 +2064,6 @@
 </blockquote>
 <p>这条规律似乎适用很广呢</p>
 <p>唉 这么看的话之前自己的App为了简化操作而疯狂缩减可调节的参数实在不妥</p>
-<p>引以为戒</p>
 ]]></content>
       <categories>
         <category>Memo</category>
@@ -4912,7 +4964,7 @@ Process finished with exit code 0</code></pre>]]></content>
       </tags>
   </entry>
   <entry>
-    <title>IntelliJ IDEA 入门笔记</title>
+    <title>IntelliJ IDEA 笔记</title>
     <url>/2020/02/24/note-idea/</url>
     <content><![CDATA[<blockquote>
 <p><a href="https://www.bilibili.com/video/av71609179?from=search&amp;seid=7606544420555480673" target="_blank" rel="noopener">https://www.bilibili.com/video/av71609179?from=search&amp;seid=7606544420555480673</a></p>
