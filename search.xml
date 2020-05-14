@@ -1,6 +1,207 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Anki也太优秀了吧！</title>
+    <url>/2020/05/12/memo/</url>
+    <content><![CDATA[<p>以前看剧的时候喜欢截屏，把不认识的词记录下来，零零散散屯了好多词</p>
+<img src="/images/2020/screencapture2020-05-12 PM11.34.40.jpg">
+
+<p>但是并不好复习，背单词的时候还是不认识</p>
+<p>而Anki！加上Image Occlusion Enhanced插件！完美解决！</p>
+<img src="/images/2020/screencapture2020-05-12 PM11.37.57.jpg">
+
+<p>拖个框遮住单词就好了，再在header里面填上单词</p>
+<p>以后的复习安排就不用自己管了~</p>
+<img src="/images/2020/screencapture2020-05-12 PM11.38.57.jpg">
+
+<p>一个问题是header里填的单词会在复习时显示</p>
+<p>但是！</p>
+<p>还能编辑卡片模板是什么神仙功能啊！注释掉header就行了嗷~</p>
+<img src="/images/2020/screencapture2020-05-12 PM11.41.31.jpg">
+
+<p>太美妙了快乐得原地转圈~</p>
+<p>仿佛能看见日后蹭蹭增长的词汇量</p>
+<p>我爱Anki😍😍😍</p>
+<hr>
+<p>发现现在真的是用了好多效率软件，简直是强迫症，为了找个满意的能从安卓应用商店到App Store到Google Play翻个遍，尤其是背单词和任务管理，扇贝不背百词斩、滴答ToDo水滴…最后剩下的都是现在最喜欢的，不知道以后还能不能发现更好的~</p>
+<ul>
+<li>日程管理：Apple自带的日历📅</li>
+<li>任务管理：Trello</li>
+<li>背单词：墨墨</li>
+<li>背诗：年轮（估计要转移到Anki了哈哈）</li>
+<li>习惯打卡：Dot Habit（还没用到一个月，待定）</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Memo</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>pyenv配置不生效</title>
+    <url>/2020/05/07/debug/</url>
+    <content><![CDATA[<h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><p>以前装过pyenv，可以正常使用</p>
+<p>今天用的时候发现配置的版本没有生效</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">coconutnut@Ss-MacBook-Pro ~ % pyenv versions</span><br><span class="line">* system (set by &#x2F;Users&#x2F;coconutnut&#x2F;.pyenv&#x2F;version)</span><br><span class="line">  3.7.4</span><br><span class="line">coconutnut@Ss-MacBook-Pro ~ % pyenv global 3.7.4</span><br><span class="line">coconutnut@Ss-MacBook-Pro ~ % python -V</span><br><span class="line">Python 2.7.17</span><br></pre></td></tr></table></figure>
+
+<h1 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h1><blockquote>
+<p><a href="https://blog.csdn.net/vencent7/article/details/76849849" target="_blank" rel="noopener">https://blog.csdn.net/vencent7/article/details/76849849</a></p>
+</blockquote>
+<p>也许是以前装Jupiter或者用Tensorflow的时候把环境搞坏了？</p>
+<p>试试把pyenv的配置放在.bash_profile的最后</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># pyenv</span><br><span class="line">export PYENV_ROOT&#x3D;&quot;$HOME&#x2F;.pyenv&quot;</span><br><span class="line">export PATH&#x3D;&quot;$PYENV_ROOT&#x2F;bin:$PATH&quot;</span><br><span class="line">eval &quot;$(pyenv init -)&quot;</span><br><span class="line"># eval &quot;$(pyenv virtualenv-init -)&quot;</span><br></pre></td></tr></table></figure>
+
+<p>再试试</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">coconutnut@Ss-MacBook-Pro ~ % source ~&#x2F;.bash_profile</span><br><span class="line">coconutnut@Ss-MacBook-Pro ~ % python -V            </span><br><span class="line">Python 3.7.4</span><br></pre></td></tr></table></figure>
+
+<p>成功</p>
+<p>PS：</p>
+<p>安装pyenv的教程有的改.bash_profile有的改.bashrc</p>
+<blockquote>
+<p><a href="https://www.bbsmax.com/A/lk5aj7Eld1/" target="_blank" rel="noopener">https://www.bbsmax.com/A/lk5aj7Eld1/</a></p>
+<p>在安装成功之后需要在<code>.bashrc</code>或者<code>.bash_profile</code>中添加三行来开启自动补全</p>
+</blockquote>
+<p>应该都是可以的</p>
+]]></content>
+      <categories>
+        <category>Debug</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>记录服务器部署</title>
+    <url>/2020/05/07/memo-server/</url>
+    <content><![CDATA[<p>以前的服务器过期了，重新买了部署，希望这次少踩点坑</p>
+<p>服务器环境：Ubuntu 16.04 64位</p>
+<h1 id="服务器配置"><a href="#服务器配置" class="headerlink" title="服务器配置"></a>服务器配置</h1><ol>
+<li><p>重置密码&amp;重启实例</p>
+</li>
+<li><p>添加安全组规则</p>
+<blockquote>
+<p><a href="https://help.aliyun.com/document_detail/151694.html?spm=a2c4g.11186623.6.582.56d15bbbDfXG8X" target="_blank" rel="noopener">https://help.aliyun.com/document_detail/151694.html?spm=a2c4g.11186623.6.582.56d15bbbDfXG8X</a></p>
+</blockquote>
+<p>顺便把8000~9000都开了</p>
+</li>
+</ol>
+<h1 id="终端访问"><a href="#终端访问" class="headerlink" title="终端访问"></a>终端访问</h1><ol>
+<li><p>ssh连接</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ssh root@&lt;实例公网IP地址&gt;</span><br></pre></td></tr></table></figure>
+
+<p>✌️</p>
+</li>
+</ol>
+<h1 id="安装jdk和Tomcat"><a href="#安装jdk和Tomcat" class="headerlink" title="安装jdk和Tomcat"></a>安装jdk和Tomcat</h1><ol>
+<li><p>下载jdk-14.0.1_linux-x64_bin.tar.gz和apache-tomcat-9.0.34.tar.gz</p>
+<blockquote>
+<p><a href="https://www.oracle.com/java/technologies/javase-jdk14-downloads.html" target="_blank" rel="noopener">https://www.oracle.com/java/technologies/javase-jdk14-downloads.html</a></p>
+<p><a href="https://tomcat.apache.org/download-90.cgi" target="_blank" rel="noopener">https://tomcat.apache.org/download-90.cgi</a></p>
+</blockquote>
+<p>（之前装的是jdk12，不知道这样会不会有毛病）</p>
+</li>
+<li><p>FileZilla连接服务器，上面两个包传到root文件夹下</p>
+</li>
+<li><p>回到终端，新建javaee文件夹，解压</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">~# ls</span><br><span class="line">apache-tomcat-9.0.34.tar.gz jdk-14.0.1_linux-x64_bin.tar.gz</span><br><span class="line">~# mkdir javaee</span><br><span class="line">~# tar zxvf jdk-14.0.1_linux-x64_bin.tar.gz -C javaee</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置java环境变量</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">~# vim &#x2F;etc&#x2F;profile</span><br></pre></td></tr></table></figure>
+
+<p>最后加上</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># set java environment</span><br><span class="line">export JAVA_HOME&#x3D;&#x2F;root&#x2F;javaee&#x2F;jdk-14.0.1</span><br><span class="line">export PATH&#x3D;$JAVA_HOME&#x2F;bin:$PATH</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">~# source &#x2F;etc&#x2F;profile</span><br><span class="line">~# java -version</span><br><span class="line">java version &quot;14.0.1&quot; 2020-04-14</span><br><span class="line">Java(TM) SE Runtime Environment (build 14.0.1+7)</span><br><span class="line">Java HotSpot(TM) 64-Bit Server VM (build 14.0.1+7, mixed mode, sharing)</span><br></pre></td></tr></table></figure>
+
+<p>✌️</p>
+</li>
+<li><p>安装tomcat</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">~# tar zxvf apache-tomcat-9.0.34.tar.gz -C javaee</span><br></pre></td></tr></table></figure>
+
+<p>配置catalina.sh</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">~&#x2F;javaee&#x2F;apache-tomcat-9.0.34&#x2F;bin# vim &#x2F;catalina.sh</span><br></pre></td></tr></table></figure>
+
+<p>加一句</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">export JAVA_HOME&#x3D;&#x2F;root&#x2F;javaee&#x2F;jdk-14.0.1</span><br></pre></td></tr></table></figure>
+
+<p>测试</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">~&#x2F;javaee&#x2F;apache-tomcat-9.0.34&#x2F;bin# .&#x2F;startup.sh </span><br><span class="line">Using CATALINA_BASE:   &#x2F;root&#x2F;javaee&#x2F;apache-tomcat-9.0.34</span><br><span class="line">Using CATALINA_HOME:   &#x2F;root&#x2F;javaee&#x2F;apache-tomcat-9.0.34</span><br><span class="line">Using CATALINA_TMPDIR: &#x2F;root&#x2F;javaee&#x2F;apache-tomcat-9.0.34&#x2F;temp</span><br><span class="line">Using JRE_HOME:        &#x2F;root&#x2F;javaee&#x2F;jdk-14.0.1</span><br><span class="line">Using CLASSPATH:       &#x2F;root&#x2F;javaee&#x2F;apache-tomcat-9.0.34&#x2F;bin&#x2F;bootstrap.jar:&#x2F;root&#x2F;javaee&#x2F;apache-tomcat-9.0.34&#x2F;bin&#x2F;tomcat-juli.jar</span><br><span class="line">Tomcat started.</span><br></pre></td></tr></table></figure>
+
+<img src="/images/2020/screencapture2020-05-07 PM12.21.05.jpg">
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">~&#x2F;javaee&#x2F;apache-tomcat-9.0.34&#x2F;bin# .&#x2F;shutdown.sh </span><br><span class="line">Using CATALINA_BASE:   &#x2F;root&#x2F;javaee&#x2F;apache-tomcat-9.0.34</span><br><span class="line">Using CATALINA_HOME:   &#x2F;root&#x2F;javaee&#x2F;apache-tomcat-9.0.34</span><br><span class="line">Using CATALINA_TMPDIR: &#x2F;root&#x2F;javaee&#x2F;apache-tomcat-9.0.34&#x2F;temp</span><br><span class="line">Using JRE_HOME:        &#x2F;root&#x2F;javaee&#x2F;jdk-14.0.1</span><br><span class="line">Using CLASSPATH:       &#x2F;root&#x2F;javaee&#x2F;apache-tomcat-9.0.34&#x2F;bin&#x2F;bootstrap.jar:&#x2F;root&#x2F;javaee&#x2F;apache-tomcat-9.0.34&#x2F;bin&#x2F;tomcat-juli.jar</span><br><span class="line">NOTE: Picked up JDK_JAVA_OPTIONS:  --add-opens&#x3D;java.base&#x2F;java.lang&#x3D;ALL-UNNAMED --add-opens&#x3D;java.base&#x2F;java.io&#x3D;ALL-UNNAMED --add-opens&#x3D;java.rmi&#x2F;sun.rmi.transport&#x3D;ALL-UNNAMED</span><br></pre></td></tr></table></figure>
+
+<p>✌️</p>
+</li>
+</ol>
+<hr>
+<p>完工！</p>
+<p>一遍过太快乐了</p>
+]]></content>
+      <categories>
+        <category>Memo</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Android 10 闪退问题</title>
+    <url>/2020/05/04/debug/</url>
+    <content><![CDATA[<p>（未解决）</p>
+<h1 id="bug描述"><a href="#bug描述" class="headerlink" title="bug描述"></a>bug描述</h1><p>打开工程可以安装，但是闪退</p>
+<p>Build中报错</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">注: 某些输入文件使用或覆盖了已过时的 API。</span><br><span class="line">注: 有关详细信息, 请使用 -Xlint:deprecation 重新编译。</span><br></pre></td></tr></table></figure>
+
+<h1 id="尝试解决"><a href="#尝试解决" class="headerlink" title="尝试解决"></a>尝试解决</h1><h2 id="尝试1"><a href="#尝试1" class="headerlink" title="尝试1"></a>尝试1</h2><blockquote>
+<p><a href="https://blog.csdn.net/caidi1988314/article/details/52460922?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-3&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-3" target="_blank" rel="noopener">https://blog.csdn.net/caidi1988314/article/details/52460922?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-3&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-3</a></p>
+</blockquote>
+<p>build.gradle android {}里加</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">allprojects &#123;</span><br><span class="line">  gradle.projectsEvaluated &#123;</span><br><span class="line">    tasks.withType(JavaCompile) &#123;</span><br><span class="line">    	options.compilerArgs &lt;&lt; &quot;-Xlint:unchecked&quot; &lt;&lt; &quot;-Xlint:deprecation&quot;                       		&#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> 出现</p>
+<img src="/images/2020/screencapture2020-05-04 PM9.09.01.jpg">
+
+<p>在报错的函数上加</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">@SuppressWarnings(&quot;deprecation&quot;)</span><br></pre></td></tr></table></figure>
+
+<p>Build成功，但还是闪退</p>
+<h2 id="尝试2"><a href="#尝试2" class="headerlink" title="尝试2"></a>尝试2</h2><p>看到activity_main.xml里有</p>
+<img src="/images/2020/screencapture2020-05-04 PM9.28.55.jpg">
+
+<p>按提示修改</p>
+<p>还是闪退</p>
+<blockquote>
+<p><a href="https://blog.csdn.net/yogima/article/details/89416885?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-1&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-1" target="_blank" rel="noopener">https://blog.csdn.net/yogima/article/details/89416885?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-1&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-1</a></p>
+</blockquote>
+<p>把MainActivity所有函数都注释掉，可以打开</p>
+<p>一点一点放开</p>
+<p>发现问题在</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">File path = <span class="keyword">new</span> File(dir);</span><br><span class="line">String[] list = path.list();</span><br><span class="line">len = list.length;</span><br><span class="line"><span class="keyword">if</span> (len == <span class="number">0</span>) &#123; <span class="keyword">return</span> <span class="number">0</span>; &#125;</span><br></pre></td></tr></table></figure>
+
+<p>list空的时候，list.length会异常</p>
+<p>加了个为空返回0</p>
+<p>但是这个异常怎么不提示呢？？？</p>
+<p>这里会为空应该读文件权限没有获取到</p>
+<h2 id="尝试3"><a href="#尝试3" class="headerlink" title="尝试3"></a>尝试3</h2><p>像上次那样加</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">android:requestLegacyExternalStorage&#x3D;&quot;true&quot;</span><br></pre></td></tr></table></figure>
+
+<p>报错</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">AAPT: error: attribute android:requestLegacyExternalStorage not found.</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><a href="https://blog.csdn.net/DeMonliuhui/article/details/99718553" target="_blank" rel="noopener">https://blog.csdn.net/DeMonliuhui/article/details/99718553</a></p>
+</blockquote>
+<p>现在这个工程的版本是</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">compileSdkVersion 28</span><br><span class="line">buildToolsVersion &#39;28.0.3&#39;</span><br><span class="line">defaultConfig &#123;</span><br><span class="line">  applicationId &quot;com.example.mydoppler&quot;</span><br><span class="line">  minSdkVersion 15</span><br><span class="line">  targetSdkVersion 28</span><br><span class="line">  versionCode 1</span><br><span class="line">  versionName &quot;1.0&quot;</span><br><span class="line">  testInstrumentationRunner &quot;androidx.test.runner.AndroidJUnitRunner&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>改成</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">compileSdkVersion 29</span><br><span class="line">buildToolsVersion &quot;29.0.2&quot;</span><br><span class="line">defaultConfig &#123;</span><br><span class="line">  applicationId&quot;com.example.mydoppler&quot;</span><br><span class="line">  minSdkVersion 26</span><br><span class="line">  targetSdkVersion 29</span><br><span class="line">  versionCode 1</span><br><span class="line">  versionName &quot;1.0&quot;</span><br><span class="line">  testInstrumentationRunner &quot;androidx.test.runner.AndroidJUnitRunner&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>requestLegacyExternalStorage属性可以加了</p>
+<p>输出那个获取的文件路径，还是null</p>
+<h2 id="尝试4"><a href="#尝试4" class="headerlink" title="尝试4"></a>尝试4</h2><p>在Run里面又发现一句红的</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">E&#x2F;libc: Access denied finding property &quot;ro.vendor.df.effect.conflict&quot;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Debug</category>
+      </categories>
+  </entry>
+  <entry>
     <title>读书笔记 深度工作</title>
     <url>/2020/05/02/deepwork/</url>
     <content><![CDATA[<img src="/images/2020/deepwork.png">]]></content>
@@ -43,6 +244,20 @@
       </categories>
       <tags>
         <tag>algorithm</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SpringCloud笔记07 总结</title>
+    <url>/2020/04/25/note-springcloud-07/</url>
+    <content><![CDATA[<img src="/images/2020/SpringCloud.png">
+
+]]></content>
+      <categories>
+        <category>Note</category>
+      </categories>
+      <tags>
+        <tag>mindmap</tag>
+        <tag>springcloud</tag>
       </tags>
   </entry>
   <entry>
@@ -3834,9 +4049,6 @@
       <categories>
         <category>Debug</category>
       </categories>
-      <tags>
-        <tag>android</tag>
-      </tags>
   </entry>
   <entry>
     <title>Spring笔记10 AOP</title>
@@ -5001,7 +5213,7 @@ Process finished with exit code 0</code></pre>]]></content>
     <url>/2020/02/22/mindmap-stress/</url>
     <content><![CDATA[<img src="/images/2020/stress.png">]]></content>
       <categories>
-        <category>Other</category>
+        <category>Memo</category>
       </categories>
       <tags>
         <tag>mindmap</tag>
@@ -5014,7 +5226,7 @@ Process finished with exit code 0</code></pre>]]></content>
 
 ]]></content>
       <categories>
-        <category>Other</category>
+        <category>Memo</category>
       </categories>
       <tags>
         <tag>mindmap</tag>
