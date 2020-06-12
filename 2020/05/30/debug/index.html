@@ -6,7 +6,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-    MyBatis笔记03 参数与结果封装 |  CoCoNutNut&#39;s NoteBook
+    项目Debug记录 |  CoCoNutNut&#39;s NoteBook
   </title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   
@@ -31,7 +31,7 @@
   <div id="app">
     <main class="content">
       <section class="outer">
-  <article id="post-note-mybatis-03" class="article article-type-post" itemscope
+  <article id="post-debug" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
   <div class="article-inner">
@@ -39,7 +39,7 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  MyBatis笔记03 参数与结果封装
+  项目Debug记录
 </h1>
   
 
@@ -48,12 +48,12 @@
 
     
     <div class="article-meta">
-      <a href="/2020/03/27/note-mybatis-03/" class="article-date">
-  <time datetime="2020-03-27T13:19:35.000Z" itemprop="datePublished">2020-03-27</time>
+      <a href="/2020/05/30/debug/" class="article-date">
+  <time datetime="2020-05-30T02:56:16.000Z" itemprop="datePublished">2020-05-30</time>
 </a>
       
   <div class="article-category">
-    <a class="article-category-link" href="/categories/Note/">Note</a>
+    <a class="article-category-link" href="/categories/Debug/">Debug</a>
   </div>
 
       
@@ -78,60 +78,18 @@
       
 
       
-      <blockquote>
-<p><a href="https://www.bilibili.com/video/av47952553" target="_blank" rel="noopener">https://www.bilibili.com/video/av47952553</a><br>p28～29</p>
-</blockquote>
-<h1 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h1><p>输入类型可以是：</p>
-<ul>
-<li><p>简单类型</p>
-</li>
-<li><p>pojo对象</p>
-<p>使用OGNL表达式解析对象字段的值，#{}或${}括号中的值为pojo属性名称</p>
-</li>
-<li><p>pojo包装对象</p>
-<p>把实体类包装起来，进行条件查询</p>
-</li>
+      <h1 id="找不到’xmlModelPlugin’"><a href="#找不到’xmlModelPlugin’" class="headerlink" title="找不到’xmlModelPlugin’"></a>找不到’xmlModelPlugin’</h1><ul>
+<li>问题</li>
 </ul>
-<h2 id="OGNL表达式"><a href="#OGNL表达式" class="headerlink" title="OGNL表达式"></a>OGNL表达式</h2><p>Object Graphic Navigation Language</p>
-<p>通过对象的取值方法来获取数据，省略get</p>
-<p>如获取用户名，类中的写法：user.getUsername()</p>
-<p>OGNL表达式写法：user.username</p>
-<p>MyBatis中，由于parameterType中已经提供了属性所属的类，可以直接写username，不需要写对象名</p>
-<h2 id="条件查询例"><a href="#条件查询例" class="headerlink" title="条件查询例"></a>条件查询例</h2><p>通过QueryVo设置查询条件</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">QueryVo</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> User user;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> User <span class="title">getUser</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> user;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setUser</span><span class="params">(User user)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.user = user;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>clone的工程启动失败，控制台报错：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Error starting ApplicationContext. To display the conditions report re-run your application with &#39;debug&#39; enabled.</span><br><span class="line">2020-05-30 10:57:39.476 ERROR 1335 --- [           main] o.s.boot.SpringApplication               : Application run failed</span><br><span class="line"></span><br><span class="line">org.springframework.beans.factory.BeanCreationException: Error creating bean with name &#39;xmlModelPlugin&#39;: Lookup method resolution failed; nested exception is java.lang.IllegalStateException: Failed to introspect Class [springfox.documentation.schema.XmlModelPlugin] from ClassLoader [jdk.internal.loader.ClassLoaders$AppClassLoader@3d4eac69]</span><br><span class="line">	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.determineCandidateConstructors(AutowiredAnnotationBeanPostProcessor.java:289) ~[spring-beans-5.2.5.RELEASE.jar:5.2.5.RELEASE]</span><br><span class="line">	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.determineConstructorsFromBeanPostProcessors(AbstractAutowireCapableBeanFactory.java:1286) ~[spring-beans-5.2.5.RELEASE.jar:5.2.5.RELEASE]</span><br><span class="line">	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1201) ~[spring-beans-5.2.5.RELEASE.jar:5.2.5.RELEASE]</span><br><span class="line">	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:557) ~[spring-beans-5.2.5.RELEASE.jar:5.2.5.RELEASE]</span><br><span class="line">	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:517) ~[spring-beans-5.2.5.RELEASE.jar:5.2.5.RELEASE]</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 
-<p>此时用username就需要加对象名</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 根据queryVo的条件查询用户 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"findUserByVo"</span> <span class="attr">parameterType</span>=<span class="string">"com.itheima.domain.QueryVo"</span> <span class="attr">resultMap</span>=<span class="string">"userMap"</span>&gt;</span></span><br><span class="line">  select * from user where username like #&#123;user.username&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testFindByVo</span><span class="params">()</span></span>&#123;</span><br><span class="line">  QueryVo vo = <span class="keyword">new</span> QueryVo();</span><br><span class="line">  User user = <span class="keyword">new</span> User();</span><br><span class="line">  user.setUserName(<span class="string">"%王%"</span>);</span><br><span class="line">  vo.setUser(user);</span><br><span class="line">  List&lt;User&gt; users = userDao.findUserByVo(vo);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="结果封装"><a href="#结果封装" class="headerlink" title="结果封装"></a>结果封装</h1><p>resultType可以是：</p>
 <ul>
-<li>简单类型</li>
-<li>pojo对象</li>
-<li>pojo列表</li>
+<li>解决</li>
 </ul>
-<h1 id="名称对应"><a href="#名称对应" class="headerlink" title="名称对应"></a>名称对应</h1><p>如果本来属性名全是小写，数据库中也全是小写，可以正常执行</p>
-<p>把属性名从全小写改成山峰，如userid改成userId，username改成userName，运行查所有</p>
-<p>可能只有userName的值查出来了</p>
-<p>因为windows系统下mysql不区分大小写</p>
-<p>但是linux系统下区分</p>
-<p><strong>解决方法</strong></p>
-<ol>
-<li>取别名</li>
-</ol>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select id as userId,username as userName,address as userAddress,sex as userSex,birthday as userBirthday from user</span><br></pre></td></tr></table></figure>
+<p>添加依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>javax.xml.bind<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jaxb-api<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.3.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p>在sql语句层面解决问题，执行效率高</p>
-<ol start="2">
-<li>MyBatis配置</li>
-</ol>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 配置 查询结果的列名和实体类的属性名的对应关系 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">"userMap"</span> <span class="attr">type</span>=<span class="string">"uSeR"</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 主键字段的对应 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">"userId"</span> <span class="attr">column</span>=<span class="string">"id"</span>&gt;</span><span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!--非主键字段的对应--&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">"userName"</span> <span class="attr">column</span>=<span class="string">"username"</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">"userAddress"</span> <span class="attr">column</span>=<span class="string">"address"</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">"userSex"</span> <span class="attr">column</span>=<span class="string">"sex"</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">"userBirthday"</span> <span class="attr">column</span>=<span class="string">"birthday"</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>此时resultType要改成resultMap，说明使用userMap解析结果封装</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"findAll"</span> <span class="attr">resultMap</span>=<span class="string">"userMap"</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!--select id as userId,username as userName,address as userAddress,sex as userSex,birthday as userBirthday from user;--&gt;</span></span><br><span class="line">  select * from user;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>开发效率高些</p>
 
       
       <!-- reward -->
@@ -144,8 +102,6 @@
     <footer class="article-footer">
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mybatis/" rel="tag">mybatis</a></li></ul>
-
 
     </footer>
 
@@ -155,19 +111,19 @@
   
   <nav class="article-nav">
     
-      <a href="/2020/03/27/note-mybatis-04/" class="article-nav-link">
+      <a href="/2020/05/31/memo/" class="article-nav-link">
         <strong class="article-nav-caption">上一篇</strong>
         <div class="article-nav-title">
           
-            MyBatis笔记04 配置文件
+            五月每日一题打卡完工纪念
           
         </div>
       </a>
     
     
-      <a href="/2020/03/27/note-mybatis-02/" class="article-nav-link">
+      <a href="/2020/05/12/memo/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">MyBatis笔记02 实现CRUD</div>
+        <div class="article-nav-title">Anki也太优秀了吧！</div>
       </a>
     
   </nav>

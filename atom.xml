@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-05-13T01:33:22.350Z</updated>
+  <updated>2020-05-31T02:19:39.988Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,60 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>五月每日一题打卡完工纪念</title>
+    <link href="http://yoursite.com/2020/05/31/memo/"/>
+    <id>http://yoursite.com/2020/05/31/memo/</id>
+    <published>2020-05-31T02:18:19.000Z</published>
+    <updated>2020-05-31T02:19:39.988Z</updated>
+    
+    <content type="html"><![CDATA[<img src="/images/2020/screencapture2020-05-31 AM10.18.55.jpg" width=300><p>居然出徽章了，太戳我了</p><img src="/images/2020/screencapture2020-05-31 AM10.19.04.jpg" width=300>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;img src=&quot;/images/2020/screencapture2020-05-31 AM10.18.55.jpg&quot; width=300&gt;
+
+&lt;p&gt;居然出徽章了，太戳我了&lt;/p&gt;
+&lt;img src=&quot;/images/2020/screencapture2020-05-31
+      
+    
+    </summary>
+    
+    
+      <category term="Memo" scheme="http://yoursite.com/categories/Memo/"/>
+    
+    
+      <category term="algorithm" scheme="http://yoursite.com/tags/algorithm/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>项目Debug记录</title>
+    <link href="http://yoursite.com/2020/05/30/debug/"/>
+    <id>http://yoursite.com/2020/05/30/debug/</id>
+    <published>2020-05-30T02:56:16.000Z</published>
+    <updated>2020-05-30T03:00:36.690Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="找不到’xmlModelPlugin’"><a href="#找不到’xmlModelPlugin’" class="headerlink" title="找不到’xmlModelPlugin’"></a>找不到’xmlModelPlugin’</h1><ul><li>问题</li></ul><p>clone的工程启动失败，控制台报错：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Error starting ApplicationContext. To display the conditions report re-run your application with &#39;debug&#39; enabled.</span><br><span class="line">2020-05-30 10:57:39.476 ERROR 1335 --- [           main] o.s.boot.SpringApplication               : Application run failed</span><br><span class="line"></span><br><span class="line">org.springframework.beans.factory.BeanCreationException: Error creating bean with name &#39;xmlModelPlugin&#39;: Lookup method resolution failed; nested exception is java.lang.IllegalStateException: Failed to introspect Class [springfox.documentation.schema.XmlModelPlugin] from ClassLoader [jdk.internal.loader.ClassLoaders$AppClassLoader@3d4eac69]</span><br><span class="line">at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.determineCandidateConstructors(AutowiredAnnotationBeanPostProcessor.java:289) ~[spring-beans-5.2.5.RELEASE.jar:5.2.5.RELEASE]</span><br><span class="line">at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.determineConstructorsFromBeanPostProcessors(AbstractAutowireCapableBeanFactory.java:1286) ~[spring-beans-5.2.5.RELEASE.jar:5.2.5.RELEASE]</span><br><span class="line">at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1201) ~[spring-beans-5.2.5.RELEASE.jar:5.2.5.RELEASE]</span><br><span class="line">at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:557) ~[spring-beans-5.2.5.RELEASE.jar:5.2.5.RELEASE]</span><br><span class="line">at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:517) ~[spring-beans-5.2.5.RELEASE.jar:5.2.5.RELEASE]</span><br><span class="line">...</span><br></pre></td></tr></table></figure><ul><li>解决</li></ul><p>添加依赖</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>javax.xml.bind<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jaxb-api<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.3.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;找不到’xmlModelPlugin’&quot;&gt;&lt;a href=&quot;#找不到’xmlModelPlugin’&quot; class=&quot;headerlink&quot; title=&quot;找不到’xmlModelPlugin’&quot;&gt;&lt;/a&gt;找不到’xmlModelPlugin’&lt;/h1&gt;&lt;ul&gt;
+
+      
+    
+    </summary>
+    
+    
+      <category term="Debug" scheme="http://yoursite.com/categories/Debug/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>Anki也太优秀了吧！</title>
@@ -128,15 +182,18 @@
     <link href="http://yoursite.com/2020/05/02/deepwork/"/>
     <id>http://yoursite.com/2020/05/02/deepwork/</id>
     <published>2020-05-02T06:43:28.000Z</published>
-    <updated>2020-05-02T06:44:40.845Z</updated>
+    <updated>2020-05-14T15:06:21.533Z</updated>
     
-    <content type="html"><![CDATA[<img src="/images/2020/deepwork.png">]]></content>
+    <content type="html"><![CDATA[<blockquote><p>《深度工作》 [美] 卡尔·纽波特</p></blockquote><img src="/images/2020/deepwork.png">]]></content>
     
     <summary type="html">
     
       
       
-        &lt;img src=&quot;/images/2020/deepwork.png&quot;&gt;
+        &lt;blockquote&gt;
+&lt;p&gt;《深度工作》 [美] 卡尔·纽波特&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;img src=&quot;/images/2020/deepwork.png&quot;&gt;
       
     
     </summary>
@@ -512,60 +569,6 @@
     
     
       <category term="vue" scheme="http://yoursite.com/tags/vue/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Axure笔记</title>
-    <link href="http://yoursite.com/2020/04/16/note-axure/"/>
-    <id>http://yoursite.com/2020/04/16/note-axure/</id>
-    <published>2020-04-16T03:17:25.000Z</published>
-    <updated>2020-05-02T05:58:08.513Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p><a href="https://www.bilibili.com/video/BV1Yx411f7d6" target="_blank" rel="noopener">https://www.bilibili.com/video/BV1Yx411f7d6</a></p></blockquote><h1 id="标尺"><a href="#标尺" class="headerlink" title="标尺"></a>标尺</h1><p>按住尺子拖下来</p><img src="/images/2020/screencapture2020-04-16 AM11.19.53.jpg"><p>左侧也是</p><h1 id="圆角"><a href="#圆角" class="headerlink" title="圆角"></a>圆角</h1><p>按住黄色三角拖动</p><img src="/images/2020/screencapture2020-04-16 AM11.34.03.jpg"><h1 id="平均排布"><a href="#平均排布" class="headerlink" title="平均排布"></a>平均排布</h1><p>选中几个元素，点水平</p><img src="/images/2020/screencapture2020-04-16 AM11.37.11.jpg"><h1 id="切割顶栏"><a href="#切割顶栏" class="headerlink" title="切割顶栏"></a>切割顶栏</h1><p>右键-&gt;分割图片</p><img src="/images/2020/screencapture2020-04-16 PM12.08.32.jpg"><h1 id="动作"><a href="#动作" class="headerlink" title="动作"></a>动作</h1><p>先建一个文件夹，一个页面对应一页，大小、位置相同</p><p>用热区罩在点击区域上</p><p>添加交互</p><img src="/images/2020/screencapture2020-04-16 PM12.27.48.jpg"><p>跳转页面 可选择打开链接</p><hr><p>上手完成</p><img src="/images/2020/screencapture2020-04-16 PM12.31.48.jpg"><img src="/images/2020/screencapture2020-04-16 PM12.31.52.jpg">]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;blockquote&gt;
-&lt;p&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV1Yx411f7d6&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://www.bilibili.com/video/BV1Yx411
-      
-    
-    </summary>
-    
-    
-      <category term="Note" scheme="http://yoursite.com/categories/Note/"/>
-    
-    
-      <category term="tool" scheme="http://yoursite.com/tags/tool/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>SpringCloud笔记03 Hystrix断路器</title>
-    <link href="http://yoursite.com/2020/04/12/note-springcloud-03/"/>
-    <id>http://yoursite.com/2020/04/12/note-springcloud-03/</id>
-    <published>2020-04-12T07:57:20.000Z</published>
-    <updated>2020-04-12T09:37:03.122Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p><a href="https://blog.csdn.net/ThinkWon/article/details/103732497" target="_blank" rel="noopener">https://blog.csdn.net/ThinkWon/article/details/103732497</a></p></blockquote><p>Hystrix功能：服务降级、服务熔断、线程隔离、请求缓存、请求合并、服务监控等</p><h1 id="创建一个hystrix-service模块"><a href="#创建一个hystrix-service模块" class="headerlink" title="创建一个hystrix-service模块"></a>创建一个hystrix-service模块</h1><p>经过前面一系列扎心操作，这次创建的时候没有用Spring Initializer加依赖，直接改的pom.xml并修改版本</p><p>@EnableCircuitBreaker开启断路器功能</p><p>pom中还要加一个依赖</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">&lt;groupId&gt;cn.hutool&lt;&#x2F;groupId&gt;</span><br><span class="line">&lt;artifactId&gt;hutool-all&lt;&#x2F;artifactId&gt;</span><br><span class="line">&lt;version&gt;5.1.0&lt;&#x2F;version&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br></pre></td></tr></table></figure><p>这个模块也添加了Ribbon的负载均衡功能</p><p>但是pom中并没有配置这个依赖</p><p>看了下依赖图发现是eureka-client依赖的</p><img src="/images/2020/screencapture2020-04-12 PM4.24.37.jpg"><h2 id="服务降级"><a href="#服务降级" class="headerlink" title="服务降级"></a>服务降级</h2><p>在UserHystrixController中添加用于测试服务降级的接口</p><p>在UserService中添加调用方法与服务降级方法，并添加@HystrixCommand注解</p><p>启动eureka-server、user-service、hystrix-service服务</p><img src="/images/2020/screencapture2020-04-12 PM5.16.10.jpg"><p>关闭user-service服务重新测试该接口</p><img src="/images/2020/screencapture2020-04-12 PM5.16.42.jpg"><p>后面测试忽略某些异常降级、缓存、请求合并表现均和教程一样</p><img src="/images/2020/screencapture2020-04-12 PM5.35.06.jpg"><h2 id="DEBUG：调用服务失败"><a href="#DEBUG：调用服务失败" class="headerlink" title="DEBUG：调用服务失败"></a>DEBUG：调用服务失败</h2><p>启动后注册中心</p><img src="/images/2020/screencapture2020-04-12 PM4.31.04.jpg"><p>调用测试方法后</p><img src="/images/2020/screencapture2020-04-12 PM4.31.10.jpg"><p>直接失败了？</p><p>试试原服务地址</p><img src="/images/2020/screencapture2020-04-12 PM4.32.40.jpg"><p>没问题</p><p>这个bug似曾相识</p><p>上次在ribbon-service中添加了依赖</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.netflix.ribbon<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>ribbon-eureka<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure><p>hystrix-service中也加一个试试</p><p>注册中心多了警告</p><img src="/images/2020/screencapture2020-04-12 PM4.35.28.jpg"><p>运行*2</p><p>还是失败了</p><p>看下Maven</p><img src="/images/2020/screencapture2020-04-12 PM4.43.25.jpg"><p>加个版本</p><p>ribbon模块用的是2.3.0</p><p>运行*3</p><p>还是挂了</p><p>拿源码的这三个模块试试</p><img src="/images/2020/screencapture2020-04-12 PM4.47.14.jpg"><p>是可以的</p><p>对比版本</p><img src="/images/2020/screencapture2020-04-12 PM4.49.02.jpg"><p>全部改成一样的</p><p>发现源码pom中还多了一个</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-actuator<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure><p>以及</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencyManagement</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-dependencies<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;spring-cloud.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">type</span>&gt;</span>pom<span class="tag">&lt;/<span class="name">type</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">scope</span>&gt;</span>import<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencyManagement</span>&gt;</span></span><br></pre></td></tr></table></figure><p>难怪前面springframework-cloud的模块总是没有版本号，原来是没加这个</p><p>（解决了前面笔记02中一个MARK）</p><p>运行*4</p><p>还🥶是🥶挂🥶了</p><p>再来一个个比代码</p><p>没差啊？</p><p>难道是其它模块的依赖也要改？改吧</p><p>发现前面大部分都是有dependencyManagement的，所以其实也没什么变动</p><p>运行*5</p><p>挂</p><p>刚才把spring-boot-starter-actuator删了，重新加上</p><p>运行*6</p><p>！成功了</p><p>可是这个时候其它版本都和源码一样了，但是源码没有用这个啊？-MARK-</p><h2 id="问题总结"><a href="#问题总结" class="headerlink" title="问题总结"></a>问题总结</h2><ol><li><p>版本 版本 版本</p></li><li><p>注册中心有，但找不到服务，试试加上</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-actuator<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></li></ol><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><img src="/images/2020/screencapture2020-04-12 PM5.36.45.jpg">]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;blockquote&gt;
-&lt;p&gt;&lt;a href=&quot;https://blog.csdn.net/ThinkWon/article/details/103732497&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://blog.csdn.net/Thin
-      
-    
-    </summary>
-    
-    
-      <category term="Note" scheme="http://yoursite.com/categories/Note/"/>
-    
-    
-      <category term="springcloud" scheme="http://yoursite.com/tags/springcloud/"/>
     
   </entry>
   

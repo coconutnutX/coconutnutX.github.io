@@ -1,6 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>五月每日一题打卡完工纪念</title>
+    <url>/2020/05/31/memo/</url>
+    <content><![CDATA[<img src="/images/2020/screencapture2020-05-31 AM10.18.55.jpg" width=300>
+
+<p>居然出徽章了，太戳我了</p>
+<img src="/images/2020/screencapture2020-05-31 AM10.19.04.jpg" width=300>]]></content>
+      <categories>
+        <category>Memo</category>
+      </categories>
+      <tags>
+        <tag>algorithm</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>项目Debug记录</title>
+    <url>/2020/05/30/debug/</url>
+    <content><![CDATA[<h1 id="找不到’xmlModelPlugin’"><a href="#找不到’xmlModelPlugin’" class="headerlink" title="找不到’xmlModelPlugin’"></a>找不到’xmlModelPlugin’</h1><ul>
+<li>问题</li>
+</ul>
+<p>clone的工程启动失败，控制台报错：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Error starting ApplicationContext. To display the conditions report re-run your application with &#39;debug&#39; enabled.</span><br><span class="line">2020-05-30 10:57:39.476 ERROR 1335 --- [           main] o.s.boot.SpringApplication               : Application run failed</span><br><span class="line"></span><br><span class="line">org.springframework.beans.factory.BeanCreationException: Error creating bean with name &#39;xmlModelPlugin&#39;: Lookup method resolution failed; nested exception is java.lang.IllegalStateException: Failed to introspect Class [springfox.documentation.schema.XmlModelPlugin] from ClassLoader [jdk.internal.loader.ClassLoaders$AppClassLoader@3d4eac69]</span><br><span class="line">	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.determineCandidateConstructors(AutowiredAnnotationBeanPostProcessor.java:289) ~[spring-beans-5.2.5.RELEASE.jar:5.2.5.RELEASE]</span><br><span class="line">	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.determineConstructorsFromBeanPostProcessors(AbstractAutowireCapableBeanFactory.java:1286) ~[spring-beans-5.2.5.RELEASE.jar:5.2.5.RELEASE]</span><br><span class="line">	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1201) ~[spring-beans-5.2.5.RELEASE.jar:5.2.5.RELEASE]</span><br><span class="line">	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:557) ~[spring-beans-5.2.5.RELEASE.jar:5.2.5.RELEASE]</span><br><span class="line">	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:517) ~[spring-beans-5.2.5.RELEASE.jar:5.2.5.RELEASE]</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>解决</li>
+</ul>
+<p>添加依赖</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>javax.xml.bind<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jaxb-api<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.3.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Debug</category>
+      </categories>
+  </entry>
+  <entry>
     <title>Anki也太优秀了吧！</title>
     <url>/2020/05/12/memo/</url>
     <content><![CDATA[<p>以前看剧的时候喜欢截屏，把不认识的词记录下来，零零散散屯了好多词</p>
@@ -204,7 +238,10 @@
   <entry>
     <title>读书笔记 深度工作</title>
     <url>/2020/05/02/deepwork/</url>
-    <content><![CDATA[<img src="/images/2020/deepwork.png">]]></content>
+    <content><![CDATA[<blockquote>
+<p>《深度工作》 [美] 卡尔·纽波特</p>
+</blockquote>
+<img src="/images/2020/deepwork.png">]]></content>
       <categories>
         <category>Memo</category>
       </categories>
@@ -5211,7 +5248,10 @@ Process finished with exit code 0</code></pre>]]></content>
   <entry>
     <title>课程总结 民事诉讼法</title>
     <url>/2020/02/22/mindmap/</url>
-    <content><![CDATA[<p>P1<br><img src="/images/2020/civil_procedure_law1.png"></p>
+    <content><![CDATA[<blockquote>
+<p>MOOC 北京交通大学 杨军 民事诉讼法</p>
+</blockquote>
+<p>P1<br><img src="/images/2020/civil_procedure_law1.png"></p>
 <p>P2<br><img src="/images/2020/civil_procedure_law2.png"></p>
 <p>P3<br><img src="/images/2020/civil_procedure_law3.png"></p>
 <p>P4<br><img src="/images/2020/civil_procedure_law4.png"></p>
@@ -5226,7 +5266,10 @@ Process finished with exit code 0</code></pre>]]></content>
   <entry>
     <title>课程总结 压力与情绪管理</title>
     <url>/2020/02/22/mindmap-stress/</url>
-    <content><![CDATA[<img src="/images/2020/stress.png">]]></content>
+    <content><![CDATA[<blockquote>
+<p>MOOC 四川大学 杨鑫 压力与情绪管理</p>
+</blockquote>
+<img src="/images/2020/stress.png">]]></content>
       <categories>
         <category>Memo</category>
       </categories>
@@ -5237,7 +5280,10 @@ Process finished with exit code 0</code></pre>]]></content>
   <entry>
     <title>课程总结 信息素养与实践</title>
     <url>/2020/02/22/mindmap-paper/</url>
-    <content><![CDATA[<img src="/images/2020/paper.png">
+    <content><![CDATA[<blockquote>
+<p>大三上的公选课</p>
+</blockquote>
+<img src="/images/2020/paper.png">
 
 ]]></content>
       <categories>
