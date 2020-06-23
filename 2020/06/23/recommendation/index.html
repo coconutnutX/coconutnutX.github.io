@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    笔记 推荐系统 |  CoCoNutNut&#39;s NoteBook
+  </title>
+  <meta name="generator" content="hexo-theme-yilia-plus">
+  
+  <link rel="shortcut icon" href="/images/1949347-2001.png" />
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="CoCoNutNut's NoteBook" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    <main class="content">
+      <section class="outer">
+  <article id="post-recommendation" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  笔记 推荐系统
+</h1>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/06/23/recommendation/" class="article-date">
+  <time datetime="2020-06-23T01:46:41.000Z" itemprop="datePublished">2020-06-23</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Note/">Note</a>
+  </div>
+
+      
+    </div>
+    
+
+    
+    
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <blockquote>
+<p><a href="https://www.bilibili.com/video/av30578499/" target="_blank" rel="noopener">https://www.bilibili.com/video/av30578499/</a></p>
+</blockquote>
+<h1 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h1><img src="/images/2020/screencapture2020-06-23 AM9.48.46.jpg">
+
+<h1 id="传统推荐系统"><a href="#传统推荐系统" class="headerlink" title="传统推荐系统"></a>传统推荐系统</h1><p>Content-based：unstructured，文字、图像等，需理解语义、提取大量特征，算法复杂延迟高</p>
+<p>Collaborative filtering协同过滤：基于User、Item历史，如点击是1、不点击是0</p>
+<p>Demographic：地域信息</p>
+<p>Knowledge-based：根据专业知识</p>
+<p>Community-based：类似Content-based，如社交网络、人群兴趣</p>
+<p>Hybrid：综合</p>
+<h2 id="协同过滤"><a href="#协同过滤" class="headerlink" title="协同过滤"></a>协同过滤</h2><img src="/images/2020/screencapture2020-06-23 AM9.52.31.jpg">
+
+<p>基于相似User判断</p>
+<p>计算相似性 </p>
+<ul>
+<li>Memery-based<ul>
+<li>Item-based 如，把Item转成矩阵计算相似性</li>
+<li>User-based</li>
+</ul>
+</li>
+<li>Model-based 建立User和Item的方程，给定一个User和Item返回一个分数</li>
+</ul>
+<img src="/images/2020/screencapture2020-06-23 AM9.55.53.jpg">
+
+<p>思想：根据User-Item Rating矩阵，学到User和Item低维的特征表示，用它计算相似性</p>
+<p>购买为1，点击未购买为0，剩下补0</p>
+<p>矩阵分解：降维 找一个矩阵代表User，一个代表Item，相乘得到</p>
+<p>可做Regularization</p>
+<h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><ul>
+<li>Easy to implement，系统简单，响应快</li>
+<li>Content-independent，与用户其它特征无关，不需要获取这些信息即可实现</li>
+</ul>
+<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><ul>
+<li>数据稀疏</li>
+<li>Cold-start problem 如新用户特征向量全0，无法计算</li>
+<li>Do not consider content</li>
+</ul>
+<h1 id="深度学习"><a href="#深度学习" class="headerlink" title="深度学习"></a>深度学习</h1><p>优势：表征能力强、不需要做特征工程、</p>
+<p>先创建深度学习的网络结构实现协同过滤，再加入Content-based</p>
+<h2 id="Neural-Collaborative-filtering"><a href="#Neural-Collaborative-filtering" class="headerlink" title="Neural Collaborative filtering"></a>Neural Collaborative filtering</h2><img src="/images/2020/screencapture2020-06-23 AM11.29.37.jpg">
+
+<ul>
+<li><p>Embedding Layers</p>
+<ul>
+<li>把任何一个User、Item变成一个低维向量</li>
+<li>One-Hot Encoding</li>
+</ul>
+</li>
+<li><p>Neural CF Layers</p>
+<ul>
+<li>做矩阵分解</li>
+<li>可以加隐藏层，学习非线性表征</li>
+</ul>
+</li>
+</ul>
+<h2 id="Neural-Matrix-Factorization-Model"><a href="#Neural-Matrix-Factorization-Model" class="headerlink" title="Neural Matrix Factorization Model"></a>Neural Matrix Factorization Model</h2><img src="/images/2020/screencapture2020-06-23 AM11.36.27.jpg">
+
+<p>线性的和非线性的结合到一起</p>
+<p>问题：没有Content-based，希望加入手工提取的特征</p>
+<h2 id="Wide-Deep-Neural-Network"><a href="#Wide-Deep-Neural-Network" class="headerlink" title="Wide Deep Neural Network"></a>Wide Deep Neural Network</h2><p>Wide部分输入手工特征工程的结果，如：年龄、历史记录</p>
+<p>Deep部分是User、Item</p>
+<p>最后结合到一起做出预测</p>
+<p>Eg: Google Play</p>
+<img src="/images/2020/screencapture2020-06-23 AM11.41.51.jpg">
+
+<h2 id="传统的-Factorization-Machines"><a href="#传统的-Factorization-Machines" class="headerlink" title="传统的 Factorization Machines"></a>传统的 Factorization Machines</h2><p>直接对产品的类型信息做One-Hot Encoding</p>
+<img src="/images/2020/screencapture2020-06-23 AM11.48.13.jpg">
+
+<p>特征交叉 如性别=男，年龄=20 把对应的维相乘，数据过大是难处理</p>
+<p>用矩阵分解的思想，wij变成&lt;vi,vj&gt;，其中vi,vj都是低维向量</p>
+<p>变形版本：</p>
+<h3 id="Field-aware-Factorization-Machines"><a href="#Field-aware-Factorization-Machines" class="headerlink" title="Field-aware Factorization Machines"></a>Field-aware Factorization Machines</h3><img src="/images/2020/screencapture2020-06-23 AM11.53.47.jpg">
+
+<p>考虑特征是来自哪里的</p>
+<p>每一个特征，与其他类别交叉时，有一个不一样的依赖向量</p>
+<h2 id="Deep-Factorization-Machines"><a href="#Deep-Factorization-Machines" class="headerlink" title="Deep Factorization Machines"></a>Deep Factorization Machines</h2><img src="/images/2020/screencapture2020-06-23 AM11.56.26.jpg">
+
+<p>左侧：传统部分</p>
+<p>每个种类做Embedding</p>
+<p>为了实现交叉，两两做特征交叉</p>
+<p>线性部分，求和（最左的+）</p>
+<p>右侧：深度部分</p>
+<p>美团的测试结果：</p>
+<img src="/images/2020/screencapture2020-06-23 AM11.58.58.jpg">
+
+<p>Wide &amp; Deep 要做特征工程，DeepFM 做了一阶、二阶的特征交叉，同时用Deep神经网络做特征工程</p>
+<h2 id="Deep-Cooperative-Neural-Network"><a href="#Deep-Cooperative-Neural-Network" class="headerlink" title="Deep Cooperative Neural Network"></a>Deep Cooperative Neural Network</h2><p>卷积神经网络</p>
+<p>涉及图片、文字时可参考</p>
+<img src="/images/2020/screencapture2020-06-23 PM12.09.24.jpg">
+
+<p>Word-Embedding 把每个单词映射成向量（Google : word2vec）</p>
+<p>最后得到User记录的低维表示，Item描述的低维表示</p>
+<h2 id="Recurrent-Neural-Network"><a href="#Recurrent-Neural-Network" class="headerlink" title="Recurrent Neural Network"></a>Recurrent Neural Network</h2><img src="/images/2020/screencapture2020-06-23 PM1.22.14.jpg">
+
+<p>给一个input，映射成低维向量，输出output</p>
+<p>同时反复自己迭代</p>
+<p>可学习与时间有关的信息，如不需要login的网站上用户点击的行为</p>
+<h3 id="Session-based-Recommendation-with-RNN"><a href="#Session-based-Recommendation-with-RNN" class="headerlink" title="Session-based Recommendation with RNN"></a>Session-based Recommendation with RNN</h3><img src="/images/2020/screencapture2020-06-23 PM1.25.03.jpg">
+
+<p>预测用户下一步行为</p>
+<h1 id="强化学习"><a href="#强化学习" class="headerlink" title="强化学习"></a>强化学习</h1><p>因为用户行为随时在变化，传统推荐系统无法实时做出调整</p>
+<img src="/images/2020/screencapture2020-06-23 PM1.27.37.jpg">
+
+<p>State可以是用户的点击行为</p>
+<p>Reward可以是点击了推荐的产品</p>
+<p>根据当前的State和Reward返回下一步Action</p>
+<p>用户对Action做出反应，得到新的State和Reward</p>
+<p>阿里的例子：</p>
+<img src="/images/2020/screencapture2020-06-23 PM1.30.26.jpg">
+
+
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+
+    </footer>
+
+  </div>
+
+  
+  
+  <nav class="article-nav">
+    
+    
+      <a href="/2020/06/16/debug/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">项目Debug记录</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+
+  
+  
+  
+
+</article>
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>
+        &copy;
+        2020
+        coconutnut
+      </li>
+      <li>
+        
+        
+        <span>
+  <i>PV:<span id="busuanzi_value_page_pv"></span></i>
+  <i>UV:<span id="busuanzi_value_site_uv"></span></i>
+</span>
+        288k
+        
+      </li>
+      <li>
+        
+        Powered by
+        
+        
+        <a href="https://hexo.io" target="_blank">Hexo</a> Theme <a href="https://github.com/Shen-Yu/hexo-theme-ayer" target="_blank">Ayer</a>
+        
+      </li>
+    </ul>
+    <ul class="list-inline">
+      
+      <li>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="to_top">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+      </div>
+    </main>
+    <aside class="sidebar">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/1949347-2001.png" alt="CoCoNutNut&#39;s NoteBook"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/mindmaps">脑图</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/share.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script>
+  try {
+    var typed = new Typed("#subtitle", {
+      strings: ['咫尺千里，江山如画', 'Sometimes you got to run before you can walk', '灯火万家城四畔，星河一道水中央'],
+      startDelay: 0,
+      typeSpeed: 200,
+      loop: true,
+      backSpeed: 100,
+      showCursor: true
+    });
+  } catch (err) {
+  }
+
+</script>
+
+
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: 'main',
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto',
+    onClick: (e) => {
+      $('.toc-link').removeClass('is-active-link');
+      $(`a[href=${e.target.hash}]`).addClass('is-active-link');
+      $(e.target.hash).scrollIntoView();
+      return false;
+    }
+  });
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/js/ayer.js"></script>
+
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+
+<script type="text/javascript" src="https://js.users.51.la/20544303.js"></script>
+
+
+
+    
+  </div>
+</body>
+
+</html>

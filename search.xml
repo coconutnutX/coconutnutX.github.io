@@ -1,6 +1,164 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>笔记 推荐系统</title>
+    <url>/2020/06/23/recommendation/</url>
+    <content><![CDATA[<blockquote>
+<p><a href="https://www.bilibili.com/video/av30578499/" target="_blank" rel="noopener">https://www.bilibili.com/video/av30578499/</a></p>
+</blockquote>
+<h1 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h1><img src="/images/2020/screencapture2020-06-23 AM9.48.46.jpg">
+
+<h1 id="传统推荐系统"><a href="#传统推荐系统" class="headerlink" title="传统推荐系统"></a>传统推荐系统</h1><p>Content-based：unstructured，文字、图像等，需理解语义、提取大量特征，算法复杂延迟高</p>
+<p>Collaborative filtering协同过滤：基于User、Item历史，如点击是1、不点击是0</p>
+<p>Demographic：地域信息</p>
+<p>Knowledge-based：根据专业知识</p>
+<p>Community-based：类似Content-based，如社交网络、人群兴趣</p>
+<p>Hybrid：综合</p>
+<h2 id="协同过滤"><a href="#协同过滤" class="headerlink" title="协同过滤"></a>协同过滤</h2><img src="/images/2020/screencapture2020-06-23 AM9.52.31.jpg">
+
+<p>基于相似User判断</p>
+<p>计算相似性 </p>
+<ul>
+<li>Memery-based<ul>
+<li>Item-based 如，把Item转成矩阵计算相似性</li>
+<li>User-based</li>
+</ul>
+</li>
+<li>Model-based 建立User和Item的方程，给定一个User和Item返回一个分数</li>
+</ul>
+<img src="/images/2020/screencapture2020-06-23 AM9.55.53.jpg">
+
+<p>思想：根据User-Item Rating矩阵，学到User和Item低维的特征表示，用它计算相似性</p>
+<p>购买为1，点击未购买为0，剩下补0</p>
+<p>矩阵分解：降维 找一个矩阵代表User，一个代表Item，相乘得到</p>
+<p>可做Regularization</p>
+<h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><ul>
+<li>Easy to implement，系统简单，响应快</li>
+<li>Content-independent，与用户其它特征无关，不需要获取这些信息即可实现</li>
+</ul>
+<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><ul>
+<li>数据稀疏</li>
+<li>Cold-start problem 如新用户特征向量全0，无法计算</li>
+<li>Do not consider content</li>
+</ul>
+<h1 id="深度学习"><a href="#深度学习" class="headerlink" title="深度学习"></a>深度学习</h1><p>优势：表征能力强、不需要做特征工程、</p>
+<p>先创建深度学习的网络结构实现协同过滤，再加入Content-based</p>
+<h2 id="Neural-Collaborative-filtering"><a href="#Neural-Collaborative-filtering" class="headerlink" title="Neural Collaborative filtering"></a>Neural Collaborative filtering</h2><img src="/images/2020/screencapture2020-06-23 AM11.29.37.jpg">
+
+<ul>
+<li><p>Embedding Layers</p>
+<ul>
+<li>把任何一个User、Item变成一个低维向量</li>
+<li>One-Hot Encoding</li>
+</ul>
+</li>
+<li><p>Neural CF Layers</p>
+<ul>
+<li>做矩阵分解</li>
+<li>可以加隐藏层，学习非线性表征</li>
+</ul>
+</li>
+</ul>
+<h2 id="Neural-Matrix-Factorization-Model"><a href="#Neural-Matrix-Factorization-Model" class="headerlink" title="Neural Matrix Factorization Model"></a>Neural Matrix Factorization Model</h2><img src="/images/2020/screencapture2020-06-23 AM11.36.27.jpg">
+
+<p>线性的和非线性的结合到一起</p>
+<p>问题：没有Content-based，希望加入手工提取的特征</p>
+<h2 id="Wide-Deep-Neural-Network"><a href="#Wide-Deep-Neural-Network" class="headerlink" title="Wide Deep Neural Network"></a>Wide Deep Neural Network</h2><p>Wide部分输入手工特征工程的结果，如：年龄、历史记录</p>
+<p>Deep部分是User、Item</p>
+<p>最后结合到一起做出预测</p>
+<p>Eg: Google Play</p>
+<img src="/images/2020/screencapture2020-06-23 AM11.41.51.jpg">
+
+<h2 id="传统的-Factorization-Machines"><a href="#传统的-Factorization-Machines" class="headerlink" title="传统的 Factorization Machines"></a>传统的 Factorization Machines</h2><p>直接对产品的类型信息做One-Hot Encoding</p>
+<img src="/images/2020/screencapture2020-06-23 AM11.48.13.jpg">
+
+<p>特征交叉 如性别=男，年龄=20 把对应的维相乘，数据过大是难处理</p>
+<p>用矩阵分解的思想，wij变成&lt;vi,vj&gt;，其中vi,vj都是低维向量</p>
+<p>变形版本：</p>
+<h3 id="Field-aware-Factorization-Machines"><a href="#Field-aware-Factorization-Machines" class="headerlink" title="Field-aware Factorization Machines"></a>Field-aware Factorization Machines</h3><img src="/images/2020/screencapture2020-06-23 AM11.53.47.jpg">
+
+<p>考虑特征是来自哪里的</p>
+<p>每一个特征，与其他类别交叉时，有一个不一样的依赖向量</p>
+<h2 id="Deep-Factorization-Machines"><a href="#Deep-Factorization-Machines" class="headerlink" title="Deep Factorization Machines"></a>Deep Factorization Machines</h2><img src="/images/2020/screencapture2020-06-23 AM11.56.26.jpg">
+
+<p>左侧：传统部分</p>
+<p>每个种类做Embedding</p>
+<p>为了实现交叉，两两做特征交叉</p>
+<p>线性部分，求和（最左的+）</p>
+<p>右侧：深度部分</p>
+<p>美团的测试结果：</p>
+<img src="/images/2020/screencapture2020-06-23 AM11.58.58.jpg">
+
+<p>Wide &amp; Deep 要做特征工程，DeepFM 做了一阶、二阶的特征交叉，同时用Deep神经网络做特征工程</p>
+<h2 id="Deep-Cooperative-Neural-Network"><a href="#Deep-Cooperative-Neural-Network" class="headerlink" title="Deep Cooperative Neural Network"></a>Deep Cooperative Neural Network</h2><p>卷积神经网络</p>
+<p>涉及图片、文字时可参考</p>
+<img src="/images/2020/screencapture2020-06-23 PM12.09.24.jpg">
+
+<p>Word-Embedding 把每个单词映射成向量（Google : word2vec）</p>
+<p>最后得到User记录的低维表示，Item描述的低维表示</p>
+<h2 id="Recurrent-Neural-Network"><a href="#Recurrent-Neural-Network" class="headerlink" title="Recurrent Neural Network"></a>Recurrent Neural Network</h2><img src="/images/2020/screencapture2020-06-23 PM1.22.14.jpg">
+
+<p>给一个input，映射成低维向量，输出output</p>
+<p>同时反复自己迭代</p>
+<p>可学习与时间有关的信息，如不需要login的网站上用户点击的行为</p>
+<h3 id="Session-based-Recommendation-with-RNN"><a href="#Session-based-Recommendation-with-RNN" class="headerlink" title="Session-based Recommendation with RNN"></a>Session-based Recommendation with RNN</h3><img src="/images/2020/screencapture2020-06-23 PM1.25.03.jpg">
+
+<p>预测用户下一步行为</p>
+<h1 id="强化学习"><a href="#强化学习" class="headerlink" title="强化学习"></a>强化学习</h1><p>因为用户行为随时在变化，传统推荐系统无法实时做出调整</p>
+<img src="/images/2020/screencapture2020-06-23 PM1.27.37.jpg">
+
+<p>State可以是用户的点击行为</p>
+<p>Reward可以是点击了推荐的产品</p>
+<p>根据当前的State和Reward返回下一步Action</p>
+<p>用户对Action做出反应，得到新的State和Reward</p>
+<p>阿里的例子：</p>
+<img src="/images/2020/screencapture2020-06-23 PM1.30.26.jpg">
+
+]]></content>
+      <categories>
+        <category>Note</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>项目Debug记录</title>
+    <url>/2020/06/16/debug/</url>
+    <content><![CDATA[<h1 id="找不到’xmlModelPlugin’"><a href="#找不到’xmlModelPlugin’" class="headerlink" title="找不到’xmlModelPlugin’"></a>找不到’xmlModelPlugin’</h1><p>05.30</p>
+<p>clone的工程启动失败，控制台报错：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Error starting ApplicationContext. To display the conditions report re-run your application with &#39;debug&#39; enabled.</span><br><span class="line">2020-05-30 10:57:39.476 ERROR 1335 --- [           main] o.s.boot.SpringApplication               : Application run failed</span><br><span class="line"></span><br><span class="line">org.springframework.beans.factory.BeanCreationException: Error creating bean with name &#39;xmlModelPlugin&#39;: Lookup method resolution failed; nested exception is java.lang.IllegalStateException: Failed to introspect Class [springfox.documentation.schema.XmlModelPlugin] from ClassLoader [jdk.internal.loader.ClassLoaders$AppClassLoader@3d4eac69]</span><br><span class="line">	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.determineCandidateConstructors(AutowiredAnnotationBeanPostProcessor.java:289) ~[spring-beans-5.2.5.RELEASE.jar:5.2.5.RELEASE]</span><br><span class="line">	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.determineConstructorsFromBeanPostProcessors(AbstractAutowireCapableBeanFactory.java:1286) ~[spring-beans-5.2.5.RELEASE.jar:5.2.5.RELEASE]</span><br><span class="line">	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1201) ~[spring-beans-5.2.5.RELEASE.jar:5.2.5.RELEASE]</span><br><span class="line">	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:557) ~[spring-beans-5.2.5.RELEASE.jar:5.2.5.RELEASE]</span><br><span class="line">	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:517) ~[spring-beans-5.2.5.RELEASE.jar:5.2.5.RELEASE]</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>解决</p>
+<p>添加依赖</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>javax.xml.bind<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jaxb-api<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.3.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="加载yml文件错误"><a href="#加载yml文件错误" class="headerlink" title="加载yml文件错误"></a>加载yml文件错误</h1><p>06.12</p>
+<p>今天新pull的工程打不开</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">java.lang.IllegalStateException: Failed to load property source from location &#39;classpath:&#x2F;bootstrap.yml&#39;</span><br></pre></td></tr></table></figure>
+
+<p>查看target -&gt; classes -&gt; bootstrap.yml</p>
+<p>发现一个main被画了波浪线，说重复定义</p>
+<p>发现</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">main:</span><br><span class="line">  allow-bean-definition-overriding: true</span><br></pre></td></tr></table></figure>
+
+<p>写了2次</p>
+<p>注释掉一个就好了</p>
+<h1 id="找不到’springSecurityFilterChain’"><a href="#找不到’springSecurityFilterChain’" class="headerlink" title="找不到’springSecurityFilterChain’"></a>找不到’springSecurityFilterChain’</h1><p>06.16</p>
+<p>新pull的又打不开了</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">org.springframework.beans.factory.BeanCreationException: Error creating bean with name &#39;springSecurityFilterChain&#39;</span><br></pre></td></tr></table></figure>
+
+<p>根据这里的一个回答</p>
+<blockquote>
+<p><a href="https://github.com/spring-guides/tut-spring-boot-oauth2/issues/68" target="_blank" rel="noopener">https://github.com/spring-guides/tut-spring-boot-oauth2/issues/68</a></p>
+</blockquote>
+<p>加上了</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.glassfish.jaxb&lt;&#x2F;groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;jaxb-runtime&lt;&#x2F;artifactId&gt;</span><br><span class="line">  &lt;version&gt;2.3.0&lt;&#x2F;version&gt; &lt;&#x2F;dependency&gt;</span><br><span class="line">  &lt;!-- JAXB needs javax.activation module (jdk9) --&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;javax.activation&lt;&#x2F;groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;javax.activation-api&lt;&#x2F;artifactId&gt;</span><br><span class="line">  &lt;version&gt;1.2.0&lt;&#x2F;version&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<p>成功启动</p>
+]]></content>
+      <categories>
+        <category>Debug</category>
+      </categories>
+  </entry>
+  <entry>
     <title>五月每日一题打卡完工纪念</title>
     <url>/2020/05/31/memo/</url>
     <content><![CDATA[<img src="/images/2020/screencapture2020-05-31 AM10.18.55.jpg" width=300>
@@ -13,26 +171,6 @@
       <tags>
         <tag>algorithm</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>项目Debug记录</title>
-    <url>/2020/05/30/debug/</url>
-    <content><![CDATA[<h1 id="找不到’xmlModelPlugin’"><a href="#找不到’xmlModelPlugin’" class="headerlink" title="找不到’xmlModelPlugin’"></a>找不到’xmlModelPlugin’</h1><ul>
-<li>问题</li>
-</ul>
-<p>clone的工程启动失败，控制台报错：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Error starting ApplicationContext. To display the conditions report re-run your application with &#39;debug&#39; enabled.</span><br><span class="line">2020-05-30 10:57:39.476 ERROR 1335 --- [           main] o.s.boot.SpringApplication               : Application run failed</span><br><span class="line"></span><br><span class="line">org.springframework.beans.factory.BeanCreationException: Error creating bean with name &#39;xmlModelPlugin&#39;: Lookup method resolution failed; nested exception is java.lang.IllegalStateException: Failed to introspect Class [springfox.documentation.schema.XmlModelPlugin] from ClassLoader [jdk.internal.loader.ClassLoaders$AppClassLoader@3d4eac69]</span><br><span class="line">	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.determineCandidateConstructors(AutowiredAnnotationBeanPostProcessor.java:289) ~[spring-beans-5.2.5.RELEASE.jar:5.2.5.RELEASE]</span><br><span class="line">	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.determineConstructorsFromBeanPostProcessors(AbstractAutowireCapableBeanFactory.java:1286) ~[spring-beans-5.2.5.RELEASE.jar:5.2.5.RELEASE]</span><br><span class="line">	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1201) ~[spring-beans-5.2.5.RELEASE.jar:5.2.5.RELEASE]</span><br><span class="line">	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:557) ~[spring-beans-5.2.5.RELEASE.jar:5.2.5.RELEASE]</span><br><span class="line">	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:517) ~[spring-beans-5.2.5.RELEASE.jar:5.2.5.RELEASE]</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>解决</li>
-</ul>
-<p>添加依赖</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>javax.xml.bind<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jaxb-api<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.3.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>Debug</category>
-      </categories>
   </entry>
   <entry>
     <title>Anki也太优秀了吧！</title>
