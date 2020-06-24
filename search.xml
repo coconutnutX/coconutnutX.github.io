@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>读书笔记 推荐系统实践</title>
+    <url>/2020/06/24/recommendation-system/</url>
+    <content><![CDATA[<img src="/images/2020/recommendation_system.png">
+
+]]></content>
+      <categories>
+        <category>Note</category>
+      </categories>
+      <tags>
+        <tag>mindmap</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>笔记 推荐系统</title>
     <url>/2020/06/23/recommendation/</url>
     <content><![CDATA[<blockquote>
@@ -385,7 +398,6 @@
       </categories>
       <tags>
         <tag>mindmap</tag>
-        <tag>excerpt</tag>
       </tags>
   </entry>
   <entry>
@@ -2434,9 +2446,6 @@
       <categories>
         <category>Memo</category>
       </categories>
-      <tags>
-        <tag>excerpt</tag>
-      </tags>
   </entry>
   <entry>
     <title>SpringMVC笔记05 文件上传</title>
@@ -3792,7 +3801,7 @@
       </tags>
   </entry>
   <entry>
-    <title>记录那些让我心动的设计</title>
+    <title>记录几个让我心动的设计</title>
     <url>/2020/03/18/aha/</url>
     <content><![CDATA[<h1 id="Trello的列表完成最后一个时会扭动～还有不同的摇摆方式！"><a href="#Trello的列表完成最后一个时会扭动～还有不同的摇摆方式！" class="headerlink" title="Trello的列表完成最后一个时会扭动～还有不同的摇摆方式！"></a>Trello的列表完成最后一个时会扭动～还有不同的摇摆方式！</h1><img src="/images/2020/Mar-18-2020 22-56-56.gif" width=400>
 <img src="/images/2020/Mar-18-2020 22-56-19.gif" width=400>
@@ -3804,9 +3813,6 @@
       <categories>
         <category>Memo</category>
       </categories>
-      <tags>
-        <tag>aha</tag>
-      </tags>
   </entry>
   <entry>
     <title>Vue笔记07 总结</title>
@@ -4521,9 +4527,6 @@
       <categories>
         <category>Memo</category>
       </categories>
-      <tags>
-        <tag>aha</tag>
-      </tags>
   </entry>
   <entry>
     <title>Spring笔记09 事务控制的问题&amp;动态代理</title>
