@@ -1,8 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>读书笔记 大脑修复术</title>
+    <url>/2020/07/25/brain/</url>
+    <content><![CDATA[<img src="/images/2020/brain1.png">
+
+<img src="/images/2020/brain2.png">
+
+<img src="/images/2020/brain3.png">
+
+<img src="/images/2020/brain4.png">]]></content>
+      <categories>
+        <category>Memo</category>
+      </categories>
+      <tags>
+        <tag>mindmap</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>记录服务器安装Anaconda</title>
+    <url>/2020/06/24/memo-python/</url>
+    <content><![CDATA[<p>pyenv每次都要source ~/.bash_profile才能生效，扎心，卸了</p>
+<p>现在笔记本上应该只有系统自带的2.7（和没卸干净的遗留文件）</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">coconutnut@Ss-MacBook-Pro ~ % python -V</span><br><span class="line">Python 2.7.17</span><br><span class="line">coconutnut@Ss-MacBook-Pro ~ % pip -V</span><br><span class="line">pip 19.3.1 from &#x2F;usr&#x2F;local&#x2F;lib&#x2F;python2.7&#x2F;site-packages&#x2F;pip (python 2.7)</span><br></pre></td></tr></table></figure>
+
+<p>想了下干脆装服务器上好了</p>
+<hr>
+<h1 id="安装Anaconda"><a href="#安装Anaconda" class="headerlink" title="安装Anaconda"></a>安装Anaconda</h1><blockquote>
+<p><a href="https://blog.csdn.net/qq_41813258/article/details/102400325" target="_blank" rel="noopener">https://blog.csdn.net/qq_41813258/article/details/102400325</a></p>
+</blockquote>
+<blockquote>
+<p><a href="https://repo.anaconda.com/archive/" target="_blank" rel="noopener">https://repo.anaconda.com/archive/</a></p>
+</blockquote>
+<p>官网下了个最新版anaconda3-2020.02-linux-x86_64.sh/</p>
+<p>bash安装，配置环境变量</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># conda -V</span><br><span class="line">conda 4.8.2</span><br></pre></td></tr></table></figure>
+
+<p>完成</p>
+<p>创建一个3.7.6的环境</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># conda create -n env3.7 python&#x3D;3.7.6</span><br><span class="line">...</span><br><span class="line">#</span><br><span class="line"># To activate this environment, use</span><br><span class="line">#</span><br><span class="line">#     $ conda activate env3.7</span><br><span class="line">#</span><br><span class="line"># To deactivate an active environment, use</span><br><span class="line">#</span><br><span class="line">#     $ conda deactivate</span><br></pre></td></tr></table></figure>
+
+<h1 id="配置Jupyter-notebook"><a href="#配置Jupyter-notebook" class="headerlink" title="配置Jupyter notebook"></a>配置Jupyter notebook</h1><blockquote>
+<p><a href="https://blog.csdn.net/qq_43058685/article/details/103804238" target="_blank" rel="noopener">https://blog.csdn.net/qq_43058685/article/details/103804238</a></p>
+</blockquote>
+<p>端口配的2020</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">jupyter notebook --ip&#x3D;0.0.0.0 --no-browser --allow-root</span><br></pre></td></tr></table></figure>
+
+<p>浏览器试了一下，ok</p>
+<h1 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 打开jupyter notebook</span><br><span class="line">jupyter notebook --allow-root</span><br><span class="line"></span><br><span class="line"># 后台运行</span><br><span class="line">nohup jupyter notebook --allow-root &amp;</span><br><span class="line"></span><br><span class="line"># 找到jupyter进程</span><br><span class="line">ps aux | grep jupyter</span><br><span class="line"></span><br><span class="line"># 关闭它</span><br><span class="line">kill XXX(pid)</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>memo</category>
+      </categories>
+  </entry>
+  <entry>
     <title>读书笔记 推荐系统实践</title>
-    <url>/2020/06/24/recommendation-system/</url>
+    <url>/2020/06/24/recommender-system/</url>
     <content><![CDATA[<img src="/images/2020/recommendation_system.png">
 
 ]]></content>
