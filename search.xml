@@ -1,6 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>AR Foundation笔记01 安卓Setup</title>
+    <url>/2020/09/26/note-arfoundation-01/</url>
+    <content><![CDATA[<p><a href="https://www.youtube.com/watch?v=0mpsiO2lCx0&amp;list=PL6VJLOFcTt7awvyIGIbLLPOBrW6-Y1R-J&amp;index=1&amp;ab_channel=DineshPunni" target="_blank" rel="noopener">https://www.youtube.com/watch?v=0mpsiO2lCx0&amp;list=PL6VJLOFcTt7awvyIGIbLLPOBrW6-Y1R-J&amp;index=1&amp;ab_channel=DineshPunni</a></p>
+<hr>
+<h1 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h1><p>macOS Catalina 10.15.6</p>
+<p>Unity Hub 2.3.10</p>
+<p>Unity 2020.1.6f1c1</p>
+<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><p>File -&gt; Build Settings</p>
+<p>切换平台到Android</p>
+<p>-&gt; Player Settings</p>
+<ol>
+<li><p>Other Settings -&gt; 改Package Name</p>
+</li>
+<li><p>Disable Multithread Rendering (Android doesn’t support yet)</p>
+</li>
+<li><p>Graphics APIs -&gt; disable Vulkan</p>
+</li>
+<li><p>Minimun API level -&gt; 26</p>
+</li>
+</ol>
+<h1 id="Package"><a href="#Package" class="headerlink" title="Package"></a>Package</h1><p>Window -&gt; Package Manager -&gt; Packages : Unity Registry</p>
+<img src="/images/2020/screencapture2020-09-26 PM5.51.57.jpg" width=400>
+
+<h1 id="Sample-Scene"><a href="#Sample-Scene" class="headerlink" title="Sample Scene"></a>Sample Scene</h1><ol>
+<li><p>删除Main Camera</p>
+</li>
+<li><p>Right Click -&gt; XR -&gt; AR Session Origin</p>
+<p>AR Camera 标签 MainCamera</p>
+</li>
+<li><p>Right Click -&gt; XR -&gt; AR Session</p>
+</li>
+<li><p>Right Click -&gt; 3D Object -&gt; Cube<br>位置改成0，0，0<br>缩放改成0.2，0.2，0.2<br>随便转转</p>
+</li>
+</ol>
+<h1 id="Build"><a href="#Build" class="headerlink" title="Build"></a>Build</h1><p>手机 -&gt; 开发者模式</p>
+<p>连上</p>
+<p>File -&gt; Build Settings -&gt; Run Device -&gt; 选中手机</p>
+<p> Add Open Scene</p>
+<p>Build and Run</p>
+<img src="/images/2020/Screenshot_2020-09-26-18-10-31-833_com.coconutnut.jpg" width=400>
+
+<p>成功<del>~</del></p>
+]]></content>
+      <categories>
+        <category>Note</category>
+      </categories>
+      <tags>
+        <tag>ar</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>记录部署静态页面</title>
     <url>/2020/08/10/webpage/</url>
     <content><![CDATA[<p>把index.html和assets准备好</p>
