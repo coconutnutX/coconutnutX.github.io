@@ -1,6 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>读论文笔记 ANN to Detect Structural Proteins</title>
+    <url>/2020/11/13/reading-note/</url>
+    <content><![CDATA[<p><strong>Artificial Neural Networks Trained to Detect Viral and Phage Structural Proteins</strong></p>
+<h1 id="数据"><a href="#数据" class="headerlink" title="数据"></a>数据</h1><p>来源：GenBank’s non-redun- dant database</p>
+<p>原始数据：</p>
+<ul>
+<li><p>正样本：6000+噬菌体结构蛋白序列</p>
+</li>
+<li><p>负样本：6000+噬菌体和原核基因组非结构蛋白序列</p>
+</li>
+</ul>
+<p>处理后的网络输入：氨基酸百分比组成（人工标记每个样本是/不是结构蛋白）</p>
+<p>目的：有一段新的序列，计算氨基酸百分比组成，输入网络，预测是否为结构蛋白</p>
+<h1 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h1><h2 id="训练"><a href="#训练" class="headerlink" title="训练"></a>训练</h2><p>目标：找最佳的网络结构&amp;数据集划分</p>
+<p>备选网络结构：</p>
+<ul>
+<li>隐藏层1，1~100个神经元</li>
+<li>隐藏层2，1~30个神经元</li>
+</ul>
+<p>备选train/validation set划分：</p>
+<ul>
+<li>50:50, 60:40, 70:30, 80:20, 95:5</li>
+</ul>
+<p>验证方法：160-fold交叉验证（图3A画的是10-fold交叉验证的结果）</p>
+<p>验证结果：</p>
+<ol>
+<li><p>输入层（20个输入单元）+ 1个隐藏层（90个神经元）+ 输出层（1个输出单元）表现最好，准确率85.6%</p>
+</li>
+<li><p>train/validation set划分80:20表现最好，准确率86.2%</p>
+</li>
+<li><p>由于没有很大差别，最终选了160个网络，投票决定</p>
+</li>
+</ol>
+<h2 id="更多工作"><a href="#更多工作" class="headerlink" title="更多工作"></a>更多工作</h2><p>关注对结构蛋白亚类的分类结果，如：是否是衣壳结构蛋白</p>
+<p>即输入数据的标记，原来标记是否为结构蛋白，现在标记是否为衣壳结构蛋白，重新训练网络，评估分类准确度</p>
+<p>还做了针对古细菌和真核生物衣壳蛋白的</p>
+<p>Isoelectric point？没看懂</p>
+<h1 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h1><p>Neural Network Toolbox 7.0 in Matlab version 7.6.0.324</p>
+<p>computations and data manipulations were done with Java, UNIX shell utilities, and Perl and Bash scripts</p>
+<h1 id="web-interface"><a href="#web-interface" class="headerlink" title="web interface"></a>web interface</h1><p><a href="https://vdm.sdsu.edu/ivireons/" target="_blank" rel="noopener">https://vdm.sdsu.edu/ivireons/</a></p>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>随便上Genbank找了一个序列<a href="https://www.ncbi.nlm.nih.gov/protein/SYW18879.1" target="_blank" rel="noopener">https://www.ncbi.nlm.nih.gov/protein/SYW18879.1</a></p>
+<p>下载FASTA格式</p>
+<p>sequence.fasta:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&gt;SYW18879.1 putative transcriptional regulator (Immunity repressor; phage) [Oenococcus oeni]</span><br><span class="line">MENKPNIAKNIREIRIKEDLTQEKLAELSGLSINFVSRLERSNNQNVSINKLEAIASALKVDIWRLLKSN</span><br><span class="line">DSEINKKEFPLHTKILFDKLSEFDPERSDRISKTILSLLEELELKQK</span><br></pre></td></tr></table></figure>
+
+<p>提交测试</p>
+<img src="/images/2020/screencapture2020-11-14 AM11.19.45.jpg">
+
+<p><strong>Structural, MCP, &amp; Tail Protein Network Predictions</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Annotation	Structural	</span><br><span class="line">MCP 1:1	</span><br><span class="line">MCP 2:1	</span><br><span class="line">MCP 3:1	</span><br><span class="line">MCP 4:1	</span><br><span class="line">MCP 7:1	</span><br><span class="line">MCP Lambda:1	</span><br><span class="line">MCP Lambda2:1	</span><br><span class="line">Tail 1:1	</span><br><span class="line">Tail 2:1	</span><br><span class="line">Tail 3:1	</span><br><span class="line">Tail 4:1	</span><br><span class="line">Tail 7:1	</span><br><span class="line">Tail Lambda:1	</span><br><span class="line">Tail Lambda2:1	</span><br><span class="line">SDS	SD MCP 1:1	</span><br><span class="line">SD MCP 2:1	</span><br><span class="line">SD MCP 3:1	</span><br><span class="line">SD MCP 4:1	</span><br><span class="line">SD MCP 7:1	</span><br><span class="line">SD MCP Lambda:1	</span><br><span class="line">SD MCP Lambda2:1	</span><br><span class="line">SD Tail 1:1	</span><br><span class="line">SD Tail 2:1	</span><br><span class="line">SD Tail,3:1	</span><br><span class="line">SD Tail 4:1	</span><br><span class="line">SD Tail 7:1	</span><br><span class="line">SD Tail Lambda:1	</span><br><span class="line">SD Tail Lambda2:1</span><br></pre></td></tr></table></figure>
+
+<p><strong>Percent Compositions and Isoelectric Point Estimates (last column)</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">0.0427 0.0000 0.0513 0.1197 0.0342 0.0085 0.0085 0.1026 0.1197 0.1453 0.0085 0.0855 0.0256 0.0256 0.0598 0.1026 0.0256 0.0256 0.0085 0.0000 9.07</span><br></pre></td></tr></table></figure>
+
+<p>根据<a href="http://vdm.sdsu.edu/ivireons/interpret.html" target="_blank" rel="noopener">interpret your results</a>的提示…没看懂</p>
+]]></content>
+      <categories>
+        <category>Note</category>
+      </categories>
+      <tags>
+        <tag>bioinformatics</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>AR Foundation笔记05 Gaze Interaction</title>
     <url>/2020/09/28/note-arfoundation-05/</url>
     <content><![CDATA[<blockquote>
