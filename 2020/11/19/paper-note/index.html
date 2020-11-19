@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    读论文笔记 DeephageTP |  CoCoNutNut&#39;s NoteBook
+  </title>
+  <meta name="generator" content="hexo-theme-yilia-plus">
+  
+  <link rel="shortcut icon" href="/images/1949347-2001.png" />
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="CoCoNutNut's NoteBook" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    <main class="content">
+      <section class="outer">
+  <article id="post-paper-note" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  读论文笔记 DeephageTP
+</h1>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/11/19/paper-note/" class="article-date">
+  <time datetime="2020-11-19T07:39:03.000Z" itemprop="datePublished">2020-11-19</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Note/">Note</a>
+  </div>
+
+      
+    </div>
+    
+
+    
+    
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <p><strong>DeephageTP: A Convolutional Neural Network Framework for Identifying Phage-specific Proteins from metagenomic sequencing data<br> Running title: an alignment-free deep learning framework for identifying phage- specific proteins</strong></p>
+<p>参考：原文 &amp; Github <a href="https://github.com/chuym726/DeephageTP" target="_blank" rel="noopener">https://github.com/chuym726/DeephageTP</a></p>
+<hr>
+<h1 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h1><p>3 specific proteins of the tailed phage:</p>
+<ol>
+<li>Portal (portal protein)</li>
+<li>TerL (large terminase subunit protein) </li>
+<li>TerS (small terminase subunit protein)</li>
+</ol>
+<p>Develop a <strong>CNN-based framework</strong> to identify these 3 proteins from <strong>metagenome data</strong></p>
+<h1 id="数据集"><a href="#数据集" class="headerlink" title="数据集"></a>数据集</h1><h2 id="train-test-set"><a href="#train-test-set" class="headerlink" title="train/test set"></a>train/test set</h2><p>(原文位置：106-127行)</p>
+<p>来源：Uniport(<a href="http://www.uniprot.org" target="_blank" rel="noopener">www.uniprot.org</a>)</p>
+<p>预处理过程：</p>
+<ol>
+<li><p>从数据库中获取各类蛋白质序列</p>
+<blockquote>
+<p>according to the taxonomy in the UniProt database, all proteins in archaea, bacteria and viruses were obtained from the database;</p>
+</blockquote>
+<p>看example_data.fa文件，长这样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;UniRef100_A0A017QK57 PBSX family phage terminase large subunit n&#x3D;1 Tax&#x3D;Glaesserella parasuis str. Nagasaki TaxID&#x3D;1117322 RepID&#x3D;A0A017QK57_HAEPR 1</span><br><span class="line">MKIQLNLPPKLIPVFTQQNVRYRGAYGGRGSAKTRTFAKMTAVVAYQRAMQGESGVILCGREFMNSLEDSSLEEIKQAIQSEPWLTDFFEVGEKYVRTKCGRISYIFTGLRHNLDSIKSKARILLAWIDEAESVSEMAWRKLLPTVRENGSEIWLTWNPEKKGSATDLRFRQHQDESMAIVEMNYSDNPWFPDVLEQERLRDKARLDDATYRWIWEGAYLEQSEAQIFRDKFQELEFKPNGDFSGPYFGLDFGFAQDPTAAVKCWVFKDELYIEYEAGKVGLELDDTATFLQKGIVGIEQYVIRADSARPESISYLKRHGLPRIDGVSKWKGSVEDGIAHIKSYKKIYIHPRCQQTLNEFRLYSYKTDRLSGDILPVVLDENNHYIDALRYALEPLMKGRQSWFG</span><br><span class="line">&gt;UniRef100_A0A017QKX8 PBSX family phage terminase large subunit n&#x3D;1 Tax&#x3D;Glaesserella parasuis str. Nagasaki TaxID&#x3D;1117322 RepID&#x3D;A0A017QKX8_HAEPR 1</span><br><span class="line">MKIQLNLPPKLIPVFTQQNVRYRGAYGGRGSAKTRTFAKMTAVVAYQRAMQGESGVILCGREFMNSLEDSSLEEIKQAIQSEPWLANFFDVGEKYVHTKCGRISYIFTGLRHNLDSIKSKARILLAWIDEAESVSEMAWRKLLPTVRESGSEIWLTWNPEKKGSATDLRFRQYQDESMAIVEMNYNDNPWFPDVLKQERLRDKARLDDATYRWIWEGDYLEESEAQVFRGKYQELEFKPLPDFEGPYHGLDFGFAQDPTAAIKCWVFKDELYIEYEAGKVGLELDDTATFLQKGIVGIEQYVIRADSARPESISYLKRHGLPRIDGVSKWKGSVEDGIAHIKSYKKIYIHPRCQQTLNEFRLYSYKTDRLSGDVLPTLVDAHNHYIDALRYALNPRIQRKGDFSQNPLKLY</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>去除无关数据</p>
+<blockquote>
+<p>the protein sequences were searched by the keywords (i.e., portal, large terminase subunit, and small terminase subunit), and the noise sequences with the uncertain keywords (e.g., hypothetical, possible, like, predicted) were removed to ensure that the selected protein sequences in the three categories are veracious;</p>
+</blockquote>
+</li>
+<li><p>其它类过多，随机留一部分</p>
+<blockquote>
+<p>the remaining sequences without the keywords of interest (portal, large terminase subunit and, small terminase subunit) were labeled as the ‘others’ category. However, the size of the ‘others’ category is more than 75 times larger than that of the three categories. To relieve the class-imbalance problem brought by this situation, we randomly selected 20000 protein sequences  from the remaining sequences and labeled as the ‘others’ category;</p>
+</blockquote>
+</li>
+<li><p>去除不正常长度的序列</p>
+<blockquote>
+<p>to further guarantee that the sequences from the database with the three categories are veracious, we calculated length distribution of these sequences (see Fig. S1), then manually checked the sequences with the abnormal length (&lt;5% and &gt; 95%) using Blastp (<a href="https://blast.ncbi.nlm.nih.gov/Blast.cgi" target="_blank" rel="noopener">https://blast.ncbi.nlm.nih.gov/Blast.cgi</a>) against NCBI nr database, and the sequences without hitting to the targeted references were filtered out (almost all the sequences with abnormal length) and labeled as the ‘others’ category.</p>
+</blockquote>
+</li>
+</ol>
+<p>最终结果：</p>
+<img src="/images/2020/screencapture2020-11-19 PM4.09.05.jpg">
+
+<h2 id="mimic-metagenomic-dataset"><a href="#mimic-metagenomic-dataset" class="headerlink" title="mimic metagenomic dataset"></a>mimic metagenomic dataset</h2><p>(原文位置：128-140行)</p>
+<p>来源：UniRef100 (<a href="https://www.uniprot.org/uniref/" target="_blank" rel="noopener">https://www.uniprot.org/uniref/</a>)</p>
+<p>处理过程和上面类似</p>
+<p>且：2个数据库有重合，手动删除重合部分</p>
+<p>用这组数据测试了模型在不同数据集大小上的表现效果</p>
+<h2 id="virome-dataset"><a href="#virome-dataset" class="headerlink" title="virome dataset"></a>virome dataset</h2><p>(原文位置：141-147行)</p>
+<p>用于测试模型在真实数据集上的结果</p>
+<p>这组是原始数据，自行获取蛋白质序列</p>
+<h2 id="3个数据集的用途"><a href="#3个数据集的用途" class="headerlink" title="3个数据集的用途"></a>3个数据集的用途</h2><p>(原文位置：193-197行 + Fig.1A)</p>
+<ol>
+<li>用train/test set训练模型，分析可行性</li>
+<li>用mimic dataset测试cutoff value</li>
+<li>用virome dataset测试真实效果</li>
+</ol>
+<blockquote>
+<p>In summary, as shown in Fig. 1A, in this study, the proposed DeephageTP framework was firstly implemented on the training dataset for feasibility analysis, and then the trained model was applied on the mimic dataset for test and the cutoff value of each category of interest was determined according to the responding loss values distributions; finally, we applied the trained model on the real metagenomic datasets for examining the performance of our framework.</p>
+</blockquote>
+<img src="/images/2020/screencapture2020-11-19 PM3.47.08.jpg">
+
+<h1 id="蛋白质序列编码"><a href="#蛋白质序列编码" class="headerlink" title="蛋白质序列编码"></a>蛋白质序列编码</h1><p>(原文位置：148-161行)</p>
+<p>方法：one-hot</p>
+<p>对20个氨基酸进行one-hot编码，1个氨基酸占20位</p>
+<img src="/images/2020/screencapture2020-11-19 PM4.20.48.jpg" width="300px">
+
+<p>L个氨基酸的蛋白质序列将被编码成 L * 20 的矩阵</p>
+<p>输入需要固定，故设置最大长度为900，多了砍掉，少了填0</p>
+<p>最终每个蛋白质序列都被编码成 900 * 20 的矩阵，作为输入</p>
+<h1 id="模型"><a href="#模型" class="headerlink" title="模型"></a>模型</h1><h2 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h2><p>(原文位置：163-170行)</p>
+<ol>
+<li><p>输入层 (ReLu)</p>
+</li>
+<li><p>卷积层</p>
+</li>
+<li><p>最大池化层 (dropout)</p>
+</li>
+<li><p>全连接层1 (ReLu) (dropout)</p>
+</li>
+<li><p>全连接层2</p>
+</li>
+<li><p>输出层 (SoftMax)</p>
+</li>
+</ol>
+<img src="/images/2020/screencapture2020-11-19 PM4.20.481.jpg">
+
+<h2 id="超参数选择"><a href="#超参数选择" class="headerlink" title="超参数选择"></a>超参数选择</h2><p>(原文位置：171-189行)</p>
+<p>全连接单元数量、dropout rate、learning rate等的取值，大部分是常用的默认值；一些用5-fold cross-validation确定</p>
+<p>20个氨基酸分成7组（根据dipole moments &amp; side-chain）： {A,G,V}, {I,L,F,P}, {Y,M,T,S}, {H,N,Q,W}, {R,K}, {D,E} and {C} -&gt; 卷积层filter大小设置为 7 * 1</p>
+<h2 id="模型评估指标"><a href="#模型评估指标" class="headerlink" title="模型评估指标"></a>模型评估指标</h2><p>(原文位置：198-213行)</p>
+<ul>
+<li>Accuracy</li>
+<li>Precision</li>
+<li>Recall</li>
+<li>F1-score</li>
+</ul>
+<h2 id="Loss计算"><a href="#Loss计算" class="headerlink" title="Loss计算"></a>Loss计算</h2><p>(原文位置：214-234行)</p>
+<img src="/images/2020/screencapture2020-11-19 PM4.50.00.jpg">
+
+<p>yk 第k维的序列的真实标签</p>
+<p>pk 第k维的序列的预测标签</p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>(原文位置：190-192行)</p>
+<p>Python 3.6</p>
+<p>Keras</p>
+<p><a href="https://github.com/chuym726/DeephageTP" target="_blank" rel="noopener">https://github.com/chuym726/DeephageTP</a></p>
+<h1 id="没看懂的"><a href="#没看懂的" class="headerlink" title="没看懂的"></a>没看懂的</h1><ol>
+<li>cutoff value是做什么的？怎么算的？</li>
+<li>loss怎么算的？</li>
+</ol>
+
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bioinformatics/" rel="tag">bioinformatics</a></li></ul>
+
+
+    </footer>
+
+  </div>
+
+  
+  
+  <nav class="article-nav">
+    
+      <a href="/2020/11/19/code-note/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            看源码笔记 DeephageTP
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2020/11/13/reading-note/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">读论文笔记 ANN to Detect Structural Proteins</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+
+  
+  
+  
+
+</article>
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>
+        &copy;
+        2020
+        coconutnut
+      </li>
+      <li>
+        
+        
+        <span>
+  <i>PV:<span id="busuanzi_value_page_pv"></span></i>
+  <i>UV:<span id="busuanzi_value_site_uv"></span></i>
+</span>
+        312k
+        
+      </li>
+      <li>
+        
+        Powered by
+        
+        
+        <a href="https://hexo.io" target="_blank">Hexo</a> Theme <a href="https://github.com/Shen-Yu/hexo-theme-ayer" target="_blank">Ayer</a>
+        
+      </li>
+    </ul>
+    <ul class="list-inline">
+      
+      <li>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="to_top">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+      </div>
+    </main>
+    <aside class="sidebar">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/1949347-2001.png" alt="CoCoNutNut&#39;s NoteBook"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/share.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script>
+  try {
+    var typed = new Typed("#subtitle", {
+      strings: ['咫尺千里，江山如画', 'The cave you fear to enter holds the treasure you seek', ''],
+      startDelay: 0,
+      typeSpeed: 200,
+      loop: true,
+      backSpeed: 100,
+      showCursor: true
+    });
+  } catch (err) {
+  }
+
+</script>
+
+
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: 'main',
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto',
+    onClick: (e) => {
+      $('.toc-link').removeClass('is-active-link');
+      $(`a[href=${e.target.hash}]`).addClass('is-active-link');
+      $(e.target.hash).scrollIntoView();
+      return false;
+    }
+  });
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/js/ayer.js"></script>
+
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+
+<script type="text/javascript" src="https://js.users.51.la/20544303.js"></script>
+
+
+
+    
+  </div>
+</body>
+
+</html>

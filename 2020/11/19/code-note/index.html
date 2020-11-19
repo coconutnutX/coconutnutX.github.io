@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    看源码笔记 DeephageTP |  CoCoNutNut&#39;s NoteBook
+  </title>
+  <meta name="generator" content="hexo-theme-yilia-plus">
+  
+  <link rel="shortcut icon" href="/images/1949347-2001.png" />
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="CoCoNutNut's NoteBook" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    <main class="content">
+      <section class="outer">
+  <article id="post-code-note" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  看源码笔记 DeephageTP
+</h1>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/11/19/code-note/" class="article-date">
+  <time datetime="2020-11-19T09:02:01.000Z" itemprop="datePublished">2020-11-19</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Note/">Note</a>
+  </div>
+
+      
+    </div>
+    
+
+    
+    
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <blockquote>
+<p><a href="https://github.com/chuym726/DeephageTP" target="_blank" rel="noopener">https://github.com/chuym726/DeephageTP</a></p>
+</blockquote>
+<h1 id="环境搭建-amp-数据准备"><a href="#环境搭建-amp-数据准备" class="headerlink" title="环境搭建&amp;数据准备"></a>环境搭建&amp;数据准备</h1><p>（已有：conda 4.9.2）</p>
+<ol>
+<li><p>下载<a href="https://github.com/chuym726/DeephageTP" target="_blank" rel="noopener">https://github.com/chuym726/DeephageTP</a></p>
+</li>
+<li><p>创建新的虚拟环境deephageTP</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda create --name deephageTP python&#x3D;3.6 numpy theano keras scikit-learn</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><p>新建工程文件夹DeephageTP-test（需要的文件从下载的DeephageTP-master拷）</p>
+</li>
+<li><p>PyCharm打开DeephageTP-test，激活环境</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda activate deephageTP</span><br></pre></td></tr></table></figure>
+
+<img src="/images/2020/screencapture2020-11-19 PM5.23.40.jpg">
+
+<p>Python Interpreter也改成deephageTP</p>
+<img src="/images/2020/screencapture2020-11-19 PM5.25.35.jpg">
+
+<img src="/images/2020/screencapture2020-11-19 PM5.26.51.jpg">
+
+<h1 id="测试example-data-fa"><a href="#测试example-data-fa" class="headerlink" title="测试example_data.fa"></a>测试example_data.fa</h1><p>代码里面直接读的training_data.faa，X和Y应该在同一个文件里，</p>
+<p>但是给的training_data.faa.X.npy.tar.gz、training_data.faa.Y.npy.tar.gz是在不同文件</p>
+<p>于是先用example_data.fa试一下（遇到bug #1，解决见Debug）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line">(deephageTP) coconutnut@x86_64-apple-darwin13 DeephageTP-test % python DeephageTP_model_training.py</span><br><span class="line">Using TensorFlow backend.</span><br><span class="line">only amino acid code.</span><br><span class="line">ok! there is the same number (193) of labels and sequences. </span><br><span class="line">193</span><br><span class="line">193</span><br><span class="line">193</span><br><span class="line">ok! windows is 900.</span><br><span class="line">ok! raw data has been saved as a npy file example_data.fa.X&#x2F;Y</span><br><span class="line">now runing is DL_Train.</span><br><span class="line">nb_filters:  50</span><br><span class="line">kernel_s:  3</span><br><span class="line">n_batch:  10</span><br><span class="line">n_echos:  20</span><br><span class="line">dropout1:  0.1</span><br><span class="line">dropout2:  0.1</span><br><span class="line">ok! the npy file example_data.fa.X&#x2F;Y.npy are loaded!</span><br><span class="line">ok! all labels are in 4 kinds.</span><br><span class="line">193</span><br><span class="line">now training for all, Be noted here no test part !!!</span><br><span class="line">[[1. 0. 0. 0.]</span><br><span class="line"> [1. 0. 0. 0.]</span><br><span class="line"> [1. 0. 0. 0.]</span><br><span class="line">......</span><br><span class="line"> [0. 0. 0. 1.]</span><br><span class="line"> [0. 0. 0. 1.]</span><br><span class="line"> [0. 0. 0. 1.]</span><br><span class="line"> [0. 0. 0. 1.]]</span><br><span class="line">2020-11-19 17:30:03.895070: I tensorflow&#x2F;core&#x2F;platform&#x2F;cpu_feature_guard.cc:145] This TensorFlow binary is optimized with Intel(R) MKL-DNN to use the following CPU instructions in performance critical operations:  SSE4.1 SSE4.2 AVX AVX2 FMA</span><br><span class="line">To enable them in non-MKL-DNN operations, rebuild TensorFlow with the appropriate compiler flags.</span><br><span class="line">2020-11-19 17:30:03.895316: I tensorflow&#x2F;core&#x2F;common_runtime&#x2F;process_util.cc:115] Creating new thread pool with default inter op setting: 8. Tune using inter_op_parallelism_threads for best performance.</span><br><span class="line">Epoch 1&#x2F;20</span><br><span class="line">193&#x2F;193 [&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;] - 12s 64ms&#x2F;step - loss: 1.1962 - accuracy: 0.4767</span><br><span class="line">Epoch 2&#x2F;20</span><br><span class="line">193&#x2F;193 [&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;] - 11s 55ms&#x2F;step - loss: 0.4503 - accuracy: 0.8446</span><br><span class="line">Epoch 3&#x2F;20</span><br><span class="line">193&#x2F;193 [&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;] - 10s 53ms&#x2F;step - loss: 0.1844 - accuracy: 0.9534</span><br><span class="line">Epoch 4&#x2F;20</span><br><span class="line">193&#x2F;193 [&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;] - 10s 52ms&#x2F;step - loss: 0.1079 - accuracy: 0.9845</span><br><span class="line">Epoch 5&#x2F;20</span><br><span class="line">193&#x2F;193 [&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;] - 11s 55ms&#x2F;step - loss: 0.0383 - accuracy: 1.0000</span><br><span class="line">Epoch 6&#x2F;20</span><br><span class="line">193&#x2F;193 [&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;] - 10s 50ms&#x2F;step - loss: 0.0203 - accuracy: 1.0000</span><br><span class="line">Epoch 7&#x2F;20</span><br><span class="line">193&#x2F;193 [&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;] - 12s 61ms&#x2F;step - loss: 0.0105 - accuracy: 1.0000</span><br><span class="line">Epoch 8&#x2F;20</span><br><span class="line">193&#x2F;193 [&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;] - 10s 51ms&#x2F;step - loss: 0.0063 - accuracy: 1.0000</span><br><span class="line">Epoch 9&#x2F;20</span><br><span class="line">193&#x2F;193 [&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;] - 10s 51ms&#x2F;step - loss: 0.0058 - accuracy: 1.0000</span><br><span class="line">Epoch 10&#x2F;20</span><br><span class="line">193&#x2F;193 [&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;] - 10s 50ms&#x2F;step - loss: 0.0104 - accuracy: 0.9948</span><br><span class="line">Epoch 11&#x2F;20</span><br><span class="line">193&#x2F;193 [&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;] - 10s 51ms&#x2F;step - loss: 0.0066 - accuracy: 1.0000</span><br><span class="line">Epoch 12&#x2F;20</span><br><span class="line">193&#x2F;193 [&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;] - 10s 51ms&#x2F;step - loss: 0.0041 - accuracy: 1.0000</span><br><span class="line">Epoch 13&#x2F;20</span><br><span class="line">193&#x2F;193 [&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;] - 10s 52ms&#x2F;step - loss: 0.0017 - accuracy: 1.0000</span><br><span class="line">Epoch 14&#x2F;20</span><br><span class="line">193&#x2F;193 [&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;] - 10s 50ms&#x2F;step - loss: 0.0026 - accuracy: 1.0000</span><br><span class="line">Epoch 15&#x2F;20</span><br><span class="line">193&#x2F;193 [&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;] - 10s 51ms&#x2F;step - loss: 0.0017 - accuracy: 1.0000</span><br><span class="line">Epoch 16&#x2F;20</span><br><span class="line">193&#x2F;193 [&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;] - 10s 50ms&#x2F;step - loss: 0.0013 - accuracy: 1.0000</span><br><span class="line">Epoch 17&#x2F;20</span><br><span class="line">193&#x2F;193 [&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;] - 10s 52ms&#x2F;step - loss: 0.0011 - accuracy: 1.0000</span><br><span class="line">Epoch 18&#x2F;20</span><br><span class="line">193&#x2F;193 [&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;] - 9s 48ms&#x2F;step - loss: 8.4943e-04 - accuracy: 1.0000</span><br><span class="line">Epoch 19&#x2F;20</span><br><span class="line">193&#x2F;193 [&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;] - 9s 49ms&#x2F;step - loss: 8.9927e-04 - accuracy: 1.0000</span><br><span class="line">Epoch 20&#x2F;20</span><br><span class="line">193&#x2F;193 [&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;] - 9s 49ms&#x2F;step - loss: 0.0011 - accuracy: 1.0000</span><br><span class="line">the model (example_data.fa.all.h5) has saved!</span><br></pre></td></tr></table></figure>
+
+<p>产生了3个文件</p>
+<p>example_data.fa.all.h5</p>
+<p>example_data.fa.X.npy</p>
+<p>example_data.fa.Y.npy</p>
+<p>所以给的training_data.faa.X.npy.tar.gz、training_data.faa.Y.npy.tar.gz也是生成的吗？data文件夹里就一个叫a的空文件，难道是没传training_data.faa？😧</p>
+<p>看了下代码，还真是🙄</p>
+<p>aa_ref2npy()用来转格式，存成one-hot编码后，X和Y分开的形式</p>
+<p>DL_Train()用来训练</p>
+<p>既然如此，直接用training_data.faa.X.npy.tar.gz、training_data.faa.Y.npy.tar.gz解压，不跑aa_ref2npy()，就可以直接训练了</p>
+<h1 id="测试training-data-faa"><a href="#测试training-data-faa" class="headerlink" title="测试training_data.faa"></a>测试training_data.faa</h1><p>解压training_data.faa.X.npy.tar.gz、training_data.faa.Y.npy.tar.gz</p>
+<p>（25.3MB解压后3.97 GB，是得有多少0啊，不愧是one-hot）</p>
+<p>代码改了2处：</p>
+<p>第8行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.cross_validation import train_test_split</span><br></pre></td></tr></table></figure>
+
+<p>改成</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.model_selection import train_test_split</span><br></pre></td></tr></table></figure>
+
+<p>最后的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if 1:</span><br><span class="line">	aa_ref2npy(ref_Data&#x3D;ref_Data,len_w&#x3D;len_w)</span><br></pre></td></tr></table></figure>
+
+<p>注释掉</p>
+<p>运行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">(deephageTP) coconutnut@x86_64-apple-darwin13 DeephageTP-test % python DeephageTP_model_training.py</span><br><span class="line">Using TensorFlow backend.</span><br><span class="line">only amino acid code.</span><br><span class="line">now runing is DL_Train.</span><br><span class="line">nb_filters:  50</span><br><span class="line">kernel_s:  3</span><br><span class="line">n_batch:  10</span><br><span class="line">n_echos:  20</span><br><span class="line">dropout1:  0.1</span><br><span class="line">dropout2:  0.1</span><br><span class="line">ok! the npy file training_data.faa.X&#x2F;Y.npy are loaded!</span><br><span class="line">ok! all labels are in 4 kinds.</span><br><span class="line">27585</span><br><span class="line">now training for all, Be noted here no test part !!!</span><br><span class="line">[[1. 0. 0. 0.]</span><br><span class="line"> [1. 0. 0. 0.]</span><br><span class="line"> [1. 0. 0. 0.]</span><br><span class="line"> ...</span><br><span class="line"> [0. 0. 0. 1.]</span><br><span class="line"> [0. 0. 0. 1.]</span><br><span class="line"> [0. 0. 0. 1.]]</span><br><span class="line">2020-11-19 17:52:30.350217: I tensorflow&#x2F;core&#x2F;platform&#x2F;cpu_feature_guard.cc:145] This TensorFlow binary is optimized with Intel(R) MKL-DNN to use the following CPU instructions in performance critical operations:  SSE4.1 SSE4.2 AVX AVX2 FMA</span><br><span class="line">To enable them in non-MKL-DNN operations, rebuild TensorFlow with the appropriate compiler flags.</span><br><span class="line">2020-11-19 17:52:30.350529: I tensorflow&#x2F;core&#x2F;common_runtime&#x2F;process_util.cc:115] Creating new thread pool with default inter op setting: 8. Tune using inter_op_parallelism_threads for best performance.</span><br><span class="line">Epoch 1&#x2F;20</span><br><span class="line"> 1250&#x2F;27585 [&gt;.............................] - ETA: 22:33 - loss: 0.5788 - accuracy: 0.8016</span><br></pre></td></tr></table></figure>
+
+<p>太大了，不跑了</p>
+<h1 id="代码分析"><a href="#代码分析" class="headerlink" title="代码分析"></a>代码分析</h1><p>训练部分 DeephageTP_model_training.py</p>
+<h2 id="aa-ref2npy"><a href="#aa-ref2npy" class="headerlink" title="aa_ref2npy()"></a>aa_ref2npy()</h2><p>做one-hot编码用的</p>
+<p>把蛋白质序列↓</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;UniRef100_A0A017QK57 PBSX family phage terminase large subunit n&#x3D;1 Tax&#x3D;Glaesserella parasuis str. Nagasaki TaxID&#x3D;1117322 RepID&#x3D;A0A017QK57_HAEPR 1</span><br><span class="line">MKIQLNLPPKLIPVFTQQNVRYRGAYGGRGSAKTRTFAKMTAVVAYQRAMQGESGVILCGREFMNSLEDSSLEEIKQAIQSEPWLTDFFEVGEKYVRTKCGRISYIFTGLRHNLDSIKSKARILLAWIDEAESVSEMAWRKLLPTVRENGSEIWLTWNPEKKGSATDLRFRQHQDESMAIVEMNYSDNPWFPDVLEQERLRDKARLDDATYRWIWEGAYLEQSEAQIFRDKFQELEFKPNGDFSGPYFGLDFGFAQDPTAAVKCWVFKDELYIEYEAGKVGLELDDTATFLQKGIVGIEQYVIRADSARPESISYLKRHGLPRIDGVSKWKGSVEDGIAHIKSYKKIYIHPRCQQTLNEFRLYSYKTDRLSGDILPVVLDENNHYIDALRYALEPLMKGRQSWFG</span><br></pre></td></tr></table></figure>
+
+<p>one-hot编码，np.array格式，保存（分别存X和Y）</p>
+<p>把X打出来看下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[[0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],  对应M</span><br><span class="line"> [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],  对应K</span><br><span class="line"> [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],  对应I</span><br><span class="line"> [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],</span><br><span class="line"> [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],</span><br><span class="line"> [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],</span><br><span class="line"> [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],</span><br><span class="line"> ...</span><br></pre></td></tr></table></figure>
+
+<p>就是和蛋白质序列MKI…一一对应的one-hot编码（还是手动写死的）</p>
+<p>大小是(900, 20)，和文中描述一样</p>
+<p>这里Y是0，根据每个蛋白质第一行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;UniRef100_A0A017QK57 PBSX family phage terminase large subunit n&#x3D;1 Tax&#x3D;Glaesserella parasuis str. Nagasaki TaxID&#x3D;1117322 RepID&#x3D;A0A017QK57_HAEPR 1</span><br></pre></td></tr></table></figure>
+
+<p>最后这个数字-1表示类别</p>
+<p>如下面这个蛋白的类别是2</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;UniRef100_A0A072NPV4 Phage terminase, small subunit n&#x3D;1 Tax&#x3D;Bacillus azotoformans MEV2011 TaxID&#x3D;1348973 RepID&#x3D;A0A072NPV4_BACAZ 3</span><br><span class="line">MAKDGTNRGGARVGAGAKKKPLTDKIAEGNPGGRKLTVMEFKDTADLKGLEMPEPNKMLEAIQKDGKALVAGEIYRNTWAWLNERGCAALVSPQLLERYAMSVARWIQCEEAVTEYGFLAKHPTTGNAIQSPYVAMGQNYMNQTNRLWMEIFQIVKENCTGEYSGINPQDDVMERLLTARRGK</span><br></pre></td></tr></table></figure>
+
+<h2 id="DL-Train"><a href="#DL-Train" class="headerlink" title="DL_Train()"></a>DL_Train()</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">DL_Train</span><span class="params">(ref_Data, len_w)</span>:</span></span><br><span class="line">	<span class="comment"># 参数设置</span></span><br><span class="line">	nb_filters = <span class="number">50</span></span><br><span class="line">	kernel_s = <span class="number">3</span></span><br><span class="line">	n_batch = <span class="number">10</span></span><br><span class="line">	n_echos = <span class="number">20</span></span><br><span class="line">	dropout1 = <span class="number">0.10</span></span><br><span class="line">	dropout2 = <span class="number">0.10</span></span><br><span class="line">	<span class="keyword">print</span> (<span class="string">"now runing is DL_Train."</span>)</span><br><span class="line">		<span class="comment"># end_lossrint("all is ended.")</span></span><br><span class="line">	<span class="keyword">print</span> (<span class="string">"nb_filters: "</span>, nb_filters)</span><br><span class="line">	<span class="keyword">print</span> (<span class="string">"kernel_s: "</span>, kernel_s)</span><br><span class="line">	<span class="keyword">print</span> (<span class="string">"n_batch: "</span>, n_batch)</span><br><span class="line">	<span class="keyword">print</span> (<span class="string">"n_echos: "</span>, n_echos)</span><br><span class="line">	<span class="keyword">print</span> (<span class="string">"dropout1: "</span>, dropout1)</span><br><span class="line">	<span class="keyword">print</span> (<span class="string">"dropout2: "</span>, dropout2)</span><br><span class="line">	</span><br><span class="line">	<span class="comment"># 处理数据</span></span><br><span class="line">	X2 = np.load(ref_Data + <span class="string">".X.npy"</span>)</span><br><span class="line">	Y2 = np.load(ref_Data + <span class="string">".Y.npy"</span>)</span><br><span class="line">	<span class="keyword">print</span> (<span class="string">"ok! the npy file "</span> + ref_Data + <span class="string">".X/Y.npy are loaded!"</span> )</span><br><span class="line">	n_classes = <span class="number">4</span>    <span class="comment">#len(np.unique(Y))</span></span><br><span class="line">	<span class="keyword">print</span> (<span class="string">"ok! all labels are in "</span> + str(n_classes) + <span class="string">" kinds."</span> )</span><br><span class="line">	YY_t = []</span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> Y2:</span><br><span class="line">		ll = np.zeros(n_classes)</span><br><span class="line">		ll[i] = <span class="number">1</span></span><br><span class="line">		YY_t.append(ll)</span><br><span class="line">	YY_t = np.array(YY_t)</span><br><span class="line">	print(len(YY_t))</span><br><span class="line">	print(<span class="string">"now training for all, Be noted here no test part !!!"</span>)</span><br><span class="line">	X_train = X2.reshape(<span class="number">-1</span>,<span class="number">1</span>,len_w,matrix_size)</span><br><span class="line">	Y_train = YY_t</span><br><span class="line">	print(Y_train)</span><br><span class="line">	</span><br><span class="line">	<span class="comment"># 构建模型</span></span><br><span class="line">	model = Sequential()</span><br><span class="line">	model.add(Conv2D(filters=nb_filters,kernel_size=(<span class="number">7</span>,<span class="number">1</span>),padding=<span class="string">'same'</span>,input_shape=(<span class="number">1</span>,len_w,matrix_size),data_format=<span class="string">'channels_first'</span>))</span><br><span class="line">	model.add(Activation(<span class="string">'relu'</span>))</span><br><span class="line">	model.add(MaxPooling2D(pool_size=(<span class="number">3</span>,<span class="number">3</span>)))</span><br><span class="line">	model.add(Dropout(dropout1))</span><br><span class="line">	model.add(Flatten())</span><br><span class="line">	model.add(Dense(<span class="number">100</span>,activation=<span class="string">'relu'</span>))</span><br><span class="line">	model.add(Dropout(dropout2))</span><br><span class="line">	model.add(Dense(n_classes,activation=<span class="string">'softmax'</span>))</span><br><span class="line">	model.compile(loss=<span class="string">'categorical_crossentropy'</span>,optimizer=Adam(),metrics=[<span class="string">'accuracy'</span>])   </span><br><span class="line">	</span><br><span class="line">	<span class="comment"># 训练模型</span></span><br><span class="line">	model.fit(X_train,Y_train,batch_size=n_batch,epochs=n_echos,verbose=<span class="number">1</span>)</span><br><span class="line">	</span><br><span class="line">	<span class="comment"># 保存模型</span></span><br><span class="line">	model.save(ref_Data + <span class="string">'.all.h5'</span>)</span><br><span class="line">	print(<span class="string">"the model ("</span> + ref_Data + <span class="string">".all.h5) has saved!"</span>)</span><br></pre></td></tr></table></figure>
+
+<h1 id="Debug"><a href="#Debug" class="headerlink" title="Debug"></a>Debug</h1><h3 id="1"><a href="#1" class="headerlink" title="#1"></a>#1</h3><p>第一次跑DeephageTP_model_training.py时遇到的bug</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ModuleNotFoundError: No module named &#39;sklearn.cross_validation&#39;</span><br></pre></td></tr></table></figure>
+
+<p>解决：</p>
+<p><a href="https://blog.csdn.net/qq_35962520/article/details/85295228" target="_blank" rel="noopener">https://blog.csdn.net/qq_35962520/article/details/85295228</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># from sklearn.cross_validation import train_test_split # cross_validation不再使用，移至model_selection</span><br><span class="line">from sklearn.model_selection import train_test_split</span><br></pre></td></tr></table></figure>
+
+
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bioinformatics/" rel="tag">bioinformatics</a></li></ul>
+
+
+    </footer>
+
+  </div>
+
+  
+  
+  <nav class="article-nav">
+    
+    
+      <a href="/2020/11/19/paper-note/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">读论文笔记 DeephageTP</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+
+  
+  
+  
+
+</article>
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>
+        &copy;
+        2020
+        coconutnut
+      </li>
+      <li>
+        
+        
+        <span>
+  <i>PV:<span id="busuanzi_value_page_pv"></span></i>
+  <i>UV:<span id="busuanzi_value_site_uv"></span></i>
+</span>
+        312k
+        
+      </li>
+      <li>
+        
+        Powered by
+        
+        
+        <a href="https://hexo.io" target="_blank">Hexo</a> Theme <a href="https://github.com/Shen-Yu/hexo-theme-ayer" target="_blank">Ayer</a>
+        
+      </li>
+    </ul>
+    <ul class="list-inline">
+      
+      <li>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="to_top">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+      </div>
+    </main>
+    <aside class="sidebar">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/1949347-2001.png" alt="CoCoNutNut&#39;s NoteBook"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/share.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script>
+  try {
+    var typed = new Typed("#subtitle", {
+      strings: ['咫尺千里，江山如画', 'The cave you fear to enter holds the treasure you seek', ''],
+      startDelay: 0,
+      typeSpeed: 200,
+      loop: true,
+      backSpeed: 100,
+      showCursor: true
+    });
+  } catch (err) {
+  }
+
+</script>
+
+
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: 'main',
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto',
+    onClick: (e) => {
+      $('.toc-link').removeClass('is-active-link');
+      $(`a[href=${e.target.hash}]`).addClass('is-active-link');
+      $(e.target.hash).scrollIntoView();
+      return false;
+    }
+  });
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/js/ayer.js"></script>
+
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+
+<script type="text/javascript" src="https://js.users.51.la/20544303.js"></script>
+
+
+
+    
+  </div>
+</body>
+
+</html>
