@@ -624,7 +624,7 @@
 
 ]]></content>
       <categories>
-        <category>memo</category>
+        <category>Memo</category>
       </categories>
   </entry>
   <entry>
@@ -4810,7 +4810,7 @@
 
 ]]></content>
       <categories>
-        <category>Exercise</category>
+        <category>Note</category>
       </categories>
       <tags>
         <tag>algorithm</tag>
@@ -4837,7 +4837,7 @@
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>递归中如果要分情况讨论，一次返回多个结果，不要多次调用递归</p>
 ]]></content>
       <categories>
-        <category>Exercise</category>
+        <category>Note</category>
       </categories>
       <tags>
         <tag>algorithm</tag>
@@ -5505,7 +5505,7 @@ Process finished with exit code 0</code></pre>]]></content>
 <p>Leetcode 188 买卖股票的最佳时机 IV —— 最多交易k次</p>
 ]]></content>
       <categories>
-        <category>Exercise</category>
+        <category>Note</category>
       </categories>
       <tags>
         <tag>algorithm</tag>
