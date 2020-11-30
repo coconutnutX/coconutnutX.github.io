@@ -1,6 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Unity笔记 Project01总结 Basic</title>
+    <url>/2020/11/30/note-unity/</url>
+    <content><![CDATA[<blockquote>
+<p><a href="https://www.youtube.com/watch?v=pwZpJzpE2lQ&amp;t=4178s&amp;ab_channel=Imphenzia" target="_blank" rel="noopener">https://www.youtube.com/watch?v=pwZpJzpE2lQ&amp;t=4178s&amp;ab_channel=Imphenzia</a></p>
+</blockquote>
+<img src="/images/2020/screencapture2020-11-30 PM9.13.29.jpg">
+
+<h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><ol>
+<li><p>人物跳跃，左右移动</p>
+<ul>
+<li><p>跳跃速度与重量无关 -&gt; ForceMode.VelocityChange</p>
+</li>
+<li><p>跳跃时保持左右速度 -&gt; rigidbodyComponent.velocity</p>
+</li>
+<li><p>不可在空中跳跃 -&gt; 检查Physics.OverlapSphere()</p>
+</li>
+<li><p>左右移动同时检查←→AD -&gt; Input.GetAxis(“Horizontal”)</p>
+</li>
+<li><p>碰到墙壁不会因为长按D贴在墙上 -&gt; 添加物理材质，摩擦力为0</p>
+</li>
+</ul>
+</li>
+<li><p>摄像头跟随角色 -&gt; 层级放在角色下即可</p>
+</li>
+<li><p>收集硬币</p>
+<ul>
+<li>不发生碰撞 -&gt; 勾选是触发器</li>
+<li>检测碰撞 -&gt; OnTriggerEnter()</li>
+<li>碰到后消除 -&gt; Destroy(other.gameObject);</li>
+</ul>
+</li>
+</ol>
+<h1 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h1><ol>
+<li>在Update()中获取输入，在FixedUpdate()中apply physics</li>
+<li>用[SerializeField] private，不要用public</li>
+<li>减少不必要的Collider，提高效率</li>
+<li>多用Prefab，善用Layer</li>
+</ol>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">using System.Collections;</span><br><span class="line">using System.Collections.Generic;</span><br><span class="line">using UnityEngine;</span><br><span class="line"></span><br><span class="line">public class Player : MonoBehaviour</span><br><span class="line">&#123;</span><br><span class="line">    [SerializeField] private Transform groundCheckTransform &#x3D; null;</span><br><span class="line">    [SerializeField] private LayerMask playerMask;</span><br><span class="line">    private bool jumpKeyPressed;</span><br><span class="line">    private float horizontalInput;</span><br><span class="line">    private Rigidbody rigidbodyComponent;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Start is called before the first frame update</span><br><span class="line">    void Start() &#123;</span><br><span class="line">        rigidbodyComponent &#x3D; GetComponent&lt;Rigidbody&gt;();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Update is called once per frame</span><br><span class="line">    void Update() &#123;</span><br><span class="line">        horizontalInput &#x3D; Input.GetAxis(&quot;Horizontal&quot;);</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; Avoid jumping in the air (always colliding with the capsule collider)</span><br><span class="line">        if(Physics.OverlapSphere(groundCheckTransform.position, 0.1f, playerMask).Length &#x3D;&#x3D; 0)&#123;</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if(Input.GetKeyDown(KeyCode.Space))&#123;</span><br><span class="line">            jumpKeyPressed &#x3D; true;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F; FixedUpdate is called once every physic update (Default 100&#x2F;s)</span><br><span class="line">    private void FixedUpdate() &#123;</span><br><span class="line">        if(jumpKeyPressed)&#123;</span><br><span class="line">            rigidbodyComponent.AddForce(Vector3.up * 5,ForceMode.VelocityChange);</span><br><span class="line">            jumpKeyPressed &#x3D; false;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        rigidbodyComponent.velocity &#x3D; new Vector3(horizontalInput * 2, rigidbodyComponent.velocity.y, 0);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private void OnTriggerEnter(Collider other) &#123;</span><br><span class="line">        &#x2F;&#x2F; Collide with 9.Coin layer</span><br><span class="line">        if(other.gameObject.layer &#x3D;&#x3D; 9)&#123;</span><br><span class="line">            Destroy(other.gameObject);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Note</category>
+      </categories>
+      <tags>
+        <tag>unity</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>看源码笔记 DeephageTP</title>
     <url>/2020/11/19/code-note/</url>
     <content><![CDATA[<blockquote>

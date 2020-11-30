@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-11-19T10:16:44.490Z</updated>
+  <updated>2020-11-30T13:27:15.197Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Unity笔记 Project01总结 Basic</title>
+    <link href="http://yoursite.com/2020/11/30/note-unity/"/>
+    <id>http://yoursite.com/2020/11/30/note-unity/</id>
+    <published>2020-11-30T12:55:58.000Z</published>
+    <updated>2020-11-30T13:27:15.197Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p><a href="https://www.youtube.com/watch?v=pwZpJzpE2lQ&amp;t=4178s&amp;ab_channel=Imphenzia" target="_blank" rel="noopener">https://www.youtube.com/watch?v=pwZpJzpE2lQ&amp;t=4178s&amp;ab_channel=Imphenzia</a></p></blockquote><img src="/images/2020/screencapture2020-11-30 PM9.13.29.jpg"><h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><ol><li><p>人物跳跃，左右移动</p><ul><li><p>跳跃速度与重量无关 -&gt; ForceMode.VelocityChange</p></li><li><p>跳跃时保持左右速度 -&gt; rigidbodyComponent.velocity</p></li><li><p>不可在空中跳跃 -&gt; 检查Physics.OverlapSphere()</p></li><li><p>左右移动同时检查←→AD -&gt; Input.GetAxis(“Horizontal”)</p></li><li><p>碰到墙壁不会因为长按D贴在墙上 -&gt; 添加物理材质，摩擦力为0</p></li></ul></li><li><p>摄像头跟随角色 -&gt; 层级放在角色下即可</p></li><li><p>收集硬币</p><ul><li>不发生碰撞 -&gt; 勾选是触发器</li><li>检测碰撞 -&gt; OnTriggerEnter()</li><li>碰到后消除 -&gt; Destroy(other.gameObject);</li></ul></li></ol><h1 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h1><ol><li>在Update()中获取输入，在FixedUpdate()中apply physics</li><li>用[SerializeField] private，不要用public</li><li>减少不必要的Collider，提高效率</li><li>多用Prefab，善用Layer</li></ol><h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">using System.Collections;</span><br><span class="line">using System.Collections.Generic;</span><br><span class="line">using UnityEngine;</span><br><span class="line"></span><br><span class="line">public class Player : MonoBehaviour</span><br><span class="line">&#123;</span><br><span class="line">    [SerializeField] private Transform groundCheckTransform &#x3D; null;</span><br><span class="line">    [SerializeField] private LayerMask playerMask;</span><br><span class="line">    private bool jumpKeyPressed;</span><br><span class="line">    private float horizontalInput;</span><br><span class="line">    private Rigidbody rigidbodyComponent;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Start is called before the first frame update</span><br><span class="line">    void Start() &#123;</span><br><span class="line">        rigidbodyComponent &#x3D; GetComponent&lt;Rigidbody&gt;();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Update is called once per frame</span><br><span class="line">    void Update() &#123;</span><br><span class="line">        horizontalInput &#x3D; Input.GetAxis(&quot;Horizontal&quot;);</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; Avoid jumping in the air (always colliding with the capsule collider)</span><br><span class="line">        if(Physics.OverlapSphere(groundCheckTransform.position, 0.1f, playerMask).Length &#x3D;&#x3D; 0)&#123;</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if(Input.GetKeyDown(KeyCode.Space))&#123;</span><br><span class="line">            jumpKeyPressed &#x3D; true;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F; FixedUpdate is called once every physic update (Default 100&#x2F;s)</span><br><span class="line">    private void FixedUpdate() &#123;</span><br><span class="line">        if(jumpKeyPressed)&#123;</span><br><span class="line">            rigidbodyComponent.AddForce(Vector3.up * 5,ForceMode.VelocityChange);</span><br><span class="line">            jumpKeyPressed &#x3D; false;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        rigidbodyComponent.velocity &#x3D; new Vector3(horizontalInput * 2, rigidbodyComponent.velocity.y, 0);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private void OnTriggerEnter(Collider other) &#123;</span><br><span class="line">        &#x2F;&#x2F; Collide with 9.Coin layer</span><br><span class="line">        if(other.gameObject.layer &#x3D;&#x3D; 9)&#123;</span><br><span class="line">            Destroy(other.gameObject);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=pwZpJzpE2lQ&amp;amp;t=4178s&amp;amp;ab_channel=Imphenzia&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;ht
+      
+    
+    </summary>
+    
+    
+      <category term="Note" scheme="http://yoursite.com/categories/Note/"/>
+    
+    
+      <category term="unity" scheme="http://yoursite.com/tags/unity/"/>
+    
+  </entry>
   
   <entry>
     <title>看源码笔记 DeephageTP</title>
@@ -521,33 +548,6 @@
     
     
       <category term="Memo" scheme="http://yoursite.com/categories/Memo/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Android 10 闪退问题</title>
-    <link href="http://yoursite.com/2020/05/04/debug/"/>
-    <id>http://yoursite.com/2020/05/04/debug/</id>
-    <published>2020-05-04T13:12:29.000Z</published>
-    <updated>2020-05-07T05:47:12.397Z</updated>
-    
-    <content type="html"><![CDATA[<p>（未解决）</p><h1 id="bug描述"><a href="#bug描述" class="headerlink" title="bug描述"></a>bug描述</h1><p>打开工程可以安装，但是闪退</p><p>Build中报错</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">注: 某些输入文件使用或覆盖了已过时的 API。</span><br><span class="line">注: 有关详细信息, 请使用 -Xlint:deprecation 重新编译。</span><br></pre></td></tr></table></figure><h1 id="尝试解决"><a href="#尝试解决" class="headerlink" title="尝试解决"></a>尝试解决</h1><h2 id="尝试1"><a href="#尝试1" class="headerlink" title="尝试1"></a>尝试1</h2><blockquote><p><a href="https://blog.csdn.net/caidi1988314/article/details/52460922?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-3&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-3" target="_blank" rel="noopener">https://blog.csdn.net/caidi1988314/article/details/52460922?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-3&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-3</a></p></blockquote><p>build.gradle android {}里加</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">allprojects &#123;</span><br><span class="line">  gradle.projectsEvaluated &#123;</span><br><span class="line">    tasks.withType(JavaCompile) &#123;</span><br><span class="line">    options.compilerArgs &lt;&lt; &quot;-Xlint:unchecked&quot; &lt;&lt; &quot;-Xlint:deprecation&quot;                       &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p> 出现</p><img src="/images/2020/screencapture2020-05-04 PM9.09.01.jpg"><p>在报错的函数上加</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@SuppressWarnings(&quot;deprecation&quot;)</span><br></pre></td></tr></table></figure><p>Build成功，但还是闪退</p><h2 id="尝试2"><a href="#尝试2" class="headerlink" title="尝试2"></a>尝试2</h2><p>看到activity_main.xml里有</p><img src="/images/2020/screencapture2020-05-04 PM9.28.55.jpg"><p>按提示修改</p><p>还是闪退</p><blockquote><p><a href="https://blog.csdn.net/yogima/article/details/89416885?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-1&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-1" target="_blank" rel="noopener">https://blog.csdn.net/yogima/article/details/89416885?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-1&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-1</a></p></blockquote><p>把MainActivity所有函数都注释掉，可以打开</p><p>一点一点放开</p><p>发现问题在</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">File path = <span class="keyword">new</span> File(dir);</span><br><span class="line">String[] list = path.list();</span><br><span class="line">len = list.length;</span><br><span class="line"><span class="keyword">if</span> (len == <span class="number">0</span>) &#123; <span class="keyword">return</span> <span class="number">0</span>; &#125;</span><br></pre></td></tr></table></figure><p>list空的时候，list.length会异常</p><p>加了个为空返回0</p><p>但是这个异常怎么不提示呢？？？</p><p>这里会为空应该读文件权限没有获取到</p><h2 id="尝试3"><a href="#尝试3" class="headerlink" title="尝试3"></a>尝试3</h2><p>像上次那样加</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">android:requestLegacyExternalStorage&#x3D;&quot;true&quot;</span><br></pre></td></tr></table></figure><p>报错</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AAPT: error: attribute android:requestLegacyExternalStorage not found.</span><br></pre></td></tr></table></figure><blockquote><p><a href="https://blog.csdn.net/DeMonliuhui/article/details/99718553" target="_blank" rel="noopener">https://blog.csdn.net/DeMonliuhui/article/details/99718553</a></p></blockquote><p>现在这个工程的版本是</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">compileSdkVersion 28</span><br><span class="line">buildToolsVersion &#39;28.0.3&#39;</span><br><span class="line">defaultConfig &#123;</span><br><span class="line">  applicationId &quot;com.example.mydoppler&quot;</span><br><span class="line">  minSdkVersion 15</span><br><span class="line">  targetSdkVersion 28</span><br><span class="line">  versionCode 1</span><br><span class="line">  versionName &quot;1.0&quot;</span><br><span class="line">  testInstrumentationRunner &quot;androidx.test.runner.AndroidJUnitRunner&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>改成</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">compileSdkVersion 29</span><br><span class="line">buildToolsVersion &quot;29.0.2&quot;</span><br><span class="line">defaultConfig &#123;</span><br><span class="line">  applicationId&quot;com.example.mydoppler&quot;</span><br><span class="line">  minSdkVersion 26</span><br><span class="line">  targetSdkVersion 29</span><br><span class="line">  versionCode 1</span><br><span class="line">  versionName &quot;1.0&quot;</span><br><span class="line">  testInstrumentationRunner &quot;androidx.test.runner.AndroidJUnitRunner&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>requestLegacyExternalStorage属性可以加了</p><p>输出那个获取的文件路径，还是null</p><h2 id="尝试4"><a href="#尝试4" class="headerlink" title="尝试4"></a>尝试4</h2><p>在Run里面又发现一句红的</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">E&#x2F;libc: Access denied finding property &quot;ro.vendor.df.effect.conflict&quot;</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;（未解决）&lt;/p&gt;
-&lt;h1 id=&quot;bug描述&quot;&gt;&lt;a href=&quot;#bug描述&quot; class=&quot;headerlink&quot; title=&quot;bug描述&quot;&gt;&lt;/a&gt;bug描述&lt;/h1&gt;&lt;p&gt;打开工程可以安装，但是闪退&lt;/p&gt;
-&lt;p&gt;Build中报错&lt;/p&gt;
-&lt;figure cla
-      
-    
-    </summary>
-    
-    
-      <category term="Debug" scheme="http://yoursite.com/categories/Debug/"/>
     
     
   </entry>
