@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-12-02T09:23:36.216Z</updated>
+  <updated>2020-12-02T10:07:55.039Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Unity笔记 Project04 点击移动+旋转摄像头</title>
+    <link href="http://yoursite.com/2020/12/02/unity-note-2/"/>
+    <id>http://yoursite.com/2020/12/02/unity-note-2/</id>
+    <published>2020-12-02T09:43:51.000Z</published>
+    <updated>2020-12-02T10:07:55.039Z</updated>
+    
+    <content type="html"><![CDATA[<p>想做成点击移动，并且摄像头可以根据鼠标位置有限制的旋转</p><h1 id="Step-1-点击移动"><a href="#Step-1-点击移动" class="headerlink" title="Step 1 - 点击移动"></a>Step 1 - 点击移动</h1><p>参照Project02</p><img src="/images/2020/screencapture2020-12-02 PM5.37.22.jpg"><p>完成~</p><img src="/images/2020/Dec-02-2020 17-42-53.gif"><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">using System.Collections;</span><br><span class="line">using System.Collections.Generic;</span><br><span class="line">using UnityEngine;</span><br><span class="line">using UnityEngine.AI;</span><br><span class="line"></span><br><span class="line">public class PlayerMovement : MonoBehaviour</span><br><span class="line">&#123;</span><br><span class="line">    public NavMeshAgent agent;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Start is called before the first frame update</span><br><span class="line">    void Start()</span><br><span class="line">    &#123;</span><br><span class="line">        agent &#x3D; GetComponent&lt;NavMeshAgent&gt;();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Update is called once per frame</span><br><span class="line">    void Update()</span><br><span class="line">    &#123;</span><br><span class="line">        &#x2F;&#x2F; Click to Move</span><br><span class="line">        if(Input.GetMouseButtonDown(0))&#123;</span><br><span class="line">            RaycastHit hit;</span><br><span class="line">            Ray ray &#x3D; Camera.main.ScreenPointToRay(Input.mousePosition);</span><br><span class="line">            if(Physics.Raycast(ray, out hit, Mathf.Infinity))&#123;</span><br><span class="line">                agent.SetDestination(hit.point);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h1 id="Step-2-旋转摄像头"><a href="#Step-2-旋转摄像头" class="headerlink" title="Step 2 - 旋转摄像头"></a>Step 2 - 旋转摄像头</h1><p>参照Project03</p><img src="/images/2020/Dec-02-2020 18-05-13.gif"><p>鼠标转向不是很方便，顺便加了方向键旋转</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">using System.Collections;</span><br><span class="line">using System.Collections.Generic;</span><br><span class="line">using UnityEngine;</span><br><span class="line"></span><br><span class="line">public class CameraLook : MonoBehaviour</span><br><span class="line">&#123;</span><br><span class="line">    public float mouseSensitivity &#x3D; 100f;</span><br><span class="line">    public float keySensitivity &#x3D; 100f;</span><br><span class="line">    public Transform player &#x3D; null;</span><br><span class="line">    private float xRotation &#x3D; 0f;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Start is called before the first frame update</span><br><span class="line">    void Start()</span><br><span class="line">    &#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Update is called once per frame</span><br><span class="line">    void Update()</span><br><span class="line">    &#123;</span><br><span class="line">        &#x2F;&#x2F; Get mouse position</span><br><span class="line">        float mouseX &#x3D; Input.GetAxis(&quot;Mouse X&quot;) * mouseSensitivity * Time.deltaTime;</span><br><span class="line">        float mouseY &#x3D; Input.GetAxis(&quot;Mouse Y&quot;) * mouseSensitivity * Time.deltaTime;</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; Get key inout</span><br><span class="line">        float keyX &#x3D; Input.GetAxis(&quot;Horizontal&quot;) * keySensitivity * Time.deltaTime;</span><br><span class="line"></span><br><span class="line">        Debug.Log(mouseX);</span><br><span class="line">        Debug.Log(keyX);</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; Rotate camera up and down</span><br><span class="line">        xRotation -&#x3D; mouseY;</span><br><span class="line">        xRotation &#x3D; Mathf.Clamp(xRotation, -30f, 30f);</span><br><span class="line">        transform.localRotation &#x3D; Quaternion.Euler(xRotation, 0f, 0f);</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; Rotate player left and right</span><br><span class="line">        player.Rotate(Vector3.up * (mouseX + keyX));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><hr><p>耶(＾－＾)V</p><p>目前这个移动方式很满意，暂时就这样</p><p>下一步可以搭场景啦~</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;想做成点击移动，并且摄像头可以根据鼠标位置有限制的旋转&lt;/p&gt;
+&lt;h1 id=&quot;Step-1-点击移动&quot;&gt;&lt;a href=&quot;#Step-1-点击移动&quot; class=&quot;headerlink&quot; title=&quot;Step 1 - 点击移动&quot;&gt;&lt;/a&gt;Step 1 - 点击移动&lt;/h
+      
+    
+    </summary>
+    
+    
+      <category term="Note" scheme="http://yoursite.com/categories/Note/"/>
+    
+    
+      <category term="unity" scheme="http://yoursite.com/tags/unity/"/>
+    
+  </entry>
   
   <entry>
     <title>Unity笔记 Project03 第一人称移动</title>
@@ -48,9 +75,9 @@
     <link href="http://yoursite.com/2020/12/02/unity-note/"/>
     <id>http://yoursite.com/2020/12/02/unity-note/</id>
     <published>2020-12-02T05:36:44.000Z</published>
-    <updated>2020-12-02T05:57:34.252Z</updated>
+    <updated>2020-12-02T09:26:35.690Z</updated>
     
-    <content type="html"><![CDATA[<blockquote><p><a href="https://www.youtube.com/watch?v=y_zdW5LIX5o&ab_channel=PekkeDev" target="_blank" rel="noopener">Click To Move with NavMesh - Unity 3D</a></p></blockquote><p>选中地面</p><p>窗口 → AI → 导航: Static &amp; Walkable</p><img src="/images/2020/screencapture2020-12-02_PM1.26.36.jpg"><p>烘焙 → Bake</p><img src="/images/2020/screencapture2020-12-02_PM1.27.18.jpg"><p>Player加组件Nav Mesh Agent</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">using System.Collections;</span><br><span class="line">using System.Collections.Generic;</span><br><span class="line">using UnityEngine;</span><br><span class="line">using UnityEngine.AI;</span><br><span class="line"></span><br><span class="line">public class Player : MonoBehaviour</span><br><span class="line">&#123;</span><br><span class="line">    NavMeshAgent agent;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Start is called before the first frame update</span><br><span class="line">    void Start()</span><br><span class="line">    &#123;</span><br><span class="line">        agent &#x3D; GetComponent&lt;NavMeshAgent&gt;();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Update is called once per frame</span><br><span class="line">    void Update()</span><br><span class="line">    &#123;</span><br><span class="line">        if(Input.GetMouseButtonDown(0))&#123;</span><br><span class="line">            RaycastHit hit;</span><br><span class="line">            Ray ray &#x3D; Camera.main.ScreenPointToRay(Input.mousePosition);</span><br><span class="line">            if(Physics.Raycast(ray, out hit, Mathf.Infinity))&#123;</span><br><span class="line">                agent.SetDestination(hit.point);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><img src="/images/2020/screencapture2020-12-02 PM1.55.04.jpg">]]></content>
+    <content type="html"><![CDATA[<blockquote><p><a href="https://www.youtube.com/watch?v=y_zdW5LIX5o&ab_channel=PekkeDev" target="_blank" rel="noopener">Click To Move with NavMesh - Unity 3D</a></p></blockquote><p>选中地面</p><p>窗口 → AI → 导航: Static &amp; Walkable</p><img src="/images/2020/screencapture2020-12-02_PM1.26.36.jpg"><p>烘焙 → Bake</p><img src="/images/2020/screencapture2020-12-02_PM1.27.18.jpg"><p>Player加组件Nav Mesh Agent</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">using System.Collections;</span><br><span class="line">using System.Collections.Generic;</span><br><span class="line">using UnityEngine;</span><br><span class="line">using UnityEngine.AI;</span><br><span class="line"></span><br><span class="line">public class Player : MonoBehaviour</span><br><span class="line">&#123;</span><br><span class="line">    NavMeshAgent agent;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Start is called before the first frame update</span><br><span class="line">    void Start()</span><br><span class="line">    &#123;</span><br><span class="line">        agent &#x3D; GetComponent&lt;NavMeshAgent&gt;();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Update is called once per frame</span><br><span class="line">    void Update()</span><br><span class="line">    &#123;</span><br><span class="line">        if(Input.GetMouseButtonDown(0))&#123;</span><br><span class="line">            RaycastHit hit;</span><br><span class="line">            Ray ray &#x3D; Camera.main.ScreenPointToRay(Input.mousePosition);</span><br><span class="line">            if(Physics.Raycast(ray, out hit, Mathf.Infinity))&#123;</span><br><span class="line">                agent.SetDestination(hit.point);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
     
     <summary type="html">
     
@@ -523,34 +550,6 @@
     
     
       <category term="algorithm" scheme="http://yoursite.com/tags/algorithm/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Anki也太优秀了吧！</title>
-    <link href="http://yoursite.com/2020/05/12/memo/"/>
-    <id>http://yoursite.com/2020/05/12/memo/</id>
-    <published>2020-05-12T15:31:31.000Z</published>
-    <updated>2020-05-13T01:33:22.350Z</updated>
-    
-    <content type="html"><![CDATA[<p>以前看剧的时候喜欢截屏，把不认识的词记录下来，零零散散屯了好多词</p><img src="/images/2020/screencapture2020-05-12 PM11.34.40.jpg"><p>但是并不好复习，背单词的时候还是不认识</p><p>而Anki！加上Image Occlusion Enhanced插件！完美解决！</p><img src="/images/2020/screencapture2020-05-12 PM11.37.57.jpg"><p>拖个框遮住单词就好了，再在header里面填上单词</p><p>以后的复习安排就不用自己管了~</p><img src="/images/2020/screencapture2020-05-12 PM11.38.57.jpg"><p>一个问题是header里填的单词会在复习时显示</p><p>但是！</p><p>还能编辑卡片模板是什么神仙功能啊！注释掉header就行了嗷~</p><img src="/images/2020/screencapture2020-05-12 PM11.41.31.jpg"><p>太美妙了快乐得原地转圈~</p><p>仿佛能看见日后蹭蹭增长的词汇量</p><p>我爱Anki😍😍😍</p><hr><p>发现现在真的是用了好多效率软件，简直是强迫症，为了找个满意的能从安卓应用商店到App Store到Google Play翻个遍，尤其是背单词和任务管理，扇贝不背百词斩、滴答ToDo水滴…最后剩下的都是现在最喜欢的，不知道以后还能不能发现更好的~</p><ul><li>日程管理：Apple自带的日历📅</li><li>任务管理：Trello</li><li>背单词：墨墨</li><li>背诗：年轮（估计要转移到Anki了哈哈）</li><li>习惯打卡：Dot Habit（还没用到一个月，待定）</li></ul>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;以前看剧的时候喜欢截屏，把不认识的词记录下来，零零散散屯了好多词&lt;/p&gt;
-&lt;img src=&quot;/images/2020/screencapture2020-05-12 PM11.34.40.jpg&quot;&gt;
-
-&lt;p&gt;但是并不好复习，背单词的时候还是不认识&lt;/p&gt;
-&lt;p&gt;而Anki
-      
-    
-    </summary>
-    
-    
-      <category term="Memo" scheme="http://yoursite.com/categories/Memo/"/>
-    
     
   </entry>
   
