@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Unity笔记 Project05 地形&amp;Asset</title>
+    <url>/2020/12/02/unity-note-3/</url>
+    <content><![CDATA[<blockquote>
+<p><a href="https://www.youtube.com/watch?v=ddy12WHqt-M&amp;ab_channel=UGuruz" target="_blank" rel="noopener">https://www.youtube.com/watch?v=ddy12WHqt-M&amp;ab_channel=UGuruz</a></p>
+</blockquote>
+<p>试了试地形</p>
+<img src="/images/2020/screencapture2020-12-02 PM8.19.30.jpg">
+
+<p>加入人物，按Project04的方式移动</p>
+<img src="/images/2020/screencapture2020-12-02 PM8.20.05.jpg">
+
+<p>找了一组模型，能用！</p>
+<img src="/images/2020/screencapture2020-12-02 PM9.53.36.jpg">
+
+<p>感觉要起飞了🤩</p>
+]]></content>
+      <categories>
+        <category>Note</category>
+      </categories>
+      <tags>
+        <tag>unity</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Unity笔记 Project04 点击移动+旋转摄像头</title>
     <url>/2020/12/02/unity-note-2/</url>
     <content><![CDATA[<p>想做成点击移动，并且摄像头可以根据鼠标位置有限制的旋转</p>

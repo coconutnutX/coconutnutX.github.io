@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-12-02T10:07:55.039Z</updated>
+  <updated>2020-12-02T13:57:22.871Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Unity笔记 Project05 地形&amp;Asset</title>
+    <link href="http://yoursite.com/2020/12/02/unity-note-3/"/>
+    <id>http://yoursite.com/2020/12/02/unity-note-3/</id>
+    <published>2020-12-02T13:54:21.000Z</published>
+    <updated>2020-12-02T13:57:22.871Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p><a href="https://www.youtube.com/watch?v=ddy12WHqt-M&amp;ab_channel=UGuruz" target="_blank" rel="noopener">https://www.youtube.com/watch?v=ddy12WHqt-M&amp;ab_channel=UGuruz</a></p></blockquote><p>试了试地形</p><img src="/images/2020/screencapture2020-12-02 PM8.19.30.jpg"><p>加入人物，按Project04的方式移动</p><img src="/images/2020/screencapture2020-12-02 PM8.20.05.jpg"><p>找了一组模型，能用！</p><img src="/images/2020/screencapture2020-12-02 PM9.53.36.jpg"><p>感觉要起飞了🤩</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=ddy12WHqt-M&amp;amp;ab_channel=UGuruz&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://www.youtu
+      
+    
+    </summary>
+    
+    
+      <category term="Note" scheme="http://yoursite.com/categories/Note/"/>
+    
+    
+      <category term="unity" scheme="http://yoursite.com/tags/unity/"/>
+    
+  </entry>
   
   <entry>
     <title>Unity笔记 Project04 点击移动+旋转摄像头</title>
@@ -521,35 +548,6 @@
     
       <category term="Debug" scheme="http://yoursite.com/categories/Debug/"/>
     
-    
-  </entry>
-  
-  <entry>
-    <title>五月每日一题打卡完工纪念</title>
-    <link href="http://yoursite.com/2020/05/31/memo/"/>
-    <id>http://yoursite.com/2020/05/31/memo/</id>
-    <published>2020-05-31T02:18:19.000Z</published>
-    <updated>2020-05-31T02:19:39.988Z</updated>
-    
-    <content type="html"><![CDATA[<img src="/images/2020/screencapture2020-05-31 AM10.18.55.jpg" width=300><p>居然出徽章了，太戳我了</p><img src="/images/2020/screencapture2020-05-31 AM10.19.04.jpg" width=300>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;img src=&quot;/images/2020/screencapture2020-05-31 AM10.18.55.jpg&quot; width=300&gt;
-
-&lt;p&gt;居然出徽章了，太戳我了&lt;/p&gt;
-&lt;img src=&quot;/images/2020/screencapture2020-05-31
-      
-    
-    </summary>
-    
-    
-      <category term="Memo" scheme="http://yoursite.com/categories/Memo/"/>
-    
-    
-      <category term="algorithm" scheme="http://yoursite.com/tags/algorithm/"/>
     
   </entry>
   
