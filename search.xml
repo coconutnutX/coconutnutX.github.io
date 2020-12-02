@@ -1,7 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Unity笔记 Project01总结 Basic</title>
+    <title>Unity笔记 Project03 第一人称移动</title>
+    <url>/2020/12/02/unity-note-1/</url>
+    <content><![CDATA[<blockquote>
+<p><a href="https://www.youtube.com/watch?v=_QajrabyTJc&amp;ab_channel=Brackeys" target="_blank" rel="noopener">https://www.youtube.com/watch?v=_QajrabyTJc&amp;ab_channel=Brackeys</a></p>
+</blockquote>
+<img src="/images/2020/screencapture2020-12-02 PM5.18.52.jpg">
+
+<h1 id="层级"><a href="#层级" class="headerlink" title="层级"></a>层级</h1><ul>
+<li>Player（空物体）-&gt; 加Character Controller；PlayerMovement（Script）<ul>
+<li>Body（圆柱）-&gt; 删除Collider</li>
+<li>Main Camera -&gt; 放在人物头部的位置；MouseLook（Script）</li>
+</ul>
+</li>
+</ul>
+<h1 id="旋转"><a href="#旋转" class="headerlink" title="旋转"></a>旋转</h1><p>x轴横向旋转，转动Player和Camera</p>
+<p>y轴纵向旋转，只转动Camera</p>
+<h1 id="移动"><a href="#移动" class="headerlink" title="移动"></a>移动</h1><p>使用Character Controller的方法</p>
+<h1 id="重力"><a href="#重力" class="headerlink" title="重力"></a>重力</h1><p>Character Controller不能使用Rigidbody🤪，只能代码解决</p>
+<p>还需要通过GroundCheck和Layer来解决碰到地面时下落速度清零的问题</p>
+<h1 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h1><ul>
+<li><p>Update()中Time.deltaTime获取从上次调用Update()至今的时间</p>
+</li>
+<li><p>控制爬楼梯跨度&amp;斜坡角度 -&gt; Character Controller中设置</p>
+</li>
+</ul>
+<img src="/images/2020/screencapture2020-12-02_PM2.00.44.jpg">
+
+<p>看教程里的总结，用Character Controller和用RigidBody来控制确实挺不一样的，后面得看看用哪个更合适</p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">using System.Collections;</span><br><span class="line">using System.Collections.Generic;</span><br><span class="line">using UnityEngine;</span><br><span class="line"></span><br><span class="line">public class MouseLook : MonoBehaviour</span><br><span class="line">&#123;</span><br><span class="line">    public float mouseSensitivity &#x3D; 100f;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 在Unity中把Player拖过来</span><br><span class="line">    public Transform playerBody &#x3D; null;</span><br><span class="line"></span><br><span class="line">    private float xRotation &#x3D; 0f;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Start is called before the first frame update</span><br><span class="line">    void Start()</span><br><span class="line">    &#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Update is called once per frame</span><br><span class="line">    void Update()</span><br><span class="line">    &#123;</span><br><span class="line">        &#x2F;&#x2F; Get Input</span><br><span class="line">        float mouseX &#x3D; Input.GetAxis(&quot;Mouse X&quot;) * mouseSensitivity * Time.deltaTime;</span><br><span class="line">        float mouseY &#x3D; Input.GetAxis(&quot;Mouse Y&quot;) * mouseSensitivity * Time.deltaTime;</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; 纵向旋转Camera</span><br><span class="line">        xRotation -&#x3D; mouseY;</span><br><span class="line">        &#x2F;&#x2F; 不直接用Rotate，因为要先限制旋转角度</span><br><span class="line">        xRotation &#x3D; Mathf.Clamp(xRotation, -30f, 30f);</span><br><span class="line">        transform.localRotation &#x3D; Quaternion.Euler(xRotation, 0f, 0f);</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; 横向旋转Player</span><br><span class="line">        playerBody.Rotate(Vector3.up * mouseX);</span><br><span class="line">        Debug.Log(mouseX);</span><br><span class="line">        Debug.Log(&quot;R:&quot;+playerBody.transform.rotation);</span><br><span class="line">        Debug.Log(&quot;LR:&quot;+playerBody.transform.localRotation);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">using System.Collections;</span><br><span class="line">using System.Collections.Generic;</span><br><span class="line">using UnityEngine;</span><br><span class="line"></span><br><span class="line">public class PlayerMovement : MonoBehaviour</span><br><span class="line">&#123;</span><br><span class="line">    public CharacterController controller;</span><br><span class="line"></span><br><span class="line">    public float speed &#x3D; 12f;</span><br><span class="line">    public float gravity &#x3D; -9.81f;</span><br><span class="line">    public float jumpHeight &#x3D; 3f;</span><br><span class="line"></span><br><span class="line">    public Transform groundCheck;</span><br><span class="line">    public float groundDistance &#x3D; 0.4f;</span><br><span class="line">    public LayerMask groundMask;</span><br><span class="line"></span><br><span class="line">    Vector3 velocity;</span><br><span class="line">    bool isGrounded;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Update is called once per frame</span><br><span class="line">    void Update()</span><br><span class="line">    &#123;</span><br><span class="line">        &#x2F;&#x2F; 防止向下的速度无限增大</span><br><span class="line">        isGrounded &#x3D; Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);</span><br><span class="line"></span><br><span class="line">        if(isGrounded &amp;&amp; velocity.y &lt; 0)&#123;</span><br><span class="line">            velocity.y &#x3D; -2f;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; 移动</span><br><span class="line">        float x &#x3D; Input.GetAxis(&quot;Horizontal&quot;);</span><br><span class="line">        float z &#x3D; Input.GetAxis(&quot;Vertical&quot;);</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; 这样写是全局坐标，不管Player面对什么方向</span><br><span class="line">        &#x2F;&#x2F; Vector3 move &#x3D; new Vector3(x, 0f, z);</span><br><span class="line"></span><br><span class="line">        Vector3 move &#x3D; transform.right * x + transform.forward * z;</span><br><span class="line">        controller.Move(move * speed * Time.deltaTime);</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; 跳跃</span><br><span class="line">        if(Input.GetButtonDown(&quot;Jump&quot;) &amp;&amp; isGrounded)&#123;</span><br><span class="line">            velocity.y &#x3D; Mathf.Sqrt(jumpHeight * -2f * gravity);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; 模拟重力</span><br><span class="line">        velocity.y +&#x3D; gravity * Time.deltaTime;</span><br><span class="line">        controller.Move(velocity * Time.deltaTime);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Note</category>
+      </categories>
+      <tags>
+        <tag>unity</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Unity笔记 Project02 点击移动</title>
+    <url>/2020/12/02/unity-note/</url>
+    <content><![CDATA[<blockquote>
+<p><a href="https://www.youtube.com/watch?v=y_zdW5LIX5o&ab_channel=PekkeDev" target="_blank" rel="noopener">Click To Move with NavMesh - Unity 3D</a></p>
+</blockquote>
+<p>选中地面</p>
+<p>窗口 → AI → 导航: Static &amp; Walkable</p>
+<img src="/images/2020/screencapture2020-12-02_PM1.26.36.jpg">
+
+<p>烘焙 → Bake</p>
+<img src="/images/2020/screencapture2020-12-02_PM1.27.18.jpg">
+
+<p>Player加组件Nav Mesh Agent</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">using System.Collections;</span><br><span class="line">using System.Collections.Generic;</span><br><span class="line">using UnityEngine;</span><br><span class="line">using UnityEngine.AI;</span><br><span class="line"></span><br><span class="line">public class Player : MonoBehaviour</span><br><span class="line">&#123;</span><br><span class="line">    NavMeshAgent agent;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Start is called before the first frame update</span><br><span class="line">    void Start()</span><br><span class="line">    &#123;</span><br><span class="line">        agent &#x3D; GetComponent&lt;NavMeshAgent&gt;();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Update is called once per frame</span><br><span class="line">    void Update()</span><br><span class="line">    &#123;</span><br><span class="line">        if(Input.GetMouseButtonDown(0))&#123;</span><br><span class="line">            RaycastHit hit;</span><br><span class="line">            Ray ray &#x3D; Camera.main.ScreenPointToRay(Input.mousePosition);</span><br><span class="line">            if(Physics.Raycast(ray, out hit, Mathf.Infinity))&#123;</span><br><span class="line">                agent.SetDestination(hit.point);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<img src="/images/2020/screencapture2020-12-02 PM1.55.04.jpg">]]></content>
+      <categories>
+        <category>Note</category>
+      </categories>
+      <tags>
+        <tag>unity</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Unity笔记 Project01 Basic</title>
     <url>/2020/11/30/note-unity/</url>
     <content><![CDATA[<blockquote>
 <p><a href="https://www.youtube.com/watch?v=pwZpJzpE2lQ&amp;t=4178s&amp;ab_channel=Imphenzia" target="_blank" rel="noopener">https://www.youtube.com/watch?v=pwZpJzpE2lQ&amp;t=4178s&amp;ab_channel=Imphenzia</a></p>
