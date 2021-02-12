@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-12-02T13:57:22.871Z</updated>
+  <updated>2021-02-12T15:36:22.280Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Notion Offline记录</title>
+    <link href="http://yoursite.com/2021/02/12/debug/"/>
+    <id>http://yoursite.com/2021/02/12/debug/</id>
+    <published>2021-02-12T15:29:15.000Z</published>
+    <updated>2021-02-12T15:36:22.280Z</updated>
+    
+    <content type="html"><![CDATA[<p>Notion的app突然Offline了</p><p>直接访问显示DNS_PROBE_FINISHED_NXDOMAIN</p><p>根据↓尝试</p><blockquote><p><a href="https://linmi.cc/6133.html" target="_blank" rel="noopener">https://linmi.cc/6133.html</a></p></blockquote><p>1.加host<br>cmd中 open /etc<br>host中加一行 104.18.23.110 notion.so<br>此时可以ping通notion.so，但app仍是offline</p><p>2.改DNS<br>加119.29.29.29<br>114.114.114.114<br>没有用，改回默认</p><p>暂时还是不能用，等修复吧</p><p>哎，失去notion仿佛失去了半个脑子</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;Notion的app突然Offline了&lt;/p&gt;
+&lt;p&gt;直接访问显示DNS_PROBE_FINISHED_NXDOMAIN&lt;/p&gt;
+&lt;p&gt;根据↓尝试&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;https://linmi.cc/6133.html&quot; targe
+      
+    
+    </summary>
+    
+    
+      <category term="Debug" scheme="http://yoursite.com/categories/Debug/"/>
+    
+    
+      <category term="tool" scheme="http://yoursite.com/tags/tool/"/>
+    
+  </entry>
   
   <entry>
     <title>Unity笔记 Project05 地形&amp;Asset</title>
@@ -523,30 +553,6 @@
     
     
       <category term="Note" scheme="http://yoursite.com/categories/Note/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>项目Debug记录</title>
-    <link href="http://yoursite.com/2020/06/16/debug/"/>
-    <id>http://yoursite.com/2020/06/16/debug/</id>
-    <published>2020-06-16T02:56:16.000Z</published>
-    <updated>2020-06-18T07:11:13.429Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="找不到’xmlModelPlugin’"><a href="#找不到’xmlModelPlugin’" class="headerlink" title="找不到’xmlModelPlugin’"></a>找不到’xmlModelPlugin’</h1><p>05.30</p><p>clone的工程启动失败，控制台报错：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Error starting ApplicationContext. To display the conditions report re-run your application with &#39;debug&#39; enabled.</span><br><span class="line">2020-05-30 10:57:39.476 ERROR 1335 --- [           main] o.s.boot.SpringApplication               : Application run failed</span><br><span class="line"></span><br><span class="line">org.springframework.beans.factory.BeanCreationException: Error creating bean with name &#39;xmlModelPlugin&#39;: Lookup method resolution failed; nested exception is java.lang.IllegalStateException: Failed to introspect Class [springfox.documentation.schema.XmlModelPlugin] from ClassLoader [jdk.internal.loader.ClassLoaders$AppClassLoader@3d4eac69]</span><br><span class="line">at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.determineCandidateConstructors(AutowiredAnnotationBeanPostProcessor.java:289) ~[spring-beans-5.2.5.RELEASE.jar:5.2.5.RELEASE]</span><br><span class="line">at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.determineConstructorsFromBeanPostProcessors(AbstractAutowireCapableBeanFactory.java:1286) ~[spring-beans-5.2.5.RELEASE.jar:5.2.5.RELEASE]</span><br><span class="line">at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1201) ~[spring-beans-5.2.5.RELEASE.jar:5.2.5.RELEASE]</span><br><span class="line">at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:557) ~[spring-beans-5.2.5.RELEASE.jar:5.2.5.RELEASE]</span><br><span class="line">at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:517) ~[spring-beans-5.2.5.RELEASE.jar:5.2.5.RELEASE]</span><br><span class="line">...</span><br></pre></td></tr></table></figure><p>解决</p><p>添加依赖</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>javax.xml.bind<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jaxb-api<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.3.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure><h1 id="加载yml文件错误"><a href="#加载yml文件错误" class="headerlink" title="加载yml文件错误"></a>加载yml文件错误</h1><p>06.12</p><p>今天新pull的工程打不开</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java.lang.IllegalStateException: Failed to load property source from location &#39;classpath:&#x2F;bootstrap.yml&#39;</span><br></pre></td></tr></table></figure><p>查看target -&gt; classes -&gt; bootstrap.yml</p><p>发现一个main被画了波浪线，说重复定义</p><p>发现</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">main:</span><br><span class="line">  allow-bean-definition-overriding: true</span><br></pre></td></tr></table></figure><p>写了2次</p><p>注释掉一个就好了</p><h1 id="找不到’springSecurityFilterChain’"><a href="#找不到’springSecurityFilterChain’" class="headerlink" title="找不到’springSecurityFilterChain’"></a>找不到’springSecurityFilterChain’</h1><p>06.16</p><p>新pull的又打不开了</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">org.springframework.beans.factory.BeanCreationException: Error creating bean with name &#39;springSecurityFilterChain&#39;</span><br></pre></td></tr></table></figure><p>根据这里的一个回答</p><blockquote><p><a href="https://github.com/spring-guides/tut-spring-boot-oauth2/issues/68" target="_blank" rel="noopener">https://github.com/spring-guides/tut-spring-boot-oauth2/issues/68</a></p></blockquote><p>加上了</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.glassfish.jaxb&lt;&#x2F;groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;jaxb-runtime&lt;&#x2F;artifactId&gt;</span><br><span class="line">  &lt;version&gt;2.3.0&lt;&#x2F;version&gt; &lt;&#x2F;dependency&gt;</span><br><span class="line">  &lt;!-- JAXB needs javax.activation module (jdk9) --&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;javax.activation&lt;&#x2F;groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;javax.activation-api&lt;&#x2F;artifactId&gt;</span><br><span class="line">  &lt;version&gt;1.2.0&lt;&#x2F;version&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br></pre></td></tr></table></figure><p>成功启动</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;找不到’xmlModelPlugin’&quot;&gt;&lt;a href=&quot;#找不到’xmlModelPlugin’&quot; class=&quot;headerlink&quot; title=&quot;找不到’xmlModelPlugin’&quot;&gt;&lt;/a&gt;找不到’xmlModelPlugin’&lt;/h1&gt;&lt;p&gt;05
-      
-    
-    </summary>
-    
-    
-      <category term="Debug" scheme="http://yoursite.com/categories/Debug/"/>
     
     
   </entry>

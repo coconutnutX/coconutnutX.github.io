@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Notion Offline记录</title>
+    <url>/2021/02/12/debug/</url>
+    <content><![CDATA[<p>Notion的app突然Offline了</p>
+<p>直接访问显示DNS_PROBE_FINISHED_NXDOMAIN</p>
+<p>根据↓尝试</p>
+<blockquote>
+<p><a href="https://linmi.cc/6133.html" target="_blank" rel="noopener">https://linmi.cc/6133.html</a></p>
+</blockquote>
+<p>1.加host<br>cmd中 open /etc<br>host中加一行 104.18.23.110 notion.so<br>此时可以ping通notion.so，但app仍是offline</p>
+<p>2.改DNS<br>加119.29.29.29<br>114.114.114.114<br>没有用，改回默认</p>
+<p>暂时还是不能用，等修复吧</p>
+<p>哎，失去notion仿佛失去了半个脑子</p>
+]]></content>
+      <categories>
+        <category>Debug</category>
+      </categories>
+      <tags>
+        <tag>tool</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Unity笔记 Project05 地形&amp;Asset</title>
     <url>/2020/12/02/unity-note-3/</url>
     <content><![CDATA[<blockquote>
