@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2021-02-12T15:36:22.280Z</updated>
+  <updated>2021-02-12T15:49:55.645Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -18,12 +18,12 @@
   
   <entry>
     <title>Notion Offline记录</title>
-    <link href="http://yoursite.com/2021/02/12/debug/"/>
-    <id>http://yoursite.com/2021/02/12/debug/</id>
+    <link href="http://yoursite.com/2021/02/12/notionn/"/>
+    <id>http://yoursite.com/2021/02/12/notionn/</id>
     <published>2021-02-12T15:29:15.000Z</published>
-    <updated>2021-02-12T15:36:22.280Z</updated>
+    <updated>2021-02-12T15:49:55.645Z</updated>
     
-    <content type="html"><![CDATA[<p>Notion的app突然Offline了</p><p>直接访问显示DNS_PROBE_FINISHED_NXDOMAIN</p><p>根据↓尝试</p><blockquote><p><a href="https://linmi.cc/6133.html" target="_blank" rel="noopener">https://linmi.cc/6133.html</a></p></blockquote><p>1.加host<br>cmd中 open /etc<br>host中加一行 104.18.23.110 notion.so<br>此时可以ping通notion.so，但app仍是offline</p><p>2.改DNS<br>加119.29.29.29<br>114.114.114.114<br>没有用，改回默认</p><p>暂时还是不能用，等修复吧</p><p>哎，失去notion仿佛失去了半个脑子</p>]]></content>
+    <content type="html"><![CDATA[<p>Notion的app突然Offline了</p><p>直接访问显示DNS_PROBE_FINISHED_NXDOMAIN</p><p>根据↓尝试</p><blockquote><p><a href="https://linmi.cc/6133.html" target="_blank" rel="noopener">https://linmi.cc/6133.html</a></p></blockquote><p>1.加host<br>cmd中 open /etc<br>host中加一行 104.18.23.110 notion.so<br>此时可以ping通notion.so，但app仍是offline</p><p>2.改DNS<br>加119.29.29.29<br>114.114.114.114<br>没有用，改回默认</p><p>暂时还是不能用，等修复吧</p><p>哎，失去notion仿佛失去了半个脑子</p><p>然后发现github.io也访问不了了，是运营商的问题</p><p>DNS改成114.114.114.114后解决</p><p>之前默认是192.168.3.1</p>]]></content>
     
     <summary type="html">
     
@@ -39,7 +39,7 @@
     </summary>
     
     
-      <category term="Debug" scheme="http://yoursite.com/categories/Debug/"/>
+      <category term="Memo" scheme="http://yoursite.com/categories/Memo/"/>
     
     
       <category term="tool" scheme="http://yoursite.com/tags/tool/"/>

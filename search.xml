@@ -2,7 +2,7 @@
 <search>
   <entry>
     <title>Notion Offline记录</title>
-    <url>/2021/02/12/debug/</url>
+    <url>/2021/02/12/notionn/</url>
     <content><![CDATA[<p>Notion的app突然Offline了</p>
 <p>直接访问显示DNS_PROBE_FINISHED_NXDOMAIN</p>
 <p>根据↓尝试</p>
@@ -13,9 +13,12 @@
 <p>2.改DNS<br>加119.29.29.29<br>114.114.114.114<br>没有用，改回默认</p>
 <p>暂时还是不能用，等修复吧</p>
 <p>哎，失去notion仿佛失去了半个脑子</p>
+<p>然后发现github.io也访问不了了，是运营商的问题</p>
+<p>DNS改成114.114.114.114后解决</p>
+<p>之前默认是192.168.3.1</p>
 ]]></content>
       <categories>
-        <category>Debug</category>
+        <category>Memo</category>
       </categories>
       <tags>
         <tag>tool</tag>
