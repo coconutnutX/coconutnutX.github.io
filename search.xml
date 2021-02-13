@@ -12,7 +12,7 @@
 <p>1.加host<br>cmd中 open /etc<br>host中加一行 104.18.23.110 notion.so<br>此时可以ping通notion.so，但app仍是offline</p>
 <p>2.改DNS<br>加119.29.29.29<br>114.114.114.114<br>没有用，改回默认</p>
 <p>暂时还是不能用，等修复吧<br>哎，失去notion仿佛失去了半个脑子</p>
-<p>更新：<br>然后发现github.io也访问不了了，是运营商的问题<br>DNS改成114.114.114.114后解决<br>之前默认是192.168.3.1</p>
+<p>更新：<br>然后发现github.io也访问不了了，是运营商的问题<br>DNS改成114.114.114.114后解决</p>
 <p>再更新：<br>notion好了！我活了！</p>
 ]]></content>
       <categories>
