@@ -20,8 +20,28 @@
 
 <h2 id="ArtTextController"><a href="#ArtTextController" class="headerlink" title="ArtTextController"></a>ArtTextController</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">using System.Collections;</span><br><span class="line">using System.Collections.Generic;</span><br><span class="line">using UnityEngine;</span><br><span class="line">using UnityEngine.UI;</span><br><span class="line"></span><br><span class="line">public class ArtTextController : MonoBehaviour</span><br><span class="line">&#123;</span><br><span class="line">    [SerializeField]</span><br><span class="line">    private string title;</span><br><span class="line"></span><br><span class="line">    [SerializeField]</span><br><span class="line">    private string description;</span><br><span class="line"></span><br><span class="line">    [SerializeField, Range(0f,10f)]</span><br><span class="line">    private float displayTextDistance &#x3D; 5f;</span><br><span class="line"></span><br><span class="line">    private Transform playerTransform;</span><br><span class="line"></span><br><span class="line">    private Text displayArtTitle;</span><br><span class="line">    private Text displayArtDescription;</span><br><span class="line"></span><br><span class="line">    private float dist;</span><br><span class="line"></span><br><span class="line">    private bool check;</span><br><span class="line"></span><br><span class="line">    void Start()</span><br><span class="line">    &#123;</span><br><span class="line">        &#x2F;&#x2F; get player transform</span><br><span class="line">        playerTransform &#x3D; GameObject.FindWithTag(&quot;Player&quot;).GetComponent&lt;Transform&gt;();</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; get UI text</span><br><span class="line">        displayArtTitle &#x3D; GameObject.FindWithTag(&quot;ArtTitle&quot;).GetComponent&lt;Text&gt;();</span><br><span class="line">        displayArtDescription &#x3D; GameObject.FindWithTag(&quot;ArtDescription&quot;).GetComponent&lt;Text&gt;();</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; set default text</span><br><span class="line">        displayArtTitle.text &#x3D; &quot;&quot;;</span><br><span class="line">        displayArtDescription.text &#x3D; &quot;&quot;;</span><br><span class="line"></span><br><span class="line">        check &#x3D; false;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Update is called once per frame</span><br><span class="line">    void Update()</span><br><span class="line">    &#123;</span><br><span class="line">        if(playerTransform)</span><br><span class="line">        &#123;</span><br><span class="line">            &#x2F;&#x2F; distance between art and player</span><br><span class="line">            dist &#x3D; Vector3.Distance(transform.position, playerTransform.position);</span><br><span class="line">            if (dist &lt; displayTextDistance)</span><br><span class="line">            &#123;</span><br><span class="line">                displayArtTitle.text &#x3D; title;</span><br><span class="line">                displayArtDescription.text &#x3D; description;</span><br><span class="line">                check &#x3D; true;</span><br><span class="line">            &#125;</span><br><span class="line">            &#x2F;&#x2F; turn off display</span><br><span class="line">            if (dist &gt; displayTextDistance &amp;&amp; check &#x3D;&#x3D; true)</span><br><span class="line">            &#123;</span><br><span class="line">                Start();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<h1 id="构建测试"><a href="#构建测试" class="headerlink" title="构建测试"></a>构建测试</h1><p>MacOS 没问题</p>
+<p>Android 试了一下，场景没问题，操作混乱</p>
+<p>​    安卓导出参考<a href="https://coconutnutx.github.io/2020/09/26/note-arfoundation-01/" target="_blank" rel="noopener">AR Foundation笔记01 安卓Setup</a></p>
+<p>​    目前的操作方式针对电脑，手机端以后再看要不要做</p>
+<p>WebGL 整了半天</p>
+<p>​    参考<a href="https://www.youtube.com/watch?v=G7TK0-vbEYc&ab_channel=UGuruz" target="_blank" rel="noopener">WebGL Export in Unity 2020</a></p>
+<p>​    成功发布到itch.io，但是靠近显示介绍没有了？</p>
+<p>​    本地Firefox打开，也没有</p>
+<h2 id="WebGL-Debug"><a href="#WebGL-Debug" class="headerlink" title="WebGL Debug"></a>WebGL Debug</h2><p>Unity里跑没问题</p>
+<p>Debug.Log人物和画的距离，可以显示，所以可能是</p>
+<p>​    UI显示出了问题</p>
+<p>​    文字没有赋值成功</p>
+<p>​    位置偏了</p>
+<p>给Text设了默认值，再试</p>
+<img src="/images/2021/screencapture2021-02-16 PM9.59.05.jpg">
 
+<p>默认值显示了</p>
+<img src="/images/2021/screencapture2021-02-16 PM9.59.12.jpg">
 
+<p>靠近没有了</p>
+<p>所以应该是位置不对</p>
+<p>不过后面准备改显示方法，暂时MARK，以后放UI的时候也有可能碰到这个问题</p>
 ]]></content>
       <categories>
         <category>Note</category>
