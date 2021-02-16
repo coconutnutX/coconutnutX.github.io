@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    Unity Note - Project07 Scroll |  CoCoNutNut&#39;s NoteBook
+  </title>
+  <meta name="generator" content="hexo-theme-yilia-plus">
+  
+  <link rel="shortcut icon" href="/images/1949347-2001.png" />
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="CoCoNutNut's NoteBook" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    <main class="content">
+      <section class="outer">
+  <article id="post-unity" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  Unity Note - Project07 Scroll
+</h1>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2021/02/14/unity/" class="article-date">
+  <time datetime="2021-02-14T12:09:34.000Z" itemprop="datePublished">2021-02-14</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Note/">Note</a>
+  </div>
+
+      
+    </div>
+    
+
+    
+    
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <h1 id="Test-open-animation"><a href="#Test-open-animation" class="headerlink" title="Test open animation"></a>Test open animation</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">using System.Collections;</span><br><span class="line">using System.Collections.Generic;</span><br><span class="line">using UnityEngine;</span><br><span class="line">using DG.Tweening;</span><br><span class="line"></span><br><span class="line">public class ReelController : MonoBehaviour</span><br><span class="line">&#123;</span><br><span class="line">    [SerializeField]</span><br><span class="line">    private float radius &#x3D; 0.1f; &#x2F;&#x2F; Cylinder radius</span><br><span class="line"></span><br><span class="line">    [SerializeField]</span><br><span class="line">    private float length &#x3D; 8.0f; &#x2F;&#x2F; Quad length</span><br><span class="line"></span><br><span class="line">    [SerializeField]</span><br><span class="line">    private float innerHeight &#x3D; 1.0f; &#x2F;&#x2F; Quad height</span><br><span class="line"></span><br><span class="line">    [SerializeField]</span><br><span class="line">    private float outerHeight &#x3D; 0.8f; &#x2F;&#x2F; Cylinder height</span><br><span class="line"></span><br><span class="line">    [SerializeField]</span><br><span class="line">    private float openDuration &#x3D; 1.0f;</span><br><span class="line"></span><br><span class="line">    [SerializeField]</span><br><span class="line">    private Ease moveEase &#x3D; Ease.Linear;</span><br><span class="line"></span><br><span class="line">    [SerializeField]</span><br><span class="line">    private Transform leftCylinderTransform &#x3D; null;</span><br><span class="line"></span><br><span class="line">    [SerializeField]</span><br><span class="line">    private Transform middleQuadTransform &#x3D; null;</span><br><span class="line"></span><br><span class="line">    [SerializeField]</span><br><span class="line">    private Transform rightCylinderTransform &#x3D; null;</span><br><span class="line"></span><br><span class="line">    void Start()</span><br><span class="line">    &#123;</span><br><span class="line">        &#x2F;&#x2F; set original position</span><br><span class="line">        middleQuadTransform.localScale &#x3D; new Vector3(radius*2,innerHeight,0);</span><br><span class="line">        middleQuadTransform.position &#x3D; new Vector3(0,0,radius);</span><br><span class="line"></span><br><span class="line">        leftCylinderTransform.localScale &#x3D; new Vector3(radius*2,outerHeight,radius*2);</span><br><span class="line">        leftCylinderTransform.position &#x3D; new Vector3(-radius,0,0);</span><br><span class="line"></span><br><span class="line">        rightCylinderTransform.localScale &#x3D; new Vector3(radius*2,outerHeight,radius*2);</span><br><span class="line">        rightCylinderTransform.position &#x3D; new Vector3(radius,0,0);</span><br><span class="line"></span><br><span class="line">        OpenReel();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    void OpenReel()</span><br><span class="line">    &#123;</span><br><span class="line">        &#x2F;&#x2F; open canvas</span><br><span class="line">        middleQuadTransform.DOScaleX(length + radius*2, openDuration).SetEase(moveEase);</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; move cylinders</span><br><span class="line">        leftCylinderTransform.DOMoveX(leftCylinderTransform.position.x - length&#x2F;2, openDuration).SetEase(moveEase);</span><br><span class="line">        rightCylinderTransform.DOMoveX(rightCylinderTransform.position.x + length&#x2F;2, openDuration).SetEase(moveEase);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<img src="/images/2021/Feb-14-2021 20-11-48.gif">
+
+<h1 id="Display-image"><a href="#Display-image" class="headerlink" title="Display image"></a>Display image</h1><p>Drag images to asset folder -&gt; Set type to Sprite -&gt; Apply</p>
+<p>Canvas -&gt; Set Render Mode to World Space</p>
+<p>Make sure all objects are positioned at (0, 0, 0)</p>
+<img src="/images/2021/screencapture2021-02-14 PM9.43.21.jpg">
+
+<p>Test size</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">RectTransform rectTransfrom &#x3D; GetComponentInChildren&lt;Image&gt;().GetComponent&lt;RectTransform&gt;();</span><br><span class="line"></span><br><span class="line">Debug.Log(&quot;rectTransfrom: &quot;+rectTransfrom);</span><br><span class="line">Debug.Log(&quot;rectTransfrom.rect: &quot;+rectTransfrom.rect);</span><br><span class="line">Debug.Log(&quot;rectTransfrom.sizeDelta: &quot;+rectTransfrom.sizeDelta);</span><br><span class="line"></span><br><span class="line">Rect rect &#x3D; rectTransfrom.rect;</span><br><span class="line">rectTransfrom.sizeDelta &#x3D; new Vector2(rect.width&#x2F;rect.height*canvasHeight,canvasHeight);</span><br><span class="line"></span><br><span class="line">Debug.Log(&quot;rectTransfrom: &quot;+rectTransfrom);</span><br><span class="line">Debug.Log(&quot;rectTransfrom.rect: &quot;+rectTransfrom.rect);</span><br><span class="line">Debug.Log(&quot;rectTransfrom.sizeDelta: &quot;+rectTransfrom.sizeDelta);</span><br></pre></td></tr></table></figure>
+
+<img src="/images/2021/screencapture2021-02-14 PM9.45.02.jpg">
+
+<h1 id="Set-scroll-size"><a href="#Set-scroll-size" class="headerlink" title="Set scroll size"></a>Set scroll size</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">using System.Collections;</span><br><span class="line">using System.Collections.Generic;</span><br><span class="line">using UnityEngine;</span><br><span class="line">using UnityEngine.UI;</span><br><span class="line">using DG.Tweening;</span><br><span class="line"></span><br><span class="line">public class ReelController : MonoBehaviour</span><br><span class="line">&#123;</span><br><span class="line">    [SerializeField]</span><br><span class="line">    private float canvasHeight &#x3D; 1000;</span><br><span class="line"></span><br><span class="line">    [SerializeField]</span><br><span class="line">    private float cylinderHeight &#x3D; 600;</span><br><span class="line"></span><br><span class="line">    [SerializeField]</span><br><span class="line">    private float cylinderRadius &#x3D; 30;</span><br><span class="line"></span><br><span class="line">    [SerializeField]</span><br><span class="line">    private float openDuration &#x3D; 1.0f;</span><br><span class="line"></span><br><span class="line">    [SerializeField]</span><br><span class="line">    private Ease moveEase &#x3D; Ease.Linear;</span><br><span class="line"></span><br><span class="line">    [SerializeField]</span><br><span class="line">    private Transform leftCylinderTransform &#x3D; null;</span><br><span class="line"></span><br><span class="line">    [SerializeField]</span><br><span class="line">    private Transform rightCylinderTransform &#x3D; null;</span><br><span class="line"></span><br><span class="line">    void Start()</span><br><span class="line">    &#123;</span><br><span class="line">        &#x2F;&#x2F; get image rectTransfrom</span><br><span class="line">        RectTransform rectTransfrom &#x3D; GetComponentInChildren&lt;Image&gt;().GetComponent&lt;RectTransform&gt;();</span><br><span class="line">        &#x2F;&#x2F; get original image size</span><br><span class="line">        Rect rect &#x3D; rectTransfrom.rect;</span><br><span class="line">        &#x2F;&#x2F; scale to default height</span><br><span class="line">        float canvasWidth &#x3D; rect.width &#x2F; rect.height * canvasHeight;</span><br><span class="line">        rectTransfrom.sizeDelta &#x3D; new Vector2(canvasWidth, canvasHeight);</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; set original position</span><br><span class="line">        leftCylinderTransform.localScale &#x3D; new Vector3(cylinderRadius*2, cylinderHeight, cylinderRadius*2);</span><br><span class="line">        leftCylinderTransform.position &#x3D; new Vector3(-cylinderRadius - canvasWidth&#x2F;2,0,0);</span><br><span class="line"></span><br><span class="line">        rightCylinderTransform.localScale &#x3D; new Vector3(cylinderRadius*2, cylinderHeight, cylinderRadius*2);</span><br><span class="line">        rightCylinderTransform.position &#x3D; new Vector3(cylinderRadius + canvasWidth&#x2F;2,0,0);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<img src="/images/2021/screencapture2021-02-14 PM10.09.59.jpg">
+
+<h1 id="Scroll-animation"><a href="#Scroll-animation" class="headerlink" title="Scroll animation"></a>Scroll animation</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line">using System.Collections;</span><br><span class="line">using System.Collections.Generic;</span><br><span class="line">using UnityEngine;</span><br><span class="line">using UnityEngine.UI;</span><br><span class="line">using DG.Tweening;</span><br><span class="line"></span><br><span class="line">public class ScrollController : MonoBehaviour</span><br><span class="line">&#123;</span><br><span class="line">    [SerializeField]</span><br><span class="line">    private float canvasHeight &#x3D; 1000;</span><br><span class="line"></span><br><span class="line">    [SerializeField]</span><br><span class="line">    private float cylinderHeight &#x3D; 600;</span><br><span class="line"></span><br><span class="line">    [SerializeField]</span><br><span class="line">    private float cylinderRadius &#x3D; 30;</span><br><span class="line"></span><br><span class="line">    [SerializeField]</span><br><span class="line">    private float openDuration &#x3D; 1.0f;</span><br><span class="line"></span><br><span class="line">    [SerializeField]</span><br><span class="line">    private Ease moveEase &#x3D; Ease.Linear;</span><br><span class="line"></span><br><span class="line">    [SerializeField]</span><br><span class="line">    private Transform leftCylinderTransform &#x3D; null;</span><br><span class="line"></span><br><span class="line">    [SerializeField]</span><br><span class="line">    private Transform rightCylinderTransform &#x3D; null;</span><br><span class="line"></span><br><span class="line">    void Start()</span><br><span class="line">    &#123;</span><br><span class="line">        &#x2F;&#x2F; Open();</span><br><span class="line"></span><br><span class="line">        OpenAnimation();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private void Open()</span><br><span class="line">    &#123;</span><br><span class="line">        &#x2F;&#x2F; get image rectTransfrom</span><br><span class="line">        RectTransform rectTransfrom &#x3D; GetComponentInChildren&lt;Image&gt;().GetComponent&lt;RectTransform&gt;();</span><br><span class="line">        &#x2F;&#x2F; get original image size</span><br><span class="line">        Rect rect &#x3D; rectTransfrom.rect;</span><br><span class="line">        &#x2F;&#x2F; scale to default height</span><br><span class="line">        float canvasWidth &#x3D; rect.width &#x2F; rect.height * canvasHeight;</span><br><span class="line">        rectTransfrom.sizeDelta &#x3D; new Vector2(canvasWidth, canvasHeight);</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; set original position</span><br><span class="line">        leftCylinderTransform.localScale &#x3D; new Vector3(cylinderRadius*2, cylinderHeight, cylinderRadius*2);</span><br><span class="line">        leftCylinderTransform.position &#x3D; new Vector3(-cylinderRadius - canvasWidth&#x2F;2,0,0);</span><br><span class="line"></span><br><span class="line">        rightCylinderTransform.localScale &#x3D; new Vector3(cylinderRadius*2, cylinderHeight, cylinderRadius*2);</span><br><span class="line">        rightCylinderTransform.position &#x3D; new Vector3(cylinderRadius + canvasWidth&#x2F;2,0,0);</span><br><span class="line"></span><br><span class="line">        Debug.Log(&quot;Scroll opened: &quot; + rectTransfrom.rect);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    void OpenAnimation()</span><br><span class="line">    &#123;</span><br><span class="line">        &#x2F;&#x2F; get image rectTransfrom</span><br><span class="line">        RectTransform rectTransfrom &#x3D; GetComponentInChildren&lt;Image&gt;().GetComponent&lt;RectTransform&gt;();</span><br><span class="line">        &#x2F;&#x2F; get original image size</span><br><span class="line">        Rect rect &#x3D; rectTransfrom.rect;</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; set width to 0</span><br><span class="line">        rectTransfrom.DOScaleX(0, 0).SetEase(moveEase);</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; scale to default height</span><br><span class="line">        float canvasWidth &#x3D; rect.width &#x2F; rect.height * canvasHeight;</span><br><span class="line">        &#x2F;&#x2F; open canvas</span><br><span class="line">        float scaleX &#x3D; canvasWidth&#x2F;rect.width;</span><br><span class="line">        float scaleY &#x3D; canvasHeight&#x2F;rect.height;</span><br><span class="line">        rectTransfrom.DOScale(new Vector2(scaleX, scaleY), openDuration).SetEase(moveEase);</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; move cylinders</span><br><span class="line">        leftCylinderTransform.localScale &#x3D; new Vector3(cylinderRadius*2, cylinderHeight, cylinderRadius*2);</span><br><span class="line">        leftCylinderTransform.DOMoveX(leftCylinderTransform.position.x - canvasWidth&#x2F;2, openDuration).SetEase(moveEase);</span><br><span class="line"></span><br><span class="line">        rightCylinderTransform.localScale &#x3D; new Vector3(cylinderRadius*2, cylinderHeight, cylinderRadius*2);</span><br><span class="line">        rightCylinderTransform.DOMoveX(rightCylinderTransform.position.x + canvasWidth&#x2F;2, openDuration).SetEase(moveEase);</span><br><span class="line"></span><br><span class="line">        Debug.Log(&quot;Scroll opened with animation: &quot; + rectTransfrom.rect);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<img src="/images/2021/Feb-14-2021 22-58-33.gif">
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/unity/" rel="tag">unity</a></li></ul>
+
+
+    </footer>
+
+  </div>
+
+  
+  
+  <nav class="article-nav">
+    
+      <a href="/2021/02/15/unity/" class="article-nav-link">
+        <strong class="article-nav-caption">previous post</strong>
+        <div class="article-nav-title">
+          
+            Unity Note - Project08 Gallery
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2021/02/14/unity-note/" class="article-nav-link">
+        <strong class="article-nav-caption">next post</strong>
+        <div class="article-nav-title">Unity Note - Project06 DoTween</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+
+  
+  
+  
+
+</article>
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>
+        &copy;
+        2020-2021
+        coconutnut
+      </li>
+      <li>
+        
+        
+        <span>
+  <i>PV:<span id="busuanzi_value_page_pv"></span></i>
+  <i>UV:<span id="busuanzi_value_site_uv"></span></i>
+</span>
+        336k
+        
+      </li>
+      <li>
+        
+        Powered by
+        
+        
+        <a href="https://hexo.io" target="_blank">Hexo</a> Theme <a href="https://github.com/Shen-Yu/hexo-theme-ayer" target="_blank">Ayer</a>
+        
+      </li>
+    </ul>
+    <ul class="list-inline">
+      
+      <li>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="to_top">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+      </div>
+    </main>
+    <aside class="sidebar">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/1949347-2001.png" alt="CoCoNutNut&#39;s NoteBook"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">Home</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">Categorie</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">Tag</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">Archive</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">About</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/share.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script>
+  try {
+    var typed = new Typed("#subtitle", {
+      strings: ['咫尺千里，江山如画', 'The cave you fear to enter holds the treasure you seek', ''],
+      startDelay: 0,
+      typeSpeed: 200,
+      loop: true,
+      backSpeed: 100,
+      showCursor: true
+    });
+  } catch (err) {
+  }
+
+</script>
+
+
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: 'main',
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto',
+    onClick: (e) => {
+      $('.toc-link').removeClass('is-active-link');
+      $(`a[href=${e.target.hash}]`).addClass('is-active-link');
+      $(e.target.hash).scrollIntoView();
+      return false;
+    }
+  });
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/js/ayer.js"></script>
+
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+
+<script type="text/javascript" src="https://js.users.51.la/20544303.js"></script>
+
+
+
+    
+  </div>
+</body>
+
+</html>
