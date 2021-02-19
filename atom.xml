@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2021-02-19T09:28:32.738Z</updated>
+  <updated>2021-02-19T09:52:59.351Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Unity Project 版本记录</title>
+    <link href="http://yoursite.com/2021/02/19/unity-project-memo/"/>
+    <id>http://yoursite.com/2021/02/19/unity-project-memo/</id>
+    <published>2021-02-19T09:35:47.000Z</published>
+    <updated>2021-02-19T09:52:59.351Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="02-16-V0-1"><a href="#02-16-V0-1" class="headerlink" title="02.16 V0.1"></a>02.16 V0.1</h1><h2 id="新增基础移动操作"><a href="#新增基础移动操作" class="headerlink" title="新增基础移动操作"></a>新增基础移动操作</h2><ul><li><p>点击寻路</p><img src="/images/2021/Feb-16-2021 18-29-31.gif"></li><li><p>靠近显示介绍</p><img src="/images/2021/Feb-16-2021 18-29-44.gif"></li><li><p>鼠标滚动前后平移</p><img src="/images/2021/Feb-16-2021 18-30-18.gif"></li><li><p>键盘前后左右平移</p><img src="/images/2021/Feb-16-2021 18-30-32.gif"></li><li><p>鼠标拖拽旋转视角</p><img src="/images/2021/Feb-16-2021 18-30-55.gif"></li></ul><h1 id="02-19-V0-1-1"><a href="#02-19-V0-1-1" class="headerlink" title="02.19 V0.1.1"></a>02.19 V0.1.1</h1><h2 id="新增介绍牌"><a href="#新增介绍牌" class="headerlink" title="新增介绍牌"></a>新增介绍牌</h2><ul><li><p>删除靠近显示介绍</p></li><li><p>介绍牌鼠标移入高亮</p><img src="/images/2021/Feb-19-2021 17-25-29.gif"></li><li><p>点击介绍牌寻路</p><img src="/images/2021/Feb-19-2021 17-25-59.gif"><ul><li>寻路中任意操作打断</li><li>到达目的地后转向介绍牌</li></ul></li></ul><h2 id="新增导游栏"><a href="#新增导游栏" class="headerlink" title="新增导游栏"></a>新增导游栏</h2><ul><li><p>点击中间按钮寻路</p><img src="/images/2021/Feb-19-2021 17-45-43.gif"></li><li><p>点击左右按钮更新导游栏并寻路</p><img src="/images/2021/Feb-19-2021 17-26-58.gif"><ul><li>最左/最右时按钮不可用</li></ul></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;02-16-V0-1&quot;&gt;&lt;a href=&quot;#02-16-V0-1&quot; class=&quot;headerlink&quot; title=&quot;02.16 V0.1&quot;&gt;&lt;/a&gt;02.16 V0.1&lt;/h1&gt;&lt;h2 id=&quot;新增基础移动操作&quot;&gt;&lt;a href=&quot;#新增基础移动操作&quot; cla
+      
+    
+    </summary>
+    
+    
+      <category term="Memo" scheme="http://yoursite.com/categories/Memo/"/>
+    
+    
+      <category term="unity" scheme="http://yoursite.com/tags/unity/"/>
+    
+  </entry>
   
   <entry>
     <title>Unity Note UI,Event</title>
@@ -526,33 +552,6 @@
       
         &lt;blockquote&gt;
 &lt;p&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=o_z_Eb8Yh2g&amp;amp;list=PL6VJLOFcTt7awvyIGIbLLPOBrW6-Y1R-J&amp;amp;index=3&amp;amp;ab_channel=
-      
-    
-    </summary>
-    
-    
-      <category term="Note" scheme="http://yoursite.com/categories/Note/"/>
-    
-    
-      <category term="ar" scheme="http://yoursite.com/tags/ar/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>AR Foundation笔记01 安卓Setup</title>
-    <link href="http://yoursite.com/2020/09/26/note-arfoundation-01/"/>
-    <id>http://yoursite.com/2020/09/26/note-arfoundation-01/</id>
-    <published>2020-09-26T09:37:55.000Z</published>
-    <updated>2020-09-26T10:22:06.105Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p> <a href="https://www.youtube.com/watch?v=0mpsiO2lCx0&amp;list=PL6VJLOFcTt7awvyIGIbLLPOBrW6-Y1R-J&amp;index=1&amp;ab_channel=DineshPunni" target="_blank" rel="noopener">https://www.youtube.com/watch?v=0mpsiO2lCx0&amp;list=PL6VJLOFcTt7awvyIGIbLLPOBrW6-Y1R-J&amp;index=1&amp;ab_channel=DineshPunni</a></p></blockquote><hr><h1 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h1><p>macOS Catalina 10.15.6</p><p>Unity Hub 2.3.10</p><p>Unity 2020.1.6f1c1</p><h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><p>File -&gt; Build Settings</p><p>切换平台到Android</p><p>-&gt; Player Settings</p><ol><li><p>Other Settings -&gt; 改Package Name</p></li><li><p>Disable Multithread Rendering (Android doesn’t support yet)</p></li><li><p>Graphics APIs -&gt; disable Vulkan</p></li><li><p>Minimun API level -&gt; 26</p></li></ol><h1 id="Package"><a href="#Package" class="headerlink" title="Package"></a>Package</h1><p>Window -&gt; Package Manager -&gt; Packages : Unity Registry</p><img src="/images/2020/screencapture2020-09-26 PM5.51.57.jpg" width=400><h1 id="Sample-Scene"><a href="#Sample-Scene" class="headerlink" title="Sample Scene"></a>Sample Scene</h1><ol><li><p>删除Main Camera</p></li><li><p>Right Click -&gt; XR -&gt; AR Session Origin</p><p>AR Camera 标签 MainCamera</p></li><li><p>Right Click -&gt; XR -&gt; AR Session</p></li><li><p>Right Click -&gt; 3D Object -&gt; Cube<br>位置改成0，0，0<br>缩放改成0.2，0.2，0.2<br>随便转转</p></li></ol><h1 id="Build"><a href="#Build" class="headerlink" title="Build"></a>Build</h1><p>手机 -&gt; 开发者模式</p><p>连上</p><p>File -&gt; Build Settings -&gt; Run Device -&gt; 选中手机</p><p> Add Open Scene</p><p>Build and Run</p><img src="/images/2020/Screenshot_2020-09-26-18-10-31-833_com.coconutnut.jpg" width=400><p>成功<del>~</del></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;blockquote&gt;
-&lt;p&gt; &lt;a href=&quot;https://www.youtube.com/watch?v=0mpsiO2lCx0&amp;amp;list=PL6VJLOFcTt7awvyIGIbLLPOBrW6-Y1R-J&amp;amp;index=1&amp;amp;ab_channel
       
     
     </summary>

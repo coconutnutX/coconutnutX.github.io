@@ -1,6 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Unity Project 版本记录</title>
+    <url>/2021/02/19/unity-project-memo/</url>
+    <content><![CDATA[<h1 id="02-16-V0-1"><a href="#02-16-V0-1" class="headerlink" title="02.16 V0.1"></a>02.16 V0.1</h1><h2 id="新增基础移动操作"><a href="#新增基础移动操作" class="headerlink" title="新增基础移动操作"></a>新增基础移动操作</h2><ul>
+<li><p>点击寻路</p>
+<img src="/images/2021/Feb-16-2021 18-29-31.gif">
+</li>
+<li><p>靠近显示介绍</p>
+<img src="/images/2021/Feb-16-2021 18-29-44.gif">
+</li>
+<li><p>鼠标滚动前后平移</p>
+<img src="/images/2021/Feb-16-2021 18-30-18.gif">
+</li>
+<li><p>键盘前后左右平移</p>
+<img src="/images/2021/Feb-16-2021 18-30-32.gif">
+</li>
+<li><p>鼠标拖拽旋转视角</p>
+<img src="/images/2021/Feb-16-2021 18-30-55.gif">
+
+</li>
+</ul>
+<h1 id="02-19-V0-1-1"><a href="#02-19-V0-1-1" class="headerlink" title="02.19 V0.1.1"></a>02.19 V0.1.1</h1><h2 id="新增介绍牌"><a href="#新增介绍牌" class="headerlink" title="新增介绍牌"></a>新增介绍牌</h2><ul>
+<li><p>删除靠近显示介绍</p>
+</li>
+<li><p>介绍牌鼠标移入高亮</p>
+<img src="/images/2021/Feb-19-2021 17-25-29.gif">
+</li>
+<li><p>点击介绍牌寻路</p>
+<img src="/images/2021/Feb-19-2021 17-25-59.gif">
+
+<ul>
+<li>寻路中任意操作打断</li>
+<li>到达目的地后转向介绍牌</li>
+</ul>
+</li>
+</ul>
+<h2 id="新增导游栏"><a href="#新增导游栏" class="headerlink" title="新增导游栏"></a>新增导游栏</h2><ul>
+<li><p>点击中间按钮寻路</p>
+<img src="/images/2021/Feb-19-2021 17-45-43.gif">
+</li>
+<li><p>点击左右按钮更新导游栏并寻路</p>
+<img src="/images/2021/Feb-19-2021 17-26-58.gif">
+
+<ul>
+<li>最左/最右时按钮不可用</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Memo</category>
+      </categories>
+      <tags>
+        <tag>unity</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Unity Note UI,Event</title>
     <url>/2021/02/17/unity/</url>
     <content><![CDATA[<h1 id="Canvas大小"><a href="#Canvas大小" class="headerlink" title="Canvas大小"></a>Canvas大小</h1><blockquote>
