@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2021-02-19T10:01:11.002Z</updated>
+  <updated>2021-02-21T07:58:20.040Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,37 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Unity Note - Project10 Wave</title>
+    <link href="http://yoursite.com/2021/02/21/unity/"/>
+    <id>http://yoursite.com/2021/02/21/unity/</id>
+    <published>2021-02-21T06:49:27.000Z</published>
+    <updated>2021-02-21T07:58:20.040Z</updated>
+    
+    <content type="html"><![CDATA[<p>尝试做个波浪动画，最后效果：</p><img src="/images/2021/Feb-21-2021 15-51-45.gif"><hr><p>strip做成Prefab</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">using System.Collections;</span><br><span class="line">using System.Collections.Generic;</span><br><span class="line">using UnityEngine;</span><br><span class="line">using DG.Tweening;</span><br><span class="line"></span><br><span class="line">public class Strip : MonoBehaviour</span><br><span class="line">&#123;</span><br><span class="line">    public void Activate(float waitSecond, float moveDistance, float moveDuration)</span><br><span class="line">    &#123;</span><br><span class="line">        StartCoroutine(ActivateMovement(waitSecond, moveDistance, moveDuration));</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    private IEnumerator ActivateMovement(float waitSecond, float moveDistance, float moveDuration)</span><br><span class="line">    &#123;</span><br><span class="line">        &#x2F;&#x2F; wait for some time</span><br><span class="line">        yield return new WaitForSeconds(waitSecond);</span><br><span class="line">        </span><br><span class="line">        &#x2F;&#x2F; set movement</span><br><span class="line">        DOTween.Sequence()</span><br><span class="line">            .Append(transform.DOMoveY(moveDistance, moveDuration).SetEase(Ease.InOutSine))</span><br><span class="line">            .SetLoops(-1,LoopType.Yoyo);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>加一个controller</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">using System.Collections;</span><br><span class="line">using System.Collections.Generic;</span><br><span class="line">using UnityEngine;</span><br><span class="line"></span><br><span class="line">public class StripController : MonoBehaviour</span><br><span class="line">&#123;</span><br><span class="line">    &#x2F;&#x2F; object setting</span><br><span class="line">    [SerializeField] private int stripNum &#x3D; 10;</span><br><span class="line">    [SerializeField] private Vector3 stripScale &#x3D; new Vector3(0.2f,5,0.01f);</span><br><span class="line">    [SerializeField] private Vector3 stripInterval &#x3D; new Vector3(0.25f,0,0);</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; movement setting</span><br><span class="line">    [SerializeField] private float moveDistance &#x3D; 2f;</span><br><span class="line">    [SerializeField] private float moveDuration &#x3D; 2f;</span><br><span class="line">    [SerializeField] private float moveInterval &#x3D; 0.1f;</span><br><span class="line"></span><br><span class="line">    private Strip stripPrefab;</span><br><span class="line">    private Strip[] strips;</span><br><span class="line">    </span><br><span class="line">    void Start()</span><br><span class="line">    &#123;</span><br><span class="line">        stripPrefab &#x3D; Resources.Load&lt;Strip&gt;(&quot;strip&quot;);</span><br><span class="line">        CreateStrips();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private void CreateStrips()</span><br><span class="line">    &#123;</span><br><span class="line">        strips &#x3D; new Strip[stripNum];</span><br><span class="line">        for(int i&#x3D;0; i&lt;stripNum; i++)&#123;</span><br><span class="line">            &#x2F;&#x2F; create cube</span><br><span class="line">            Strip obj &#x3D; Instantiate(stripPrefab);</span><br><span class="line">            &#x2F;&#x2F; set position</span><br><span class="line">            obj.transform.position &#x3D; transform.position + stripInterval * i;</span><br><span class="line">            obj.transform.localScale &#x3D; stripScale;</span><br><span class="line">            &#x2F;&#x2F; activate movement</span><br><span class="line">            obj.Activate(moveInterval*(i+5), moveDistance, moveDuration);</span><br><span class="line">            &#x2F;&#x2F; add to array</span><br><span class="line">            strips[i] &#x3D; obj;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>奇怪的一点，前几个条的起始时间总是有点问题，但是找不出来为什么，暂时就把所有起始时间往后挪一点</p><img src="/images/2021/screencapture2021-02-21 PM3.21.01.jpg"><p>这样就没问题了</p><img src="/images/2021/screencapture2021-02-21 PM3.23.48.jpg"><hr><p>关于WaitForSeconds()</p><blockquote><p><a href="https://forum.unity.com/threads/waitforseconds-in-c.75411/" target="_blank" rel="noopener">https://forum.unity.com/threads/waitforseconds-in-c.75411/</a></p></blockquote><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">private void executeWait()</span><br><span class="line">&#123;</span><br><span class="line">  Debug.Log(&quot;wait start&quot;);</span><br><span class="line">  StartCoroutine(Wait(20.0f));</span><br><span class="line">  Debug.Log(&quot;This gets called after starting the Coroutine&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private IEnumerator Wait(float seconds)</span><br><span class="line">&#123;</span><br><span class="line">  Debug.Log(&quot;waiting&quot;);</span><br><span class="line">  yield return new WaitForSeconds(seconds);</span><br><span class="line">  Debug.Log(&quot;wait end&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><hr><p>现在这个波浪效果一个问题是DOTWeen消耗太大</p><img src="/images/2021/screencapture2021-02-21 PM3.56.56.jpg"><p>也许还是直接用波浪形物体平移？</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;尝试做个波浪动画，最后效果：&lt;/p&gt;
+&lt;img src=&quot;/images/2021/Feb-21-2021 15-51-45.gif&quot;&gt;
+
+&lt;hr&gt;
+&lt;p&gt;strip做成Prefab&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;t
+      
+    
+    </summary>
+    
+    
+      <category term="Note" scheme="http://yoursite.com/categories/Note/"/>
+    
+    
+      <category term="unity" scheme="http://yoursite.com/tags/unity/"/>
+    
+  </entry>
   
   <entry>
     <title>Unity Project 版本记录</title>
@@ -525,33 +556,6 @@
       
         &lt;blockquote&gt;
 &lt;p&gt; &lt;a href=&quot;https://www.youtube.com/watch?v=uWWiYfPTUtU&amp;amp;list=PL6VJLOFcTt7awvyIGIbLLPOBrW6-Y1R-J&amp;amp;index=4&amp;amp;ab_channel
-      
-    
-    </summary>
-    
-    
-      <category term="Note" scheme="http://yoursite.com/categories/Note/"/>
-    
-    
-      <category term="ar" scheme="http://yoursite.com/tags/ar/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>AR Foundation笔记02 Image Tracking</title>
-    <link href="http://yoursite.com/2020/09/26/note-arfoundation-02/"/>
-    <id>http://yoursite.com/2020/09/26/note-arfoundation-02/</id>
-    <published>2020-09-26T10:21:08.000Z</published>
-    <updated>2020-09-26T10:49:32.732Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p><a href="https://www.youtube.com/watch?v=o_z_Eb8Yh2g&amp;list=PL6VJLOFcTt7awvyIGIbLLPOBrW6-Y1R-J&amp;index=3&amp;ab_channel=DineshPunni" target="_blank" rel="noopener">https://www.youtube.com/watch?v=o_z_Eb8Yh2g&amp;list=PL6VJLOFcTt7awvyIGIbLLPOBrW6-Y1R-J&amp;index=3&amp;ab_channel=DineshPunni</a></p></blockquote><hr><p>AR Session Origin -&gt; Add AR Tracked Image Manager</p><p>Assets -&gt; Create -&gt; XR -&gt; Reference Image Library</p><p>拖一张图到Assets里</p><p>Reference Library -&gt; Add Image 把图拖进去，填Physical Size</p><img src="/images/2020/screencapture2020-09-26 PM6.30.20.jpg"><p>AR Session Origin -&gt; 把Reference Library拖到AR Tracked Image Manager中</p><p>Assets -&gt; Create -&gt; C# Script -&gt; 重命名ImageRecognitionExample</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">using System.Collections;</span><br><span class="line">using System.Collections.Generic;</span><br><span class="line">using UnityEngine;</span><br><span class="line">using UnityEngine.XR.ARFoundation;</span><br><span class="line"></span><br><span class="line">public class NewBehaviourScript : MonoBehaviour</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    private ARTrackedImageManager _arTrackedImageManager;</span><br><span class="line">    </span><br><span class="line">    private void Awake()</span><br><span class="line">    &#123;</span><br><span class="line">        _arTrackedImageManager &#x3D; FindObjectOfType&lt;ARTrackedImageManager&gt;();    </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public void OnEnable()</span><br><span class="line">    &#123;</span><br><span class="line">        _arTrackedImageManager.trackedImagesChanged +&#x3D; OnImageChanged;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public void onDisable()</span><br><span class="line">    &#123;</span><br><span class="line">        _arTrackedImageManager.trackedImagesChanged -&#x3D; OnImageChanged;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public void OnImageChanged(ARTrackedImagesChangedEventArgs args)</span><br><span class="line">    &#123;</span><br><span class="line">        foreach (var trackedImage in args.added)</span><br><span class="line">        &#123;</span><br><span class="line">            Debug.Log(trackedImage.name);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>Create 3D Object Cube，调整位置、大小</p><img src="/images/2020/screencapture2020-09-26 PM6.44.08.jpg"><p>拖进Assets（变成prefab），在SampleScene中删除</p><p>把prefab拖进AR Tracked Image Manager</p><p>Build</p><img src="/images/2020/Screenshot_2020-09-26-18-48-02-522_com.coconutnut.jpg" width=400><p>成功~</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;blockquote&gt;
-&lt;p&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=o_z_Eb8Yh2g&amp;amp;list=PL6VJLOFcTt7awvyIGIbLLPOBrW6-Y1R-J&amp;amp;index=3&amp;amp;ab_channel=
       
     
     </summary>
