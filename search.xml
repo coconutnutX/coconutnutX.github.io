@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Unity Note - Project10 Wave2 PerlinNoise</title>
+    <url>/2021/02/21/unity-1/</url>
+    <content><![CDATA[<p>继续上次的波浪</p>
+<p>一个很喜欢的chrome插件几枝是用noise做的波浪，试一下Mathf.PerlinNoise()</p>
+<p>参考：</p>
+<blockquote>
+<p><a href="https://blog.csdn.net/FumikiSAMA/article/details/80212432" target="_blank" rel="noopener">https://blog.csdn.net/FumikiSAMA/article/details/80212432</a></p>
+<p><a href="https://docs.unity3d.com/ScriptReference/Mathf.PerlinNoise.html" target="_blank" rel="noopener">https://docs.unity3d.com/ScriptReference/Mathf.PerlinNoise.html</a></p>
+</blockquote>
+<h1 id="网格拓扑绘制图形"><a href="#网格拓扑绘制图形" class="headerlink" title="网格拓扑绘制图形"></a>网格拓扑绘制图形</h1><blockquote>
+<p><a href="https://www.jianshu.com/p/1f79e33308a6" target="_blank" rel="noopener">https://www.jianshu.com/p/1f79e33308a6</a></p>
+</blockquote>
+<p>试着画了一个四面体</p>
+<img src="/images/2021/screencapture2021-02-21 PM5.09.05.jpg">
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Vector3[] vertices &#x3D; new Vector3[4];</span><br><span class="line">vertices[0] &#x3D; new Vector3(0, 0, 0);</span><br><span class="line">vertices[1] &#x3D; new Vector3((float)System.Math.Sqrt(3), 1, 0);</span><br><span class="line">vertices[2] &#x3D; new Vector3(0, 2, 0);</span><br><span class="line">vertices[3] &#x3D; new Vector3((float)System.Math.Sqrt(1&#x2F;3), 1, (float)System.Math.Sqrt(8&#x2F;3));</span><br><span class="line"></span><br><span class="line">int[] triangle &#x3D; new int[12] &#123;0,2,1,0,1,3,1,2,3,2,0,3&#125;;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; get mesh</span><br><span class="line">Mesh mesh &#x3D; GetComponent&lt;MeshFilter&gt;().mesh;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; clear original mesh</span><br><span class="line">mesh.Clear();</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; set new vertices</span><br><span class="line">mesh.vertices &#x3D; vertices;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; set new triangles</span><br><span class="line">mesh.triangles &#x3D; triangle;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; calculate mesh</span><br><span class="line">mesh.RecalculateNormals();</span><br></pre></td></tr></table></figure>
+
+<p>接下来试试画曲线</p>
+]]></content>
+      <categories>
+        <category>Note</category>
+      </categories>
+      <tags>
+        <tag>unity</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Unity Note - Project10 Wave</title>
     <url>/2021/02/21/unity/</url>
     <content><![CDATA[<p>尝试做个波浪动画，最后效果：</p>
@@ -13,7 +40,7 @@
 <p>加一个controller</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">using System.Collections;</span><br><span class="line">using System.Collections.Generic;</span><br><span class="line">using UnityEngine;</span><br><span class="line"></span><br><span class="line">public class StripController : MonoBehaviour</span><br><span class="line">&#123;</span><br><span class="line">    &#x2F;&#x2F; object setting</span><br><span class="line">    [SerializeField] private int stripNum &#x3D; 10;</span><br><span class="line">    [SerializeField] private Vector3 stripScale &#x3D; new Vector3(0.2f,5,0.01f);</span><br><span class="line">    [SerializeField] private Vector3 stripInterval &#x3D; new Vector3(0.25f,0,0);</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; movement setting</span><br><span class="line">    [SerializeField] private float moveDistance &#x3D; 2f;</span><br><span class="line">    [SerializeField] private float moveDuration &#x3D; 2f;</span><br><span class="line">    [SerializeField] private float moveInterval &#x3D; 0.1f;</span><br><span class="line"></span><br><span class="line">    private Strip stripPrefab;</span><br><span class="line">    private Strip[] strips;</span><br><span class="line">    </span><br><span class="line">    void Start()</span><br><span class="line">    &#123;</span><br><span class="line">        stripPrefab &#x3D; Resources.Load&lt;Strip&gt;(&quot;strip&quot;);</span><br><span class="line">        CreateStrips();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private void CreateStrips()</span><br><span class="line">    &#123;</span><br><span class="line">        strips &#x3D; new Strip[stripNum];</span><br><span class="line">        for(int i&#x3D;0; i&lt;stripNum; i++)&#123;</span><br><span class="line">            &#x2F;&#x2F; create cube</span><br><span class="line">            Strip obj &#x3D; Instantiate(stripPrefab);</span><br><span class="line">            &#x2F;&#x2F; set position</span><br><span class="line">            obj.transform.position &#x3D; transform.position + stripInterval * i;</span><br><span class="line">            obj.transform.localScale &#x3D; stripScale;</span><br><span class="line">            &#x2F;&#x2F; activate movement</span><br><span class="line">            obj.Activate(moveInterval*(i+5), moveDistance, moveDuration);</span><br><span class="line">            &#x2F;&#x2F; add to array</span><br><span class="line">            strips[i] &#x3D; obj;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>奇怪的一点，前几个条的起始时间总是有点问题，但是找不出来为什么，暂时就把所有起始时间往后挪一点</p>
+<p>奇怪的一点，前几个条的起始时间总是有点问题，暂时找不出来为什么，先把所有起始时间往后挪一点 MARK</p>
 <img src="/images/2021/screencapture2021-02-21 PM3.21.01.jpg">
 
 <p>这样就没问题了</p>
