@@ -30,7 +30,31 @@
 <h1 id="生成构建Debug"><a href="#生成构建Debug" class="headerlink" title="生成构建Debug"></a>生成构建Debug</h1><p>生成WebGL后，部分文字显示不全</p>
 <p>查到一种解决方式：把颜色空间改成Linear，有错误提示，然后又把自动API取消勾选了。Graphics API变成了WebGL2.0。没用</p>
 <p>popup和按钮中的中文都没有了，难道是字体的问题？</p>
-<p>改了字体，重新生成，搞定~</p>
+<p>改了字体，重新生成，可以显示</p>
+<p>但是，每次第一次打开总是没有？要先点过一次左或者右，后续才有显示。也许是加载顺序的问题？</p>
+<p>调了几次顺序，还是不行</p>
+<p>不仅是文字显示，有时刚开始滚动条也没有，后面慢慢解决吧</p>
+<p>MARK</p>
+<h1 id="寻路转向Debug"><a href="#寻路转向Debug" class="headerlink" title="寻路转向Debug"></a>寻路转向Debug</h1><p>有的时候寻路到了终点不会自动转向</p>
+<p>发现设置GuideStatus为Ready后，有时Agent的remainingDistance仍是0（也许是有延迟），于是就直接到了stop状态</p>
+<p>于是改成在Update()中修改状态，当前为Ready且remainingDistance!=0，状态改为On</p>
+<p>当前为On且remainingDistance==0，设置转向，状态改为Static</p>
+<p>但是这样又出现一个问题，即在原地点击寻路，状态无法变成On</p>
+<p>于是在SetNewDestination()中先做一次判断，如果当前位置已经是目的位置，直接将状态设置成On</p>
+<p>之前Ready和On状态是为了处理鼠标点击的一些问题，目前关于鼠标：</p>
+<ul>
+<li>途中 OK</li>
+<li>原地（已经到达，测试转向）<ul>
+<li>导航栏 OK</li>
+<li>展板<ul>
+<li>快点【被打断】</li>
+<li>慢点 OK</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>就很迷惑，先这样吧</p>
 ]]></content>
       <categories>
         <category>Note</category>
