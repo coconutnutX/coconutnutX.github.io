@@ -109,7 +109,10 @@
 <p>但是，每次第一次打开总是没有？要先点过一次左或者右，后续才有显示。也许是加载顺序的问题？</p>
 <p>调了几次顺序，还是不行</p>
 <p>不仅是文字显示，有时刚开始滚动条也没有，后面慢慢解决吧</p>
-<p>MARK</p>
+<p>MARK 未解决的Bug：</p>
+<p>新加载后，第一次点更多，无文字</p>
+<p>点一次左/右后，有文字，但无法显示滚动条</p>
+<p>重新点开更多，有滚动条</p>
 <h1 id="寻路转向Debug"><a href="#寻路转向Debug" class="headerlink" title="寻路转向Debug"></a>寻路转向Debug</h1><p>有的时候寻路到了终点不会自动转向</p>
 <p>发现设置GuideStatus为Ready后，有时Agent的remainingDistance仍是0（也许是有延迟），于是就直接到了stop状态</p>
 <p>于是改成在Update()中修改状态，当前为Ready且remainingDistance!=0，状态改为On</p>
@@ -187,7 +190,7 @@
   <i>PV:<span id="busuanzi_value_page_pv"></span></i>
   <i>UV:<span id="busuanzi_value_site_uv"></span></i>
 </span>
-        354k
+        355k
         
       </li>
       <li>
