@@ -82,7 +82,38 @@
 <img src="/images/2021/Mar-21-2021 22-30-25.gif">
 </li>
 <li><p>设置座椅、绿植、花瓶等</p>
-<img src="/images/2021/Mar-21-2021 22-32-51.gif"></li>
+<img src="/images/2021/Mar-21-2021 22-32-51.gif">
+
+</li>
+</ul>
+<h1 id="03-25-V0-2-3"><a href="#03-25-V0-2-3" class="headerlink" title="03.25 V0.2.3"></a>03.25 V0.2.3</h1><ul>
+<li><p>修改导航栏高亮效果</p>
+</li>
+<li><p>新增装饰效果</p>
+<img src="/images/2021/Mar-26-2021 10-03-52.gif">
+
+</li>
+</ul>
+<h2 id="新增音乐"><a href="#新增音乐" class="headerlink" title="新增音乐"></a>新增音乐</h2><ul>
+<li>移动时添加脚步音效</li>
+<li>千里江山图走廊中添加流水音效</li>
+</ul>
+<h1 id="03-31-V0-2-4"><a href="#03-31-V0-2-4" class="headerlink" title="03.31 V0.2.4"></a>03.31 V0.2.4</h1><p>修改UI</p>
+<ul>
+<li>修改导航栏图标为文字，避免左右箭头与移动方向不一致影响体验</li>
+<li>新增上下左右移动按钮</li>
+<li>导航栏初始显示0展览介绍，此时只有下一幅按钮可点击</li>
+</ul>
+<p>修改展厅</p>
+<ul>
+<li>新增展览介绍，默认进入场景时面向展览介绍，点下一幅来到第一幅画作</li>
+<li>调整朝代介绍位置，使导航到画作时能完整浏览</li>
+<li>新增出口</li>
+<li>新增方向指示牌，将部分地上的花瓶移动到指示牌平台上</li>
+</ul>
+<p>修改导航模块</p>
+<ul>
+<li>点击画作也可导航</li>
 </ul>
 ]]></content>
       <categories>
@@ -131,7 +162,16 @@
 <img src="/images/2021/screencapture2021-03-18 PM2.38.54.jpg">
 
 <p>发现可以调最大尺寸，就清晰了</p>
-<img src="/images/2021/screencapture2021-03-18 PM2.41.11.jpg">]]></content>
+<img src="/images/2021/screencapture2021-03-18 PM2.41.11.jpg">
+
+<hr>
+<p>测试发布的时候V0.2.2，build里面data文件有235.4MB，itch.io无法加载</p>
+<p>将图片全体降了一个清晰度，变成114MB，可以加载了，但还是很大</p>
+<p>将5种花删成2种，变成104.7MB</p>
+<p>把波浪长椅换成和其它地方一样的竹椅，墙外的竹子叶子全删到最少，变成102.1MB</p>
+<p>墙外竹子全删掉，变成91.3MB</p>
+<p>V0.2.1的时候是42.3MB，看来还是画最占空间</p>
+]]></content>
       <categories>
         <category>Note</category>
       </categories>
