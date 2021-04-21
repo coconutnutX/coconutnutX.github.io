@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    Unity Debug WebGL播放视频 |  CoCoNutNut&#39;s NoteBook
+  </title>
+  <meta name="generator" content="hexo-theme-yilia-plus">
+  
+  <link rel="shortcut icon" href="/images/1949347-2001.png" />
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="CoCoNutNut's NoteBook" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    <main class="content">
+      <section class="outer">
+  <article id="post-unity-debug" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  Unity Debug WebGL播放视频
+</h1>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2021/04/02/unity-debug/" class="article-date">
+  <time datetime="2021-04-02T01:53:07.000Z" itemprop="datePublished">2021-04-02</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Note/">Note</a>
+  </div>
+
+      
+    </div>
+    
+
+    
+    
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <p>Unity内运行时播放视频没问题，导出后用火狐打开就放不了，看控制台报错是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">已拦截跨源请求：同源策略禁止读取位于 file:&#x2F;&#x2F;&#x2F;Users&#x2F;...&#x2F;unity&#x2F;Backups&#x2F;WebV0.3&#x2F;sharedassets0.resource 的远程资源。（原因：CORS 请求不是 http）。</span><br></pre></td></tr></table></figure>
+
+<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><ol>
+<li><p>WebGL只能通过URL播放视频</p>
+<blockquote>
+<p><a href="https://blog.csdn.net/wuyt2008/article/details/107592492?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522161752087116780265448826%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fall.%2522%257D&request_id=161752087116780265448826&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_v2~times_rank-10-107592492.first_rank_v2_pc_rank_v29&utm_term=unity+webgl+%E8%A7%86%E9%A2%91%E9%BB%91%E5%B1%8F" target="_blank" rel="noopener">Unity2019在WebGL下播放视频</a></p>
+</blockquote>
+</li>
+<li><p>火狐浏览器设置允许跨域</p>
+<p>security.fileuri.strict_origin_policy改false</p>
+<blockquote>
+<p><a href="https://blog.csdn.net/qq_28867949/article/details/99890103?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-1&spm=1001.2101.3001.4242" target="_blank" rel="noopener">Firefox火狐浏览器访问本地文件-提示跨域问题</a></p>
+</blockquote>
+</li>
+<li><p>火狐浏览器设置允许播放视频</p>
+<blockquote>
+<p><a href="https://blog.csdn.net/qq_34243277/article/details/114398872?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-1&spm=1001.2101.3001.4242" target="_blank" rel="noopener">Unity2018发布webgl视频无法播放</a></p>
+</blockquote>
+</li>
+</ol>
+<h1 id="各种失败尝试记录"><a href="#各种失败尝试记录" class="headerlink" title="各种失败尝试记录"></a>各种失败尝试记录</h1><p>1.</p>
+<blockquote>
+<p><a href="https://blog.kongregate.com/unity-html5-cors-and-you/" target="_blank" rel="noopener">https://blog.kongregate.com/unity-html5-cors-and-you/</a></p>
+</blockquote>
+<p>写了问题原因，但是没看到针对Unity怎么解决</p>
+<p>2.</p>
+<blockquote>
+<p><a href="https://www.jianshu.com/p/78904381ba32" target="_blank" rel="noopener">https://www.jianshu.com/p/78904381ba32</a></p>
+</blockquote>
+<p>说把privacy.file_unique_origin改成false，但是它已经是false了</p>
+<p>3.</p>
+<p>发现Unity中Video Player的视频源有视频剪辑和URL两种方式</p>
+<p>之前用的是视频剪辑，直接把mp4文件拖进去</p>
+<p>改用URL试试，从浏览中找到同一个文件，测试也可以播放。试了一个网络上的mp4的URL，测试也可以</p>
+<p>那或许可以尝试把mp4上传，然后用URL访问</p>
+<blockquote>
+<p><a href="https://blog.csdn.net/weixin_33912453/article/details/94087306?utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-6.baidujs&amp;dist_request_id=&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-6.baidujs" target="_blank" rel="noopener">https://blog.csdn.net/weixin_33912453/article/details/94087306?utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-6.baidujs&amp;dist_request_id=&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-6.baidujs</a></p>
+</blockquote>
+<p>试试这个用爱奇艺开放平台的</p>
+<p>发现注册应用必须有url</p>
+<p>4.</p>
+<p>再找一下有没有视频托管网站</p>
+<p><a href="https://www.zhihu.com/question/23036186/answer/1716470191" target="_blank" rel="noopener">https://www.zhihu.com/question/23036186/answer/1716470191</a></p>
+<p>找了一个酷播云，视频要审核，等会再看（似乎不能直接拿到URL，可能要凉）</p>
+<p><a href="http://www.stonepoll.com/helpcenter/hc/kb/article/fcc34c50-301a-822a-df8c-e690f5af5bb5/" target="_blank" rel="noopener">http://www.stonepoll.com/helpcenter/hc/kb/article/fcc34c50-301a-822a-df8c-e690f5af5bb5/</a></p>
+<p>腾讯云要买服务，算了先</p>
+<p>又传了一个优酷的，等会看审核</p>
+<p>得，拿不到mp4的URL</p>
+<p>5.</p>
+<p>还是从浏览器入手吧，试试允许跨域</p>
+<p><a href="https://blog.csdn.net/nju_zjy/article/details/108870385" target="_blank" rel="noopener">https://blog.csdn.net/nju_zjy/article/details/108870385</a></p>
+<p>参考这个，装一个火狐插件</p>
+<p>没用</p>
+<p>多试了几个插件，都没用</p>
+<p>6.</p>
+<p>有找到一个调浏览器设置的</p>
+<p><a href="https://blog.csdn.net/qq_28867949/article/details/99890103?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-1&amp;spm=1001.2101.3001.4242" target="_blank" rel="noopener">https://blog.csdn.net/qq_28867949/article/details/99890103?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-1&amp;spm=1001.2101.3001.4242</a></p>
+<p>把security.fileuri.strict_origin_policy改成false</p>
+<p>【重启后不报错了！】</p>
+<p>但是视频还是播放不了</p>
+<p>7.</p>
+<p><a href="https://blog.csdn.net/qq_38229886/article/details/103139228?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-2&amp;spm=1001.2101.3001.4242" target="_blank" rel="noopener">https://blog.csdn.net/qq_38229886/article/details/103139228?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-2&amp;spm=1001.2101.3001.4242</a></p>
+<p>WebGL不支持mp4？！…</p>
+<p>转成ogv。没用</p>
+<p>8.</p>
+<p>找了一个在线的mp4地址，本地ok</p>
+<p>导出WebGL运行，不报错，播放不了</p>
+<p>9.</p>
+<p><a href="https://blog.csdn.net/weixin_43779625/article/details/103410836" target="_blank" rel="noopener">https://blog.csdn.net/weixin_43779625/article/details/103410836</a></p>
+<p>改用Render Texture的方式（以前是材质覆盖）</p>
+<p>不行（甚至本地都显示不了视频，只有声音）</p>
+<p>10.</p>
+<p><a href="https://blog.csdn.net/JLX_Sir/article/details/82684491?utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-2.baidujs&amp;dist_request_id=&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-2.baidujs" target="_blank" rel="noopener">https://blog.csdn.net/JLX_Sir/article/details/82684491?utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-2.baidujs&amp;dist_request_id=&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-2.baidujs</a></p>
+<p>说WebGL不支持高分辨率</p>
+<p>试试在检查器里设置转码 1/4分辨率，比特率模式低，空间质量低</p>
+<p>导出，不行</p>
+<p>11.</p>
+<p><a href="https://blog.csdn.net/qq_34243277/article/details/114398872?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-1&amp;spm=1001.2101.3001.4242" target="_blank" rel="noopener">https://blog.csdn.net/qq_34243277/article/details/114398872?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-1&amp;spm=1001.2101.3001.4242</a></p>
+<p>火狐还有阻止音视频的默认设置？？关掉</p>
+<p>mp4和ogv都不行</p>
+<p>12.</p>
+<p><a href="https://blog.csdn.net/s1314_JHC/article/details/80618252" target="_blank" rel="noopener">https://blog.csdn.net/s1314_JHC/article/details/80618252</a></p>
+<p>还有说是WebGL不支持MovieTexture的，用插件</p>
+<p>导出后是黑的，疯狂报错</p>
+<p>13.</p>
+<p><a href="https://blog.csdn.net/wuyt2008/article/details/107592492?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522161752087116780265448826%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fall.%2522%257D&amp;request_id=161752087116780265448826&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_v2~times_rank-10-107592492.first_rank_v2_pc_rank_v29&amp;utm_term=unity+webgl+%E8%A7%86%E9%A2%91%E9%BB%91%E5%B1%8F" target="_blank" rel="noopener">https://blog.csdn.net/wuyt2008/article/details/107592492?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522161752087116780265448826%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fall.%2522%257D&amp;request_id=161752087116780265448826&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_v2~times_rank-10-107592492.first_rank_v2_pc_rank_v29&amp;utm_term=unity+webgl+%E8%A7%86%E9%A2%91%E9%BB%91%E5%B1%8F</a></p>
+<p>这个说WebGL只能通过url播放</p>
+<p>现在调过火狐的设置了，再试试url吧</p>
+<p>!!!!!!!!!!!!成功了😭!!!!!!!!!!!!</p>
+
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/unity/" rel="tag">unity</a></li></ul>
+
+
+    </footer>
+
+  </div>
+
+  
+  
+  <nav class="article-nav">
+    
+      <a href="/2021/04/21/anki/" class="article-nav-link">
+        <strong class="article-nav-caption">previous post</strong>
+        <div class="article-nav-title">
+          
+            记录anki卡片
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2021/03/21/unity-project-memo/" class="article-nav-link">
+        <strong class="article-nav-caption">next post</strong>
+        <div class="article-nav-title">Unity Project 版本记录</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+
+  
+  
+  
+
+</article>
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>
+        &copy;
+        2020-2021
+        coconutnut
+      </li>
+      <li>
+        
+        
+        <span>
+  <i>PV:<span id="busuanzi_value_page_pv"></span></i>
+  <i>UV:<span id="busuanzi_value_site_uv"></span></i>
+</span>
+        361k
+        
+      </li>
+      <li>
+        
+        Powered by
+        
+        
+        <a href="https://hexo.io" target="_blank">Hexo</a> Theme <a href="https://github.com/Shen-Yu/hexo-theme-ayer" target="_blank">Ayer</a>
+        
+      </li>
+    </ul>
+    <ul class="list-inline">
+      
+      <li>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="to_top">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+      </div>
+    </main>
+    <aside class="sidebar">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/1949347-2001.png" alt="CoCoNutNut&#39;s NoteBook"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">Home</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">Categorie</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">Tag</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">Archive</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">About</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/share.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script>
+  try {
+    var typed = new Typed("#subtitle", {
+      strings: ['The cave you fear to enter holds the treasure you seek', '咫尺千里，江山如画', ''],
+      startDelay: 0,
+      typeSpeed: 200,
+      loop: true,
+      backSpeed: 100,
+      showCursor: true
+    });
+  } catch (err) {
+  }
+
+</script>
+
+
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: 'main',
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto',
+    onClick: (e) => {
+      $('.toc-link').removeClass('is-active-link');
+      $(`a[href=${e.target.hash}]`).addClass('is-active-link');
+      $(e.target.hash).scrollIntoView();
+      return false;
+    }
+  });
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/js/ayer.js"></script>
+
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+
+<script type="text/javascript" src="https://js.users.51.la/20544303.js"></script>
+
+
+
+    
+  </div>
+</body>
+
+</html>

@@ -1,6 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>记录anki卡片</title>
+    <url>/2021/04/21/anki/</url>
+    <content><![CDATA[<p>打算用anki背法语单词，用Fast Word Query加发音</p>
+<p>字段：</p>
+<img src="/images/2021/screencapture2021-04-21 AM11.48.55.jpg" width="400px">
+
+<p>卡片：</p>
+<p>正面模板</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;&#x2F;br&gt;</span><br><span class="line">&lt;center&gt;</span><br><span class="line">&lt;div class&#x3D;&quot;background&quot;&gt;</span><br><span class="line">	&lt;div&gt;&#123;&#123;word&#125;&#125;&lt;&#x2F;div&gt;&lt;&#x2F;br&gt;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;center&gt;</span><br></pre></td></tr></table></figure>
+
+<p>背面模板</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;center&gt;</span><br><span class="line">&lt;div class&#x3D;&quot;background&quot;&gt;</span><br><span class="line">	&#123;&#123;FrontSide&#125;&#125;</span><br><span class="line">	&lt;hr id&#x3D;answer&gt;</span><br><span class="line">	&lt;div&gt;&#123;&#123;pronunciation&#125;&#125;&lt;&#x2F;div&gt;</span><br><span class="line">	&lt;div&gt;&#123;&#123;explanation&#125;&#125;&lt;&#x2F;div&gt;</span><br><span class="line">	&lt;div&gt;&#123;&#123;example&#125;&#125;&lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;center&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;var initVoice &#x3D; function () &#123;</span><br><span class="line">    var player &#x3D; document.getElementById(&#39;dictVoice&#39;);</span><br><span class="line">    document.addEventListener(&#39;click&#39;, function (e) &#123;</span><br><span class="line">        var target &#x3D; e.target;</span><br><span class="line">        if (target.hasAttribute(&#39;role&#39;) &amp;&amp; target.getAttribute(&#39;role&#39;).indexOf(&#39;dict_audio_js&#39;) &gt;&#x3D; 0) &#123;</span><br><span class="line">            var url &#x3D; target.getAttribute(&#39;data-rel&#39;);</span><br><span class="line">            player.setAttribute(&#39;src&#39;, url);</span><br><span class="line">            player.volume &#x3D; 1;</span><br><span class="line">            player.play();</span><br><span class="line">            e.preventDefault();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;, false);</span><br><span class="line">&#125;;</span><br><span class="line">initVoice();&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>Fast Word Query配置：</p>
+<img src="/images/2021/screencapture2021-04-21 AM11.47.38.jpg">
+
+<p>试了一下法语助手只能查到发音，没有解释，于是解释用了有道</p>
+<p>此时效果：</p>
+<img src="/images/2021/screencapture2021-04-21 AM11.51.40.jpg">
+
+<p>翻面自动发音，例句的语音也可以点</p>
+<p>但有个问题是，查到的例句是白色，背景也是白色</p>
+<p>选中example框，在编辑html中找到了这几个div的class，卡片中改样式</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.card &#123;</span><br><span class="line">font-family: arial;</span><br><span class="line">font-size: 20px;</span><br><span class="line">&#125;</span><br><span class="line">.background&#123;</span><br><span class="line">max-width: 800px;</span><br><span class="line">&#125;</span><br><span class="line">.mcols-layout&#123;</span><br><span class="line"> background-color:#333335</span><br><span class="line">&#125;</span><br><span class="line">.trans-container&#123;</span><br><span class="line">background-color: #333335;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>搞定~</p>
+<img src="/images/2021/screencapture2021-04-21 PM12.22.46.jpg">]]></content>
+      <categories>
+        <category>Memo</category>
+      </categories>
+      <tags>
+        <tag>tool</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Unity Debug WebGL播放视频</title>
+    <url>/2021/04/02/unity-debug/</url>
+    <content><![CDATA[<p>Unity内运行时播放视频没问题，导出后用火狐打开就放不了，看控制台报错是</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">已拦截跨源请求：同源策略禁止读取位于 file:&#x2F;&#x2F;&#x2F;Users&#x2F;...&#x2F;unity&#x2F;Backups&#x2F;WebV0.3&#x2F;sharedassets0.resource 的远程资源。（原因：CORS 请求不是 http）。</span><br></pre></td></tr></table></figure>
+
+<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><ol>
+<li><p>WebGL只能通过URL播放视频</p>
+<blockquote>
+<p><a href="https://blog.csdn.net/wuyt2008/article/details/107592492?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522161752087116780265448826%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fall.%2522%257D&request_id=161752087116780265448826&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_v2~times_rank-10-107592492.first_rank_v2_pc_rank_v29&utm_term=unity+webgl+%E8%A7%86%E9%A2%91%E9%BB%91%E5%B1%8F" target="_blank" rel="noopener">Unity2019在WebGL下播放视频</a></p>
+</blockquote>
+</li>
+<li><p>火狐浏览器设置允许跨域</p>
+<p>security.fileuri.strict_origin_policy改false</p>
+<blockquote>
+<p><a href="https://blog.csdn.net/qq_28867949/article/details/99890103?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-1&spm=1001.2101.3001.4242" target="_blank" rel="noopener">Firefox火狐浏览器访问本地文件-提示跨域问题</a></p>
+</blockquote>
+</li>
+<li><p>火狐浏览器设置允许播放视频</p>
+<blockquote>
+<p><a href="https://blog.csdn.net/qq_34243277/article/details/114398872?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-1&spm=1001.2101.3001.4242" target="_blank" rel="noopener">Unity2018发布webgl视频无法播放</a></p>
+</blockquote>
+</li>
+</ol>
+<h1 id="各种失败尝试记录"><a href="#各种失败尝试记录" class="headerlink" title="各种失败尝试记录"></a>各种失败尝试记录</h1><p>1.</p>
+<blockquote>
+<p><a href="https://blog.kongregate.com/unity-html5-cors-and-you/" target="_blank" rel="noopener">https://blog.kongregate.com/unity-html5-cors-and-you/</a></p>
+</blockquote>
+<p>写了问题原因，但是没看到针对Unity怎么解决</p>
+<p>2.</p>
+<blockquote>
+<p><a href="https://www.jianshu.com/p/78904381ba32" target="_blank" rel="noopener">https://www.jianshu.com/p/78904381ba32</a></p>
+</blockquote>
+<p>说把privacy.file_unique_origin改成false，但是它已经是false了</p>
+<p>3.</p>
+<p>发现Unity中Video Player的视频源有视频剪辑和URL两种方式</p>
+<p>之前用的是视频剪辑，直接把mp4文件拖进去</p>
+<p>改用URL试试，从浏览中找到同一个文件，测试也可以播放。试了一个网络上的mp4的URL，测试也可以</p>
+<p>那或许可以尝试把mp4上传，然后用URL访问</p>
+<blockquote>
+<p><a href="https://blog.csdn.net/weixin_33912453/article/details/94087306?utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-6.baidujs&amp;dist_request_id=&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-6.baidujs" target="_blank" rel="noopener">https://blog.csdn.net/weixin_33912453/article/details/94087306?utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-6.baidujs&amp;dist_request_id=&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-6.baidujs</a></p>
+</blockquote>
+<p>试试这个用爱奇艺开放平台的</p>
+<p>发现注册应用必须有url</p>
+<p>4.</p>
+<p>再找一下有没有视频托管网站</p>
+<p><a href="https://www.zhihu.com/question/23036186/answer/1716470191" target="_blank" rel="noopener">https://www.zhihu.com/question/23036186/answer/1716470191</a></p>
+<p>找了一个酷播云，视频要审核，等会再看（似乎不能直接拿到URL，可能要凉）</p>
+<p><a href="http://www.stonepoll.com/helpcenter/hc/kb/article/fcc34c50-301a-822a-df8c-e690f5af5bb5/" target="_blank" rel="noopener">http://www.stonepoll.com/helpcenter/hc/kb/article/fcc34c50-301a-822a-df8c-e690f5af5bb5/</a></p>
+<p>腾讯云要买服务，算了先</p>
+<p>又传了一个优酷的，等会看审核</p>
+<p>得，拿不到mp4的URL</p>
+<p>5.</p>
+<p>还是从浏览器入手吧，试试允许跨域</p>
+<p><a href="https://blog.csdn.net/nju_zjy/article/details/108870385" target="_blank" rel="noopener">https://blog.csdn.net/nju_zjy/article/details/108870385</a></p>
+<p>参考这个，装一个火狐插件</p>
+<p>没用</p>
+<p>多试了几个插件，都没用</p>
+<p>6.</p>
+<p>有找到一个调浏览器设置的</p>
+<p><a href="https://blog.csdn.net/qq_28867949/article/details/99890103?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-1&amp;spm=1001.2101.3001.4242" target="_blank" rel="noopener">https://blog.csdn.net/qq_28867949/article/details/99890103?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-1&amp;spm=1001.2101.3001.4242</a></p>
+<p>把security.fileuri.strict_origin_policy改成false</p>
+<p>【重启后不报错了！】</p>
+<p>但是视频还是播放不了</p>
+<p>7.</p>
+<p><a href="https://blog.csdn.net/qq_38229886/article/details/103139228?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-2&amp;spm=1001.2101.3001.4242" target="_blank" rel="noopener">https://blog.csdn.net/qq_38229886/article/details/103139228?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-2&amp;spm=1001.2101.3001.4242</a></p>
+<p>WebGL不支持mp4？！…</p>
+<p>转成ogv。没用</p>
+<p>8.</p>
+<p>找了一个在线的mp4地址，本地ok</p>
+<p>导出WebGL运行，不报错，播放不了</p>
+<p>9.</p>
+<p><a href="https://blog.csdn.net/weixin_43779625/article/details/103410836" target="_blank" rel="noopener">https://blog.csdn.net/weixin_43779625/article/details/103410836</a></p>
+<p>改用Render Texture的方式（以前是材质覆盖）</p>
+<p>不行（甚至本地都显示不了视频，只有声音）</p>
+<p>10.</p>
+<p><a href="https://blog.csdn.net/JLX_Sir/article/details/82684491?utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-2.baidujs&amp;dist_request_id=&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-2.baidujs" target="_blank" rel="noopener">https://blog.csdn.net/JLX_Sir/article/details/82684491?utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-2.baidujs&amp;dist_request_id=&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-2.baidujs</a></p>
+<p>说WebGL不支持高分辨率</p>
+<p>试试在检查器里设置转码 1/4分辨率，比特率模式低，空间质量低</p>
+<p>导出，不行</p>
+<p>11.</p>
+<p><a href="https://blog.csdn.net/qq_34243277/article/details/114398872?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-1&amp;spm=1001.2101.3001.4242" target="_blank" rel="noopener">https://blog.csdn.net/qq_34243277/article/details/114398872?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-1&amp;spm=1001.2101.3001.4242</a></p>
+<p>火狐还有阻止音视频的默认设置？？关掉</p>
+<p>mp4和ogv都不行</p>
+<p>12.</p>
+<p><a href="https://blog.csdn.net/s1314_JHC/article/details/80618252" target="_blank" rel="noopener">https://blog.csdn.net/s1314_JHC/article/details/80618252</a></p>
+<p>还有说是WebGL不支持MovieTexture的，用插件</p>
+<p>导出后是黑的，疯狂报错</p>
+<p>13.</p>
+<p><a href="https://blog.csdn.net/wuyt2008/article/details/107592492?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522161752087116780265448826%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fall.%2522%257D&amp;request_id=161752087116780265448826&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_v2~times_rank-10-107592492.first_rank_v2_pc_rank_v29&amp;utm_term=unity+webgl+%E8%A7%86%E9%A2%91%E9%BB%91%E5%B1%8F" target="_blank" rel="noopener">https://blog.csdn.net/wuyt2008/article/details/107592492?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522161752087116780265448826%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fall.%2522%257D&amp;request_id=161752087116780265448826&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_v2~times_rank-10-107592492.first_rank_v2_pc_rank_v29&amp;utm_term=unity+webgl+%E8%A7%86%E9%A2%91%E9%BB%91%E5%B1%8F</a></p>
+<p>这个说WebGL只能通过url播放</p>
+<p>现在调过火狐的设置了，再试试url吧</p>
+<p>!!!!!!!!!!!!成功了😭!!!!!!!!!!!!</p>
+]]></content>
+      <categories>
+        <category>Note</category>
+      </categories>
+      <tags>
+        <tag>unity</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Unity Project 版本记录</title>
     <url>/2021/03/21/unity-project-memo/</url>
     <content><![CDATA[<h1 id="02-16-V0-1"><a href="#02-16-V0-1" class="headerlink" title="02.16 V0.1"></a>02.16 V0.1</h1><h2 id="新增基础移动操作"><a href="#新增基础移动操作" class="headerlink" title="新增基础移动操作"></a>新增基础移动操作</h2><ul>
@@ -100,9 +236,13 @@
 </ul>
 <h1 id="03-31-V0-2-4"><a href="#03-31-V0-2-4" class="headerlink" title="03.31 V0.2.4"></a>03.31 V0.2.4</h1><p>修改UI</p>
 <ul>
-<li>修改导航栏图标为文字，避免左右箭头与移动方向不一致影响体验</li>
-<li>新增上下左右移动按钮</li>
-<li>导航栏初始显示0展览介绍，此时只有下一幅按钮可点击</li>
+<li><p>修改导航栏图标为文字，避免左右箭头与移动方向不一致影响体验</p>
+</li>
+<li><p>新增上下左右移动按钮</p>
+<img src="/images/2021/Apr-02-2021 09-24-45.gif">
+</li>
+<li><p>导航栏初始显示0展览介绍，此时只有下一幅按钮可点击</p>
+</li>
 </ul>
 <p>修改展厅</p>
 <ul>
@@ -114,6 +254,19 @@
 <p>修改导航模块</p>
 <ul>
 <li>点击画作也可导航</li>
+</ul>
+<h1 id="04-02-V0-3"><a href="#04-02-V0-3" class="headerlink" title="04.02 V0.3"></a>04.02 V0.3</h1><p>新增影厅</p>
+<ul>
+<li><p>开始和暂停视频</p>
+<img src="/images/2021/Apr-02-2021 09-18-14.gif">
+
+</li>
+</ul>
+<p>导航栏新增展开按钮</p>
+<ul>
+<li>点击展开去影厅和回起点按钮</li>
+<li>去影厅导航到影厅</li>
+<li>会起点导航到展厅介绍</li>
 </ul>
 ]]></content>
       <categories>
