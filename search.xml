@@ -27,7 +27,12 @@
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.card &#123;</span><br><span class="line">font-family: arial;</span><br><span class="line">font-size: 20px;</span><br><span class="line">&#125;</span><br><span class="line">.background&#123;</span><br><span class="line">max-width: 800px;</span><br><span class="line">&#125;</span><br><span class="line">.mcols-layout&#123;</span><br><span class="line"> background-color:#333335</span><br><span class="line">&#125;</span><br><span class="line">.trans-container&#123;</span><br><span class="line">background-color: #333335;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>搞定~</p>
-<img src="/images/2021/screencapture2021-04-21 PM12.22.46.jpg">]]></content>
+<img src="/images/2021/screencapture2021-04-21 PM12.22.46.jpg">
+
+<hr>
+<p>又加了个pre字段，可以放le la之类的，显示时在word之前 </p>
+<p>查的时候忽略（在Fast Word Query中Ignore掉），仍只查word，避免查不到解释</p>
+]]></content>
       <categories>
         <category>Memo</category>
       </categories>
