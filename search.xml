@@ -1,6 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>DA project0 test record</title>
+    <url>/2021/10/19/DA-project-test/</url>
+    <content><![CDATA[<p>Project0要求实现Perfect Link，给了测试用的tc.py用来修改网络情况，stress.py模拟发消息。（Distributed Algorithms 2021-2022 Project Validation.pdf）</p>
+<p>想测一下试试。</p>
+<p>注：以下几个测试都没有改tc.py的参数，即↓</p>
+<img src="/images/2021/screencapture2021-10-19 PM6.43.30.jpg">
+
+<h1 id="Round-1"><a href="#Round-1" class="headerlink" title="Round 1"></a>Round 1</h1><p>参数如图：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">testConfig = &#123;</span><br><span class="line">        <span class="string">'concurrency'</span> : <span class="number">8</span>, <span class="comment"># How many threads are interferring with the running processes</span></span><br><span class="line">        <span class="string">'attempts'</span> : <span class="number">8</span>, <span class="comment"># How many interferring attempts each threads does</span></span><br><span class="line">        <span class="string">'attemptsDistribution'</span> : &#123; <span class="comment"># Probability with which an interferring thread will</span></span><br><span class="line">            <span class="string">'STOP'</span>: <span class="number">0.48</span>,          <span class="comment"># select an interferring action (make sure they add up to 1)</span></span><br><span class="line">            <span class="string">'CONT'</span>: <span class="number">0.48</span>,</span><br><span class="line">            <span class="string">'TERM'</span>:<span class="number">0.04</span></span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">python3 stress.py -r ../template_java/run.sh -t perfect -l output -p <span class="number">10</span> -m <span class="number">10</span></span><br></pre></td></tr></table></figure>
+
+<p>testConfig在stress.py最后，这里全是默认，10个process，每个发10条消息（config中只有一行 10 1）</p>
+<p>理论上来说，应该是2-9号都要给1号发10条，总共90条</p>
+<p>但是出来的数据不完全是90</p>
+<img src="/images/2021/screencapture2021-10-19 PM6.46.31.jpg">
+
+<p>（这里统计输出写了个简单工具，见最后）</p>
+<p>根据后面测试的结果推测，问题在testConfig这里。concurrency和attempts数值都是8，也就是有8个捣乱线程各干预8次。STOP和CONT只是暂停和继续，不会干扰最后的结果。但是这里还有0.04的概率会发TERM，直接把正在干活的process杀了。所以最后有的只发了79、80</p>
+<h1 id="Round-2"><a href="#Round-2" class="headerlink" title="Round 2"></a>Round 2</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">'concurrency'</span> : <span class="number">16</span></span><br><span class="line"><span class="string">'attempts'</span> : <span class="number">16</span></span><br><span class="line"><span class="string">'attemptsDistribution'</span> : </span><br><span class="line">            <span class="string">'STOP'</span>: <span class="number">0.48</span>,</span><br><span class="line">            <span class="string">'CONT'</span>: <span class="number">0.48</span>,</span><br><span class="line">            <span class="string">'TERM'</span>:<span class="number">0.04</span></span><br><span class="line"></span><br><span class="line">-p <span class="number">20</span> -m <span class="number">20</span></span><br></pre></td></tr></table></figure>
+
+<p>试了几次这个参数，情况差不多。应该有19*20=380条，但是结果分别是：267、299、360、319</p>
+<h1 id="突然"><a href="#突然" class="headerlink" title="突然"></a>突然</h1><p>经另一位当值的昆虫馆管理员提醒，测试进程数是有上限的</p>
+<img src="/images/2021/screencapture2021-10-19 PM6.08.42.jpg">
+
+<p>对不起我的CPU🙇‍♂️</p>
+<p>（但是这里到底是在说9 100是上限，还是举个例子说如果9 100，让跑25分钟？？？）</p>
+<h1 id="Round-3"><a href="#Round-3" class="headerlink" title="Round 3"></a>Round 3</h1><p>于是就把p和m直接设成9和100</p>
+<p>意识到TERM可能会对correctness有影响，这里把TERM也调成了0</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">'concurrency'</span> : <span class="number">8</span></span><br><span class="line"><span class="string">'attempts'</span> : <span class="number">8</span></span><br><span class="line"><span class="string">'attemptsDistribution'</span> : </span><br><span class="line">            <span class="string">'STOP'</span>: <span class="number">0.5</span>,</span><br><span class="line">            <span class="string">'CONT'</span>: <span class="number">0.5</span>,</span><br><span class="line">            <span class="string">'TERM'</span>:<span class="number">0.0</span></span><br><span class="line"></span><br><span class="line">-p <span class="number">9</span> -m <span class="number">100</span></span><br></pre></td></tr></table></figure>
+
+<img src="/images/2021/screencapture2021-10-19 PM7.06.12.jpg">
+
+<p>输出没毛病</p>
+<h1 id="Round-4"><a href="#Round-4" class="headerlink" title="Round 4"></a>Round 4</h1><p>然后把TERM改回去</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">'concurrency'</span> : <span class="number">8</span></span><br><span class="line"><span class="string">'attempts'</span> : <span class="number">8</span></span><br><span class="line"><span class="string">'attemptsDistribution'</span> : </span><br><span class="line">            <span class="string">'STOP'</span>: <span class="number">0.48</span>,</span><br><span class="line">            <span class="string">'CONT'</span>: <span class="number">0.48</span>,</span><br><span class="line">            <span class="string">'TERM'</span>:<span class="number">0.04</span></span><br><span class="line"></span><br><span class="line">-p <span class="number">9</span> -m <span class="number">100</span></span><br></pre></td></tr></table></figure>
+
+<img src="/images/2021/screencapture2021-10-19 PM7.07.10.jpg">
+
+<p>左边是运行中部分输出</p>
+<p>可以发现有的process被SIGTERM杀掉了，第一次SIGTERM多一些，最后收到的少一些。第二次最后才有一个SIGTERM，此时已经发完了</p>
+<p>符合预期</p>
+<h1 id="Tool"><a href="#Tool" class="headerlink" title="Tool"></a>Tool</h1><p>由于输出长得实在没眼看，不好debug，写了个工具统计一下</p>
+<p>这两放一个目录下：</p>
+<ul>
+<li>count.py</li>
+<li>output.txt</li>
+</ul>
+<p>output.txt是stress.py的输出（只是process 1的output，全是deliver没有broadcast的，长这样↓）</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">d 2 81</span><br><span class="line">d 2 87</span><br><span class="line">d 2 85</span><br><span class="line">d 6 48</span><br><span class="line">d 6 58</span><br><span class="line">d 6 86</span><br><span class="line">d 6 90</span><br><span class="line">d 6 93</span><br><span class="line">d 6 95</span><br><span class="line">d 6 99</span><br><span class="line">d 6 94</span><br><span class="line">d 2 11</span><br><span class="line">d 2 61</span><br><span class="line">d 2 92</span><br><span class="line">d 2 2</span><br><span class="line">d 2 9</span><br><span class="line">d 6 54</span><br><span class="line">d 2 21</span><br><span class="line">d 2 14</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>count.py</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">with</span> open(<span class="string">"output.txt"</span>,<span class="string">"r"</span>) <span class="keyword">as</span> f:</span><br><span class="line">	data = f.readlines()</span><br><span class="line"></span><br><span class="line">	dict = &#123;&#125;</span><br><span class="line">	count = <span class="number">0</span></span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span> line <span class="keyword">in</span> data:</span><br><span class="line">		splited = line.split(<span class="string">" "</span>)</span><br><span class="line">		sender = int(splited[<span class="number">1</span>])</span><br><span class="line">		seq = int(splited[<span class="number">2</span>])</span><br><span class="line">		</span><br><span class="line">		dict.setdefault(sender,[]).append(seq)</span><br><span class="line">		count += <span class="number">1</span></span><br><span class="line">		</span><br><span class="line">	print(<span class="string">"\nTotal number of senders: "</span> , len(dict), <span class="string">"\n"</span>)</span><br><span class="line">	print(<span class="string">"Total number of messages: "</span>,  count, <span class="string">"\n"</span>)</span><br><span class="line">	print(<span class="string">"Details (S: sender id; T: total message received, Q: seq)\n"</span>)</span><br><span class="line">		</span><br><span class="line">	keys = []</span><br><span class="line">	<span class="keyword">for</span> sender <span class="keyword">in</span> dict.keys():</span><br><span class="line">		keys.append(int(sender))</span><br><span class="line">	keys.sort()</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span> sender <span class="keyword">in</span> keys:</span><br><span class="line">		dict[sender].sort()</span><br><span class="line">		print(<span class="string">"S:"</span>, format(sender,<span class="string">"&lt;4"</span>), <span class="string">" T:"</span>, format(len(dict[sender]),<span class="string">"&lt;5"</span>), <span class="string">" Q:"</span>, dict[sender])</span><br><span class="line">		<span class="comment"># print("S:", format(sender,"&lt;4"), " T:", format(len(dict[sender]),"&lt;5"))</span></span><br></pre></td></tr></table></figure>
+
+<p>后面输出多了，可以把具体的SEQ删掉掉，前面少的时候可以看看有没有重复</p>
+]]></content>
+      <categories>
+        <category>Memo</category>
+      </categories>
+  </entry>
+  <entry>
     <title>记录anki卡片</title>
     <url>/2021/04/21/anki/</url>
     <content><![CDATA[<p>打算用anki背法语单词，用Fast Word Query加发音</p>
@@ -1524,7 +1585,7 @@
   </entry>
   <entry>
     <title>记录部署静态页面</title>
-    <url>/2020/08/10/webpage/</url>
+    <url>/2020/08/09/webpage/</url>
     <content><![CDATA[<p>把index.html和assets准备好</p>
 <p>ssh连上服务器</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo apt-get install apache2</span><br></pre></td></tr></table></figure>
