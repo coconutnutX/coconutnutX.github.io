@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Summary on basic register reductions</title>
+    <url>/2021/10/31/register/</url>
+    <content><![CDATA[<img src="/images/2021/screencapture2021-10-31 PM5.58.54.jpg">
+]]></content>
+      <categories>
+        <category>Note</category>
+      </categories>
+      <tags>
+        <tag>distributed_algorithm</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>CountSketch Matrix</title>
     <url>/2021/10/27/countsketch/</url>
     <content><![CDATA[<p>Drew a simple example to help understanding what I learned in class.</p>

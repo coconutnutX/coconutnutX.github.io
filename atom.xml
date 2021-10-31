@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2021-10-27T21:08:15.515Z</updated>
+  <updated>2021-10-31T17:03:27.698Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Summary on basic register reductions</title>
+    <link href="http://yoursite.com/2021/10/31/register/"/>
+    <id>http://yoursite.com/2021/10/31/register/</id>
+    <published>2021-10-31T17:01:49.000Z</published>
+    <updated>2021-10-31T17:03:27.698Z</updated>
+    
+    <content type="html"><![CDATA[<img src="/images/2021/screencapture2021-10-31 PM5.58.54.jpg">]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;img src=&quot;/images/2021/screencapture2021-10-31 PM5.58.54.jpg&quot;&gt;
+
+      
+    
+    </summary>
+    
+    
+      <category term="Note" scheme="http://yoursite.com/categories/Note/"/>
+    
+    
+      <category term="distributed_algorithm" scheme="http://yoursite.com/tags/distributed-algorithm/"/>
+    
+  </entry>
   
   <entry>
     <title>CountSketch Matrix</title>
@@ -540,33 +567,6 @@
       
         &lt;blockquote&gt;
 &lt;p&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=_QajrabyTJc&amp;amp;ab_channel=Brackeys&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://www.you
-      
-    
-    </summary>
-    
-    
-      <category term="Note" scheme="http://yoursite.com/categories/Note/"/>
-    
-    
-      <category term="unity" scheme="http://yoursite.com/tags/unity/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Unity笔记 Project02 点击移动</title>
-    <link href="http://yoursite.com/2020/12/02/unity-note/"/>
-    <id>http://yoursite.com/2020/12/02/unity-note/</id>
-    <published>2020-12-02T05:36:44.000Z</published>
-    <updated>2020-12-02T09:26:35.690Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p><a href="https://www.youtube.com/watch?v=y_zdW5LIX5o&ab_channel=PekkeDev" target="_blank" rel="noopener">Click To Move with NavMesh - Unity 3D</a></p></blockquote><p>选中地面</p><p>窗口 → AI → 导航: Static &amp; Walkable</p><img src="/images/2020/screencapture2020-12-02_PM1.26.36.jpg"><p>烘焙 → Bake</p><img src="/images/2020/screencapture2020-12-02_PM1.27.18.jpg"><p>Player加组件Nav Mesh Agent</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">using System.Collections;</span><br><span class="line">using System.Collections.Generic;</span><br><span class="line">using UnityEngine;</span><br><span class="line">using UnityEngine.AI;</span><br><span class="line"></span><br><span class="line">public class Player : MonoBehaviour</span><br><span class="line">&#123;</span><br><span class="line">    NavMeshAgent agent;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Start is called before the first frame update</span><br><span class="line">    void Start()</span><br><span class="line">    &#123;</span><br><span class="line">        agent &#x3D; GetComponent&lt;NavMeshAgent&gt;();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Update is called once per frame</span><br><span class="line">    void Update()</span><br><span class="line">    &#123;</span><br><span class="line">        if(Input.GetMouseButtonDown(0))&#123;</span><br><span class="line">            RaycastHit hit;</span><br><span class="line">            Ray ray &#x3D; Camera.main.ScreenPointToRay(Input.mousePosition);</span><br><span class="line">            if(Physics.Raycast(ray, out hit, Mathf.Infinity))&#123;</span><br><span class="line">                agent.SetDestination(hit.point);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;blockquote&gt;
-&lt;p&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=y_zdW5LIX5o&amp;ab_channel=PekkeDev&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Click To Move with 
       
     
     </summary>
