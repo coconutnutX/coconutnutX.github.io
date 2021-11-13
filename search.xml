@@ -1,6 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>sync example notes2 memory order</title>
+    <url>/2021/11/13/concurrent2/</url>
+    <content><![CDATA[<p>Producer consumer example</p>
+<p>There might be conflict on buffer[], but consumed_until and produced_until prevent that (if used correctly).</p>
+<p>So, only need to make sure consumed_until and produced_until accessed correctly under concurrency.</p>
+<h1 id="Using-locks"><a href="#Using-locks" class="headerlink" title="Using locks"></a>Using locks</h1><p>In each round of produce()</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">  lock_acquire(&amp;lock);</span><br><span class="line">  <span class="keyword">if</span> (consumed_until + BUFFER_SIZE &gt; r) <span class="keyword">break</span>;</span><br><span class="line">  lock_release(&amp;lock);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">produced[r] = ...</span><br><span class="line"><span class="built_in">buffer</span>[r % BUFFER_SIZE] = produced[r];</span><br><span class="line">produced_until++;</span><br><span class="line">lock_release(&amp;lock);</span><br></pre></td></tr></table></figure>
+
+<p>Two locks:</p>
+<ol>
+<li>check if can produce: conflict on consumed_until</li>
+<li>conflict on produced_until</li>
+</ol>
+<p>In each round of consume()</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">  lock_acquire(&amp;lock);</span><br><span class="line">  <span class="keyword">if</span> (produced_until &gt; r) <span class="keyword">break</span>;</span><br><span class="line">  lock_release(&amp;lock);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">consumed[r] = <span class="built_in">buffer</span>[r % BUFFER_SIZE];</span><br><span class="line">consumed_until++;</span><br><span class="line">lock_release(&amp;lock);</span><br></pre></td></tr></table></figure>
+
+<p>Two locks:</p>
+<ol>
+<li>check if can consume: conflict on produced_until</li>
+<li>conflict on consumed_until</li>
+</ol>
+<h1 id="Using-atomic-vairables"><a href="#Using-atomic-vairables" class="headerlink" title="Using atomic vairables"></a>Using atomic vairables</h1><p>In produce, two locks can be modified:</p>
+<ol>
+<li><p>check if can produce: conflict on consumed_until</p>
+<p>no ordering constraints -&gt; memory_order_relaxed</p>
+</li>
+<li><p>conflict on produced_until</p>
+<p>store produced_until should happen after all operations -&gt; load-store + store-store = release</p>
+</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">  <span class="comment">// The memory order can be relaxed as we don't read anything "produced" by the consumer.</span></span><br><span class="line">  <span class="keyword">int</span> local_cu = atomic_load_explicit(&amp;consumed_until, memory_order_relaxed);</span><br><span class="line">  <span class="keyword">if</span> (local_cu + BUFFER_SIZE &gt; r) <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line">produced[r] = ...</span><br><span class="line"><span class="built_in">buffer</span>[r % BUFFER_SIZE] = produced[r];</span><br><span class="line"><span class="comment">// We want to increment "produced_until" after the buffer has been written.</span></span><br><span class="line"><span class="comment">// By using memory_order_release, we prevent the STOREs on buffer from being</span></span><br><span class="line"><span class="comment">// reordered after the atomic operation.</span></span><br><span class="line">atomic_fetch_add_explicit(&amp;produced_until, <span class="number">1</span>, memory_order_release);</span><br></pre></td></tr></table></figure>
+
+<p>In consume, two locks can be modified:</p>
+<ol>
+<li><p>check if can consume: conflict on produced_until</p>
+<p>load produced_until should happen before all operations -&gt; load-load + load-store = acquire</p>
+</li>
+<li><p>conflict on consumed_until</p>
+<p>store consumed_until should happen after all operations -&gt; load-store + store-store = release</p>
+</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">  <span class="comment">// We don't want to access the buffer before checking the atomic variable.</span></span><br><span class="line">  <span class="comment">// The memory_order_acquire prevents this reordering.</span></span><br><span class="line">  <span class="keyword">int</span> local_pu = atomic_load_explicit(&amp;produced_until, memory_order_acquire);</span><br><span class="line">  <span class="keyword">if</span> (local_pu &gt; r) <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">consumed[r] = <span class="built_in">buffer</span>[r % BUFFER_SIZE];</span><br><span class="line">atomic_fetch_add_explicit(&amp;consumed_until, <span class="number">1</span>, memory_order_release);</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="Memory-barriers"><a href="#Memory-barriers" class="headerlink" title="Memory barriers"></a>Memory barriers</h1><blockquote>
+<p><a href="https://en.cppreference.com/w/cpp/atomic/memory_order" target="_blank" rel="noopener">std::memory_order</a></p>
+<p><a href="https://www.modernescpp.com/index.php/fences-as-memory-barriers" target="_blank" rel="noopener">Fences are Memory Barriers</a></p>
+<p><a href="https://www.youtube.com/watch?v=qlkMbxUbKfw&ab_channel=CodeBlacksmith" target="_blank" rel="noopener">Memory Barriers - Learn Modern C++</a></p>
+</blockquote>
+<ul>
+<li><p>memory_order_relaxed: no ordering constraints</p>
+</li>
+<li><p>memory_order_consume</p>
+</li>
+<li><p>memory_order_acquire: load-load + load-store</p>
+<img src="/images/2021/screencapture2021-11-13 AM10.59.57.jpg">
+</li>
+<li><p>memory_order_release: load-store + store-store</p>
+<img src="/images/2021/screencapture2021-11-13 AM11.00.42.jpg">
+</li>
+<li><p>memory_order_acq_rel</p>
+</li>
+<li><p>memory_order_seq_cst</p>
+</li>
+</ul>
+<img src="/images/2021/screencapture2021-11-13 AM10.55.43.jpg">
+
+
+
+<img src="/images/2021/screencapture2021-11-13 AM10.57.03.jpg">
+]]></content>
+      <categories>
+        <category>Note</category>
+      </categories>
+      <tags>
+        <tag>concurrent_algorithm</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>sync example note1</title>
+    <url>/2021/11/13/concurrent/</url>
+    <content><![CDATA[<p>Cync example for C concurrent programing</p>
+<h1 id="Threads"><a href="#Threads" class="headerlink" title="Threads"></a>Threads</h1><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;assert.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> RUNS (4096 * 256)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> THREADS 4</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">int</span> counter = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">count</span><span class="params">(<span class="keyword">void</span>* null)</span> </span>&#123;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"New thread created\n"</span>);</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// do something</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="comment">// declare an array of 4 threads</span></span><br><span class="line">  <span class="keyword">pthread_t</span> handlers[THREADS];</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">intptr_t</span> i = <span class="number">0</span>; i &lt; THREADS; i++) &#123;</span><br><span class="line">    <span class="keyword">int</span> res = pthread_create(&amp;handlers[i], <span class="literal">NULL</span>, count, <span class="literal">NULL</span>);</span><br><span class="line">    assert(!res);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; THREADS; i++) &#123;</span><br><span class="line">    <span class="keyword">int</span> res = pthread_join(handlers[i], <span class="literal">NULL</span>);</span><br><span class="line">    assert(!res);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (counter != RUNS * THREADS) &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Didn't count so well. :/, found %d\n"</span>, counter);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Counted up to %d.\n"</span>, counter);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Lock"><a href="#Lock" class="headerlink" title="Lock"></a>Lock</h1><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"lock.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span>* <span class="title">count</span><span class="params">(<span class="keyword">void</span>* null)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> r = <span class="number">0</span>; r &lt; RUNS; r++) &#123;</span><br><span class="line">    lock_acquire(&amp;lock);</span><br><span class="line">    counter++;</span><br><span class="line">    lock_release(&amp;lock);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Better version: use lock_wait(&amp;lock) and lock_wake_up(&amp;lock) to prevent bucy wait, but rely on a notification.</p>
+<h1 id="Atomic-variable"><a href="#Atomic-variable" class="headerlink" title="Atomic  variable"></a>Atomic  variable</h1><p>Atomic variables (~atomic registers) do not enforce atomic operation blocks.</p>
+<p>Need to use atomic operation.</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">atomic_int</span> counter = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span>* <span class="title">count</span><span class="params">(<span class="keyword">void</span>* null)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> r = <span class="number">0</span>; r &lt; RUNS; r++) &#123;</span><br><span class="line">    atomic_fetch_add(&amp;counter, <span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Another example</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> expected = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">if</span> (atomic_compare_exchange_strong(&amp;leader[r], &amp;expected, tid)) &#123;</span><br><span class="line">	atomic_fetch_add(&amp;nb_leaders[r], <span class="number">1</span>); <span class="comment">// used to check correctness</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Debug"><a href="#Debug" class="headerlink" title="Debug"></a>Debug</h1><p>当有include .h时，报错</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">clang: error: linker command failed with <span class="built_in">exit</span> code <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>可以在Terminal</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">gcc election2.c lock.c -o ekection2.o</span><br><span class="line">./election2.o</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Note</category>
+      </categories>
+      <tags>
+        <tag>concurrent_algorithm</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Summary on basic register reductions</title>
     <url>/2021/10/31/register/</url>
     <content><![CDATA[<img src="/images/2021/screencapture2021-10-31 PM5.58.54.jpg">
