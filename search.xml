@@ -58,6 +58,54 @@
       </tags>
   </entry>
   <entry>
+    <title>课程总结 信息素养与实践</title>
+    <url>/2020/02/22/mindmap-paper/</url>
+    <content><![CDATA[<blockquote>
+<p>大三上的公选课</p>
+</blockquote>
+<img src="/images/2020/paper.png">
+
+]]></content>
+      <categories>
+        <category>Memo</category>
+      </categories>
+      <tags>
+        <tag>mindmap</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>课程总结 压力与情绪管理</title>
+    <url>/2020/02/22/mindmap-stress/</url>
+    <content><![CDATA[<blockquote>
+<p>MOOC 四川大学 杨鑫 压力与情绪管理</p>
+</blockquote>
+<img src="/images/2020/stress.png">]]></content>
+      <categories>
+        <category>Memo</category>
+      </categories>
+      <tags>
+        <tag>mindmap</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>课程总结 民事诉讼法</title>
+    <url>/2020/02/22/mindmap/</url>
+    <content><![CDATA[<blockquote>
+<p>MOOC 北京交通大学 杨军 民事诉讼法</p>
+</blockquote>
+<p>P1<br><img src="/images/2020/civil_procedure_law1.png"></p>
+<p>P2<br><img src="/images/2020/civil_procedure_law2.png"></p>
+<p>P3<br><img src="/images/2020/civil_procedure_law3.png"></p>
+<p>P4<br><img src="/images/2020/civil_procedure_law4.png"></p>
+]]></content>
+      <categories>
+        <category>Memo</category>
+      </categories>
+      <tags>
+        <tag>mindmap</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Spring笔记01 jdbc常用操作</title>
     <url>/2020/02/24/note-spring-01/</url>
     <content><![CDATA[<blockquote>
@@ -134,40 +182,6 @@
       </categories>
       <tags>
         <tag>spring</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>课程总结 信息素养与实践</title>
-    <url>/2020/02/22/mindmap-paper/</url>
-    <content><![CDATA[<blockquote>
-<p>大三上的公选课</p>
-</blockquote>
-<img src="/images/2020/paper.png">
-
-]]></content>
-      <categories>
-        <category>Memo</category>
-      </categories>
-      <tags>
-        <tag>mindmap</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>课程总结 民事诉讼法</title>
-    <url>/2020/02/22/mindmap/</url>
-    <content><![CDATA[<blockquote>
-<p>MOOC 北京交通大学 杨军 民事诉讼法</p>
-</blockquote>
-<p>P1<br><img src="/images/2020/civil_procedure_law1.png"></p>
-<p>P2<br><img src="/images/2020/civil_procedure_law2.png"></p>
-<p>P3<br><img src="/images/2020/civil_procedure_law3.png"></p>
-<p>P4<br><img src="/images/2020/civil_procedure_law4.png"></p>
-]]></content>
-      <categories>
-        <category>Memo</category>
-      </categories>
-      <tags>
-        <tag>mindmap</tag>
       </tags>
   </entry>
   <entry>
@@ -272,20 +286,6 @@
       </categories>
       <tags>
         <tag>spring</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>课程总结 压力与情绪管理</title>
-    <url>/2020/02/22/mindmap-stress/</url>
-    <content><![CDATA[<blockquote>
-<p>MOOC 四川大学 杨鑫 压力与情绪管理</p>
-</blockquote>
-<img src="/images/2020/stress.png">]]></content>
-      <categories>
-        <category>Memo</category>
-      </categories>
-      <tags>
-        <tag>mindmap</tag>
       </tags>
   </entry>
   <entry>
@@ -579,53 +579,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Spring笔记07 基于注解的IoC案例（实现CRUD）</title>
-    <url>/2020/03/04/note-spring-07/</url>
-    <content><![CDATA[<blockquote>
-<p><a href="https://www.bilibili.com/video/av47952931?p=38">https://www.bilibili.com/video/av47952931?p=38</a></p>
-</blockquote>
-<hr>
-<h1 id="数据库部分"><a href="#数据库部分" class="headerlink" title="数据库部分"></a>数据库部分</h1><p>继续用上次的表<br><img src="/images/2020/20200304181444129.png" width=200></p>
-<hr>
-<h1 id="在基于xml的案例上修改"><a href="#在基于xml的案例上修改" class="headerlink" title="在基于xml的案例上修改"></a>在基于xml的案例上修改</h1><p>（加上整合junit的部分，具体记录在笔记8）</p>
-<p>pom.xml加上整合junit需要的依赖spring-test<br>junit版本4.12及以上</p>
-<p>beans.xml名称空间需要修改<br>在Spring文档中搜索xmlns:context（基于xml时是xmlns）找名称空间<br>配置Service和Dao的部分可以不要了<br>加上component-scan告知Spring在创建容器时要扫描的包</p>
-<p>实体类、接口没有变化</p>
-<p>业务层实现类AccountServiceImpl加注解<br>@Service(“accountService”)<br>变量accountDao上加注解，由于只有一个AccountDao，可以用@Autowired<br>对应的set方法可以删掉</p>
-<p>持久层实现类AccountDaoImpl加注解<br>@Repository(“accountDao”)<br>runner同样用@Autowired，set方法删掉</p>
-<p>测试类改为整合junit的写法</p>
-<hr>
-<h1 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h1><h2 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h2><img src="/images/2020/20200304183227273.png" width=300>
-
-<h2 id="pom-xml"><a href="#pom-xml" class="headerlink" title="pom.xml"></a>pom.xml</h2><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://maven.apache.org/POM/4.0.0&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.coconutnut<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>day02_02_account_xml<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--    打成jar包--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">packaging</span>&gt;</span>jar<span class="tag">&lt;/<span class="name">packaging</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--    加入依赖--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--        spring--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-context<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.0.2.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    	<span class="comment">&lt;!--    	spring整合junit--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.0.2.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!--        dbutils--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>commons-dbutils<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>commons-dbutils<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.4<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!--        mysql驱动--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>mysql<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mysql-connector-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>8.0.16<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!--        jdbc连接池--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.mchange<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>c3p0<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.9.5.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!--    junit测试--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.12<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h2 id="beans-xml"><a href="#beans-xml" class="headerlink" title="beans.xml"></a>beans.xml</h2><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.springframework.org/schema/beans&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:context</span>=<span class="string">&quot;http://www.springframework.org/schema/context&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://www.springframework.org/schema/beans</span></span></span><br><span class="line"><span class="string"><span class="tag">        http://www.springframework.org/schema/beans/spring-beans.xsd</span></span></span><br><span class="line"><span class="string"><span class="tag">        http://www.springframework.org/schema/context</span></span></span><br><span class="line"><span class="string"><span class="tag">        http://www.springframework.org/schema/context/spring-context.xsd&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">context:annotation-config</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--    告知Spring在创建容器时要扫描的包--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">&quot;com.cc&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">context:component-scan</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--    配置QueryRunner（多例）--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;runner&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.apache.commons.dbutils.QueryRunner&quot;</span> <span class="attr">scope</span>=<span class="string">&quot;prototype&quot;</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--        注入数据源（没有set方法，只能构造函数注入）--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">name</span>=<span class="string">&quot;ds&quot;</span> <span class="attr">ref</span>=<span class="string">&quot;dataSource&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--    配置数据源--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;dataSource&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.mchange.v2.c3p0.ComboPooledDataSource&quot;</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--        注入连接数据库的信息--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;driverClass&quot;</span> <span class="attr">value</span>=<span class="string">&quot;com.mysql.cj.jdbc.Driver&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;jdbcUrl&quot;</span> <span class="attr">value</span>=<span class="string">&quot;jdbc:mysql://localhost:3306/groot?characterEncoding=utf8&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;user&quot;</span> <span class="attr">value</span>=<span class="string">&quot;root&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span> <span class="attr">value</span>=<span class="string">&quot;iamgroot&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h2 id="实体类"><a href="#实体类" class="headerlink" title="实体类"></a>实体类</h2><p>Account.java</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.cc.domain;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.Serializable;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 账户的实体类</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Account</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Integer id;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> Float money;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Integer <span class="title">getId</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setId</span><span class="params">(Integer id)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.id = id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Float <span class="title">getMoney</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> money;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setMoney</span><span class="params">(Float money)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.money = money;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Account&#123;&quot;</span> +</span><br><span class="line">                <span class="string">&quot;id=&quot;</span> + id +</span><br><span class="line">                <span class="string">&quot;, name=&#x27;&quot;</span> + name + <span class="string">&#x27;\&#x27;&#x27;</span> +</span><br><span class="line">                <span class="string">&quot;, money=&quot;</span> + money +</span><br><span class="line">                <span class="string">&#x27;&#125;&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="业务层"><a href="#业务层" class="headerlink" title="业务层"></a>业务层</h2><p>IAccountService.java</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.cc.service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.cc.domain.Account;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 账户的业务层接口</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IAccountService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 增</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> account</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">createAccount</span><span class="params">(Account account)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 删</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> accountId</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">deleteAccount</span><span class="params">(Integer accountId)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 改</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> account</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">updateAccount</span><span class="params">(Account account)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 查一个</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> accountId</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function">Account <span class="title">retrieveAccountById</span><span class="params">(Integer accountId)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 查所有</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function">List&lt;Account&gt; <span class="title">retrieveAllAccounts</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>AccountServiceImpl.java</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.cc.service.impl;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.cc.dao.IAccountDao;</span><br><span class="line"><span class="keyword">import</span> com.cc.domain.Account;</span><br><span class="line"><span class="keyword">import</span> com.cc.service.IAccountService;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 账户的业务层实现类</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Service(&quot;accountService&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AccountServiceImpl</span> <span class="keyword">implements</span> <span class="title">IAccountService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> IAccountDao accountDao;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">createAccount</span><span class="params">(Account account)</span> </span>&#123;</span><br><span class="line">        accountDao.createAccount(account);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">deleteAccount</span><span class="params">(Integer accountId)</span> </span>&#123;</span><br><span class="line">        accountDao.deleteAccount(accountId);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">updateAccount</span><span class="params">(Account account)</span> </span>&#123;</span><br><span class="line">        accountDao.updateAccount(account);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Account <span class="title">retrieveAccountById</span><span class="params">(Integer accountId)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> accountDao.retrieveAccountById(accountId);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;Account&gt; <span class="title">retrieveAllAccounts</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> accountDao.retrieveAllAccounts();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="持久层"><a href="#持久层" class="headerlink" title="持久层"></a>持久层</h2><p>IAccountDao.java</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.cc.dao;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.cc.domain.Account;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 账户的持久层接口</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IAccountDao</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">createAccount</span><span class="params">(Account account)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">deleteAccount</span><span class="params">(Integer accountId)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">updateAccount</span><span class="params">(Account account)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">Account <span class="title">retrieveAccountById</span><span class="params">(Integer accountId)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">List&lt;Account&gt; <span class="title">retrieveAllAccounts</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>AccountDaoImpl.java</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.cc.dao.impl;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.cc.dao.IAccountDao;</span><br><span class="line"><span class="keyword">import</span> com.cc.domain.Account;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.dbutils.QueryRunner;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.dbutils.handlers.BeanHandler;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.dbutils.handlers.BeanListHandler;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Repository;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.sql.SQLException;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 账户的持久层实现类</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Repository(&quot;accountDao&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AccountDaoImpl</span> <span class="keyword">implements</span> <span class="title">IAccountDao</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> QueryRunner runner;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">createAccount</span><span class="params">(Account account)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            runner.update(<span class="string">&quot;insert into account(name,money) values(?,?)&quot;</span>, account.getName(), account.getMoney());</span><br><span class="line">        &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">deleteAccount</span><span class="params">(Integer accountId)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            runner.update(<span class="string">&quot;delete from account where id = ?&quot;</span>, accountId);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">updateAccount</span><span class="params">(Account account)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            runner.update(<span class="string">&quot;update account set name = ?, money = ? where id = ?&quot;</span>, account.getName(), account.getMoney(),account.getId());</span><br><span class="line">        &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Account <span class="title">retrieveAccountById</span><span class="params">(Integer accountId)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> runner.query(<span class="string">&quot;select * from account where id = ?&quot;</span>, <span class="keyword">new</span> BeanHandler&lt;Account&gt;(Account.class), accountId);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;Account&gt; <span class="title">retrieveAllAccounts</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> runner.query(<span class="string">&quot;select * from account&quot;</span>, <span class="keyword">new</span> BeanListHandler&lt;Account&gt;(Account.class));</span><br><span class="line">        &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="测试方法"><a href="#测试方法" class="headerlink" title="测试方法"></a>测试方法</h2><p>AccountServiceTest.java</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.cc.test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.cc.domain.Account;</span><br><span class="line"><span class="keyword">import</span> com.cc.service.IAccountService;</span><br><span class="line"><span class="keyword">import</span> org.junit.Before;</span><br><span class="line"><span class="keyword">import</span> org.junit.Test;</span><br><span class="line"><span class="keyword">import</span> org.junit.runner.RunWith;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.ApplicationContext;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.support.ClassPathXmlApplicationContext;</span><br><span class="line"><span class="keyword">import</span> org.springframework.test.context.ContextConfiguration;</span><br><span class="line"><span class="keyword">import</span> org.springframework.test.context.junit4.SpringJUnit4ClassRunner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 使用Junit测试配置</span></span><br><span class="line"><span class="comment"> * Spring整合Junit的配置</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RunWith(SpringJUnit4ClassRunner.class)</span></span><br><span class="line"><span class="meta">@ContextConfiguration(locations = &quot;classpath:beans.xml&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AccountServiceTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> IAccountService as;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testCreate</span><span class="params">()</span></span>&#123;</span><br><span class="line">        Account account = <span class="keyword">new</span> Account();</span><br><span class="line">        account.setName(<span class="string">&quot;eee&quot;</span>);</span><br><span class="line">        account.setMoney(<span class="number">10000f</span>);</span><br><span class="line">        as.createAccount(account);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testDelete</span><span class="params">()</span></span>&#123;</span><br><span class="line">        as.deleteAccount(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testUpdate</span><span class="params">()</span></span>&#123;</span><br><span class="line">        Account account = as.retrieveAccountById(<span class="number">3</span>);</span><br><span class="line">        account.setMoney(<span class="number">3000f</span>);</span><br><span class="line">        as.updateAccount(account);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testRetrieveOne</span><span class="params">()</span></span>&#123;</span><br><span class="line">        Account account = as.retrieveAccountById(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        System.out.println(account);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testRetrieveAll</span><span class="params">()</span></span>&#123;</span><br><span class="line">        List&lt;Account&gt; accounts = as.retrieveAllAccounts();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(Account account : accounts)&#123;</span><br><span class="line">            System.out.println(account);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<hr>
-<h1 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h1><p>testRetrieveAll()<br><img src="/images/2020/20200304182802930.png" width=800></p>
-<p>testRetrieveOne()<br><img src="/images/2020/20200304182924177.png" width=800></p>
-<p>testCreate()<br><img src="/images/2020/20200304183005488.png" width=200></p>
-<p>testDelete()<br><img src="/images/2020/20200304183052388.png" width=200></p>
-<p>testUpdate()<br><img src="/images/2020/20200304183142618.png" width=200></p>
-]]></content>
-      <categories>
-        <category>Note</category>
-      </categories>
-      <tags>
-        <tag>spring</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Spring笔记06 基于xml的IoC案例（实现CRUD）</title>
     <url>/2020/03/04/note-spring-06/</url>
     <content><![CDATA[<blockquote>
@@ -694,6 +647,53 @@ Account&#123;id=2, name=&apos;bbb&apos;, money=1000.0&#125;
 Account&#123;id=3, name=&apos;ccc&apos;, money=1000.0&#125;
 
 Process finished with exit code 0</code></pre>]]></content>
+      <categories>
+        <category>Note</category>
+      </categories>
+      <tags>
+        <tag>spring</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Spring笔记07 基于注解的IoC案例（实现CRUD）</title>
+    <url>/2020/03/04/note-spring-07/</url>
+    <content><![CDATA[<blockquote>
+<p><a href="https://www.bilibili.com/video/av47952931?p=38">https://www.bilibili.com/video/av47952931?p=38</a></p>
+</blockquote>
+<hr>
+<h1 id="数据库部分"><a href="#数据库部分" class="headerlink" title="数据库部分"></a>数据库部分</h1><p>继续用上次的表<br><img src="/images/2020/20200304181444129.png" width=200></p>
+<hr>
+<h1 id="在基于xml的案例上修改"><a href="#在基于xml的案例上修改" class="headerlink" title="在基于xml的案例上修改"></a>在基于xml的案例上修改</h1><p>（加上整合junit的部分，具体记录在笔记8）</p>
+<p>pom.xml加上整合junit需要的依赖spring-test<br>junit版本4.12及以上</p>
+<p>beans.xml名称空间需要修改<br>在Spring文档中搜索xmlns:context（基于xml时是xmlns）找名称空间<br>配置Service和Dao的部分可以不要了<br>加上component-scan告知Spring在创建容器时要扫描的包</p>
+<p>实体类、接口没有变化</p>
+<p>业务层实现类AccountServiceImpl加注解<br>@Service(“accountService”)<br>变量accountDao上加注解，由于只有一个AccountDao，可以用@Autowired<br>对应的set方法可以删掉</p>
+<p>持久层实现类AccountDaoImpl加注解<br>@Repository(“accountDao”)<br>runner同样用@Autowired，set方法删掉</p>
+<p>测试类改为整合junit的写法</p>
+<hr>
+<h1 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h1><h2 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h2><img src="/images/2020/20200304183227273.png" width=300>
+
+<h2 id="pom-xml"><a href="#pom-xml" class="headerlink" title="pom.xml"></a>pom.xml</h2><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://maven.apache.org/POM/4.0.0&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.coconutnut<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>day02_02_account_xml<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--    打成jar包--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">packaging</span>&gt;</span>jar<span class="tag">&lt;/<span class="name">packaging</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--    加入依赖--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--        spring--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-context<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.0.2.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    	<span class="comment">&lt;!--    	spring整合junit--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.0.2.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!--        dbutils--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>commons-dbutils<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>commons-dbutils<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.4<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!--        mysql驱动--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>mysql<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mysql-connector-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>8.0.16<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!--        jdbc连接池--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.mchange<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>c3p0<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.9.5.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!--    junit测试--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.12<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="beans-xml"><a href="#beans-xml" class="headerlink" title="beans.xml"></a>beans.xml</h2><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.springframework.org/schema/beans&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:context</span>=<span class="string">&quot;http://www.springframework.org/schema/context&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://www.springframework.org/schema/beans</span></span></span><br><span class="line"><span class="string"><span class="tag">        http://www.springframework.org/schema/beans/spring-beans.xsd</span></span></span><br><span class="line"><span class="string"><span class="tag">        http://www.springframework.org/schema/context</span></span></span><br><span class="line"><span class="string"><span class="tag">        http://www.springframework.org/schema/context/spring-context.xsd&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">context:annotation-config</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--    告知Spring在创建容器时要扫描的包--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">&quot;com.cc&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">context:component-scan</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--    配置QueryRunner（多例）--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;runner&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.apache.commons.dbutils.QueryRunner&quot;</span> <span class="attr">scope</span>=<span class="string">&quot;prototype&quot;</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--        注入数据源（没有set方法，只能构造函数注入）--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">name</span>=<span class="string">&quot;ds&quot;</span> <span class="attr">ref</span>=<span class="string">&quot;dataSource&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--    配置数据源--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;dataSource&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.mchange.v2.c3p0.ComboPooledDataSource&quot;</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--        注入连接数据库的信息--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;driverClass&quot;</span> <span class="attr">value</span>=<span class="string">&quot;com.mysql.cj.jdbc.Driver&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;jdbcUrl&quot;</span> <span class="attr">value</span>=<span class="string">&quot;jdbc:mysql://localhost:3306/groot?characterEncoding=utf8&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;user&quot;</span> <span class="attr">value</span>=<span class="string">&quot;root&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span> <span class="attr">value</span>=<span class="string">&quot;iamgroot&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="实体类"><a href="#实体类" class="headerlink" title="实体类"></a>实体类</h2><p>Account.java</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.cc.domain;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.Serializable;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 账户的实体类</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Account</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Integer id;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> Float money;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Integer <span class="title">getId</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setId</span><span class="params">(Integer id)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.id = id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Float <span class="title">getMoney</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> money;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setMoney</span><span class="params">(Float money)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.money = money;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Account&#123;&quot;</span> +</span><br><span class="line">                <span class="string">&quot;id=&quot;</span> + id +</span><br><span class="line">                <span class="string">&quot;, name=&#x27;&quot;</span> + name + <span class="string">&#x27;\&#x27;&#x27;</span> +</span><br><span class="line">                <span class="string">&quot;, money=&quot;</span> + money +</span><br><span class="line">                <span class="string">&#x27;&#125;&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="业务层"><a href="#业务层" class="headerlink" title="业务层"></a>业务层</h2><p>IAccountService.java</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.cc.service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.cc.domain.Account;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 账户的业务层接口</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IAccountService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 增</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> account</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">createAccount</span><span class="params">(Account account)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 删</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> accountId</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">deleteAccount</span><span class="params">(Integer accountId)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 改</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> account</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">updateAccount</span><span class="params">(Account account)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 查一个</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> accountId</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function">Account <span class="title">retrieveAccountById</span><span class="params">(Integer accountId)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 查所有</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function">List&lt;Account&gt; <span class="title">retrieveAllAccounts</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>AccountServiceImpl.java</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.cc.service.impl;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.cc.dao.IAccountDao;</span><br><span class="line"><span class="keyword">import</span> com.cc.domain.Account;</span><br><span class="line"><span class="keyword">import</span> com.cc.service.IAccountService;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 账户的业务层实现类</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Service(&quot;accountService&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AccountServiceImpl</span> <span class="keyword">implements</span> <span class="title">IAccountService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> IAccountDao accountDao;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">createAccount</span><span class="params">(Account account)</span> </span>&#123;</span><br><span class="line">        accountDao.createAccount(account);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">deleteAccount</span><span class="params">(Integer accountId)</span> </span>&#123;</span><br><span class="line">        accountDao.deleteAccount(accountId);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">updateAccount</span><span class="params">(Account account)</span> </span>&#123;</span><br><span class="line">        accountDao.updateAccount(account);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Account <span class="title">retrieveAccountById</span><span class="params">(Integer accountId)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> accountDao.retrieveAccountById(accountId);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;Account&gt; <span class="title">retrieveAllAccounts</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> accountDao.retrieveAllAccounts();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="持久层"><a href="#持久层" class="headerlink" title="持久层"></a>持久层</h2><p>IAccountDao.java</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.cc.dao;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.cc.domain.Account;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 账户的持久层接口</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IAccountDao</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">createAccount</span><span class="params">(Account account)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">deleteAccount</span><span class="params">(Integer accountId)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">updateAccount</span><span class="params">(Account account)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">Account <span class="title">retrieveAccountById</span><span class="params">(Integer accountId)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">List&lt;Account&gt; <span class="title">retrieveAllAccounts</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>AccountDaoImpl.java</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.cc.dao.impl;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.cc.dao.IAccountDao;</span><br><span class="line"><span class="keyword">import</span> com.cc.domain.Account;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.dbutils.QueryRunner;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.dbutils.handlers.BeanHandler;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.dbutils.handlers.BeanListHandler;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Repository;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.sql.SQLException;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 账户的持久层实现类</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Repository(&quot;accountDao&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AccountDaoImpl</span> <span class="keyword">implements</span> <span class="title">IAccountDao</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> QueryRunner runner;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">createAccount</span><span class="params">(Account account)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            runner.update(<span class="string">&quot;insert into account(name,money) values(?,?)&quot;</span>, account.getName(), account.getMoney());</span><br><span class="line">        &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">deleteAccount</span><span class="params">(Integer accountId)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            runner.update(<span class="string">&quot;delete from account where id = ?&quot;</span>, accountId);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">updateAccount</span><span class="params">(Account account)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            runner.update(<span class="string">&quot;update account set name = ?, money = ? where id = ?&quot;</span>, account.getName(), account.getMoney(),account.getId());</span><br><span class="line">        &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Account <span class="title">retrieveAccountById</span><span class="params">(Integer accountId)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> runner.query(<span class="string">&quot;select * from account where id = ?&quot;</span>, <span class="keyword">new</span> BeanHandler&lt;Account&gt;(Account.class), accountId);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;Account&gt; <span class="title">retrieveAllAccounts</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> runner.query(<span class="string">&quot;select * from account&quot;</span>, <span class="keyword">new</span> BeanListHandler&lt;Account&gt;(Account.class));</span><br><span class="line">        &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="测试方法"><a href="#测试方法" class="headerlink" title="测试方法"></a>测试方法</h2><p>AccountServiceTest.java</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.cc.test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.cc.domain.Account;</span><br><span class="line"><span class="keyword">import</span> com.cc.service.IAccountService;</span><br><span class="line"><span class="keyword">import</span> org.junit.Before;</span><br><span class="line"><span class="keyword">import</span> org.junit.Test;</span><br><span class="line"><span class="keyword">import</span> org.junit.runner.RunWith;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.ApplicationContext;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.support.ClassPathXmlApplicationContext;</span><br><span class="line"><span class="keyword">import</span> org.springframework.test.context.ContextConfiguration;</span><br><span class="line"><span class="keyword">import</span> org.springframework.test.context.junit4.SpringJUnit4ClassRunner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 使用Junit测试配置</span></span><br><span class="line"><span class="comment"> * Spring整合Junit的配置</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RunWith(SpringJUnit4ClassRunner.class)</span></span><br><span class="line"><span class="meta">@ContextConfiguration(locations = &quot;classpath:beans.xml&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AccountServiceTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> IAccountService as;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testCreate</span><span class="params">()</span></span>&#123;</span><br><span class="line">        Account account = <span class="keyword">new</span> Account();</span><br><span class="line">        account.setName(<span class="string">&quot;eee&quot;</span>);</span><br><span class="line">        account.setMoney(<span class="number">10000f</span>);</span><br><span class="line">        as.createAccount(account);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testDelete</span><span class="params">()</span></span>&#123;</span><br><span class="line">        as.deleteAccount(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testUpdate</span><span class="params">()</span></span>&#123;</span><br><span class="line">        Account account = as.retrieveAccountById(<span class="number">3</span>);</span><br><span class="line">        account.setMoney(<span class="number">3000f</span>);</span><br><span class="line">        as.updateAccount(account);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testRetrieveOne</span><span class="params">()</span></span>&#123;</span><br><span class="line">        Account account = as.retrieveAccountById(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        System.out.println(account);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testRetrieveAll</span><span class="params">()</span></span>&#123;</span><br><span class="line">        List&lt;Account&gt; accounts = as.retrieveAllAccounts();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(Account account : accounts)&#123;</span><br><span class="line">            System.out.println(account);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h1><p>testRetrieveAll()<br><img src="/images/2020/20200304182802930.png" width=800></p>
+<p>testRetrieveOne()<br><img src="/images/2020/20200304182924177.png" width=800></p>
+<p>testCreate()<br><img src="/images/2020/20200304183005488.png" width=200></p>
+<p>testDelete()<br><img src="/images/2020/20200304183052388.png" width=200></p>
+<p>testUpdate()<br><img src="/images/2020/20200304183142618.png" width=200></p>
+]]></content>
       <categories>
         <category>Note</category>
       </categories>
@@ -993,21 +993,6 @@ Process finished with exit code 0</code></pre>]]></content>
       </tags>
   </entry>
   <entry>
-    <title>Android 10 写文件权限问题</title>
-    <url>/2020/03/12/debug-android/</url>
-    <content><![CDATA[<h1 id="bug描述"><a href="#bug描述" class="headerlink" title="bug描述"></a>bug描述</h1><p>换手机之后一个以前没毛病的写文件操作写不了了<br>估摸着是版本问题</p>
-<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><p>AndroidManifest.xml中，application标签中加</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">android:requestLegacyExternalStorage=&quot;true&quot;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>ref:<br><a href="https://blog.csdn.net/weixin_40093242/article/details/104067573?depth_1-utm_source=distribute.pc_relevant.none-task&amp;utm_source=distribute.pc_relevant.none-task">https://blog.csdn.net/weixin_40093242/article/details/104067573?depth_1-utm_source=distribute.pc_relevant.none-task&amp;utm_source=distribute.pc_relevant.none-task</a></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>Debug</category>
-      </categories>
-  </entry>
-  <entry>
     <title>Vue笔记03 Element UI使用&amp;动态路由导航栏</title>
     <url>/2020/03/11/note-vue-03/</url>
     <content><![CDATA[<blockquote>
@@ -1095,6 +1080,21 @@ Process finished with exit code 0</code></pre>]]></content>
       <tags>
         <tag>vue</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Android 10 写文件权限问题</title>
+    <url>/2020/03/12/debug-android/</url>
+    <content><![CDATA[<h1 id="bug描述"><a href="#bug描述" class="headerlink" title="bug描述"></a>bug描述</h1><p>换手机之后一个以前没毛病的写文件操作写不了了<br>估摸着是版本问题</p>
+<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><p>AndroidManifest.xml中，application标签中加</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">android:requestLegacyExternalStorage=&quot;true&quot;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>ref:<br><a href="https://blog.csdn.net/weixin_40093242/article/details/104067573?depth_1-utm_source=distribute.pc_relevant.none-task&amp;utm_source=distribute.pc_relevant.none-task">https://blog.csdn.net/weixin_40093242/article/details/104067573?depth_1-utm_source=distribute.pc_relevant.none-task&amp;utm_source=distribute.pc_relevant.none-task</a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Debug</category>
+      </categories>
   </entry>
   <entry>
     <title>LeetCode.337 打家劫舍</title>
@@ -1550,6 +1550,20 @@ Process finished with exit code 0</code></pre>]]></content>
       </tags>
   </entry>
   <entry>
+    <title>记录几个让我心动的设计</title>
+    <url>/2020/03/18/aha/</url>
+    <content><![CDATA[<h1 id="Trello的列表完成最后一个时会扭动～还有不同的摇摆方式！"><a href="#Trello的列表完成最后一个时会扭动～还有不同的摇摆方式！" class="headerlink" title="Trello的列表完成最后一个时会扭动～还有不同的摇摆方式！"></a>Trello的列表完成最后一个时会扭动～还有不同的摇摆方式！</h1><img src="/images/2020/Mar-18-2020 22-56-56.gif" width=400>
+<img src="/images/2020/Mar-18-2020 22-56-19.gif" width=400>
+<img src="/images/2020/Mar-18-2020 22-57-26.gif" width=400>
+啊Trello我的❤️！
+
+<h1 id="企鹅岛里的企鹅会把花田里的花叼出来种～"><a href="#企鹅岛里的企鹅会把花田里的花叼出来种～" class="headerlink" title="企鹅岛里的企鹅会把花田里的花叼出来种～"></a>企鹅岛里的企鹅会把花田里的花叼出来种～</h1><img src="/images/2020/20200318_233535.gif" width=300>
+天呐我需要一个高清的录屏app -MARK-]]></content>
+      <categories>
+        <category>Memo</category>
+      </categories>
+  </entry>
+  <entry>
     <title>Vue笔记07 总结</title>
     <url>/2020/03/17/note-vue-07/</url>
     <content><![CDATA[<p>这个教程6p学完了～总结一下这个图书增删改查的demo</p>
@@ -1619,20 +1633,6 @@ Process finished with exit code 0</code></pre>]]></content>
       <tags>
         <tag>vue</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>记录几个让我心动的设计</title>
-    <url>/2020/03/18/aha/</url>
-    <content><![CDATA[<h1 id="Trello的列表完成最后一个时会扭动～还有不同的摇摆方式！"><a href="#Trello的列表完成最后一个时会扭动～还有不同的摇摆方式！" class="headerlink" title="Trello的列表完成最后一个时会扭动～还有不同的摇摆方式！"></a>Trello的列表完成最后一个时会扭动～还有不同的摇摆方式！</h1><img src="/images/2020/Mar-18-2020 22-56-56.gif" width=400>
-<img src="/images/2020/Mar-18-2020 22-56-19.gif" width=400>
-<img src="/images/2020/Mar-18-2020 22-57-26.gif" width=400>
-啊Trello我的❤️！
-
-<h1 id="企鹅岛里的企鹅会把花田里的花叼出来种～"><a href="#企鹅岛里的企鹅会把花田里的花叼出来种～" class="headerlink" title="企鹅岛里的企鹅会把花田里的花叼出来种～"></a>企鹅岛里的企鹅会把花田里的花叼出来种～</h1><img src="/images/2020/20200318_233535.gif" width=300>
-天呐我需要一个高清的录屏app -MARK-]]></content>
-      <categories>
-        <category>Memo</category>
-      </categories>
   </entry>
   <entry>
     <title>Spring笔记11 Spring中的JdbcTemplate</title>
@@ -1773,37 +1773,6 @@ Process finished with exit code 0</code></pre>]]></content>
       </tags>
   </entry>
   <entry>
-    <title>学习Spring的一点感想</title>
-    <url>/2020/03/19/note-spring/</url>
-    <content><![CDATA[<p>Spring学到这里，记录一点点感想</p>
-<hr>
-<p>这个教程一个经常的操作就是</p>
-<p>噼里啪啦噼里啪啦写了一大堆，然后灵魂质问：<strong>你都能写出来的东西Spring会没有吗？</strong></p>
-<p>🥶🥶🥶</p>
-<p>fine</p>
-<p>不过这种过程解释了这些设计的用意，也难怪评论很多都说这个教程是看过最好的</p>
-<p>然鹅，用Spring Boot的时候现在的这一堆也不用写啊！</p>
-<p>最初接触java web这一大趴的时候特别迷惑，Tomcat、Spring、Spring MVC、Spring Boot…一😳脸😳懵😳逼</p>
-<p>看到大多的建议是从Spring开始，不然Spring Boot能用但是不懂为什么</p>
-<p>于是学了一些Spring（估计是一个四小时版本），用的时候为了方便还是直接上了Spring Boot</p>
-<p>现在重新学一遍，没之前那么😳😳😳了，教程里说到Spring可以简化手撕代码的时候，也知道Spring Boot还能再简化一些</p>
-<p>对它们的理解也慢慢清晰了一点点，感觉就是一个不断封装、约定&gt;配置的简化过程，和计算机中许许多多的进化过程一样，都是一层一层的抽(tou)象(lan)</p>
-<hr>
-<img src="/images/2020/1949370-200.png" width=100>
-
-
-<p>说起来，春天到了呢</p>
-<p>今天湖北已经0新增了，希望能赶快开门…</p>
-<p>🦢</p>
-]]></content>
-      <categories>
-        <category>Memo</category>
-      </categories>
-      <tags>
-        <tag>spring</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Spring笔记13 Spring中的事务控制</title>
     <url>/2020/03/19/note-spring-13/</url>
     <content><![CDATA[<blockquote>
@@ -1867,6 +1836,37 @@ Process finished with exit code 0</code></pre>]]></content>
       </tags>
   </entry>
   <entry>
+    <title>学习Spring的一点感想</title>
+    <url>/2020/03/19/note-spring/</url>
+    <content><![CDATA[<p>Spring学到这里，记录一点点感想</p>
+<hr>
+<p>这个教程一个经常的操作就是</p>
+<p>噼里啪啦噼里啪啦写了一大堆，然后灵魂质问：<strong>你都能写出来的东西Spring会没有吗？</strong></p>
+<p>🥶🥶🥶</p>
+<p>fine</p>
+<p>不过这种过程解释了这些设计的用意，也难怪评论很多都说这个教程是看过最好的</p>
+<p>然鹅，用Spring Boot的时候现在的这一堆也不用写啊！</p>
+<p>最初接触java web这一大趴的时候特别迷惑，Tomcat、Spring、Spring MVC、Spring Boot…一😳脸😳懵😳逼</p>
+<p>看到大多的建议是从Spring开始，不然Spring Boot能用但是不懂为什么</p>
+<p>于是学了一些Spring（估计是一个四小时版本），用的时候为了方便还是直接上了Spring Boot</p>
+<p>现在重新学一遍，没之前那么😳😳😳了，教程里说到Spring可以简化手撕代码的时候，也知道Spring Boot还能再简化一些</p>
+<p>对它们的理解也慢慢清晰了一点点，感觉就是一个不断封装、约定&gt;配置的简化过程，和计算机中许许多多的进化过程一样，都是一层一层的抽(tou)象(lan)</p>
+<hr>
+<img src="/images/2020/1949370-200.png" width=100>
+
+
+<p>说起来，春天到了呢</p>
+<p>今天湖北已经0新增了，希望能赶快开门…</p>
+<p>🦢</p>
+]]></content>
+      <categories>
+        <category>Memo</category>
+      </categories>
+      <tags>
+        <tag>spring</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Spring笔记14 Spring5的新特性</title>
     <url>/2020/03/20/note-spring-14/</url>
     <content><![CDATA[<blockquote>
@@ -1896,18 +1896,6 @@ Process finished with exit code 0</code></pre>]]></content>
       </categories>
       <tags>
         <tag>spring</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Spring笔记15 总结</title>
-    <url>/2020/03/20/note-spring-15/</url>
-    <content><![CDATA[<img src="/images/2020/spring.png">]]></content>
-      <categories>
-        <category>Note</category>
-      </categories>
-      <tags>
-        <tag>spring</tag>
-        <tag>mindmap</tag>
       </tags>
   </entry>
   <entry>
@@ -1967,6 +1955,18 @@ Process finished with exit code 0</code></pre>]]></content>
       </categories>
       <tags>
         <tag>mybatis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Spring笔记15 总结</title>
+    <url>/2020/03/20/note-spring-15/</url>
+    <content><![CDATA[<img src="/images/2020/spring.png">]]></content>
+      <categories>
+        <category>Note</category>
+      </categories>
+      <tags>
+        <tag>mindmap</tag>
+        <tag>spring</tag>
       </tags>
   </entry>
   <entry>
@@ -2142,6 +2142,59 @@ Process finished with exit code 0</code></pre>]]></content>
       </tags>
   </entry>
   <entry>
+    <title>MyBatis笔记06 动态sql语句</title>
+    <url>/2020/03/30/note-mybatis-06/</url>
+    <content><![CDATA[<blockquote>
+<p><a href="https://www.bilibili.com/video/av47952553">https://www.bilibili.com/video/av47952553</a><br>p45~47</p>
+</blockquote>
+<h1 id="if标签"><a href="#if标签" class="headerlink" title="if标签"></a>if标签</h1><p>根据传入参数条件查询</p>
+<p>条件可能是用户名、性别、地址，或者都有、都没有</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// IUserDao.java</span></span><br><span class="line"></span><br><span class="line"><span class="function">List&lt;User&gt; <span class="title">findUserByCondition</span><span class="params">(User user)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>与要用and，不能用&amp;&amp;</p>
+<p>sql语句上的内容无关大小写</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;findUserByCondition&quot;</span> <span class="attr">resultMap</span>=<span class="string">&quot;userMap&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;user&quot;</span>&gt;</span></span><br><span class="line">  select * from user where 1=1</span><br><span class="line">  <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;userName != null&quot;</span>&gt;</span></span><br><span class="line">    and username = #&#123;userName&#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;userSex != null&quot;</span>&gt;</span></span><br><span class="line">    and sex = #&#123;userSex&#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>测试</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testFindByCondition</span><span class="params">()</span></span>&#123;</span><br><span class="line">  User u = <span class="keyword">new</span> User();</span><br><span class="line">  u.setUserName(<span class="string">&quot;老王&quot;</span>);</span><br><span class="line">  u.setUserSex(<span class="string">&quot;女&quot;</span>);</span><br><span class="line"></span><br><span class="line">  List&lt;User&gt; users = userDao.findUserByCondition(u);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>不写 where 1=1 ？</p>
+<p>改进 -&gt; where标签</p>
+<h1 id="where标签"><a href="#where标签" class="headerlink" title="where标签"></a>where标签</h1><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;findUserByCondition&quot;</span> <span class="attr">resultMap</span>=<span class="string">&quot;userMap&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;user&quot;</span>&gt;</span></span><br><span class="line">  select * from user</span><br><span class="line">  <span class="tag">&lt;<span class="name">where</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;userName != null&quot;</span>&gt;</span></span><br><span class="line">      and username = #&#123;userName&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;userSex != null&quot;</span>&gt;</span></span><br><span class="line">      and sex = #&#123;userSex&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">where</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="foreach标签"><a href="#foreach标签" class="headerlink" title="foreach标签"></a>foreach标签</h1><p>根据queryvo中的Id集合实现查询用户列表</p>
+<p><strong>QueryVo.java</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">QueryVo</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> User user;</span><br><span class="line">    <span class="keyword">private</span> List&lt;Integer&gt; ids;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// get set ...</span></span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>IUserDao.java</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function">List&lt;User&gt; <span class="title">findUserInIds</span><span class="params">(QueryVo vo)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p><strong>IUserDao.xml</strong></p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;findUserInIds&quot;</span> <span class="attr">resultMap</span>=<span class="string">&quot;userMap&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;queryvo&quot;</span>&gt;</span></span><br><span class="line">  select * from user</span><br><span class="line">  <span class="tag">&lt;<span class="name">where</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;ids != null and ids.size()&gt;0&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">foreach</span> <span class="attr">collection</span>=<span class="string">&quot;ids&quot;</span> <span class="attr">open</span>=<span class="string">&quot;and id in (&quot;</span> <span class="attr">close</span>=<span class="string">&quot;)&quot;</span> <span class="attr">item</span>=<span class="string">&quot;uid&quot;</span> <span class="attr">separator</span>=<span class="string">&quot;,&quot;</span>&gt;</span></span><br><span class="line">        #&#123;uid&#125;</span><br><span class="line">      <span class="tag">&lt;/<span class="name">foreach</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">where</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>#{uid}是由上面item=”uid”决定的</p>
+<p><strong>测试</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testFindInIds</span><span class="params">()</span></span>&#123;</span><br><span class="line">  QueryVo vo = <span class="keyword">new</span> QueryVo();</span><br><span class="line">  List&lt;Integer&gt; list = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</span><br><span class="line">  list.add(<span class="number">41</span>);</span><br><span class="line">  list.add(<span class="number">42</span>);</span><br><span class="line">  list.add(<span class="number">46</span>);</span><br><span class="line">  vo.setIds(list);</span><br><span class="line"></span><br><span class="line">  List&lt;User&gt; users = userDao.findUserInIds(vo);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="sql标签"><a href="#sql标签" class="headerlink" title="sql标签"></a>sql标签</h1><p>抽取重复的sql语句</p>
+<p>（本来写不写;都可以，但是抽取sql语句时，为了防止后续的拼接出问题，最好不要写;）</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">sql</span> <span class="attr">id</span>=<span class="string">&quot;defaultUser&quot;</span>&gt;</span></span><br><span class="line">  select * from user</span><br><span class="line"><span class="tag">&lt;/<span class="name">sql</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>就可以把</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;findAll&quot;</span> <span class="attr">resultMap</span>=<span class="string">&quot;userMap&quot;</span>&gt;</span></span><br><span class="line">  select * from user</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>改成</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;findAll&quot;</span> <span class="attr">resultMap</span>=<span class="string">&quot;userMap&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">include</span> <span class="attr">refid</span>=<span class="string">&quot;defaultUser&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">include</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Note</category>
+      </categories>
+      <tags>
+        <tag>mybatis</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>MyBatis笔记05 连接池</title>
     <url>/2020/03/30/note-mybatis-05/</url>
     <content><![CDATA[<blockquote>
@@ -2216,59 +2269,6 @@ Process finished with exit code 0</code></pre>]]></content>
 <img src="/images/2020/screencapture2020-03-30AM10.40.26.jpg">
 
 <p>POOLED是MyBatis自己实现的一套连接池，根据javax.sql.DataSource规范</p>
-]]></content>
-      <categories>
-        <category>Note</category>
-      </categories>
-      <tags>
-        <tag>mybatis</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>MyBatis笔记06 动态sql语句</title>
-    <url>/2020/03/30/note-mybatis-06/</url>
-    <content><![CDATA[<blockquote>
-<p><a href="https://www.bilibili.com/video/av47952553">https://www.bilibili.com/video/av47952553</a><br>p45~47</p>
-</blockquote>
-<h1 id="if标签"><a href="#if标签" class="headerlink" title="if标签"></a>if标签</h1><p>根据传入参数条件查询</p>
-<p>条件可能是用户名、性别、地址，或者都有、都没有</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// IUserDao.java</span></span><br><span class="line"></span><br><span class="line"><span class="function">List&lt;User&gt; <span class="title">findUserByCondition</span><span class="params">(User user)</span></span>;</span><br></pre></td></tr></table></figure>
-
-<p>与要用and，不能用&amp;&amp;</p>
-<p>sql语句上的内容无关大小写</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;findUserByCondition&quot;</span> <span class="attr">resultMap</span>=<span class="string">&quot;userMap&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;user&quot;</span>&gt;</span></span><br><span class="line">  select * from user where 1=1</span><br><span class="line">  <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;userName != null&quot;</span>&gt;</span></span><br><span class="line">    and username = #&#123;userName&#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;userSex != null&quot;</span>&gt;</span></span><br><span class="line">    and sex = #&#123;userSex&#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>测试</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testFindByCondition</span><span class="params">()</span></span>&#123;</span><br><span class="line">  User u = <span class="keyword">new</span> User();</span><br><span class="line">  u.setUserName(<span class="string">&quot;老王&quot;</span>);</span><br><span class="line">  u.setUserSex(<span class="string">&quot;女&quot;</span>);</span><br><span class="line"></span><br><span class="line">  List&lt;User&gt; users = userDao.findUserByCondition(u);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>不写 where 1=1 ？</p>
-<p>改进 -&gt; where标签</p>
-<h1 id="where标签"><a href="#where标签" class="headerlink" title="where标签"></a>where标签</h1><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;findUserByCondition&quot;</span> <span class="attr">resultMap</span>=<span class="string">&quot;userMap&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;user&quot;</span>&gt;</span></span><br><span class="line">  select * from user</span><br><span class="line">  <span class="tag">&lt;<span class="name">where</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;userName != null&quot;</span>&gt;</span></span><br><span class="line">      and username = #&#123;userName&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;userSex != null&quot;</span>&gt;</span></span><br><span class="line">      and sex = #&#123;userSex&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">where</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h1 id="foreach标签"><a href="#foreach标签" class="headerlink" title="foreach标签"></a>foreach标签</h1><p>根据queryvo中的Id集合实现查询用户列表</p>
-<p><strong>QueryVo.java</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">QueryVo</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> User user;</span><br><span class="line">    <span class="keyword">private</span> List&lt;Integer&gt; ids;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// get set ...</span></span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>IUserDao.java</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function">List&lt;User&gt; <span class="title">findUserInIds</span><span class="params">(QueryVo vo)</span></span>;</span><br></pre></td></tr></table></figure>
-
-<p><strong>IUserDao.xml</strong></p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;findUserInIds&quot;</span> <span class="attr">resultMap</span>=<span class="string">&quot;userMap&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;queryvo&quot;</span>&gt;</span></span><br><span class="line">  select * from user</span><br><span class="line">  <span class="tag">&lt;<span class="name">where</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;ids != null and ids.size()&gt;0&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">foreach</span> <span class="attr">collection</span>=<span class="string">&quot;ids&quot;</span> <span class="attr">open</span>=<span class="string">&quot;and id in (&quot;</span> <span class="attr">close</span>=<span class="string">&quot;)&quot;</span> <span class="attr">item</span>=<span class="string">&quot;uid&quot;</span> <span class="attr">separator</span>=<span class="string">&quot;,&quot;</span>&gt;</span></span><br><span class="line">        #&#123;uid&#125;</span><br><span class="line">      <span class="tag">&lt;/<span class="name">foreach</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">where</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>#{uid}是由上面item=”uid”决定的</p>
-<p><strong>测试</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testFindInIds</span><span class="params">()</span></span>&#123;</span><br><span class="line">  QueryVo vo = <span class="keyword">new</span> QueryVo();</span><br><span class="line">  List&lt;Integer&gt; list = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</span><br><span class="line">  list.add(<span class="number">41</span>);</span><br><span class="line">  list.add(<span class="number">42</span>);</span><br><span class="line">  list.add(<span class="number">46</span>);</span><br><span class="line">  vo.setIds(list);</span><br><span class="line"></span><br><span class="line">  List&lt;User&gt; users = userDao.findUserInIds(vo);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="sql标签"><a href="#sql标签" class="headerlink" title="sql标签"></a>sql标签</h1><p>抽取重复的sql语句</p>
-<p>（本来写不写;都可以，但是抽取sql语句时，为了防止后续的拼接出问题，最好不要写;）</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">sql</span> <span class="attr">id</span>=<span class="string">&quot;defaultUser&quot;</span>&gt;</span></span><br><span class="line">  select * from user</span><br><span class="line"><span class="tag">&lt;/<span class="name">sql</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>就可以把</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;findAll&quot;</span> <span class="attr">resultMap</span>=<span class="string">&quot;userMap&quot;</span>&gt;</span></span><br><span class="line">  select * from user</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>改成</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;findAll&quot;</span> <span class="attr">resultMap</span>=<span class="string">&quot;userMap&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">include</span> <span class="attr">refid</span>=<span class="string">&quot;defaultUser&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">include</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
 ]]></content>
       <categories>
         <category>Note</category>
@@ -3905,6 +3905,45 @@ Process finished with exit code 0</code></pre>]]></content>
       </tags>
   </entry>
   <entry>
+    <title>Axure笔记</title>
+    <url>/2020/04/16/note-axure/</url>
+    <content><![CDATA[<blockquote>
+<p><a href="https://www.bilibili.com/video/BV1Yx411f7d6">https://www.bilibili.com/video/BV1Yx411f7d6</a></p>
+</blockquote>
+<h1 id="标尺"><a href="#标尺" class="headerlink" title="标尺"></a>标尺</h1><p>按住尺子拖下来</p>
+<img src="/images/2020/screencapture2020-04-16 AM11.19.53.jpg">
+
+<p>左侧也是</p>
+<h1 id="圆角"><a href="#圆角" class="headerlink" title="圆角"></a>圆角</h1><p>按住黄色三角拖动</p>
+<img src="/images/2020/screencapture2020-04-16 AM11.34.03.jpg">
+
+<h1 id="平均排布"><a href="#平均排布" class="headerlink" title="平均排布"></a>平均排布</h1><p>选中几个元素，点水平</p>
+<img src="/images/2020/screencapture2020-04-16 AM11.37.11.jpg">
+
+<h1 id="切割顶栏"><a href="#切割顶栏" class="headerlink" title="切割顶栏"></a>切割顶栏</h1><p>右键-&gt;分割图片</p>
+<img src="/images/2020/screencapture2020-04-16 PM12.08.32.jpg">
+
+<h1 id="动作"><a href="#动作" class="headerlink" title="动作"></a>动作</h1><p>先建一个文件夹，一个页面对应一页，大小、位置相同</p>
+<p>用热区罩在点击区域上</p>
+<p>添加交互</p>
+<img src="/images/2020/screencapture2020-04-16 PM12.27.48.jpg">
+
+<p>跳转页面 可选择打开链接</p>
+<hr>
+<p>上手完成</p>
+<img src="/images/2020/screencapture2020-04-16 PM12.31.48.jpg">
+
+<img src="/images/2020/screencapture2020-04-16 PM12.31.52.jpg">
+
+]]></content>
+      <categories>
+        <category>Note</category>
+      </categories>
+      <tags>
+        <tag>tool</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SpringCloud笔记03 Hystrix断路器</title>
     <url>/2020/04/12/note-springcloud-03/</url>
     <content><![CDATA[<blockquote>
@@ -4004,45 +4043,6 @@ Process finished with exit code 0</code></pre>]]></content>
       </categories>
       <tags>
         <tag>springcloud</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Axure笔记</title>
-    <url>/2020/04/16/note-axure/</url>
-    <content><![CDATA[<blockquote>
-<p><a href="https://www.bilibili.com/video/BV1Yx411f7d6">https://www.bilibili.com/video/BV1Yx411f7d6</a></p>
-</blockquote>
-<h1 id="标尺"><a href="#标尺" class="headerlink" title="标尺"></a>标尺</h1><p>按住尺子拖下来</p>
-<img src="/images/2020/screencapture2020-04-16 AM11.19.53.jpg">
-
-<p>左侧也是</p>
-<h1 id="圆角"><a href="#圆角" class="headerlink" title="圆角"></a>圆角</h1><p>按住黄色三角拖动</p>
-<img src="/images/2020/screencapture2020-04-16 AM11.34.03.jpg">
-
-<h1 id="平均排布"><a href="#平均排布" class="headerlink" title="平均排布"></a>平均排布</h1><p>选中几个元素，点水平</p>
-<img src="/images/2020/screencapture2020-04-16 AM11.37.11.jpg">
-
-<h1 id="切割顶栏"><a href="#切割顶栏" class="headerlink" title="切割顶栏"></a>切割顶栏</h1><p>右键-&gt;分割图片</p>
-<img src="/images/2020/screencapture2020-04-16 PM12.08.32.jpg">
-
-<h1 id="动作"><a href="#动作" class="headerlink" title="动作"></a>动作</h1><p>先建一个文件夹，一个页面对应一页，大小、位置相同</p>
-<p>用热区罩在点击区域上</p>
-<p>添加交互</p>
-<img src="/images/2020/screencapture2020-04-16 PM12.27.48.jpg">
-
-<p>跳转页面 可选择打开链接</p>
-<hr>
-<p>上手完成</p>
-<img src="/images/2020/screencapture2020-04-16 PM12.31.48.jpg">
-
-<img src="/images/2020/screencapture2020-04-16 PM12.31.52.jpg">
-
-]]></content>
-      <categories>
-        <category>Note</category>
-      </categories>
-      <tags>
-        <tag>tool</tag>
       </tags>
   </entry>
   <entry>
@@ -4158,6 +4158,71 @@ Process finished with exit code 0</code></pre>]]></content>
 
 <p>配置</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cloud:</span><br><span class="line">  consul:</span><br><span class="line">    host: localhost</span><br><span class="line">    port: 8500</span><br><span class="line">    discovery:</span><br><span class="line">      service-name: $&#123;spring.application.name&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Note</category>
+      </categories>
+      <tags>
+        <tag>springcloud</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SpringCloud笔记05 OpenFeign服务消费者</title>
+    <url>/2020/04/21/note-springcloud-05/</url>
+    <content><![CDATA[<blockquote>
+<p><a href="https://blog.csdn.net/ThinkWon/article/details/103735751">https://blog.csdn.net/ThinkWon/article/details/103735751</a></p>
+</blockquote>
+<p>Spring Cloud OpenFeign 是声明式的服务调用工具，它整合了Ribbon和Hystrix，拥有负载均衡和服务容错功能</p>
+<h1 id="创建feign-service模块"><a href="#创建feign-service模块" class="headerlink" title="创建feign-service模块"></a>创建feign-service模块</h1><h2 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h2><p>教程给的依赖是</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-netflix-eureka-client<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-openfeign<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>换成consul注册中心，改成</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-consul-discovery<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-actuator<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-openfeign<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>发现没有spring cloud版本和依赖管理，加上</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">spring-cloud.version</span>&gt;</span>Hoxton.RELEASE<span class="tag">&lt;/<span class="name">spring-cloud.version</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencyManagement</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-dependencies<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;spring-cloud.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">type</span>&gt;</span>pom<span class="tag">&lt;/<span class="name">type</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">scope</span>&gt;</span>import<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencyManagement</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>查看右侧Maven栏中没有红线</p>
+<p>下一步</p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>教程给的配置</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8701</span></span><br><span class="line"></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">feign-service</span></span><br><span class="line"></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line">  <span class="attr">client:</span></span><br><span class="line">    <span class="attr">register-with-eureka:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">fetch-registry:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">service-url:</span></span><br><span class="line">      <span class="attr">defaultZone:</span> <span class="string">http://localhost:8001/eureka/</span></span><br></pre></td></tr></table></figure>
+
+<p>换成consul</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment">#eureka:</span></span><br><span class="line"><span class="comment">#  client:</span></span><br><span class="line"><span class="comment">#    register-with-eureka: true</span></span><br><span class="line"><span class="comment">#    fetch-registry: true</span></span><br><span class="line"><span class="comment">#    service-url:</span></span><br><span class="line"><span class="comment">#      defaultZone: http://localhost:8001/eureka/</span></span><br><span class="line"></span><br><span class="line"><span class="attr">cloud:</span></span><br><span class="line">  <span class="attr">consul:</span></span><br><span class="line">    <span class="attr">host:</span> <span class="string">localhost</span></span><br><span class="line">    <span class="attr">port:</span> <span class="number">8500</span></span><br><span class="line">    <span class="attr">discovery:</span></span><br><span class="line">      <span class="attr">service-name:</span> <span class="string">$&#123;spring.application.name&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="EnableFeignClients启动功能"><a href="#EnableFeignClients启动功能" class="headerlink" title="@EnableFeignClients启动功能"></a>@EnableFeignClients启动功能</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">@EnableFeignClients</span><br><span class="line">@EnableDiscoveryClient</span><br><span class="line">@SpringBootApplication</span><br><span class="line">public class FeignServiceApplication &#123;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        SpringApplication.run(FeignServiceApplication.class, args);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="接口和控制器"><a href="#接口和控制器" class="headerlink" title="接口和控制器"></a>接口和控制器</h2><p>根据源码补齐其它代码</p>
+<img src="/images/2020/screencapture2020-04-21 AM9.49.59.jpg" width=300>
+
+<h1 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h1><p>启动consul服务器，两个user-service，feign-service服务</p>
+<img src="/images/2020/screencapture2020-04-21 AM9.52.28.jpg">
+
+<p>调用<a href="http://localhost:8701/user/1四次">http://localhost:8701/user/1四次</a></p>
+<img src="/images/2020screencapture2020-04-21 AM9.53.09.jpg">
+
+<p>交替打印</p>
+<img src="/images/2020/screencapture2020-04-21 AM9.53.16.jpg">
+
+<h1 id="服务降级"><a href="#服务降级" class="headerlink" title="服务降级"></a>服务降级</h1><p>前面UserFallbackService也拷过来了</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@FeignClient(value = &quot;user-service&quot;, fallback = UserFallbackService.class)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserService</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注释也加了</p>
+<p>修改application.yml，开启Hystrix功能</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment">#在Feign中开启Hystrix</span></span><br><span class="line"><span class="attr">feign:</span></span><br><span class="line">  <span class="attr">hystrix:</span></span><br><span class="line">    <span class="attr">enabled:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>关闭两个user-service服务，重新启动feign-service</p>
+<p>调用<a href="http://localhost:8701/user/1进行测试">http://localhost:8701/user/1进行测试</a></p>
+<p>发现被降级</p>
+<img src="/images/2020/screencapture2020-04-21 AM9.57.28.jpg">
+
+<h1 id="日志打印功能"><a href="#日志打印功能" class="headerlink" title="日志打印功能"></a>日志打印功能</h1><p>用FeignConfig配置类</p>
+<p>在application.yml中配置需要开启日志的Feign客户端</p>
+<p>可设置日志级别</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><img src="/images/2020/screencapture2020-04-21 AM10.11.43.jpg">
 
 ]]></content>
       <categories>
@@ -4317,71 +4382,6 @@ Process finished with exit code 0</code></pre>]]></content>
       </categories>
       <tags>
         <tag>mybatis_plus</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>SpringCloud笔记05 OpenFeign服务消费者</title>
-    <url>/2020/04/21/note-springcloud-05/</url>
-    <content><![CDATA[<blockquote>
-<p><a href="https://blog.csdn.net/ThinkWon/article/details/103735751">https://blog.csdn.net/ThinkWon/article/details/103735751</a></p>
-</blockquote>
-<p>Spring Cloud OpenFeign 是声明式的服务调用工具，它整合了Ribbon和Hystrix，拥有负载均衡和服务容错功能</p>
-<h1 id="创建feign-service模块"><a href="#创建feign-service模块" class="headerlink" title="创建feign-service模块"></a>创建feign-service模块</h1><h2 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h2><p>教程给的依赖是</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-netflix-eureka-client<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-openfeign<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>换成consul注册中心，改成</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-consul-discovery<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-actuator<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-openfeign<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>发现没有spring cloud版本和依赖管理，加上</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">spring-cloud.version</span>&gt;</span>Hoxton.RELEASE<span class="tag">&lt;/<span class="name">spring-cloud.version</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencyManagement</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-dependencies<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;spring-cloud.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">type</span>&gt;</span>pom<span class="tag">&lt;/<span class="name">type</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">scope</span>&gt;</span>import<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencyManagement</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>查看右侧Maven栏中没有红线</p>
-<p>下一步</p>
-<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>教程给的配置</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8701</span></span><br><span class="line"></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">feign-service</span></span><br><span class="line"></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line">  <span class="attr">client:</span></span><br><span class="line">    <span class="attr">register-with-eureka:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">fetch-registry:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">service-url:</span></span><br><span class="line">      <span class="attr">defaultZone:</span> <span class="string">http://localhost:8001/eureka/</span></span><br></pre></td></tr></table></figure>
-
-<p>换成consul</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment">#eureka:</span></span><br><span class="line"><span class="comment">#  client:</span></span><br><span class="line"><span class="comment">#    register-with-eureka: true</span></span><br><span class="line"><span class="comment">#    fetch-registry: true</span></span><br><span class="line"><span class="comment">#    service-url:</span></span><br><span class="line"><span class="comment">#      defaultZone: http://localhost:8001/eureka/</span></span><br><span class="line"></span><br><span class="line"><span class="attr">cloud:</span></span><br><span class="line">  <span class="attr">consul:</span></span><br><span class="line">    <span class="attr">host:</span> <span class="string">localhost</span></span><br><span class="line">    <span class="attr">port:</span> <span class="number">8500</span></span><br><span class="line">    <span class="attr">discovery:</span></span><br><span class="line">      <span class="attr">service-name:</span> <span class="string">$&#123;spring.application.name&#125;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="EnableFeignClients启动功能"><a href="#EnableFeignClients启动功能" class="headerlink" title="@EnableFeignClients启动功能"></a>@EnableFeignClients启动功能</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">@EnableFeignClients</span><br><span class="line">@EnableDiscoveryClient</span><br><span class="line">@SpringBootApplication</span><br><span class="line">public class FeignServiceApplication &#123;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        SpringApplication.run(FeignServiceApplication.class, args);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="接口和控制器"><a href="#接口和控制器" class="headerlink" title="接口和控制器"></a>接口和控制器</h2><p>根据源码补齐其它代码</p>
-<img src="/images/2020/screencapture2020-04-21 AM9.49.59.jpg" width=300>
-
-<h1 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h1><p>启动consul服务器，两个user-service，feign-service服务</p>
-<img src="/images/2020/screencapture2020-04-21 AM9.52.28.jpg">
-
-<p>调用<a href="http://localhost:8701/user/1四次">http://localhost:8701/user/1四次</a></p>
-<img src="/images/2020screencapture2020-04-21 AM9.53.09.jpg">
-
-<p>交替打印</p>
-<img src="/images/2020/screencapture2020-04-21 AM9.53.16.jpg">
-
-<h1 id="服务降级"><a href="#服务降级" class="headerlink" title="服务降级"></a>服务降级</h1><p>前面UserFallbackService也拷过来了</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@FeignClient(value = &quot;user-service&quot;, fallback = UserFallbackService.class)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserService</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>注释也加了</p>
-<p>修改application.yml，开启Hystrix功能</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment">#在Feign中开启Hystrix</span></span><br><span class="line"><span class="attr">feign:</span></span><br><span class="line">  <span class="attr">hystrix:</span></span><br><span class="line">    <span class="attr">enabled:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-
-<p>关闭两个user-service服务，重新启动feign-service</p>
-<p>调用<a href="http://localhost:8701/user/1进行测试">http://localhost:8701/user/1进行测试</a></p>
-<p>发现被降级</p>
-<img src="/images/2020/screencapture2020-04-21 AM9.57.28.jpg">
-
-<h1 id="日志打印功能"><a href="#日志打印功能" class="headerlink" title="日志打印功能"></a>日志打印功能</h1><p>用FeignConfig配置类</p>
-<p>在application.yml中配置需要开启日志的Feign客户端</p>
-<p>可设置日志级别</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><img src="/images/2020/screencapture2020-04-21 AM10.11.43.jpg">
-
-]]></content>
-      <categories>
-        <category>Note</category>
-      </categories>
-      <tags>
-        <tag>springcloud</tag>
       </tags>
   </entry>
   <entry>
@@ -4988,20 +4988,6 @@ Process finished with exit code 0</code></pre>]]></content>
       </tags>
   </entry>
   <entry>
-    <title>SpringCloud笔记07 总结</title>
-    <url>/2020/04/25/note-springcloud-07/</url>
-    <content><![CDATA[<img src="/images/2020/SpringCloud.png">
-
-]]></content>
-      <categories>
-        <category>Note</category>
-      </categories>
-      <tags>
-        <tag>mindmap</tag>
-        <tag>springcloud</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>四月每日一题打卡完工纪念</title>
     <url>/2020/04/30/memo/</url>
     <content><![CDATA[<img src="/images/2020/screencapture2020-04-30 PM4.03.43.jpg" width=300>
@@ -5015,6 +5001,20 @@ Process finished with exit code 0</code></pre>]]></content>
       </categories>
       <tags>
         <tag>algorithm</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SpringCloud笔记07 总结</title>
+    <url>/2020/04/25/note-springcloud-07/</url>
+    <content><![CDATA[<img src="/images/2020/SpringCloud.png">
+
+]]></content>
+      <categories>
+        <category>Note</category>
+      </categories>
+      <tags>
+        <tag>mindmap</tag>
+        <tag>springcloud</tag>
       </tags>
   </entry>
   <entry>
@@ -6462,6 +6462,62 @@ Process finished with exit code 0</code></pre>]]></content>
       </tags>
   </entry>
   <entry>
+    <title>Unity Note - Project10 Wave</title>
+    <url>/2021/02/21/unity/</url>
+    <content><![CDATA[<p>尝试做个波浪动画，最后效果：</p>
+<img src="/images/2021/Feb-21-2021 15-51-45.gif">
+
+<hr>
+<p>strip做成Prefab</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">using System.Collections;</span><br><span class="line">using System.Collections.Generic;</span><br><span class="line">using UnityEngine;</span><br><span class="line">using DG.Tweening;</span><br><span class="line"></span><br><span class="line">public class Strip : MonoBehaviour</span><br><span class="line">&#123;</span><br><span class="line">    public void Activate(float waitSecond, float moveDistance, float moveDuration)</span><br><span class="line">    &#123;</span><br><span class="line">        StartCoroutine(ActivateMovement(waitSecond, moveDistance, moveDuration));</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    private IEnumerator ActivateMovement(float waitSecond, float moveDistance, float moveDuration)</span><br><span class="line">    &#123;</span><br><span class="line">        // wait for some time</span><br><span class="line">        yield return new WaitForSeconds(waitSecond);</span><br><span class="line">        </span><br><span class="line">        // set movement</span><br><span class="line">        DOTween.Sequence()</span><br><span class="line">            .Append(transform.DOMoveY(moveDistance, moveDuration).SetEase(Ease.InOutSine))</span><br><span class="line">            .SetLoops(-1,LoopType.Yoyo);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>加一个controller</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">using System.Collections;</span><br><span class="line">using System.Collections.Generic;</span><br><span class="line">using UnityEngine;</span><br><span class="line"></span><br><span class="line">public class StripController : MonoBehaviour</span><br><span class="line">&#123;</span><br><span class="line">    // object setting</span><br><span class="line">    [SerializeField] private int stripNum = 10;</span><br><span class="line">    [SerializeField] private Vector3 stripScale = new Vector3(0.2f,5,0.01f);</span><br><span class="line">    [SerializeField] private Vector3 stripInterval = new Vector3(0.25f,0,0);</span><br><span class="line"></span><br><span class="line">    // movement setting</span><br><span class="line">    [SerializeField] private float moveDistance = 2f;</span><br><span class="line">    [SerializeField] private float moveDuration = 2f;</span><br><span class="line">    [SerializeField] private float moveInterval = 0.1f;</span><br><span class="line"></span><br><span class="line">    private Strip stripPrefab;</span><br><span class="line">    private Strip[] strips;</span><br><span class="line">    </span><br><span class="line">    void Start()</span><br><span class="line">    &#123;</span><br><span class="line">        stripPrefab = Resources.Load&lt;Strip&gt;(&quot;strip&quot;);</span><br><span class="line">        CreateStrips();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private void CreateStrips()</span><br><span class="line">    &#123;</span><br><span class="line">        strips = new Strip[stripNum];</span><br><span class="line">        for(int i=0; i&lt;stripNum; i++)&#123;</span><br><span class="line">            // create cube</span><br><span class="line">            Strip obj = Instantiate(stripPrefab);</span><br><span class="line">            // set position</span><br><span class="line">            obj.transform.position = transform.position + stripInterval * i;</span><br><span class="line">            obj.transform.localScale = stripScale;</span><br><span class="line">            // activate movement</span><br><span class="line">            obj.Activate(moveInterval*(i+5), moveDistance, moveDuration);</span><br><span class="line">            // add to array</span><br><span class="line">            strips[i] = obj;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>奇怪的一点，前几个条的起始时间总是有点问题，暂时找不出来为什么，先把所有起始时间往后挪一点 MARK</p>
+<img src="/images/2021/screencapture2021-02-21 PM3.21.01.jpg">
+
+<p>这样就没问题了</p>
+<img src="/images/2021/screencapture2021-02-21 PM3.23.48.jpg">
+
+<hr>
+<p>关于WaitForSeconds()</p>
+<blockquote>
+<p><a href="https://forum.unity.com/threads/waitforseconds-in-c.75411/">https://forum.unity.com/threads/waitforseconds-in-c.75411/</a></p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">private void executeWait()</span><br><span class="line">&#123;</span><br><span class="line">  Debug.Log(&quot;wait start&quot;);</span><br><span class="line">  StartCoroutine(Wait(20.0f));</span><br><span class="line">  Debug.Log(&quot;This gets called after starting the Coroutine&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private IEnumerator Wait(float seconds)</span><br><span class="line">&#123;</span><br><span class="line">  Debug.Log(&quot;waiting&quot;);</span><br><span class="line">  yield return new WaitForSeconds(seconds);</span><br><span class="line">  Debug.Log(&quot;wait end&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>现在这个波浪效果一个问题是DOTWeen消耗太大</p>
+<img src="/images/2021/screencapture2021-02-21 PM3.56.56.jpg">
+
+<p>也许还是直接用波浪形物体平移？</p>
+<hr>
+<p>一个很喜欢的chrome插件几枝是用noise做的波浪，试一下Mathf.PerlinNoise()</p>
+<p>参考：</p>
+<blockquote>
+<p><a href="https://blog.csdn.net/FumikiSAMA/article/details/80212432">https://blog.csdn.net/FumikiSAMA/article/details/80212432</a></p>
+<p><a href="https://docs.unity3d.com/ScriptReference/Mathf.PerlinNoise.html">https://docs.unity3d.com/ScriptReference/Mathf.PerlinNoise.html</a></p>
+</blockquote>
+<p>网格拓扑绘制图形</p>
+<blockquote>
+<p><a href="https://www.jianshu.com/p/1f79e33308a6">https://www.jianshu.com/p/1f79e33308a6</a></p>
+</blockquote>
+<p>试着画了一个四面体</p>
+<img src="/images/2021/screencapture2021-02-21 PM5.09.05.jpg">
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Vector3[] vertices = new Vector3[4];</span><br><span class="line">vertices[0] = new Vector3(0, 0, 0);</span><br><span class="line">vertices[1] = new Vector3((float)System.Math.Sqrt(3), 1, 0);</span><br><span class="line">vertices[2] = new Vector3(0, 2, 0);</span><br><span class="line">vertices[3] = new Vector3((float)System.Math.Sqrt(1/3), 1, (float)System.Math.Sqrt(8/3));</span><br><span class="line"></span><br><span class="line">int[] triangle = new int[12] &#123;0,2,1,0,1,3,1,2,3,2,0,3&#125;;</span><br><span class="line"></span><br><span class="line">// get mesh</span><br><span class="line">Mesh mesh = GetComponent&lt;MeshFilter&gt;().mesh;</span><br><span class="line"></span><br><span class="line">// clear original mesh</span><br><span class="line">mesh.Clear();</span><br><span class="line"></span><br><span class="line">// set new vertices</span><br><span class="line">mesh.vertices = vertices;</span><br><span class="line"></span><br><span class="line">// set new triangles</span><br><span class="line">mesh.triangles = triangle;</span><br><span class="line"></span><br><span class="line">// calculate mesh</span><br><span class="line">mesh.RecalculateNormals();</span><br></pre></td></tr></table></figure>
+
+<p>下次用这个画波浪试试</p>
+]]></content>
+      <categories>
+        <category>Note</category>
+      </categories>
+      <tags>
+        <tag>unity</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Project V0.1.1 Record - UI,Event</title>
     <url>/2021/02/17/unity/</url>
     <content><![CDATA[<h1 id="Canvas大小"><a href="#Canvas大小" class="headerlink" title="Canvas大小"></a>Canvas大小</h1><blockquote>
@@ -6543,62 +6599,6 @@ Process finished with exit code 0</code></pre>]]></content>
 <h1 id="脚本执行顺序问题"><a href="#脚本执行顺序问题" class="headerlink" title="脚本执行顺序问题"></a>脚本执行顺序问题</h1><p>做了导航栏之后，发现初始化顺序有点问题</p>
 <p>导航栏要使用Board上的数字和名字，有时会为默认值</p>
 <p>选中任意一个script，调整Inspector-&gt;Execution Order，解决</p>
-]]></content>
-      <categories>
-        <category>Note</category>
-      </categories>
-      <tags>
-        <tag>unity</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Unity Note - Project10 Wave</title>
-    <url>/2021/02/21/unity/</url>
-    <content><![CDATA[<p>尝试做个波浪动画，最后效果：</p>
-<img src="/images/2021/Feb-21-2021 15-51-45.gif">
-
-<hr>
-<p>strip做成Prefab</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">using System.Collections;</span><br><span class="line">using System.Collections.Generic;</span><br><span class="line">using UnityEngine;</span><br><span class="line">using DG.Tweening;</span><br><span class="line"></span><br><span class="line">public class Strip : MonoBehaviour</span><br><span class="line">&#123;</span><br><span class="line">    public void Activate(float waitSecond, float moveDistance, float moveDuration)</span><br><span class="line">    &#123;</span><br><span class="line">        StartCoroutine(ActivateMovement(waitSecond, moveDistance, moveDuration));</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    private IEnumerator ActivateMovement(float waitSecond, float moveDistance, float moveDuration)</span><br><span class="line">    &#123;</span><br><span class="line">        // wait for some time</span><br><span class="line">        yield return new WaitForSeconds(waitSecond);</span><br><span class="line">        </span><br><span class="line">        // set movement</span><br><span class="line">        DOTween.Sequence()</span><br><span class="line">            .Append(transform.DOMoveY(moveDistance, moveDuration).SetEase(Ease.InOutSine))</span><br><span class="line">            .SetLoops(-1,LoopType.Yoyo);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>加一个controller</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">using System.Collections;</span><br><span class="line">using System.Collections.Generic;</span><br><span class="line">using UnityEngine;</span><br><span class="line"></span><br><span class="line">public class StripController : MonoBehaviour</span><br><span class="line">&#123;</span><br><span class="line">    // object setting</span><br><span class="line">    [SerializeField] private int stripNum = 10;</span><br><span class="line">    [SerializeField] private Vector3 stripScale = new Vector3(0.2f,5,0.01f);</span><br><span class="line">    [SerializeField] private Vector3 stripInterval = new Vector3(0.25f,0,0);</span><br><span class="line"></span><br><span class="line">    // movement setting</span><br><span class="line">    [SerializeField] private float moveDistance = 2f;</span><br><span class="line">    [SerializeField] private float moveDuration = 2f;</span><br><span class="line">    [SerializeField] private float moveInterval = 0.1f;</span><br><span class="line"></span><br><span class="line">    private Strip stripPrefab;</span><br><span class="line">    private Strip[] strips;</span><br><span class="line">    </span><br><span class="line">    void Start()</span><br><span class="line">    &#123;</span><br><span class="line">        stripPrefab = Resources.Load&lt;Strip&gt;(&quot;strip&quot;);</span><br><span class="line">        CreateStrips();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private void CreateStrips()</span><br><span class="line">    &#123;</span><br><span class="line">        strips = new Strip[stripNum];</span><br><span class="line">        for(int i=0; i&lt;stripNum; i++)&#123;</span><br><span class="line">            // create cube</span><br><span class="line">            Strip obj = Instantiate(stripPrefab);</span><br><span class="line">            // set position</span><br><span class="line">            obj.transform.position = transform.position + stripInterval * i;</span><br><span class="line">            obj.transform.localScale = stripScale;</span><br><span class="line">            // activate movement</span><br><span class="line">            obj.Activate(moveInterval*(i+5), moveDistance, moveDuration);</span><br><span class="line">            // add to array</span><br><span class="line">            strips[i] = obj;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>奇怪的一点，前几个条的起始时间总是有点问题，暂时找不出来为什么，先把所有起始时间往后挪一点 MARK</p>
-<img src="/images/2021/screencapture2021-02-21 PM3.21.01.jpg">
-
-<p>这样就没问题了</p>
-<img src="/images/2021/screencapture2021-02-21 PM3.23.48.jpg">
-
-<hr>
-<p>关于WaitForSeconds()</p>
-<blockquote>
-<p><a href="https://forum.unity.com/threads/waitforseconds-in-c.75411/">https://forum.unity.com/threads/waitforseconds-in-c.75411/</a></p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">private void executeWait()</span><br><span class="line">&#123;</span><br><span class="line">  Debug.Log(&quot;wait start&quot;);</span><br><span class="line">  StartCoroutine(Wait(20.0f));</span><br><span class="line">  Debug.Log(&quot;This gets called after starting the Coroutine&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private IEnumerator Wait(float seconds)</span><br><span class="line">&#123;</span><br><span class="line">  Debug.Log(&quot;waiting&quot;);</span><br><span class="line">  yield return new WaitForSeconds(seconds);</span><br><span class="line">  Debug.Log(&quot;wait end&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<hr>
-<p>现在这个波浪效果一个问题是DOTWeen消耗太大</p>
-<img src="/images/2021/screencapture2021-02-21 PM3.56.56.jpg">
-
-<p>也许还是直接用波浪形物体平移？</p>
-<hr>
-<p>一个很喜欢的chrome插件几枝是用noise做的波浪，试一下Mathf.PerlinNoise()</p>
-<p>参考：</p>
-<blockquote>
-<p><a href="https://blog.csdn.net/FumikiSAMA/article/details/80212432">https://blog.csdn.net/FumikiSAMA/article/details/80212432</a></p>
-<p><a href="https://docs.unity3d.com/ScriptReference/Mathf.PerlinNoise.html">https://docs.unity3d.com/ScriptReference/Mathf.PerlinNoise.html</a></p>
-</blockquote>
-<p>网格拓扑绘制图形</p>
-<blockquote>
-<p><a href="https://www.jianshu.com/p/1f79e33308a6">https://www.jianshu.com/p/1f79e33308a6</a></p>
-</blockquote>
-<p>试着画了一个四面体</p>
-<img src="/images/2021/screencapture2021-02-21 PM5.09.05.jpg">
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Vector3[] vertices = new Vector3[4];</span><br><span class="line">vertices[0] = new Vector3(0, 0, 0);</span><br><span class="line">vertices[1] = new Vector3((float)System.Math.Sqrt(3), 1, 0);</span><br><span class="line">vertices[2] = new Vector3(0, 2, 0);</span><br><span class="line">vertices[3] = new Vector3((float)System.Math.Sqrt(1/3), 1, (float)System.Math.Sqrt(8/3));</span><br><span class="line"></span><br><span class="line">int[] triangle = new int[12] &#123;0,2,1,0,1,3,1,2,3,2,0,3&#125;;</span><br><span class="line"></span><br><span class="line">// get mesh</span><br><span class="line">Mesh mesh = GetComponent&lt;MeshFilter&gt;().mesh;</span><br><span class="line"></span><br><span class="line">// clear original mesh</span><br><span class="line">mesh.Clear();</span><br><span class="line"></span><br><span class="line">// set new vertices</span><br><span class="line">mesh.vertices = vertices;</span><br><span class="line"></span><br><span class="line">// set new triangles</span><br><span class="line">mesh.triangles = triangle;</span><br><span class="line"></span><br><span class="line">// calculate mesh</span><br><span class="line">mesh.RecalculateNormals();</span><br></pre></td></tr></table></figure>
-
-<p>下次用这个画波浪试试</p>
 ]]></content>
       <categories>
         <category>Note</category>
