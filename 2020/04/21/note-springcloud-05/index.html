@@ -75,7 +75,7 @@
      
     <div class="article-meta">
       <a href="/2020/04/21/note-springcloud-05/" class="article-date">
-  <time datetime="2020-04-21T01:36:57.000Z" itemprop="datePublished">2020-04-21</time>
+  <time datetime="2020-04-21T07:36:57.000Z" itemprop="datePublished">2020-04-21</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/Note/">Note</a>
@@ -92,7 +92,7 @@
     <div class="article-entry" itemprop="articleBody">
        
   <blockquote>
-<p><a href="https://blog.csdn.net/ThinkWon/article/details/103735751" target="_blank" rel="noopener">https://blog.csdn.net/ThinkWon/article/details/103735751</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/ThinkWon/article/details/103735751">https://blog.csdn.net/ThinkWon/article/details/103735751</a></p>
 </blockquote>
 <p>Spring Cloud OpenFeign 是声明式的服务调用工具，它整合了Ribbon和Hystrix，拥有负载均衡和服务容错功能</p>
 <h1 id="创建feign-service模块"><a href="#创建feign-service模块" class="headerlink" title="创建feign-service模块"></a>创建feign-service模块</h1><h2 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h2><p>教程给的依赖是</p>
@@ -114,7 +114,7 @@
 <p>换成consul</p>
 <figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#eureka:</span></span><br><span class="line"><span class="comment">#  client:</span></span><br><span class="line"><span class="comment">#    register-with-eureka: true</span></span><br><span class="line"><span class="comment">#    fetch-registry: true</span></span><br><span class="line"><span class="comment">#    service-url:</span></span><br><span class="line"><span class="comment">#      defaultZone: http://localhost:8001/eureka/</span></span><br><span class="line"></span><br><span class="line"><span class="attr">cloud:</span></span><br><span class="line">  <span class="attr">consul:</span></span><br><span class="line">    <span class="attr">host:</span> <span class="string">localhost</span></span><br><span class="line">    <span class="attr">port:</span> <span class="number">8500</span></span><br><span class="line">    <span class="attr">discovery:</span></span><br><span class="line">      <span class="attr">service-name:</span> <span class="string">$&#123;spring.application.name&#125;</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="EnableFeignClients启动功能"><a href="#EnableFeignClients启动功能" class="headerlink" title="@EnableFeignClients启动功能"></a>@EnableFeignClients启动功能</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@EnableFeignClients</span><br><span class="line">@EnableDiscoveryClient</span><br><span class="line">@SpringBootApplication</span><br><span class="line">public class FeignServiceApplication &#123;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        SpringApplication.run(FeignServiceApplication.class, args);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="EnableFeignClients启动功能"><a href="#EnableFeignClients启动功能" class="headerlink" title="@EnableFeignClients启动功能"></a>@EnableFeignClients启动功能</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@EnableFeignClients</span><br><span class="line">@EnableDiscoveryClient</span><br><span class="line">@SpringBootApplication</span><br><span class="line">public class FeignServiceApplication &#123;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        SpringApplication.run(FeignServiceApplication.class, args);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="接口和控制器"><a href="#接口和控制器" class="headerlink" title="接口和控制器"></a>接口和控制器</h2><p>根据源码补齐其它代码</p>
 <img src="/images/2020/screencapture2020-04-21 AM9.49.59.jpg" width=300>
@@ -122,21 +122,21 @@
 <h1 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h1><p>启动consul服务器，两个user-service，feign-service服务</p>
 <img src="/images/2020/screencapture2020-04-21 AM9.52.28.jpg">
 
-<p>调用<a href="http://localhost:8701/user/1四次" target="_blank" rel="noopener">http://localhost:8701/user/1四次</a></p>
+<p>调用<a target="_blank" rel="noopener" href="http://localhost:8701/user/1四次">http://localhost:8701/user/1四次</a></p>
 <img src="/images/2020screencapture2020-04-21 AM9.53.09.jpg">
 
 <p>交替打印</p>
 <img src="/images/2020/screencapture2020-04-21 AM9.53.16.jpg">
 
 <h1 id="服务降级"><a href="#服务降级" class="headerlink" title="服务降级"></a>服务降级</h1><p>前面UserFallbackService也拷过来了</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FeignClient</span>(value = <span class="string">"user-service"</span>, fallback = UserFallbackService<span class="class">.<span class="keyword">class</span>)</span></span><br><span class="line"><span class="class"><span class="title">public</span> <span class="title">interface</span> <span class="title">UserService</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FeignClient(value = &quot;user-service&quot;, fallback = UserFallbackService.class)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserService</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>注释也加了</p>
 <p>修改application.yml，开启Hystrix功能</p>
 <figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#在Feign中开启Hystrix</span></span><br><span class="line"><span class="attr">feign:</span></span><br><span class="line">  <span class="attr">hystrix:</span></span><br><span class="line">    <span class="attr">enabled:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
 
 <p>关闭两个user-service服务，重新启动feign-service</p>
-<p>调用<a href="http://localhost:8701/user/1进行测试" target="_blank" rel="noopener">http://localhost:8701/user/1进行测试</a></p>
+<p>调用<a target="_blank" rel="noopener" href="http://localhost:8701/user/1进行测试">http://localhost:8701/user/1进行测试</a></p>
 <p>发现被降级</p>
 <img src="/images/2020/screencapture2020-04-21 AM9.57.28.jpg">
 
@@ -203,7 +203,7 @@
   <span class="division">|</span>
   <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
 </span>
-        368k
+        377k
         
       </li>
       

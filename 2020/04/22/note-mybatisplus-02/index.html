@@ -75,7 +75,7 @@
      
     <div class="article-meta">
       <a href="/2020/04/22/note-mybatisplus-02/" class="article-date">
-  <time datetime="2020-04-22T07:32:48.000Z" itemprop="datePublished">2020-04-22</time>
+  <time datetime="2020-04-22T13:32:48.000Z" itemprop="datePublished">2020-04-22</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/Note/">Note</a>
@@ -92,34 +92,34 @@
     <div class="article-entry" itemprop="articleBody">
        
   <blockquote>
-<p><a href="https://www.bilibili.com/video/BV1rE41197jR" target="_blank" rel="noopener">https://www.bilibili.com/video/BV1rE41197jR</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1rE41197jR">https://www.bilibili.com/video/BV1rE41197jR</a></p>
 <p>p27~32</p>
 </blockquote>
-<p><a href="https://mybatis.plus/config/#基本配置" target="_blank" rel="noopener">官方文档</a></p>
+<p><a target="_blank" rel="noopener" href="https://mybatis.plus/config/#基本配置">官方文档</a></p>
 <h1 id="基本配置"><a href="#基本配置" class="headerlink" title="基本配置"></a>基本配置</h1><h2 id="configLocation"><a href="#configLocation" class="headerlink" title="configLocation"></a>configLocation</h2><p>MyBatis 配置文件位置</p>
 <p>eg：resources文件夹下有mybatis-config.xml，要将其作为MyBatis配置文件</p>
 <p>则需在applications.properties中配置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 指定全局的配置文件</span><br><span class="line">mybatis-plus.config-location &#x3D; classpath:mybatis-config.xml</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 指定全局的配置文件</span><br><span class="line">mybatis-plus.config-location = classpath:mybatis-config.xml</span><br></pre></td></tr></table></figure>
 
 <h2 id="mapperLocations"><a href="#mapperLocations" class="headerlink" title="mapperLocations"></a>mapperLocations</h2><p>指定mapper文件位置</p>
 <p>当默认的Mapper不够用（如需要多表查询时），可以指定自定义的mapper，在里面写sql语句</p>
 <p>例如resources中新建mybatis文件夹，新建一个UserMapper.xml</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mybatis-plus.mapper-locations &#x3D; classpath*:mybatis&#x2F;*.xml</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mybatis-plus.mapper-locations = classpath*:mybatis/*.xml</span><br></pre></td></tr></table></figure>
 
 <p>Maven多模块项目的扫描路径需以classpath*开头（即加在多个jar包下的xml文件）</p>
 <h2 id="typeAliasesPackage"><a href="#typeAliasesPackage" class="headerlink" title="typeAliasesPackage"></a>typeAliasesPackage</h2><p>给包中的类注册别名，注册后在 Mapper 对应的 XML 文件中可以直接使用类名，而不用使用全限定的类名</p>
 <p>例如</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mybatis-plus.type-aliases-package &#x3D; cn.itcast.mp.pojo</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mybatis-plus.type-aliases-package = cn.itcast.mp.pojo</span><br></pre></td></tr></table></figure>
 
 <h1 id="进阶配置"><a href="#进阶配置" class="headerlink" title="进阶配置"></a>进阶配置</h1><p>大都为 MyBatis 原生支持的配置</p>
 <p>注意：如果制定了全局配置文件，需要在全局配置文件中配置，和application.properties不能共存</p>
 <h2 id="mapUnderscoreToCamelCase"><a href="#mapUnderscoreToCamelCase" class="headerlink" title="mapUnderscoreToCamelCase"></a>mapUnderscoreToCamelCase</h2><p>是否开启自动驼峰命名规则映射</p>
 <h2 id="cacheEnabled"><a href="#cacheEnabled" class="headerlink" title="cacheEnabled"></a>cacheEnabled</h2><p>开启Mybatis二级缓存，默认为 true</p>
 <h1 id="DB-策略配置"><a href="#DB-策略配置" class="headerlink" title="DB 策略配置"></a>DB 策略配置</h1><h2 id="idType"><a href="#idType" class="headerlink" title="idType"></a>idType</h2><p>全局默认主键类型，设置后，即可省略实体对象中的@TableId(type = IdType.AUTO)配置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mybatis-plus.global-config.db-config.id-type &#x3D; auto</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mybatis-plus.global-config.db-config.id-type = auto</span><br></pre></td></tr></table></figure>
 
 <h2 id="tablePrefix"><a href="#tablePrefix" class="headerlink" title="tablePrefix"></a>tablePrefix</h2><p>指定表名前缀，全局配置后可省略@TableName()配置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mybatis-plus.global-config.db-config.table-prefix &#x3D; tb_</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mybatis-plus.global-config.db-config.table-prefix = tb_</span><br></pre></td></tr></table></figure>
 
 <p>如，User类默认会去找user表，如果要找tb_user表，需要使用注解，或者全局配置前缀</p>
  
@@ -180,7 +180,7 @@
   <span class="division">|</span>
   <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
 </span>
-        368k
+        377k
         
       </li>
       

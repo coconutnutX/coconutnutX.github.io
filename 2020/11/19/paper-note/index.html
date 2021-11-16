@@ -75,7 +75,7 @@
      
     <div class="article-meta">
       <a href="/2020/11/19/paper-note/" class="article-date">
-  <time datetime="2020-11-19T07:39:03.000Z" itemprop="datePublished">2020-11-19</time>
+  <time datetime="2020-11-19T14:39:03.000Z" itemprop="datePublished">2020-11-19</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/Note/">Note</a>
@@ -92,7 +92,7 @@
     <div class="article-entry" itemprop="articleBody">
        
   <p><strong>DeephageTP: A Convolutional Neural Network Framework for Identifying Phage-specific Proteins from metagenomic sequencing data<br> Running title: an alignment-free deep learning framework for identifying phage- specific proteins</strong></p>
-<p>参考：原文 &amp; Github <a href="https://github.com/chuym726/DeephageTP" target="_blank" rel="noopener">https://github.com/chuym726/DeephageTP</a></p>
+<p>参考：原文 &amp; Github <a target="_blank" rel="noopener" href="https://github.com/chuym726/DeephageTP">https://github.com/chuym726/DeephageTP</a></p>
 <hr>
 <h1 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h1><p>3 specific proteins of the tailed phage:</p>
 <ol>
@@ -102,7 +102,7 @@
 </ol>
 <p>Develop a <strong>CNN-based framework</strong> to identify these 3 proteins from <strong>metagenome data</strong></p>
 <h1 id="数据集"><a href="#数据集" class="headerlink" title="数据集"></a>数据集</h1><h2 id="train-test-set"><a href="#train-test-set" class="headerlink" title="train/test set"></a>train/test set</h2><p>(原文位置：106-127行)</p>
-<p>来源：Uniport(<a href="http://www.uniprot.org" target="_blank" rel="noopener">www.uniprot.org</a>)</p>
+<p>来源：Uniport(<a target="_blank" rel="noopener" href="http://www.uniprot.org">www.uniprot.org</a>)</p>
 <p>预处理过程：</p>
 <ol>
 <li><p>从数据库中获取各类蛋白质序列</p>
@@ -110,7 +110,7 @@
 <p>according to the taxonomy in the UniProt database, all proteins in archaea, bacteria and viruses were obtained from the database;</p>
 </blockquote>
 <p>看example_data.fa文件，长这样：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;UniRef100_A0A017QK57 PBSX family phage terminase large subunit n&#x3D;1 Tax&#x3D;Glaesserella parasuis str. Nagasaki TaxID&#x3D;1117322 RepID&#x3D;A0A017QK57_HAEPR 1</span><br><span class="line">MKIQLNLPPKLIPVFTQQNVRYRGAYGGRGSAKTRTFAKMTAVVAYQRAMQGESGVILCGREFMNSLEDSSLEEIKQAIQSEPWLTDFFEVGEKYVRTKCGRISYIFTGLRHNLDSIKSKARILLAWIDEAESVSEMAWRKLLPTVRENGSEIWLTWNPEKKGSATDLRFRQHQDESMAIVEMNYSDNPWFPDVLEQERLRDKARLDDATYRWIWEGAYLEQSEAQIFRDKFQELEFKPNGDFSGPYFGLDFGFAQDPTAAVKCWVFKDELYIEYEAGKVGLELDDTATFLQKGIVGIEQYVIRADSARPESISYLKRHGLPRIDGVSKWKGSVEDGIAHIKSYKKIYIHPRCQQTLNEFRLYSYKTDRLSGDILPVVLDENNHYIDALRYALEPLMKGRQSWFG</span><br><span class="line">&gt;UniRef100_A0A017QKX8 PBSX family phage terminase large subunit n&#x3D;1 Tax&#x3D;Glaesserella parasuis str. Nagasaki TaxID&#x3D;1117322 RepID&#x3D;A0A017QKX8_HAEPR 1</span><br><span class="line">MKIQLNLPPKLIPVFTQQNVRYRGAYGGRGSAKTRTFAKMTAVVAYQRAMQGESGVILCGREFMNSLEDSSLEEIKQAIQSEPWLANFFDVGEKYVHTKCGRISYIFTGLRHNLDSIKSKARILLAWIDEAESVSEMAWRKLLPTVRESGSEIWLTWNPEKKGSATDLRFRQYQDESMAIVEMNYNDNPWFPDVLKQERLRDKARLDDATYRWIWEGDYLEESEAQVFRGKYQELEFKPLPDFEGPYHGLDFGFAQDPTAAIKCWVFKDELYIEYEAGKVGLELDDTATFLQKGIVGIEQYVIRADSARPESISYLKRHGLPRIDGVSKWKGSVEDGIAHIKSYKKIYIHPRCQQTLNEFRLYSYKTDRLSGDVLPTLVDAHNHYIDALRYALNPRIQRKGDFSQNPLKLY</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;UniRef100_A0A017QK57 PBSX family phage terminase large subunit n=1 Tax=Glaesserella parasuis str. Nagasaki TaxID=1117322 RepID=A0A017QK57_HAEPR 1</span><br><span class="line">MKIQLNLPPKLIPVFTQQNVRYRGAYGGRGSAKTRTFAKMTAVVAYQRAMQGESGVILCGREFMNSLEDSSLEEIKQAIQSEPWLTDFFEVGEKYVRTKCGRISYIFTGLRHNLDSIKSKARILLAWIDEAESVSEMAWRKLLPTVRENGSEIWLTWNPEKKGSATDLRFRQHQDESMAIVEMNYSDNPWFPDVLEQERLRDKARLDDATYRWIWEGAYLEQSEAQIFRDKFQELEFKPNGDFSGPYFGLDFGFAQDPTAAVKCWVFKDELYIEYEAGKVGLELDDTATFLQKGIVGIEQYVIRADSARPESISYLKRHGLPRIDGVSKWKGSVEDGIAHIKSYKKIYIHPRCQQTLNEFRLYSYKTDRLSGDILPVVLDENNHYIDALRYALEPLMKGRQSWFG</span><br><span class="line">&gt;UniRef100_A0A017QKX8 PBSX family phage terminase large subunit n=1 Tax=Glaesserella parasuis str. Nagasaki TaxID=1117322 RepID=A0A017QKX8_HAEPR 1</span><br><span class="line">MKIQLNLPPKLIPVFTQQNVRYRGAYGGRGSAKTRTFAKMTAVVAYQRAMQGESGVILCGREFMNSLEDSSLEEIKQAIQSEPWLANFFDVGEKYVHTKCGRISYIFTGLRHNLDSIKSKARILLAWIDEAESVSEMAWRKLLPTVRESGSEIWLTWNPEKKGSATDLRFRQYQDESMAIVEMNYNDNPWFPDVLKQERLRDKARLDDATYRWIWEGDYLEESEAQVFRGKYQELEFKPLPDFEGPYHGLDFGFAQDPTAAIKCWVFKDELYIEYEAGKVGLELDDTATFLQKGIVGIEQYVIRADSARPESISYLKRHGLPRIDGVSKWKGSVEDGIAHIKSYKKIYIHPRCQQTLNEFRLYSYKTDRLSGDVLPTLVDAHNHYIDALRYALNPRIQRKGDFSQNPLKLY</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>去除无关数据</p>
 <blockquote>
@@ -124,7 +124,7 @@
 </li>
 <li><p>去除不正常长度的序列</p>
 <blockquote>
-<p>to further guarantee that the sequences from the database with the three categories are veracious, we calculated length distribution of these sequences (see Fig. S1), then manually checked the sequences with the abnormal length (&lt;5% and &gt; 95%) using Blastp (<a href="https://blast.ncbi.nlm.nih.gov/Blast.cgi" target="_blank" rel="noopener">https://blast.ncbi.nlm.nih.gov/Blast.cgi</a>) against NCBI nr database, and the sequences without hitting to the targeted references were filtered out (almost all the sequences with abnormal length) and labeled as the ‘others’ category.</p>
+<p>to further guarantee that the sequences from the database with the three categories are veracious, we calculated length distribution of these sequences (see Fig. S1), then manually checked the sequences with the abnormal length (&lt;5% and &gt; 95%) using Blastp (<a target="_blank" rel="noopener" href="https://blast.ncbi.nlm.nih.gov/Blast.cgi">https://blast.ncbi.nlm.nih.gov/Blast.cgi</a>) against NCBI nr database, and the sequences without hitting to the targeted references were filtered out (almost all the sequences with abnormal length) and labeled as the ‘others’ category.</p>
 </blockquote>
 </li>
 </ol>
@@ -132,7 +132,7 @@
 <img src="/images/2020/screencapture2020-11-19 PM4.09.05.jpg">
 
 <h2 id="mimic-metagenomic-dataset"><a href="#mimic-metagenomic-dataset" class="headerlink" title="mimic metagenomic dataset"></a>mimic metagenomic dataset</h2><p>(原文位置：128-140行)</p>
-<p>来源：UniRef100 (<a href="https://www.uniprot.org/uniref/" target="_blank" rel="noopener">https://www.uniprot.org/uniref/</a>)</p>
+<p>来源：UniRef100 (<a target="_blank" rel="noopener" href="https://www.uniprot.org/uniref/">https://www.uniprot.org/uniref/</a>)</p>
 <p>处理过程和上面类似</p>
 <p>且：2个数据库有重合，手动删除重合部分</p>
 <p>用这组数据测试了模型在不同数据集大小上的表现效果</p>
@@ -193,7 +193,7 @@
 <h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>(原文位置：190-192行)</p>
 <p>Python 3.6</p>
 <p>Keras</p>
-<p><a href="https://github.com/chuym726/DeephageTP" target="_blank" rel="noopener">https://github.com/chuym726/DeephageTP</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/chuym726/DeephageTP">https://github.com/chuym726/DeephageTP</a></p>
 <h1 id="没看懂的"><a href="#没看懂的" class="headerlink" title="没看懂的"></a>没看懂的</h1><ol>
 <li>cutoff value是做什么的？怎么算的？</li>
 <li>loss怎么算的？</li>
@@ -256,7 +256,7 @@
   <span class="division">|</span>
   <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
 </span>
-        368k
+        377k
         
       </li>
       

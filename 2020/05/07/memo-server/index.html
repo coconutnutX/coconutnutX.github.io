@@ -75,7 +75,7 @@
      
     <div class="article-meta">
       <a href="/2020/05/07/memo-server/" class="article-date">
-  <time datetime="2020-05-07T03:23:24.000Z" itemprop="datePublished">2020-05-07</time>
+  <time datetime="2020-05-07T09:23:24.000Z" itemprop="datePublished">2020-05-07</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/Memo/">Memo</a>
@@ -98,14 +98,14 @@
 </li>
 <li><p>添加安全组规则</p>
 <blockquote>
-<p><a href="https://help.aliyun.com/document_detail/151694.html?spm=a2c4g.11186623.6.582.56d15bbbDfXG8X" target="_blank" rel="noopener">https://help.aliyun.com/document_detail/151694.html?spm=a2c4g.11186623.6.582.56d15bbbDfXG8X</a></p>
+<p><a target="_blank" rel="noopener" href="https://help.aliyun.com/document_detail/151694.html?spm=a2c4g.11186623.6.582.56d15bbbDfXG8X">https://help.aliyun.com/document_detail/151694.html?spm=a2c4g.11186623.6.582.56d15bbbDfXG8X</a></p>
 </blockquote>
 <p>顺便把8000~9000都开了</p>
 </li>
 </ol>
 <h1 id="终端访问"><a href="#终端访问" class="headerlink" title="终端访问"></a>终端访问</h1><ol>
 <li><p>ssh连接</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh root@&lt;实例公网IP地址&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh root@&lt;实例公网IP地址&gt;</span><br></pre></td></tr></table></figure>
 
 <p>✌️</p>
 </li>
@@ -113,41 +113,41 @@
 <h1 id="安装jdk和Tomcat"><a href="#安装jdk和Tomcat" class="headerlink" title="安装jdk和Tomcat"></a>安装jdk和Tomcat</h1><ol>
 <li><p>下载jdk-14.0.1_linux-x64_bin.tar.gz和apache-tomcat-9.0.34.tar.gz</p>
 <blockquote>
-<p><a href="https://www.oracle.com/java/technologies/javase-jdk14-downloads.html" target="_blank" rel="noopener">https://www.oracle.com/java/technologies/javase-jdk14-downloads.html</a></p>
-<p><a href="https://tomcat.apache.org/download-90.cgi" target="_blank" rel="noopener">https://tomcat.apache.org/download-90.cgi</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.oracle.com/java/technologies/javase-jdk14-downloads.html">https://www.oracle.com/java/technologies/javase-jdk14-downloads.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://tomcat.apache.org/download-90.cgi">https://tomcat.apache.org/download-90.cgi</a></p>
 </blockquote>
 <p>（之前装的是jdk12，不知道这样会不会有毛病）</p>
 </li>
 <li><p>FileZilla连接服务器，上面两个包传到root文件夹下</p>
 </li>
 <li><p>回到终端，新建javaee文件夹，解压</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">~# ls</span><br><span class="line">apache-tomcat-9.0.34.tar.gz jdk-14.0.1_linux-x64_bin.tar.gz</span><br><span class="line">~# mkdir javaee</span><br><span class="line">~# tar zxvf jdk-14.0.1_linux-x64_bin.tar.gz -C javaee</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">~# ls</span><br><span class="line">apache-tomcat-9.0.34.tar.gz jdk-14.0.1_linux-x64_bin.tar.gz</span><br><span class="line">~# mkdir javaee</span><br><span class="line">~# tar zxvf jdk-14.0.1_linux-x64_bin.tar.gz -C javaee</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>配置java环境变量</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~# vim &#x2F;etc&#x2F;profile</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~# vim /etc/profile</span><br></pre></td></tr></table></figure>
 
 <p>最后加上</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># set java environment</span><br><span class="line">export JAVA_HOME&#x3D;&#x2F;root&#x2F;javaee&#x2F;jdk-14.0.1</span><br><span class="line">export PATH&#x3D;$JAVA_HOME&#x2F;bin:$PATH</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># set java environment</span><br><span class="line">export JAVA_HOME=/root/javaee/jdk-14.0.1</span><br><span class="line">export PATH=$JAVA_HOME/bin:$PATH</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">~# source &#x2F;etc&#x2F;profile</span><br><span class="line">~# java -version</span><br><span class="line">java version &quot;14.0.1&quot; 2020-04-14</span><br><span class="line">Java(TM) SE Runtime Environment (build 14.0.1+7)</span><br><span class="line">Java HotSpot(TM) 64-Bit Server VM (build 14.0.1+7, mixed mode, sharing)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">~# source /etc/profile</span><br><span class="line">~# java -version</span><br><span class="line">java version &quot;14.0.1&quot; 2020-04-14</span><br><span class="line">Java(TM) SE Runtime Environment (build 14.0.1+7)</span><br><span class="line">Java HotSpot(TM) 64-Bit Server VM (build 14.0.1+7, mixed mode, sharing)</span><br></pre></td></tr></table></figure>
 
 <p>✌️</p>
 </li>
 <li><p>安装tomcat</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~# tar zxvf apache-tomcat-9.0.34.tar.gz -C javaee</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~# tar zxvf apache-tomcat-9.0.34.tar.gz -C javaee</span><br></pre></td></tr></table></figure>
 
 <p>配置catalina.sh</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~&#x2F;javaee&#x2F;apache-tomcat-9.0.34&#x2F;bin# vim &#x2F;catalina.sh</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/javaee/apache-tomcat-9.0.34/bin# vim /catalina.sh</span><br></pre></td></tr></table></figure>
 
 <p>加一句</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME&#x3D;&#x2F;root&#x2F;javaee&#x2F;jdk-14.0.1</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/root/javaee/jdk-14.0.1</span><br></pre></td></tr></table></figure>
 
 <p>测试</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">~&#x2F;javaee&#x2F;apache-tomcat-9.0.34&#x2F;bin# .&#x2F;startup.sh </span><br><span class="line">Using CATALINA_BASE:   &#x2F;root&#x2F;javaee&#x2F;apache-tomcat-9.0.34</span><br><span class="line">Using CATALINA_HOME:   &#x2F;root&#x2F;javaee&#x2F;apache-tomcat-9.0.34</span><br><span class="line">Using CATALINA_TMPDIR: &#x2F;root&#x2F;javaee&#x2F;apache-tomcat-9.0.34&#x2F;temp</span><br><span class="line">Using JRE_HOME:        &#x2F;root&#x2F;javaee&#x2F;jdk-14.0.1</span><br><span class="line">Using CLASSPATH:       &#x2F;root&#x2F;javaee&#x2F;apache-tomcat-9.0.34&#x2F;bin&#x2F;bootstrap.jar:&#x2F;root&#x2F;javaee&#x2F;apache-tomcat-9.0.34&#x2F;bin&#x2F;tomcat-juli.jar</span><br><span class="line">Tomcat started.</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">~/javaee/apache-tomcat-9.0.34/bin# ./startup.sh </span><br><span class="line">Using CATALINA_BASE:   /root/javaee/apache-tomcat-9.0.34</span><br><span class="line">Using CATALINA_HOME:   /root/javaee/apache-tomcat-9.0.34</span><br><span class="line">Using CATALINA_TMPDIR: /root/javaee/apache-tomcat-9.0.34/temp</span><br><span class="line">Using JRE_HOME:        /root/javaee/jdk-14.0.1</span><br><span class="line">Using CLASSPATH:       /root/javaee/apache-tomcat-9.0.34/bin/bootstrap.jar:/root/javaee/apache-tomcat-9.0.34/bin/tomcat-juli.jar</span><br><span class="line">Tomcat started.</span><br></pre></td></tr></table></figure>
 
 <img src="/images/2020/screencapture2020-05-07 PM12.21.05.jpg">
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">~&#x2F;javaee&#x2F;apache-tomcat-9.0.34&#x2F;bin# .&#x2F;shutdown.sh </span><br><span class="line">Using CATALINA_BASE:   &#x2F;root&#x2F;javaee&#x2F;apache-tomcat-9.0.34</span><br><span class="line">Using CATALINA_HOME:   &#x2F;root&#x2F;javaee&#x2F;apache-tomcat-9.0.34</span><br><span class="line">Using CATALINA_TMPDIR: &#x2F;root&#x2F;javaee&#x2F;apache-tomcat-9.0.34&#x2F;temp</span><br><span class="line">Using JRE_HOME:        &#x2F;root&#x2F;javaee&#x2F;jdk-14.0.1</span><br><span class="line">Using CLASSPATH:       &#x2F;root&#x2F;javaee&#x2F;apache-tomcat-9.0.34&#x2F;bin&#x2F;bootstrap.jar:&#x2F;root&#x2F;javaee&#x2F;apache-tomcat-9.0.34&#x2F;bin&#x2F;tomcat-juli.jar</span><br><span class="line">NOTE: Picked up JDK_JAVA_OPTIONS:  --add-opens&#x3D;java.base&#x2F;java.lang&#x3D;ALL-UNNAMED --add-opens&#x3D;java.base&#x2F;java.io&#x3D;ALL-UNNAMED --add-opens&#x3D;java.rmi&#x2F;sun.rmi.transport&#x3D;ALL-UNNAMED</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">~/javaee/apache-tomcat-9.0.34/bin# ./shutdown.sh </span><br><span class="line">Using CATALINA_BASE:   /root/javaee/apache-tomcat-9.0.34</span><br><span class="line">Using CATALINA_HOME:   /root/javaee/apache-tomcat-9.0.34</span><br><span class="line">Using CATALINA_TMPDIR: /root/javaee/apache-tomcat-9.0.34/temp</span><br><span class="line">Using JRE_HOME:        /root/javaee/jdk-14.0.1</span><br><span class="line">Using CLASSPATH:       /root/javaee/apache-tomcat-9.0.34/bin/bootstrap.jar:/root/javaee/apache-tomcat-9.0.34/bin/tomcat-juli.jar</span><br><span class="line">NOTE: Picked up JDK_JAVA_OPTIONS:  --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.io=ALL-UNNAMED --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED</span><br></pre></td></tr></table></figure>
 
 <p>✌️</p>
 </li>
@@ -211,7 +211,7 @@
   <span class="division">|</span>
   <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
 </span>
-        368k
+        377k
         
       </li>
       

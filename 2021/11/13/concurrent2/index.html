@@ -11,7 +11,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1"
       />
-      <title>sync example notes2 memory order |  CoCoNutNut&#39;s NoteBook</title>
+      <title>sync example note2：memory order |  CoCoNutNut&#39;s NoteBook</title>
   <meta name="generator" content="hexo-theme-ayer">
       
       <link rel="shortcut icon" href="/images/1949347-2001.png" />
@@ -66,7 +66,7 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  sync example notes2 memory order
+  sync example note2：memory order
 </h1>
  
 
@@ -95,7 +95,7 @@
 <p>There might be conflict on buffer[], but consumed_until and produced_until prevent that (if used correctly).</p>
 <p>So, only need to make sure consumed_until and produced_until accessed correctly under concurrency.</p>
 <h1 id="Using-locks"><a href="#Using-locks" class="headerlink" title="Using locks"></a>Using locks</h1><p>In each round of produce()</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">  lock_acquire(&amp;lock);</span><br><span class="line">  <span class="keyword">if</span> (consumed_until + BUFFER_SIZE &gt; r) <span class="keyword">break</span>;</span><br><span class="line">  lock_release(&amp;lock);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">produced[r] = ...</span><br><span class="line"><span class="built_in">buffer</span>[r % BUFFER_SIZE] = produced[r];</span><br><span class="line">produced_until++;</span><br><span class="line">lock_release(&amp;lock);</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">  lock_acquire(&amp;lock);</span><br><span class="line">  <span class="keyword">if</span> (consumed_until + BUFFER_SIZE &gt; r) <span class="keyword">break</span>;</span><br><span class="line">  lock_release(&amp;lock);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">produced[r] = ...</span><br><span class="line">buffer[r % BUFFER_SIZE] = produced[r];</span><br><span class="line">produced_until++;</span><br><span class="line">lock_release(&amp;lock);</span><br></pre></td></tr></table></figure>
 
 <p>Two locks:</p>
 <ol>
@@ -103,7 +103,7 @@
 <li>conflict on produced_until</li>
 </ol>
 <p>In each round of consume()</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">  lock_acquire(&amp;lock);</span><br><span class="line">  <span class="keyword">if</span> (produced_until &gt; r) <span class="keyword">break</span>;</span><br><span class="line">  lock_release(&amp;lock);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">consumed[r] = <span class="built_in">buffer</span>[r % BUFFER_SIZE];</span><br><span class="line">consumed_until++;</span><br><span class="line">lock_release(&amp;lock);</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">  lock_acquire(&amp;lock);</span><br><span class="line">  <span class="keyword">if</span> (produced_until &gt; r) <span class="keyword">break</span>;</span><br><span class="line">  lock_release(&amp;lock);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">consumed[r] = buffer[r % BUFFER_SIZE];</span><br><span class="line">consumed_until++;</span><br><span class="line">lock_release(&amp;lock);</span><br></pre></td></tr></table></figure>
 
 <p>Two locks:</p>
 <ol>
@@ -119,7 +119,7 @@
 <p>store produced_until should happen after all operations -&gt; load-store + store-store = release</p>
 </li>
 </ol>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">  <span class="comment">// The memory order can be relaxed as we don't read anything "produced" by the consumer.</span></span><br><span class="line">  <span class="keyword">int</span> local_cu = atomic_load_explicit(&amp;consumed_until, memory_order_relaxed);</span><br><span class="line">  <span class="keyword">if</span> (local_cu + BUFFER_SIZE &gt; r) <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line">produced[r] = ...</span><br><span class="line"><span class="built_in">buffer</span>[r % BUFFER_SIZE] = produced[r];</span><br><span class="line"><span class="comment">// We want to increment "produced_until" after the buffer has been written.</span></span><br><span class="line"><span class="comment">// By using memory_order_release, we prevent the STOREs on buffer from being</span></span><br><span class="line"><span class="comment">// reordered after the atomic operation.</span></span><br><span class="line">atomic_fetch_add_explicit(&amp;produced_until, <span class="number">1</span>, memory_order_release);</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">  <span class="comment">// The memory order can be relaxed as we don&#x27;t read anything &quot;produced&quot; by the consumer.</span></span><br><span class="line">  <span class="keyword">int</span> local_cu = atomic_load_explicit(&amp;consumed_until, memory_order_relaxed);</span><br><span class="line">  <span class="keyword">if</span> (local_cu + BUFFER_SIZE &gt; r) <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line">produced[r] = ...</span><br><span class="line">buffer[r % BUFFER_SIZE] = produced[r];</span><br><span class="line"><span class="comment">// We want to increment &quot;produced_until&quot; after the buffer has been written.</span></span><br><span class="line"><span class="comment">// By using memory_order_release, we prevent the STOREs on buffer from being</span></span><br><span class="line"><span class="comment">// reordered after the atomic operation.</span></span><br><span class="line">atomic_fetch_add_explicit(&amp;produced_until, <span class="number">1</span>, memory_order_release);</span><br></pre></td></tr></table></figure>
 
 <p>In consume, two locks can be modified:</p>
 <ol>
@@ -130,14 +130,14 @@
 <p>store consumed_until should happen after all operations -&gt; load-store + store-store = release</p>
 </li>
 </ol>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">  <span class="comment">// We don't want to access the buffer before checking the atomic variable.</span></span><br><span class="line">  <span class="comment">// The memory_order_acquire prevents this reordering.</span></span><br><span class="line">  <span class="keyword">int</span> local_pu = atomic_load_explicit(&amp;produced_until, memory_order_acquire);</span><br><span class="line">  <span class="keyword">if</span> (local_pu &gt; r) <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">consumed[r] = <span class="built_in">buffer</span>[r % BUFFER_SIZE];</span><br><span class="line">atomic_fetch_add_explicit(&amp;consumed_until, <span class="number">1</span>, memory_order_release);</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">  <span class="comment">// We don&#x27;t want to access the buffer before checking the atomic variable.</span></span><br><span class="line">  <span class="comment">// The memory_order_acquire prevents this reordering.</span></span><br><span class="line">  <span class="keyword">int</span> local_pu = atomic_load_explicit(&amp;produced_until, memory_order_acquire);</span><br><span class="line">  <span class="keyword">if</span> (local_pu &gt; r) <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">consumed[r] = buffer[r % BUFFER_SIZE];</span><br><span class="line">atomic_fetch_add_explicit(&amp;consumed_until, <span class="number">1</span>, memory_order_release);</span><br></pre></td></tr></table></figure>
 
 
 
 <h1 id="Memory-barriers"><a href="#Memory-barriers" class="headerlink" title="Memory barriers"></a>Memory barriers</h1><blockquote>
-<p><a href="https://en.cppreference.com/w/cpp/atomic/memory_order" target="_blank" rel="noopener">std::memory_order</a></p>
-<p><a href="https://www.modernescpp.com/index.php/fences-as-memory-barriers" target="_blank" rel="noopener">Fences are Memory Barriers</a></p>
-<p><a href="https://www.youtube.com/watch?v=qlkMbxUbKfw&ab_channel=CodeBlacksmith" target="_blank" rel="noopener">Memory Barriers - Learn Modern C++</a></p>
+<p><a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/atomic/memory_order">std::memory_order</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.modernescpp.com/index.php/fences-as-memory-barriers">Fences are Memory Barriers</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=qlkMbxUbKfw&ab_channel=CodeBlacksmith">Memory Barriers - Learn Modern C++</a></p>
 </blockquote>
 <ul>
 <li><p>memory_order_relaxed: no ordering constraints</p>
@@ -209,7 +209,7 @@
   <span class="division">|</span>
   <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
 </span>
-        368k
+        377k
         
       </li>
       

@@ -75,7 +75,7 @@
      
     <div class="article-meta">
       <a href="/2020/04/08/note-springcloud-01/" class="article-date">
-  <time datetime="2020-04-08T13:11:54.000Z" itemprop="datePublished">2020-04-08</time>
+  <time datetime="2020-04-08T19:11:54.000Z" itemprop="datePublished">2020-04-08</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/Note/">Note</a>
@@ -92,14 +92,14 @@
     <div class="article-entry" itemprop="articleBody">
        
   <blockquote>
-<p><a href="https://blog.csdn.net/ThinkWon/article/details/103726655" target="_blank" rel="noopener">https://blog.csdn.net/ThinkWon/article/details/103726655</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/ThinkWon/article/details/103726655">https://blog.csdn.net/ThinkWon/article/details/103726655</a></p>
 </blockquote>
 <hr>
 <blockquote>
 <p>Spring Cloud Netflix Eureka是Spring Cloud Netflix子项目的核心组件之一，主要用于微服务架构中的服务治理</p>
 </blockquote>
 <p>先疑惑了一下此Netflix是不是彼Netflix</p>
-<p>查了一下 <a href="https://www.cnblogs.com/EasonJim/p/7795816.html" target="_blank" rel="noopener">Netflix是什么，与Spring Cloud有什么关系</a> 还真是</p>
+<p>查了一下 <a target="_blank" rel="noopener" href="https://www.cnblogs.com/EasonJim/p/7795816.html">Netflix是什么，与Spring Cloud有什么关系</a> 还真是</p>
 <p>爱了爱了</p>
 <hr>
 <h1 id="搭建Eureka注册中心"><a href="#搭建Eureka注册中心" class="headerlink" title="搭建Eureka注册中心"></a>搭建Eureka注册中心</h1><ol>
@@ -132,37 +132,37 @@
 
 <h2 id="DEBUG：没有Run-Dashboard"><a href="#DEBUG：没有Run-Dashboard" class="headerlink" title="DEBUG：没有Run Dashboard"></a>DEBUG：没有Run Dashboard</h2><p><strong>尝试1</strong></p>
 <blockquote>
-<p><a href="https://blog.csdn.net/chinoukin/article/details/80577890" target="_blank" rel="noopener">https://blog.csdn.net/chinoukin/article/details/80577890</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/chinoukin/article/details/80577890">https://blog.csdn.net/chinoukin/article/details/80577890</a></p>
 </blockquote>
 <p>改.idea/workspace.xml的</p>
 <p>原本是这样</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">component</span> <span class="attr">name</span>=<span class="string">"RunDashboard"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">option</span> <span class="attr">name</span>=<span class="string">"configurationTypes"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"SpringBootApplicationConfigurationType"</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">component</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">component</span> <span class="attr">name</span>=<span class="string">&quot;RunDashboard&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">option</span> <span class="attr">name</span>=<span class="string">&quot;configurationTypes&quot;</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;SpringBootApplicationConfigurationType&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">component</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>但是这个文件每次改了command+s就又回去了</p>
 <p><strong>尝试2</strong></p>
 <blockquote>
-<p><a href="https://blog.csdn.net/feixiangsmile/article/details/96908744" target="_blank" rel="noopener">https://blog.csdn.net/feixiangsmile/article/details/96908744</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/feixiangsmile/article/details/96908744">https://blog.csdn.net/feixiangsmile/article/details/96908744</a></p>
 </blockquote>
 <p>Edit Configurations中</p>
 <p>Templates中</p>
 <p>点击加号添加Application和Spring Boot</p>
 <p>workspace.xml变成了</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">component</span> <span class="attr">name</span>=<span class="string">"RunDashboard"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">option</span> <span class="attr">name</span>=<span class="string">"configurationTypes"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">set</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"Application"</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"SpringBootApplicationConfigurationType"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">set</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">component</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">component</span> <span class="attr">name</span>=<span class="string">&quot;RunDashboard&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">option</span> <span class="attr">name</span>=<span class="string">&quot;configurationTypes&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">set</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;Application&quot;</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;SpringBootApplicationConfigurationType&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">set</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">component</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>但还是没有</p>
 <p><strong>尝试3</strong></p>
 <blockquote>
-<p><a href="https://www.cnblogs.com/JealousGirl/p/openorcloserundash.html" target="_blank" rel="noopener">https://www.cnblogs.com/JealousGirl/p/openorcloserundash.html</a></p>
-<p><a href="https://blog.csdn.net/icebox126/article/details/78861943" target="_blank" rel="noopener">https://blog.csdn.net/icebox126/article/details/78861943</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/JealousGirl/p/openorcloserundash.html">https://www.cnblogs.com/JealousGirl/p/openorcloserundash.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/icebox126/article/details/78861943">https://blog.csdn.net/icebox126/article/details/78861943</a></p>
 </blockquote>
 <p>在workspace.xml中添加（这次可以加了）</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"show.run.dashboard.notification"</span> <span class="attr">value</span>=<span class="string">"true"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;show.run.dashboard.notification&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>但是重启还是不会弹出提示</p>
 <p><strong>尝试4</strong></p>
 <blockquote>
-<p><a href="https://intellij-support.jetbrains.com/hc/en-us/community/posts/115000428264-New-Spring-Boot-Run-dashboard-not-showing-up" target="_blank" rel="noopener">https://intellij-support.jetbrains.com/hc/en-us/community/posts/115000428264-New-Spring-Boot-Run-dashboard-not-showing-up</a></p>
-<p><a href="https://blog.csdn.net/jianxia801/article/details/99576764" target="_blank" rel="noopener">https://blog.csdn.net/jianxia801/article/details/99576764</a></p>
+<p><a target="_blank" rel="noopener" href="https://intellij-support.jetbrains.com/hc/en-us/community/posts/115000428264-New-Spring-Boot-Run-dashboard-not-showing-up">https://intellij-support.jetbrains.com/hc/en-us/community/posts/115000428264-New-Spring-Boot-Run-dashboard-not-showing-up</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/jianxia801/article/details/99576764">https://blog.csdn.net/jianxia801/article/details/99576764</a></p>
 </blockquote>
 <img src="/images/2020/screencapture2020-04-09 AM10.30.31.jpg">
 
@@ -198,7 +198,7 @@
 <p>但是spring-boot-starter-test似乎多了很多东西（试了一下并不能删）</p>
 <p><strong>尝试2</strong></p>
 <p>看下报错</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">2020-04-09 10:43:38.777 ERROR 1243 --- [           main] c.n.d.s.t.d.RedirectingEurekaHttpClient  : Request execution error. endpoint&#x3D;DefaultEndpoint&#123; serviceUrl&#x3D;&#39;http:&#x2F;&#x2F;localhost:8001&#x2F;eureka&#x2F;&#125;</span><br><span class="line"></span><br><span class="line">com.sun.jersey.api.client.ClientHandlerException: java.net.ConnectException: Connection refused (Connection refused)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">2020-04-09 10:43:38.777 ERROR 1243 --- [           main] c.n.d.s.t.d.RedirectingEurekaHttpClient  : Request execution error. endpoint=DefaultEndpoint&#123; serviceUrl=&#x27;http://localhost:8001/eureka/&#125;</span><br><span class="line"></span><br><span class="line">com.sun.jersey.api.client.ClientHandlerException: java.net.ConnectException: Connection refused (Connection refused)</span><br></pre></td></tr></table></figure>
 
 <p>好像干了个蠢事</p>
 <img src="/images/2020/screencapture2020-04-09 AM10.44.58.jpg">
@@ -218,17 +218,17 @@
 <li><p>本机配置域名</p>
 <p>macOS在/etc/hosts</p>
 <p>改之前的存个档</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">##</span><br><span class="line"># Host Database</span><br><span class="line">#</span><br><span class="line"># localhost is used to configure the loopback interface</span><br><span class="line"># when the system is booting.  Do not change this entry.</span><br><span class="line">##</span><br><span class="line">127.0.0.1	localhost</span><br><span class="line">255.255.255.255	broadcasthost</span><br><span class="line">::1             localhost</span><br><span class="line">127.0.0.1 xmind.net</span><br><span class="line">127.0.0.1 www.xmind.net</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">##</span><br><span class="line"># Host Database</span><br><span class="line">#</span><br><span class="line"># localhost is used to configure the loopback interface</span><br><span class="line"># when the system is booting.  Do not change this entry.</span><br><span class="line">##</span><br><span class="line">127.0.0.1	localhost</span><br><span class="line">255.255.255.255	broadcasthost</span><br><span class="line">::1             localhost</span><br><span class="line">127.0.0.1 xmind.net</span><br><span class="line">127.0.0.1 www.xmind.net</span><br></pre></td></tr></table></figure>
 
 <p>加两行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1 replica1</span><br><span class="line">127.0.0.1 replica2</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1 replica1</span><br><span class="line">127.0.0.1 replica2</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>启动</p>
 </li>
 <li><p>修改配置，让eureka-client连接到集群</p>
 </li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 配置注册中心地址</span><br><span class="line"># defaultZone: http:&#x2F;&#x2F;localhost:8001&#x2F;eureka</span><br><span class="line"># 同时注册到两个注册中心</span><br><span class="line">defaultZone: http:&#x2F;&#x2F;replica1:8002&#x2F;eureka&#x2F;,http:&#x2F;&#x2F;replica2:8003&#x2F;eureka&#x2F;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 配置注册中心地址</span><br><span class="line"># defaultZone: http://localhost:8001/eureka</span><br><span class="line"># 同时注册到两个注册中心</span><br><span class="line">defaultZone: http://replica1:8002/eureka/,http://replica2:8003/eureka/</span><br></pre></td></tr></table></figure>
 
 <h2 id="DEBUG：服务器没有注册"><a href="#DEBUG：服务器没有注册" class="headerlink" title="DEBUG：服务器没有注册"></a>DEBUG：服务器没有注册</h2><p>复制一份原启动配置，修改为从replica1启动</p>
 <img src="/images/2020/screencapture2020-04-09 AM10.57.57.jpg">
@@ -268,13 +268,13 @@
 
 <p>（最后发现都行，且没必要创建时添加，随时在pom.xml中修改都可）</p>
 <h2 id="DEBUG：新的模块没有被识别为Maven项目"><a href="#DEBUG：新的模块没有被识别为Maven项目" class="headerlink" title="DEBUG：新的模块没有被识别为Maven项目"></a>DEBUG：新的模块没有被识别为Maven项目</h2><blockquote>
-<p><a href="https://www.jianshu.com/p/909eb8a48d49" target="_blank" rel="noopener">https://www.jianshu.com/p/909eb8a48d49</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/909eb8a48d49">https://www.jianshu.com/p/909eb8a48d49</a></p>
 </blockquote>
 <p>右边Maven栏＋对应的pom.xml</p>
 <h2 id="DEBUG：启动报错-amp-Whitelabel-Error-Page"><a href="#DEBUG：启动报错-amp-Whitelabel-Error-Page" class="headerlink" title="DEBUG：启动报错&amp;Whitelabel Error Page"></a>DEBUG：启动报错&amp;Whitelabel Error Page</h2><img src="/images/2020/screencapture2020-04-09 AM11.27.19.jpg">
 
 <blockquote>
-<p><a href="https://blog.csdn.net/qq_28379809/article/details/102789716" target="_blank" rel="noopener">https://blog.csdn.net/qq_28379809/article/details/102789716</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_28379809/article/details/102789716">https://blog.csdn.net/qq_28379809/article/details/102789716</a></p>
 </blockquote>
 <p>添加依赖</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
@@ -477,7 +477,7 @@
   <span class="division">|</span>
   <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
 </span>
-        368k
+        377k
         
       </li>
       

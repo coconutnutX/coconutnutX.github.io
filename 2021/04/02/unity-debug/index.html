@@ -75,7 +75,7 @@
      
     <div class="article-meta">
       <a href="/2021/04/02/unity-debug/" class="article-date">
-  <time datetime="2021-04-02T01:53:07.000Z" itemprop="datePublished">2021-04-02</time>
+  <time datetime="2021-04-02T07:53:07.000Z" itemprop="datePublished">2021-04-02</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/Note/">Note</a>
@@ -92,34 +92,34 @@
     <div class="article-entry" itemprop="articleBody">
        
   <p>Unity内运行时播放视频没问题，导出后用火狐打开就放不了，看控制台报错是</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">已拦截跨源请求：同源策略禁止读取位于 file:&#x2F;&#x2F;&#x2F;Users&#x2F;...&#x2F;unity&#x2F;Backups&#x2F;WebV0.3&#x2F;sharedassets0.resource 的远程资源。（原因：CORS 请求不是 http）。</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">已拦截跨源请求：同源策略禁止读取位于 file:///Users/.../unity/Backups/WebV0.3/sharedassets0.resource 的远程资源。（原因：CORS 请求不是 http）。</span><br></pre></td></tr></table></figure>
 
 <h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><ol>
 <li><p>WebGL只能通过URL播放视频</p>
 <blockquote>
-<p><a href="https://blog.csdn.net/wuyt2008/article/details/107592492?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522161752087116780265448826%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fall.%2522%257D&request_id=161752087116780265448826&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_v2~times_rank-10-107592492.first_rank_v2_pc_rank_v29&utm_term=unity+webgl+%E8%A7%86%E9%A2%91%E9%BB%91%E5%B1%8F" target="_blank" rel="noopener">Unity2019在WebGL下播放视频</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/wuyt2008/article/details/107592492?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522161752087116780265448826%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fall.%2522%257D&request_id=161752087116780265448826&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_v2~times_rank-10-107592492.first_rank_v2_pc_rank_v29&utm_term=unity+webgl+%E8%A7%86%E9%A2%91%E9%BB%91%E5%B1%8F">Unity2019在WebGL下播放视频</a></p>
 </blockquote>
 </li>
 <li><p>火狐浏览器设置允许跨域</p>
 <p>security.fileuri.strict_origin_policy改false</p>
 <blockquote>
-<p><a href="https://blog.csdn.net/qq_28867949/article/details/99890103?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-1&spm=1001.2101.3001.4242" target="_blank" rel="noopener">Firefox火狐浏览器访问本地文件-提示跨域问题</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_28867949/article/details/99890103?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-1&spm=1001.2101.3001.4242">Firefox火狐浏览器访问本地文件-提示跨域问题</a></p>
 </blockquote>
 </li>
 <li><p>火狐浏览器设置允许播放视频</p>
 <blockquote>
-<p><a href="https://blog.csdn.net/qq_34243277/article/details/114398872?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-1&spm=1001.2101.3001.4242" target="_blank" rel="noopener">Unity2018发布webgl视频无法播放</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_34243277/article/details/114398872?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-1&spm=1001.2101.3001.4242">Unity2018发布webgl视频无法播放</a></p>
 </blockquote>
 </li>
 </ol>
 <h1 id="各种失败尝试记录"><a href="#各种失败尝试记录" class="headerlink" title="各种失败尝试记录"></a>各种失败尝试记录</h1><p>1.</p>
 <blockquote>
-<p><a href="https://blog.kongregate.com/unity-html5-cors-and-you/" target="_blank" rel="noopener">https://blog.kongregate.com/unity-html5-cors-and-you/</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.kongregate.com/unity-html5-cors-and-you/">https://blog.kongregate.com/unity-html5-cors-and-you/</a></p>
 </blockquote>
 <p>写了问题原因，但是没看到针对Unity怎么解决</p>
 <p>2.</p>
 <blockquote>
-<p><a href="https://www.jianshu.com/p/78904381ba32" target="_blank" rel="noopener">https://www.jianshu.com/p/78904381ba32</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/78904381ba32">https://www.jianshu.com/p/78904381ba32</a></p>
 </blockquote>
 <p>说把privacy.file_unique_origin改成false，但是它已经是false了</p>
 <p>3.</p>
@@ -128,56 +128,56 @@
 <p>改用URL试试，从浏览中找到同一个文件，测试也可以播放。试了一个网络上的mp4的URL，测试也可以</p>
 <p>那或许可以尝试把mp4上传，然后用URL访问</p>
 <blockquote>
-<p><a href="https://blog.csdn.net/weixin_33912453/article/details/94087306?utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-6.baidujs&amp;dist_request_id=&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-6.baidujs" target="_blank" rel="noopener">https://blog.csdn.net/weixin_33912453/article/details/94087306?utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-6.baidujs&amp;dist_request_id=&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-6.baidujs</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_33912453/article/details/94087306?utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-6.baidujs&amp;dist_request_id=&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-6.baidujs">https://blog.csdn.net/weixin_33912453/article/details/94087306?utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-6.baidujs&amp;dist_request_id=&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-6.baidujs</a></p>
 </blockquote>
 <p>试试这个用爱奇艺开放平台的</p>
 <p>发现注册应用必须有url</p>
 <p>4.</p>
 <p>再找一下有没有视频托管网站</p>
-<p><a href="https://www.zhihu.com/question/23036186/answer/1716470191" target="_blank" rel="noopener">https://www.zhihu.com/question/23036186/answer/1716470191</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/23036186/answer/1716470191">https://www.zhihu.com/question/23036186/answer/1716470191</a></p>
 <p>找了一个酷播云，视频要审核，等会再看（似乎不能直接拿到URL，可能要凉）</p>
-<p><a href="http://www.stonepoll.com/helpcenter/hc/kb/article/fcc34c50-301a-822a-df8c-e690f5af5bb5/" target="_blank" rel="noopener">http://www.stonepoll.com/helpcenter/hc/kb/article/fcc34c50-301a-822a-df8c-e690f5af5bb5/</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.stonepoll.com/helpcenter/hc/kb/article/fcc34c50-301a-822a-df8c-e690f5af5bb5/">http://www.stonepoll.com/helpcenter/hc/kb/article/fcc34c50-301a-822a-df8c-e690f5af5bb5/</a></p>
 <p>腾讯云要买服务，算了先</p>
 <p>又传了一个优酷的，等会看审核</p>
 <p>得，拿不到mp4的URL</p>
 <p>5.</p>
 <p>还是从浏览器入手吧，试试允许跨域</p>
-<p><a href="https://blog.csdn.net/nju_zjy/article/details/108870385" target="_blank" rel="noopener">https://blog.csdn.net/nju_zjy/article/details/108870385</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/nju_zjy/article/details/108870385">https://blog.csdn.net/nju_zjy/article/details/108870385</a></p>
 <p>参考这个，装一个火狐插件</p>
 <p>没用</p>
 <p>多试了几个插件，都没用</p>
 <p>6.</p>
 <p>有找到一个调浏览器设置的</p>
-<p><a href="https://blog.csdn.net/qq_28867949/article/details/99890103?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-1&amp;spm=1001.2101.3001.4242" target="_blank" rel="noopener">https://blog.csdn.net/qq_28867949/article/details/99890103?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-1&amp;spm=1001.2101.3001.4242</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_28867949/article/details/99890103?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-1&amp;spm=1001.2101.3001.4242">https://blog.csdn.net/qq_28867949/article/details/99890103?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-1&amp;spm=1001.2101.3001.4242</a></p>
 <p>把security.fileuri.strict_origin_policy改成false</p>
 <p>【重启后不报错了！】</p>
 <p>但是视频还是播放不了</p>
 <p>7.</p>
-<p><a href="https://blog.csdn.net/qq_38229886/article/details/103139228?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-2&amp;spm=1001.2101.3001.4242" target="_blank" rel="noopener">https://blog.csdn.net/qq_38229886/article/details/103139228?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-2&amp;spm=1001.2101.3001.4242</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_38229886/article/details/103139228?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-2&amp;spm=1001.2101.3001.4242">https://blog.csdn.net/qq_38229886/article/details/103139228?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-2&amp;spm=1001.2101.3001.4242</a></p>
 <p>WebGL不支持mp4？！…</p>
 <p>转成ogv。没用</p>
 <p>8.</p>
 <p>找了一个在线的mp4地址，本地ok</p>
 <p>导出WebGL运行，不报错，播放不了</p>
 <p>9.</p>
-<p><a href="https://blog.csdn.net/weixin_43779625/article/details/103410836" target="_blank" rel="noopener">https://blog.csdn.net/weixin_43779625/article/details/103410836</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43779625/article/details/103410836">https://blog.csdn.net/weixin_43779625/article/details/103410836</a></p>
 <p>改用Render Texture的方式（以前是材质覆盖）</p>
 <p>不行（甚至本地都显示不了视频，只有声音）</p>
 <p>10.</p>
-<p><a href="https://blog.csdn.net/JLX_Sir/article/details/82684491?utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-2.baidujs&amp;dist_request_id=&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-2.baidujs" target="_blank" rel="noopener">https://blog.csdn.net/JLX_Sir/article/details/82684491?utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-2.baidujs&amp;dist_request_id=&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-2.baidujs</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/JLX_Sir/article/details/82684491?utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-2.baidujs&amp;dist_request_id=&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-2.baidujs">https://blog.csdn.net/JLX_Sir/article/details/82684491?utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-2.baidujs&amp;dist_request_id=&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-2.baidujs</a></p>
 <p>说WebGL不支持高分辨率</p>
 <p>试试在检查器里设置转码 1/4分辨率，比特率模式低，空间质量低</p>
 <p>导出，不行</p>
 <p>11.</p>
-<p><a href="https://blog.csdn.net/qq_34243277/article/details/114398872?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-1&amp;spm=1001.2101.3001.4242" target="_blank" rel="noopener">https://blog.csdn.net/qq_34243277/article/details/114398872?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-1&amp;spm=1001.2101.3001.4242</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_34243277/article/details/114398872?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-1&amp;spm=1001.2101.3001.4242">https://blog.csdn.net/qq_34243277/article/details/114398872?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-1&amp;spm=1001.2101.3001.4242</a></p>
 <p>火狐还有阻止音视频的默认设置？？关掉</p>
 <p>mp4和ogv都不行</p>
 <p>12.</p>
-<p><a href="https://blog.csdn.net/s1314_JHC/article/details/80618252" target="_blank" rel="noopener">https://blog.csdn.net/s1314_JHC/article/details/80618252</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/s1314_JHC/article/details/80618252">https://blog.csdn.net/s1314_JHC/article/details/80618252</a></p>
 <p>还有说是WebGL不支持MovieTexture的，用插件</p>
 <p>导出后是黑的，疯狂报错</p>
 <p>13.</p>
-<p><a href="https://blog.csdn.net/wuyt2008/article/details/107592492?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522161752087116780265448826%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fall.%2522%257D&amp;request_id=161752087116780265448826&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_v2~times_rank-10-107592492.first_rank_v2_pc_rank_v29&amp;utm_term=unity+webgl+%E8%A7%86%E9%A2%91%E9%BB%91%E5%B1%8F" target="_blank" rel="noopener">https://blog.csdn.net/wuyt2008/article/details/107592492?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522161752087116780265448826%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fall.%2522%257D&amp;request_id=161752087116780265448826&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_v2~times_rank-10-107592492.first_rank_v2_pc_rank_v29&amp;utm_term=unity+webgl+%E8%A7%86%E9%A2%91%E9%BB%91%E5%B1%8F</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/wuyt2008/article/details/107592492?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522161752087116780265448826%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fall.%2522%257D&amp;request_id=161752087116780265448826&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_v2~times_rank-10-107592492.first_rank_v2_pc_rank_v29&amp;utm_term=unity+webgl+%E8%A7%86%E9%A2%91%E9%BB%91%E5%B1%8F">https://blog.csdn.net/wuyt2008/article/details/107592492?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522161752087116780265448826%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fall.%2522%257D&amp;request_id=161752087116780265448826&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_v2~times_rank-10-107592492.first_rank_v2_pc_rank_v29&amp;utm_term=unity+webgl+%E8%A7%86%E9%A2%91%E9%BB%91%E5%B1%8F</a></p>
 <p>这个说WebGL只能通过url播放</p>
 <p>现在调过火狐的设置了，再试试url吧</p>
 <p>!!!!!!!!!!!!成功了😭!!!!!!!!!!!!</p>
@@ -239,7 +239,7 @@
   <span class="division">|</span>
   <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
 </span>
-        368k
+        377k
         
       </li>
       

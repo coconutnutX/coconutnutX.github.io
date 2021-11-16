@@ -75,7 +75,7 @@
      
     <div class="article-meta">
       <a href="/2020/05/07/debug/" class="article-date">
-  <time datetime="2020-05-07T05:41:47.000Z" itemprop="datePublished">2020-05-07</time>
+  <time datetime="2020-05-07T11:41:47.000Z" itemprop="datePublished">2020-05-07</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/Debug/">Debug</a>
@@ -93,23 +93,23 @@
        
   <h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><p>以前装过pyenv，可以正常使用</p>
 <p>今天用的时候发现配置的版本没有生效</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">coconutnut@Ss-MacBook-Pro ~ % pyenv versions</span><br><span class="line">* system (set by &#x2F;Users&#x2F;coconutnut&#x2F;.pyenv&#x2F;version)</span><br><span class="line">  3.7.4</span><br><span class="line">coconutnut@Ss-MacBook-Pro ~ % pyenv global 3.7.4</span><br><span class="line">coconutnut@Ss-MacBook-Pro ~ % python -V</span><br><span class="line">Python 2.7.17</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">coconutnut@Ss-MacBook-Pro ~ % pyenv versions</span><br><span class="line">* system (set by /Users/coconutnut/.pyenv/version)</span><br><span class="line">  3.7.4</span><br><span class="line">coconutnut@Ss-MacBook-Pro ~ % pyenv global 3.7.4</span><br><span class="line">coconutnut@Ss-MacBook-Pro ~ % python -V</span><br><span class="line">Python 2.7.17</span><br></pre></td></tr></table></figure>
 
 <h1 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h1><blockquote>
-<p><a href="https://blog.csdn.net/vencent7/article/details/76849849" target="_blank" rel="noopener">https://blog.csdn.net/vencent7/article/details/76849849</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/vencent7/article/details/76849849">https://blog.csdn.net/vencent7/article/details/76849849</a></p>
 </blockquote>
 <p>也许是以前装Jupiter或者用Tensorflow的时候把环境搞坏了？</p>
 <p>试试把pyenv的配置放在.bash_profile的最后</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># pyenv</span><br><span class="line">export PYENV_ROOT&#x3D;&quot;$HOME&#x2F;.pyenv&quot;</span><br><span class="line">export PATH&#x3D;&quot;$PYENV_ROOT&#x2F;bin:$PATH&quot;</span><br><span class="line">eval &quot;$(pyenv init -)&quot;</span><br><span class="line"># eval &quot;$(pyenv virtualenv-init -)&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># pyenv</span><br><span class="line">export PYENV_ROOT=&quot;$HOME/.pyenv&quot;</span><br><span class="line">export PATH=&quot;$PYENV_ROOT/bin:$PATH&quot;</span><br><span class="line">eval &quot;$(pyenv init -)&quot;</span><br><span class="line"># eval &quot;$(pyenv virtualenv-init -)&quot;</span><br></pre></td></tr></table></figure>
 
 <p>再试试</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">coconutnut@Ss-MacBook-Pro ~ % source ~&#x2F;.bash_profile</span><br><span class="line">coconutnut@Ss-MacBook-Pro ~ % python -V            </span><br><span class="line">Python 3.7.4</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">coconutnut@Ss-MacBook-Pro ~ % source ~/.bash_profile</span><br><span class="line">coconutnut@Ss-MacBook-Pro ~ % python -V            </span><br><span class="line">Python 3.7.4</span><br></pre></td></tr></table></figure>
 
 <p>成功</p>
 <p>PS：</p>
 <p>安装pyenv的教程有的改.bash_profile有的改.bashrc</p>
 <blockquote>
-<p><a href="https://www.bbsmax.com/A/lk5aj7Eld1/" target="_blank" rel="noopener">https://www.bbsmax.com/A/lk5aj7Eld1/</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bbsmax.com/A/lk5aj7Eld1/">https://www.bbsmax.com/A/lk5aj7Eld1/</a></p>
 <p>在安装成功之后需要在<code>.bashrc</code>或者<code>.bash_profile</code>中添加三行来开启自动补全</p>
 </blockquote>
 <p>应该都是可以的</p>
@@ -169,7 +169,7 @@
   <span class="division">|</span>
   <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
 </span>
-        368k
+        377k
         
       </li>
       

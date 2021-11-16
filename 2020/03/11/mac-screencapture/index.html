@@ -75,7 +75,7 @@
      
     <div class="article-meta">
       <a href="/2020/03/11/mac-screencapture/" class="article-date">
-  <time datetime="2020-03-11T02:12:13.000Z" itemprop="datePublished">2020-03-11</time>
+  <time datetime="2020-03-11T09:12:13.000Z" itemprop="datePublished">2020-03-11</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/Note/">Note</a>
@@ -94,37 +94,37 @@
   <p>问题：以前插入截图得先改文件名，要时间戳不含中文，而且png特别大，最好转成jpg，很麻烦</p>
 <p>目标：文件名时间戳不含中文 &amp; jpg格式</p>
 <hr>
-<h1 id="一通操作"><a href="#一通操作" class="headerlink" title="一通操作"></a>一通操作</h1><h2 id="改格式"><a href="#改格式" class="headerlink" title="改格式"></a>改格式</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">defaults write com.apple.screencapture type jpg</span><br></pre></td></tr></table></figure>
+<h1 id="一通操作"><a href="#一通操作" class="headerlink" title="一通操作"></a>一通操作</h1><h2 id="改格式"><a href="#改格式" class="headerlink" title="改格式"></a>改格式</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">defaults write com.apple.screencapture type jpg</span><br></pre></td></tr></table></figure>
 
-<h2 id="改名"><a href="#改名" class="headerlink" title="改名"></a>改名</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">defaults write com.apple.screencapture name screencapture</span><br></pre></td></tr></table></figure>
+<h2 id="改名"><a href="#改名" class="headerlink" title="改名"></a>改名</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">defaults write com.apple.screencapture name screencapture</span><br></pre></td></tr></table></figure>
 
 <h2 id="改时间戳格式"><a href="#改时间戳格式" class="headerlink" title="改时间戳格式"></a>改时间戳格式</h2><p>系统偏好设置-&gt;语言与地区-&gt;高级-&gt;时间</p>
 <p>正午前和中午后框中：上午/下午改成AM/PM </p>
 <h2 id="完工"><a href="#完工" class="headerlink" title="完工"></a>完工</h2><p>Before:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">截屏2020-03-11上午9.50.34</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">截屏2020-03-11上午9.50.34</span><br></pre></td></tr></table></figure>
 
 <p>After:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">screencapture2020-03-11AM10.05.30</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">screencapture2020-03-11AM10.05.30</span><br></pre></td></tr></table></figure>
 
 
 
 <hr>
-<h1 id="命令备忘"><a href="#命令备忘" class="headerlink" title="命令备忘"></a>命令备忘</h1><h2 id="修改格式"><a href="#修改格式" class="headerlink" title="修改格式"></a>修改格式</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">defaults write com.apple.screencapture type jpg</span><br></pre></td></tr></table></figure>
+<h1 id="命令备忘"><a href="#命令备忘" class="headerlink" title="命令备忘"></a>命令备忘</h1><h2 id="修改格式"><a href="#修改格式" class="headerlink" title="修改格式"></a>修改格式</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">defaults write com.apple.screencapture type jpg</span><br></pre></td></tr></table></figure>
 
-<h2 id="修改文件名"><a href="#修改文件名" class="headerlink" title="修改文件名"></a>修改文件名</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">defaults write com.apple.screencapture name XXX</span><br></pre></td></tr></table></figure>
+<h2 id="修改文件名"><a href="#修改文件名" class="headerlink" title="修改文件名"></a>修改文件名</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">defaults write com.apple.screencapture name XXX</span><br></pre></td></tr></table></figure>
 
-<h2 id="时间戳"><a href="#时间戳" class="headerlink" title="时间戳"></a>时间戳</h2><h3 id="移除时间戳"><a href="#移除时间戳" class="headerlink" title="移除时间戳"></a>移除时间戳</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">defaults write com.apple.screencapture &quot;include-date&quot; 0</span><br></pre></td></tr></table></figure>
+<h2 id="时间戳"><a href="#时间戳" class="headerlink" title="时间戳"></a>时间戳</h2><h3 id="移除时间戳"><a href="#移除时间戳" class="headerlink" title="移除时间戳"></a>移除时间戳</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">defaults write com.apple.screencapture &quot;include-date&quot; 0</span><br></pre></td></tr></table></figure>
 
-<h3 id="加时间戳"><a href="#加时间戳" class="headerlink" title="加时间戳"></a>加时间戳</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">defaults write com.apple.screencapture &quot;include-date&quot; 1</span><br></pre></td></tr></table></figure>
+<h3 id="加时间戳"><a href="#加时间戳" class="headerlink" title="加时间戳"></a>加时间戳</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">defaults write com.apple.screencapture &quot;include-date&quot; 1</span><br></pre></td></tr></table></figure>
 
-<h2 id="其它帮助"><a href="#其它帮助" class="headerlink" title="其它帮助"></a>其它帮助</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">screencapture -h</span><br></pre></td></tr></table></figure>
+<h2 id="其它帮助"><a href="#其它帮助" class="headerlink" title="其它帮助"></a>其它帮助</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">screencapture -h</span><br></pre></td></tr></table></figure>
 
 
 
 <blockquote>
 <p>ref:</p>
-<p><a href="https://zhuanlan.zhihu.com/p/73725126" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/73725126</a></p>
-<p><a href="https://www.maketecheasier.com/remove-time-stamp-screenshot-mac/" target="_blank" rel="noopener">https://www.maketecheasier.com/remove-time-stamp-screenshot-mac/</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/73725126">https://zhuanlan.zhihu.com/p/73725126</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.maketecheasier.com/remove-time-stamp-screenshot-mac/">https://www.maketecheasier.com/remove-time-stamp-screenshot-mac/</a></p>
 </blockquote>
  
       <!-- reward -->
@@ -184,7 +184,7 @@
   <span class="division">|</span>
   <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
 </span>
-        368k
+        377k
         
       </li>
       
