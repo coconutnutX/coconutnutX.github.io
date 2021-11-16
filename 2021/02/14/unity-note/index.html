@@ -1,39 +1,66 @@
 <!DOCTYPE html>
+
+
 <html lang="en">
-
-<head>
-  <meta charset="utf-8" />
-    
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  <title>
-    Unity Note - Project06 DoTween |  CoCoNutNut&#39;s NoteBook
-  </title>
-  <meta name="generator" content="hexo-theme-yilia-plus">
-  
-  <link rel="shortcut icon" href="/images/1949347-2001.png" />
-  
-  
-<link rel="stylesheet" href="/css/main.css">
-
-  
-  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
-  
   
 
-  
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>Unity Note - Project06 DoTween |  CoCoNutNut&#39;s NoteBook</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/images/1949347-2001.png" />
+       
+<link rel="stylesheet" href="/dist/main.css">
 
-<link rel="alternate" href="/atom.xml" title="CoCoNutNut's NoteBook" type="application/atom+xml">
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/css/remixicon.min.css"
+      />
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    <link rel="alternate" href="/atom.xml" title="CoCoNutNut's NoteBook" type="application/atom+xml">
 </head>
-
+  </html>
 </html>
+
 
 <body>
   <div id="app">
-    <main class="content">
+    
+      
+    <main class="content on">
       <section class="outer">
-  <article id="post-unity-note" class="article article-type-post" itemscope
-  itemprop="blogPost" data-scroll-reveal>
-
+  <article
+  id="post-unity-note"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
   <div class="article-inner">
     
     <header class="article-header">
@@ -41,42 +68,28 @@
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
   Unity Note - Project06 DoTween
 </h1>
-  
+ 
 
+      
     </header>
-    
-
-    
+     
     <div class="article-meta">
       <a href="/2021/02/14/unity-note/" class="article-date">
   <time datetime="2021-02-14T08:31:45.000Z" itemprop="datePublished">2021-02-14</time>
-</a>
-      
+</a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/Note/">Note</a>
   </div>
-
-      
+ 
     </div>
-    
-
-    
-    
+      
 
 
 
-
-    
-
-    
+  
     <div class="article-entry" itemprop="articleBody">
-      
-
-
-      
-
-      
-      <blockquote>
+       
+  <blockquote>
 <p><a href="https://www.youtube.com/watch?v=cKwz4xlQHmo&ab_channel=DilmerValecillos" target="_blank" rel="noopener">Creating Dynamic animations with DOTween for Unity3d</a></p>
 </blockquote>
 <blockquote>
@@ -102,27 +115,22 @@
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line">using System.Collections;</span><br><span class="line">using System.Collections.Generic;</span><br><span class="line">using UnityEngine;</span><br><span class="line">using DG.Tweening;</span><br><span class="line"></span><br><span class="line">public class DoTweenController : MonoBehaviour</span><br><span class="line">&#123;</span><br><span class="line">    [SerializeField]</span><br><span class="line">    private Vector3 targetLocation &#x3D; Vector3.zero;</span><br><span class="line"></span><br><span class="line">    [SerializeField, Range(1.0f, 10.0f)]</span><br><span class="line">    private float moveDuration &#x3D; 1.0f;</span><br><span class="line"></span><br><span class="line">    [SerializeField]</span><br><span class="line">    private Ease moveEase &#x3D; Ease.Linear;</span><br><span class="line"></span><br><span class="line">    [SerializeField]</span><br><span class="line">    private Color targetColor;</span><br><span class="line"></span><br><span class="line">    [SerializeField, Range(1.0f, 10.0f)]</span><br><span class="line">    private float colorChangeDuration &#x3D; 1.0f;</span><br><span class="line"></span><br><span class="line">    [SerializeField, Range(0.1f, 10.0f)]</span><br><span class="line">    private float scaleMultiplier &#x3D; 3.0f;</span><br><span class="line"></span><br><span class="line">    [SerializeField]</span><br><span class="line">    private DoTweenType doTweenType &#x3D; DoTweenType.MovementOneWay;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Different types of animation</span><br><span class="line">    private enum DoTweenType</span><br><span class="line">    &#123;</span><br><span class="line">        MovementOneWay,</span><br><span class="line">        MovementTwoWay,</span><br><span class="line">        MovementOneWayColorChange,</span><br><span class="line">        MomementOneWayColorChangeScaleChange</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Start is called before the first frame update</span><br><span class="line">    void Start()</span><br><span class="line">    &#123;</span><br><span class="line">        if(targetLocation &#x3D;&#x3D; Vector3.zero)&#123;</span><br><span class="line">                &#x2F;&#x2F; stay at original position</span><br><span class="line">                targetLocation &#x3D; transform.position;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        if(doTweenType &#x3D;&#x3D; DoTweenType.MovementOneWay)&#123;</span><br><span class="line">            transform.DOMove(targetLocation, moveDuration).SetEase(moveEase);</span><br><span class="line">        &#125;</span><br><span class="line">        else if(doTweenType &#x3D;&#x3D; DoTweenType.MovementTwoWay)&#123;</span><br><span class="line">            StartCoroutine(MoveWithBothWays());</span><br><span class="line">        &#125;</span><br><span class="line">        else if(doTweenType &#x3D;&#x3D; DoTweenType.MovementOneWayColorChange)&#123;</span><br><span class="line">            &#x2F;&#x2F; another way</span><br><span class="line">            DOTween.Sequence()</span><br><span class="line">                .Append(transform.DOMove(targetLocation, moveDuration).SetEase(moveEase))</span><br><span class="line">                .Append(transform.GetComponent&lt;Renderer&gt;().material.DOColor(targetColor, colorChangeDuration).SetEase(moveEase));</span><br><span class="line">        &#125;</span><br><span class="line">        else if(doTweenType &#x3D;&#x3D; DoTweenType.MomementOneWayColorChangeScaleChange)&#123;</span><br><span class="line">            DOTween.Sequence()</span><br><span class="line">                .Append(transform.DOMove(targetLocation, moveDuration).SetEase(moveEase))</span><br><span class="line">                .Append(transform.GetComponent&lt;Renderer&gt;().material.DOColor(targetColor, colorChangeDuration).SetEase(moveEase))</span><br><span class="line">                .Append(transform.DOScale(scaleMultiplier, moveDuration).SetEase(moveEase));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private IEnumerator MoveWithBothWays()&#123;</span><br><span class="line">        &#x2F;&#x2F; save original position</span><br><span class="line">        Vector3 originalLocation &#x3D; transform.position;</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; go to traget location</span><br><span class="line">        transform.DOMove(targetLocation, moveDuration).SetEase(moveEase);</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; wait</span><br><span class="line">        yield return new WaitForSeconds(moveDuration);</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; go to original location</span><br><span class="line">        transform.DOMove(originalLocation, moveDuration).SetEase(moveEase);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<img src="/images/2021/Feb-14-2021 18-16-16.gif">
-      
+<img src="/images/2021/Feb-14-2021 18-16-16.gif"> 
       <!-- reward -->
       
     </div>
     
+
+    <!-- copyright -->
     
-      <!-- copyright -->
-      
     <footer class="article-footer">
-      
-      
+       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/unity/" rel="tag">unity</a></li></ul>
 
-
     </footer>
-
   </div>
 
-  
-  
+   
   <nav class="article-nav">
     
       <a href="/2021/02/14/unity/" class="article-nav-link">
@@ -142,16 +150,11 @@
     
   </nav>
 
-
   
-
-  
-
-  
-  
-  
-
+   
+     
 </article>
+
 </section>
       <footer class="footer">
   <div class="outer">
@@ -159,8 +162,9 @@
       <li>
         &copy;
         2020-2021
-        coconutnut
+        </i> coconutnut
       </li>
+      
       <li>
         
         
@@ -171,6 +175,7 @@
         368k
         
       </li>
+      
       <li>
         
         Powered by
@@ -179,24 +184,38 @@
         <a href="https://hexo.io" target="_blank">Hexo</a> Theme <a href="https://github.com/Shen-Yu/hexo-theme-ayer" target="_blank">Ayer</a>
         
       </li>
-    </ul>
-    <ul class="list-inline">
       
       <li>
+      
+    </li>
+    </ul>
+
+    <ul>
+      
+    </ul>
+    
+    
+    <ul>
       <li>
         <!-- cnzz统计 -->
         
       </li>
     </ul>
+    
   </div>
-</footer>
-      <div class="to_top">
-        <div class="totop" id="totop">
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
   <i class="ri-arrow-up-line"></i>
 </div>
-      </div>
-    </main>
-    <aside class="sidebar">
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
       <button class="navbar-toggle"></button>
 <nav class="navbar">
   
@@ -256,80 +275,52 @@
   <div class="reward-box">
     
     <div class="reward-item">
-      <img class="reward-img" src="/images/alipay.jpg">
+      <img class="reward-img" src="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/alipay.jpg">
       <span class="reward-type">支付宝</span>
     </div>
     
     
     <div class="reward-item">
-      <img class="reward-img" src="/images/wechat.jpg">
+      <img class="reward-img" src="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/wechat.jpg">
       <span class="reward-type">微信</span>
     </div>
     
   </div>
 </div>
     
-<script src="/js/jquery-2.0.3.min.js"></script>
-
-
-<script src="/js/share.js"></script>
-
-
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
 <script src="/js/lazyload.min.js"></script>
 
-
-<script>
-  try {
-    var typed = new Typed("#subtitle", {
-      strings: ['The cave you fear to enter holds the treasure you seek', '咫尺千里，江山如画', ''],
-      startDelay: 0,
-      typeSpeed: 200,
-      loop: true,
-      backSpeed: 100,
-      showCursor: true
-    });
-  } catch (err) {
-  }
-
-</script>
-
-
-
-
+<!-- Tocbot -->
+ 
 <script src="/js/tocbot.min.js"></script>
 
 <script>
-  // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
   tocbot.init({
-    tocSelector: '.tocbot',
-    contentSelector: '.article-entry',
-    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
     hasInnerContainers: true,
     scrollSmooth: true,
-    scrollContainer: 'main',
-    positionFixedSelector: '.tocbot',
-    positionFixedClass: 'is-position-fixed',
-    fixedSidebarOffset: 'auto',
-    onClick: (e) => {
-      $('.toc-link').removeClass('is-active-link');
-      $(`a[href=${e.target.hash}]`).addClass('is-active-link');
-      $(e.target.hash).scrollIntoView();
-      return false;
-    }
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
   });
 </script>
 
-
-
 <script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css"
+/>
 <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
 
-<script src="/js/ayer.js"></script>
+<script src="/dist/main.js"></script>
 
-
-
-<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
 <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
 
     <!-- Background of PhotoSwipe. 
@@ -397,7 +388,7 @@
 </div>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css">
 <script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
 
@@ -434,20 +425,35 @@
         })
     }
     viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
 </script>
 
 
-
-
-<script src="/js/busuanzi-2.3.pure.min.js"></script>
-
-
-
-<script type="text/javascript" src="https://js.users.51.la/20544303.js"></script>
-
-
-
     
+    
+
   </div>
 </body>
 
