@@ -1,119 +1,224 @@
 <!DOCTYPE html>
-
-
 <html lang="en">
-  
-
-    <head>
-      <meta charset="utf-8" />
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="coconutnut">
+    
+    <title>
         
-      <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1, maximum-scale=1"
-      />
-      <title>笔记 推荐系统 |  CoCoNutNut&#39;s NoteBook</title>
-  <meta name="generator" content="hexo-theme-ayer">
-      
-      <link rel="shortcut icon" href="/images/1949347-2001.png" />
-       
-<link rel="stylesheet" href="/dist/main.css">
+            笔记 推荐系统 |
+        
+        CoCoNutNut&#39;s NoteBook
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
 
-      <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/css/remixicon.min.css"
-      />
-      
-<link rel="stylesheet" href="/css/custom.css">
- 
-      <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
-       
- 
+    <link rel="shortcut icon" href="/images/avatar.png">
+    
+<link rel="stylesheet" href="/css/font-awesome.min.css">
 
-      <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
-      />
-      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
-
-      <!-- mermaid -->
-      
-      <style>
-        .swal2-styled.swal2-confirm {
-          font-size: 1.6rem;
-        }
-      </style>
-    <link rel="alternate" href="/atom.xml" title="CoCoNutNut's NoteBook" type="application/atom+xml">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"coconutnutx.github.io","root":"/","language":"en","path":"search.json"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"rgb(70,179,119)","avatar":"/images/avatar.jpg","favicon":"/images/avatar.png","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":false,"background_img":"/images/panorama1.jpg","description":"The cave you fear to enter holds the treasure you seek."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":false}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":true},"lazyload":{"enable":true},"version":"3.4.3"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="CoCoNutNut's NoteBook" type="application/atom+xml">
 </head>
-  </html>
-</html>
 
 
 <body>
-  <div id="app">
+<div class="progress-bar-container">
     
-      
-    <main class="content on">
-      <section class="outer">
-  <article
-  id="post-recommendation"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
+        <span class="scroll-progress-bar"></span>
     
-    <header class="article-header">
-       
-<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  笔记 推荐系统
-</h1>
- 
 
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2020/06/23/recommendation/" class="article-date">
-  <time datetime="2020-06-23T07:46:41.000Z" itemprop="datePublished">2020-06-23</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Note/">Note</a>
-  </div>
-  
-<div class="word_count">
-    <span class="post-time">
-        <span class="post-meta-item-icon">
-            <i class="ri-quill-pen-line"></i>
-            <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">839</span>
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
         </span>
-    </span>
-
-    <span class="post-time">
-        &nbsp; | &nbsp;
-        <span class="post-meta-item-icon">
-            <i class="ri-book-open-line"></i>
-            <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">3 min</span>
-        </span>
-    </span>
+    
 </div>
- 
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+                <a class="logo-image" href="/">
+                    <img src="/images/avatar.png">
+                </a>
+            
+            <a class="logo-title" href="/">
+                CoCoNutNut&#39;s NoteBook
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                HOME
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                ARCHIVES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                CATEGORIES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                TAGS
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
     </div>
-      
-    <div class="tocbot"></div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">ARCHIVES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">CATEGORIES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">TAGS</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
 
 
+        </div>
 
+        <div class="page-main-content-middle">
 
-  
-    <div class="article-entry" itemprop="articleBody">
-       
-  <blockquote>
-<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/av30578499/">https://www.bilibili.com/video/av30578499/</a></p>
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">笔记 推荐系统</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">coconutnut</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2020-06-23 09:46:41
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/Note/">Note</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <blockquote>
+<p><a class="link"   target="_blank" rel="noopener" href="https://www.bilibili.com/video/av30578499/" >https://www.bilibili.com/video/av30578499/<i class="fas fa-external-link-alt"></i></a></p>
 </blockquote>
-<h1 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h1><img src="/images/2020/screencapture2020-06-23 AM9.48.46.jpg">
+<h1 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h1><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2020/screencapture2020-06-23 AM9.48.46.jpg"
+                     
+                >
 
 <h1 id="传统推荐系统"><a href="#传统推荐系统" class="headerlink" title="传统推荐系统"></a>传统推荐系统</h1><p>Content-based：unstructured，文字、图像等，需理解语义、提取大量特征，算法复杂延迟高</p>
 <p>Collaborative filtering协同过滤：基于User、Item历史，如点击是1、不点击是0</p>
@@ -121,7 +226,12 @@
 <p>Knowledge-based：根据专业知识</p>
 <p>Community-based：类似Content-based，如社交网络、人群兴趣</p>
 <p>Hybrid：综合</p>
-<h2 id="协同过滤"><a href="#协同过滤" class="headerlink" title="协同过滤"></a>协同过滤</h2><img src="/images/2020/screencapture2020-06-23 AM9.52.31.jpg">
+<h2 id="协同过滤"><a href="#协同过滤" class="headerlink" title="协同过滤"></a>协同过滤</h2><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2020/screencapture2020-06-23 AM9.52.31.jpg"
+                     
+                >
 
 <p>基于相似User判断</p>
 <p>计算相似性 </p>
@@ -133,7 +243,12 @@
 </li>
 <li>Model-based 建立User和Item的方程，给定一个User和Item返回一个分数</li>
 </ul>
-<img src="/images/2020/screencapture2020-06-23 AM9.55.53.jpg">
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2020/screencapture2020-06-23 AM9.55.53.jpg"
+                     
+                >
 
 <p>思想：根据User-Item Rating矩阵，学到User和Item低维的特征表示，用它计算相似性</p>
 <p>购买为1，点击未购买为0，剩下补0</p>
@@ -150,7 +265,12 @@
 </ul>
 <h1 id="深度学习"><a href="#深度学习" class="headerlink" title="深度学习"></a>深度学习</h1><p>优势：表征能力强、不需要做特征工程、</p>
 <p>先创建深度学习的网络结构实现协同过滤，再加入Content-based</p>
-<h2 id="Neural-Collaborative-filtering"><a href="#Neural-Collaborative-filtering" class="headerlink" title="Neural Collaborative filtering"></a>Neural Collaborative filtering</h2><img src="/images/2020/screencapture2020-06-23 AM11.29.37.jpg">
+<h2 id="Neural-Collaborative-filtering"><a href="#Neural-Collaborative-filtering" class="headerlink" title="Neural Collaborative filtering"></a>Neural Collaborative filtering</h2><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2020/screencapture2020-06-23 AM11.29.37.jpg"
+                     
+                >
 
 <ul>
 <li><p>Embedding Layers</p>
@@ -166,7 +286,12 @@
 </ul>
 </li>
 </ul>
-<h2 id="Neural-Matrix-Factorization-Model"><a href="#Neural-Matrix-Factorization-Model" class="headerlink" title="Neural Matrix Factorization Model"></a>Neural Matrix Factorization Model</h2><img src="/images/2020/screencapture2020-06-23 AM11.36.27.jpg">
+<h2 id="Neural-Matrix-Factorization-Model"><a href="#Neural-Matrix-Factorization-Model" class="headerlink" title="Neural Matrix Factorization Model"></a>Neural Matrix Factorization Model</h2><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2020/screencapture2020-06-23 AM11.36.27.jpg"
+                     
+                >
 
 <p>线性的和非线性的结合到一起</p>
 <p>问题：没有Content-based，希望加入手工提取的特征</p>
@@ -174,19 +299,39 @@
 <p>Deep部分是User、Item</p>
 <p>最后结合到一起做出预测</p>
 <p>Eg: Google Play</p>
-<img src="/images/2020/screencapture2020-06-23 AM11.41.51.jpg">
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2020/screencapture2020-06-23 AM11.41.51.jpg"
+                     
+                >
 
 <h2 id="传统的-Factorization-Machines"><a href="#传统的-Factorization-Machines" class="headerlink" title="传统的 Factorization Machines"></a>传统的 Factorization Machines</h2><p>直接对产品的类型信息做One-Hot Encoding</p>
-<img src="/images/2020/screencapture2020-06-23 AM11.48.13.jpg">
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2020/screencapture2020-06-23 AM11.48.13.jpg"
+                     
+                >
 
 <p>特征交叉 如性别=男，年龄=20 把对应的维相乘，数据过大是难处理</p>
 <p>用矩阵分解的思想，wij变成&lt;vi,vj&gt;，其中vi,vj都是低维向量</p>
 <p>变形版本：</p>
-<h3 id="Field-aware-Factorization-Machines"><a href="#Field-aware-Factorization-Machines" class="headerlink" title="Field-aware Factorization Machines"></a>Field-aware Factorization Machines</h3><img src="/images/2020/screencapture2020-06-23 AM11.53.47.jpg">
+<h3 id="Field-aware-Factorization-Machines"><a href="#Field-aware-Factorization-Machines" class="headerlink" title="Field-aware Factorization Machines"></a>Field-aware Factorization Machines</h3><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2020/screencapture2020-06-23 AM11.53.47.jpg"
+                     
+                >
 
 <p>考虑特征是来自哪里的</p>
 <p>每一个特征，与其他类别交叉时，有一个不一样的依赖向量</p>
-<h2 id="Deep-Factorization-Machines"><a href="#Deep-Factorization-Machines" class="headerlink" title="Deep Factorization Machines"></a>Deep Factorization Machines</h2><img src="/images/2020/screencapture2020-06-23 AM11.56.26.jpg">
+<h2 id="Deep-Factorization-Machines"><a href="#Deep-Factorization-Machines" class="headerlink" title="Deep Factorization Machines"></a>Deep Factorization Machines</h2><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2020/screencapture2020-06-23 AM11.56.26.jpg"
+                     
+                >
 
 <p>左侧：传统部分</p>
 <p>每个种类做Embedding</p>
@@ -194,371 +339,339 @@
 <p>线性部分，求和（最左的+）</p>
 <p>右侧：深度部分</p>
 <p>美团的测试结果：</p>
-<img src="/images/2020/screencapture2020-06-23 AM11.58.58.jpg">
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2020/screencapture2020-06-23 AM11.58.58.jpg"
+                     
+                >
 
 <p>Wide &amp; Deep 要做特征工程，DeepFM 做了一阶、二阶的特征交叉，同时用Deep神经网络做特征工程</p>
 <h2 id="Deep-Cooperative-Neural-Network"><a href="#Deep-Cooperative-Neural-Network" class="headerlink" title="Deep Cooperative Neural Network"></a>Deep Cooperative Neural Network</h2><p>卷积神经网络</p>
 <p>涉及图片、文字时可参考</p>
-<img src="/images/2020/screencapture2020-06-23 PM12.09.24.jpg">
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2020/screencapture2020-06-23 PM12.09.24.jpg"
+                     
+                >
 
 <p>Word-Embedding 把每个单词映射成向量（Google : word2vec）</p>
 <p>最后得到User记录的低维表示，Item描述的低维表示</p>
-<h2 id="Recurrent-Neural-Network"><a href="#Recurrent-Neural-Network" class="headerlink" title="Recurrent Neural Network"></a>Recurrent Neural Network</h2><img src="/images/2020/screencapture2020-06-23 PM1.22.14.jpg">
+<h2 id="Recurrent-Neural-Network"><a href="#Recurrent-Neural-Network" class="headerlink" title="Recurrent Neural Network"></a>Recurrent Neural Network</h2><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2020/screencapture2020-06-23 PM1.22.14.jpg"
+                     
+                >
 
 <p>给一个input，映射成低维向量，输出output</p>
 <p>同时反复自己迭代</p>
 <p>可学习与时间有关的信息，如不需要login的网站上用户点击的行为</p>
-<h3 id="Session-based-Recommendation-with-RNN"><a href="#Session-based-Recommendation-with-RNN" class="headerlink" title="Session-based Recommendation with RNN"></a>Session-based Recommendation with RNN</h3><img src="/images/2020/screencapture2020-06-23 PM1.25.03.jpg">
+<h3 id="Session-based-Recommendation-with-RNN"><a href="#Session-based-Recommendation-with-RNN" class="headerlink" title="Session-based Recommendation with RNN"></a>Session-based Recommendation with RNN</h3><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2020/screencapture2020-06-23 PM1.25.03.jpg"
+                     
+                >
 
 <p>预测用户下一步行为</p>
 <h1 id="强化学习"><a href="#强化学习" class="headerlink" title="强化学习"></a>强化学习</h1><p>因为用户行为随时在变化，传统推荐系统无法实时做出调整</p>
-<img src="/images/2020/screencapture2020-06-23 PM1.27.37.jpg">
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2020/screencapture2020-06-23 PM1.27.37.jpg"
+                     
+                >
 
 <p>State可以是用户的点击行为</p>
 <p>Reward可以是点击了推荐的产品</p>
 <p>根据当前的State和Reward返回下一步Action</p>
 <p>用户对Action做出反应，得到新的State和Reward</p>
 <p>阿里的例子：</p>
-<img src="/images/2020/screencapture2020-06-23 PM1.30.26.jpg">
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2020/screencapture2020-06-23 PM1.30.26.jpg"
+                     
+                >
 
- 
-      <!-- reward -->
-      
-    </div>
-    
 
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-   
-  <nav class="article-nav">
-    
-      <a href="/2020/06/24/recommender-system/" class="article-nav-link">
-        <strong class="article-nav-caption">previous post</strong>
-        <div class="article-nav-title">
-          
-            读书笔记 推荐系统实践
-          
-        </div>
-      </a>
-    
-    
-      <a href="/2020/06/16/debug/" class="article-nav-link">
-        <strong class="article-nav-caption">next post</strong>
-        <div class="article-nav-title">项目Debug记录</div>
-      </a>
-    
-  </nav>
-
-  
-   
-     
-</article>
-
-</section>
-      <footer class="footer">
-  <div class="outer">
-    <ul class="list-inline">
-      <li>
-        &copy;
-        2020-2021
-        </i> coconutnut
-      </li>
-      
-      <li>
-        
-        
-        <span>
-  <i>PV:<span id="busuanzi_value_page_pv"></span></i>
-  <i>UV:<span id="busuanzi_value_site_uv"></span></i>
-</span>
-        377k
-        
-      </li>
-      
-      <li>
-        
-        Powered by
-        
-        
-        <a href="https://hexo.io" target="_blank">Hexo</a> Theme <a href="https://github.com/Shen-Yu/hexo-theme-ayer" target="_blank">Ayer</a>
-        
-      </li>
-      
-      <li>
-      
-    </li>
-    </ul>
-
-    <ul>
-      
-    </ul>
-    
-    
-    <ul>
-      <li>
-        <!-- cnzz统计 -->
-        
-      </li>
-    </ul>
-    
-  </div>
-</footer>    
-    </main>
-    <div class="float_btns">
-      <div class="totop" id="totop">
-  <i class="ri-arrow-up-line"></i>
-</div>
-
-<div class="todark" id="todark">
-  <i class="ri-moon-line"></i>
-</div>
-
-    </div>
-    <aside class="sidebar on">
-      <button class="navbar-toggle"></button>
-<nav class="navbar">
-  
-  <div class="logo">
-    <a href="/"><img src="/images/1949347-2001.png" alt="CoCoNutNut&#39;s NoteBook"></a>
-  </div>
-  
-  <ul class="nav nav-main">
-    
-    <li class="nav-item">
-      <a class="nav-item-link" href="/">Home</a>
-    </li>
-    
-    <li class="nav-item">
-      <a class="nav-item-link" href="/categories">Categorie</a>
-    </li>
-    
-    <li class="nav-item">
-      <a class="nav-item-link" href="/tags">Tag</a>
-    </li>
-    
-    <li class="nav-item">
-      <a class="nav-item-link" href="/archives">Archive</a>
-    </li>
-    
-    <li class="nav-item">
-      <a class="nav-item-link" href="/about">About</a>
-    </li>
-    
-  </ul>
-</nav>
-<nav class="navbar navbar-bottom">
-  <ul class="nav">
-    <li class="nav-item">
-      
-      <a class="nav-item-link nav-item-search"  title="Search">
-        <i class="ri-search-line"></i>
-      </a>
-      
-      
-    </li>
-  </ul>
-</nav>
-<div class="search-form-wrap">
-  <div class="local-search local-search-plugin">
-  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
-  <div id="local-search-result" class="local-search-result"></div>
-</div>
-</div>
-    </aside>
-    <div id="mask"></div>
-
-<!-- #reward -->
-<div id="reward">
-  <span class="close"><i class="ri-close-line"></i></span>
-  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
-  <div class="reward-box">
-    
-    <div class="reward-item">
-      <img class="reward-img" src="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/alipay.jpg">
-      <span class="reward-type">支付宝</span>
-    </div>
-    
-    
-    <div class="reward-item">
-      <img class="reward-img" src="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/wechat.jpg">
-      <span class="reward-type">微信</span>
-    </div>
-    
-  </div>
-</div>
-    
-<script src="/js/jquery-3.6.0.min.js"></script>
- 
-<script src="/js/lazyload.min.js"></script>
-
-<!-- Tocbot -->
- 
-<script src="/js/tocbot.min.js"></script>
-
-<script>
-  tocbot.init({
-    tocSelector: ".tocbot",
-    contentSelector: ".article-entry",
-    headingSelector: "h1, h2, h3, h4, h5, h6",
-    hasInnerContainers: true,
-    scrollSmooth: true,
-    scrollContainer: "main",
-    positionFixedSelector: ".tocbot",
-    positionFixedClass: "is-position-fixed",
-    fixedSidebarOffset: "auto",
-  });
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
-<link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css"
-/>
-<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
-
-<script src="/dist/main.js"></script>
-
-<!-- ImageViewer -->
- <!-- Root element of PhotoSwipe. Must have class pswp. -->
-<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-
-    <!-- Background of PhotoSwipe. 
-         It's a separate element as animating opacity is faster than rgba(). -->
-    <div class="pswp__bg"></div>
-
-    <!-- Slides wrapper with overflow:hidden. -->
-    <div class="pswp__scroll-wrap">
-
-        <!-- Container that holds slides. 
-            PhotoSwipe keeps only 3 of them in the DOM to save memory.
-            Don't modify these 3 pswp__item elements, data is added later on. -->
-        <div class="pswp__container">
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
         </div>
 
-        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
-        <div class="pswp__ui pswp__ui--hidden">
+        
 
-            <div class="pswp__top-bar">
-
-                <!--  Controls are self-explanatory. Order can be changed. -->
-
-                <div class="pswp__counter"></div>
-
-                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-
-                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
-
-                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-
-                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-
-                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
-                <!-- element will get class pswp__preloader--active when preloader is running -->
-                <div class="pswp__preloader">
-                    <div class="pswp__preloader__icn">
-                        <div class="pswp__preloader__cut">
-                            <div class="pswp__preloader__donut"></div>
-                        </div>
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2020/06/24/recommender-system/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">读书笔记 推荐系统实践</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
                     </div>
-                </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2020/06/16/debug/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">项目Debug记录</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
             </div>
+        
 
-            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                <div class="pswp__share-tooltip"></div>
-            </div>
+        
+    </div>
+</div>
 
-            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-            </button>
 
-            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-            </button>
-
-            <div class="pswp__caption">
-                <div class="pswp__caption__center"></div>
+                
             </div>
 
         </div>
 
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span>&nbsp;-&nbsp;
+            
+            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">coconutnut</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        Visitor Count&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        Totalview&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.3</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
     </div>
 
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
 </div>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css">
-<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="fas fa-arrow-up"></i>
+            </li>
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Overview"><span class="nav-number">1.</span> <span class="nav-text">Overview</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BC%A0%E7%BB%9F%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F"><span class="nav-number">2.</span> <span class="nav-text">传统推荐系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%8F%E5%90%8C%E8%BF%87%E6%BB%A4"><span class="nav-number">2.1.</span> <span class="nav-text">协同过滤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E7%82%B9"><span class="nav-number">2.1.1.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9"><span class="nav-number">2.1.2.</span> <span class="nav-text">缺点</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0"><span class="nav-number">3.</span> <span class="nav-text">深度学习</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Neural-Collaborative-filtering"><span class="nav-number">3.1.</span> <span class="nav-text">Neural Collaborative filtering</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Neural-Matrix-Factorization-Model"><span class="nav-number">3.2.</span> <span class="nav-text">Neural Matrix Factorization Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Wide-Deep-Neural-Network"><span class="nav-number">3.3.</span> <span class="nav-text">Wide Deep Neural Network</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%A0%E7%BB%9F%E7%9A%84-Factorization-Machines"><span class="nav-number">3.4.</span> <span class="nav-text">传统的 Factorization Machines</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Field-aware-Factorization-Machines"><span class="nav-number">3.4.1.</span> <span class="nav-text">Field-aware Factorization Machines</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Deep-Factorization-Machines"><span class="nav-number">3.5.</span> <span class="nav-text">Deep Factorization Machines</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Deep-Cooperative-Neural-Network"><span class="nav-number">3.6.</span> <span class="nav-text">Deep Cooperative Neural Network</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Recurrent-Neural-Network"><span class="nav-number">3.7.</span> <span class="nav-text">Recurrent Neural Network</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Session-based-Recommendation-with-RNN"><span class="nav-number">3.7.1.</span> <span class="nav-text">Session-based Recommendation with RNN</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0"><span class="nav-number">4.</span> <span class="nav-text">强化学习</span></a></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/header-shrink.js"></script>
+
+<script src="/js/back2top.js"></script>
+
+<script src="/js/dark-light-toggle.js"></script>
+
+
+
+    
+<script src="/js/local-search.js"></script>
+
+
+
+
+    
+<script src="/js/code-copy.js"></script>
+
+
+
+
+    
+<script src="/js/lazyload.js"></script>
+
+
+
+<div class="post-scripts pjax">
+    
+        
+<script src="/js/left-side-toggle.js"></script>
+
+<script src="/js/libs/anime.min.js"></script>
+
+<script src="/js/toc.js"></script>
+
+    
+</div>
+
+
+    
+<script src="/js/libs/pjax.min.js"></script>
 
 <script>
-    function viewer_init() {
-        let pswpElement = document.querySelectorAll('.pswp')[0];
-        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
 
-        $imgArr.forEach(($em, i) => {
-            $em.onclick = () => {
-                // slider展开状态
-                // todo: 这样不好，后面改成状态
-                if (document.querySelector('.left-col.show')) return
-                let items = []
-                $imgArr.forEach(($em2, i2) => {
-                    let img = $em2.getAttribute('data-idx', i2)
-                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
-                    let title = $em2.getAttribute('alt')
-                    // 获得原图尺寸
-                    const image = new Image()
-                    image.src = src
-                    items.push({
-                        src: src,
-                        w: image.width || $em2.width,
-                        h: image.height || $em2.height,
-                        title: title
-                    })
-                })
-                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
-                    index: parseInt(i)
-                });
-                gallery.init()
-            }
-        })
-    }
-    viewer_init()
-</script> 
-<!-- MathJax -->
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
 
-<!-- Katex -->
-
-<!-- busuanzi  -->
- 
-<script src="/js/busuanzi-2.3.pure.min.js"></script>
- 
-<!-- ClickLove -->
-
-<!-- ClickBoom1 -->
-
-<!-- ClickBoom2 -->
-
-<!-- CodeCopy -->
-
-<!-- CanvasBackground -->
-
-<script>
-  if (window.mermaid) {
-    mermaid.initialize({ theme: "forest" });
-  }
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
 </script>
 
 
-    
-    
 
-  </div>
 </body>
-
 </html>

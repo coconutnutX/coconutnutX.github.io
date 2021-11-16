@@ -1,117 +1,228 @@
 <!DOCTYPE html>
-
-
 <html lang="en">
-  
-
-    <head>
-      <meta charset="utf-8" />
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="coconutnut">
+    
+    <title>
         
-      <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1, maximum-scale=1"
-      />
-      <title>SpringCloud笔记02 Ribbon负载均衡 |  CoCoNutNut&#39;s NoteBook</title>
-  <meta name="generator" content="hexo-theme-ayer">
-      
-      <link rel="shortcut icon" href="/images/1949347-2001.png" />
-       
-<link rel="stylesheet" href="/dist/main.css">
+            SpringCloud笔记02 Ribbon负载均衡 |
+        
+        CoCoNutNut&#39;s NoteBook
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
 
-      <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/css/remixicon.min.css"
-      />
-      
-<link rel="stylesheet" href="/css/custom.css">
- 
-      <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
-       
- 
+    <link rel="shortcut icon" href="/images/avatar.png">
+    
+<link rel="stylesheet" href="/css/font-awesome.min.css">
 
-      <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
-      />
-      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
-
-      <!-- mermaid -->
-      
-      <style>
-        .swal2-styled.swal2-confirm {
-          font-size: 1.6rem;
-        }
-      </style>
-    <link rel="alternate" href="/atom.xml" title="CoCoNutNut's NoteBook" type="application/atom+xml">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"coconutnutx.github.io","root":"/","language":"en","path":"search.json"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"rgb(70,179,119)","avatar":"/images/avatar.jpg","favicon":"/images/avatar.png","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":false,"background_img":"/images/panorama1.jpg","description":"The cave you fear to enter holds the treasure you seek."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":false}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":true},"lazyload":{"enable":true},"version":"3.4.3"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="CoCoNutNut's NoteBook" type="application/atom+xml">
 </head>
-  </html>
-</html>
 
 
 <body>
-  <div id="app">
+<div class="progress-bar-container">
     
-      
-    <main class="content on">
-      <section class="outer">
-  <article
-  id="post-note-springcloud-02"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
+        <span class="scroll-progress-bar"></span>
     
-    <header class="article-header">
-       
-<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  SpringCloud笔记02 Ribbon负载均衡
-</h1>
- 
 
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2020/04/09/note-springcloud-02/" class="article-date">
-  <time datetime="2020-04-09T17:13:46.000Z" itemprop="datePublished">2020-04-09</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Note/">Note</a>
-  </div>
-  
-<div class="word_count">
-    <span class="post-time">
-        <span class="post-meta-item-icon">
-            <i class="ri-quill-pen-line"></i>
-            <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">2k</span>
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
         </span>
-    </span>
-
-    <span class="post-time">
-        &nbsp; | &nbsp;
-        <span class="post-meta-item-icon">
-            <i class="ri-book-open-line"></i>
-            <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">9 min</span>
-        </span>
-    </span>
+    
 </div>
- 
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+                <a class="logo-image" href="/">
+                    <img src="/images/avatar.png">
+                </a>
+            
+            <a class="logo-title" href="/">
+                CoCoNutNut&#39;s NoteBook
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                HOME
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                ARCHIVES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                CATEGORIES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                TAGS
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
     </div>
-      
-    <div class="tocbot"></div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">ARCHIVES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">CATEGORIES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">TAGS</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
 
 
+        </div>
 
+        <div class="page-main-content-middle">
 
-  
-    <div class="article-entry" itemprop="articleBody">
-       
-  <blockquote>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/ThinkWon/article/details/103729080">https://blog.csdn.net/ThinkWon/article/details/103729080</a></p>
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">SpringCloud笔记02 Ribbon负载均衡</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">coconutnut</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2020-04-09 19:13:46
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/Note/">Note</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/springcloud/">springcloud</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <blockquote>
+<p><a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/ThinkWon/article/details/103729080" >https://blog.csdn.net/ThinkWon/article/details/103729080<i class="fas fa-external-link-alt"></i></a></p>
 </blockquote>
 <h1 id="user-service模块"><a href="#user-service模块" class="headerlink" title="user-service模块"></a>user-service模块</h1><ol>
 <li>创建user-service模块</li>
@@ -134,36 +245,71 @@
 </ol>
 <p>8001开一个Server（上次的模块）</p>
 <p>8201、8202各开一个Service</p>
-<img src="/images/2020/screencapture2020-04-09 PM7.55.27.jpg">
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2020/screencapture2020-04-09 PM7.55.27.jpg"
+                     
+                >
 
 <p>这次是同样的配置文件，2个端口各开一个，改Active profiles</p>
 <p>上次是不同的配置文件，开在不同的端口，用Override parameters</p>
 <p>8301开Ribbon Service</p>
-<img src="/images/2020/screencapture2020-04-09 PM9.36.41.jpg">
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2020/screencapture2020-04-09 PM9.36.41.jpg"
+                     
+                >
 
 <ol start="2">
 <li>调用接口进行测试</li>
 </ol>
-<img src="/images/2020/screencapture2020-04-10 AM10.28.54.jpg">
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2020/screencapture2020-04-10 AM10.28.54.jpg"
+                     
+                >
 
 <p>8201</p>
-<img src="/images/2020/screencapture2020-04-10 AM10.32.24.jpg">
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2020/screencapture2020-04-10 AM10.32.24.jpg"
+                     
+                >
 
 <p>8202</p>
-<img src="/images/2020/screencapture2020-04-10 AM10.32.33.jpg">
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2020/screencapture2020-04-10 AM10.32.33.jpg"
+                     
+                >
 
 <h2 id="DEBUG：运行后没有注册"><a href="#DEBUG：运行后没有注册" class="headerlink" title="DEBUG：运行后没有注册"></a>DEBUG：运行后没有注册</h2><p>启动几个服务后</p>
-<img src="/images/2020/screencapture2020-04-09 PM7.59.13.jpg">
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2020/screencapture2020-04-09 PM7.59.13.jpg"
+                     
+                >
 
 <p>但是浏览器中查看</p>
-<img src="/images/2020/screencapture2020-04-09 PM7.59.23.jpg">
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2020/screencapture2020-04-09 PM7.59.23.jpg"
+                     
+                >
 
 <p>发现又忘记加@EnableDiscoveryClient了</p>
 <p>重启</p>
 <p>还是没有注册上</p>
 <p><strong>尝试1</strong></p>
 <blockquote>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/yangyongming_888/article/details/83859092">https://blog.csdn.net/yangyongming_888/article/details/83859092</a></p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/yangyongming_888/article/details/83859092" >https://blog.csdn.net/yangyongming_888/article/details/83859092<i class="fas fa-external-link-alt"></i></a></p>
 </blockquote>
 <p>说是依赖带starter和不带starter</p>
 <p>但是看了下三个pom.xml中都是带starter的</p>
@@ -198,23 +344,38 @@
 
 <p>没用</p>
 <blockquote>
-<p><a target="_blank" rel="noopener" href="https://segmentfault.com/q/1010000012008825">https://segmentfault.com/q/1010000012008825</a></p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://segmentfault.com/q/1010000012008825" >https://segmentfault.com/q/1010000012008825<i class="fas fa-external-link-alt"></i></a></p>
 </blockquote>
 <p>有说是yml的缩进问题</p>
 <p>看了一下上次可以注册的服务的yml</p>
-<img src="/images/2020/screencapture2020-04-09 PM8.49.31.jpg">
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2020/screencapture2020-04-09 PM8.49.31.jpg"
+                     
+                >
 
 <p>这次的</p>
-<img src="/images/2020/screencapture2020-04-09 PM8.49.35.jpg">
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2020/screencapture2020-04-09 PM8.49.35.jpg"
+                     
+                >
 
 <p>发现注册的true是白色的</p>
 <p>提示</p>
-<img src="/images/2020/screencapture2020-04-09 PM8.53.23.jpg">
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2020/screencapture2020-04-09 PM8.53.23.jpg"
+                     
+                >
 
 <p>确实有问题</p>
 <p>把pom.xml中spring-cloud-starter-netflix-eureka-client的依赖注释的，依然能启动</p>
 <blockquote>
-<p><a target="_blank" rel="noopener" href="https://ask.csdn.net/questions/719186">https://ask.csdn.net/questions/719186</a></p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://ask.csdn.net/questions/719186" >https://ask.csdn.net/questions/719186<i class="fas fa-external-link-alt"></i></a></p>
 </blockquote>
 <p>有说加版本号的</p>
 <p>没用</p>
@@ -230,32 +391,62 @@
 <p>没差啊</p>
 <p>那难道是依赖没有导入</p>
 <p>看下Maven</p>
-<img src="/images/2020/screencapture2020-04-09 PM9.14.59.jpg">
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2020/screencapture2020-04-09 PM9.14.59.jpg"
+                     
+                >
 
 <p>???</p>
 <p>难道真是没有版本号</p>
 <p>而且为什么前面的模块也都是红的，那是怎么运行成功的 迷惑</p>
 <p>点进去看一下</p>
-<img src="/images/2020/screencapture2020-04-09 PM9.15.46.jpg">
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2020/screencapture2020-04-09 PM9.15.46.jpg"
+                     
+                >
 
 <p>也许只是部分冲突所以还能运行？</p>
 <p>总之先加个版本号</p>
-<img src="/images/2020/screencapture2020-04-09 PM9.23.48.jpg">
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2020/screencapture2020-04-09 PM9.23.48.jpg"
+                     
+                >
 
 <p>加了之后还是unknown</p>
 <p>重启也是</p>
 <p>发现右下角在下载</p>
 <p>下完之后变成了Maven中变成了2.2.2.RELEASE</p>
 <p>激动地搓搓手</p>
-<img src="/images/2020/screencapture2020-04-09 PM9.27.27.jpg">
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2020/screencapture2020-04-09 PM9.27.27.jpg"
+                     
+                >
 
 <p>成功！</p>
-<img src="/images/2020/screencapture2020-04-09 PM9.29.40.jpg">
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2020/screencapture2020-04-09 PM9.29.40.jpg"
+                     
+                >
 
 <p>注册上了</p>
 <p>给ribbon-service也加个版本</p>
 <p>加在properties里似乎不管用，暂时都加在dependency里好了</p>
-<img src="/images/2020/screencapture2020-04-09 PM9.31.51.jpg">
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2020/screencapture2020-04-09 PM9.31.51.jpg"
+                     
+                >
 
 <h2 id="DEBUG：调用接口调试的问题"><a href="#DEBUG：调用接口调试的问题" class="headerlink" title="DEBUG：调用接口调试的问题"></a>DEBUG：调用接口调试的问题</h2><p>出现Whitelabel Error Page</p>
 <p>报错是</p>
@@ -263,16 +454,26 @@
 
 <p>找不到com.netflix.niws.client.http.RestClient</p>
 <p>看一下依赖</p>
-<img src="/images/2020/screencapture2020-04-09 PM9.46.14.jpg">
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2020/screencapture2020-04-09 PM9.46.14.jpg"
+                     
+                >
 
 <p>似乎有很多冲突</p>
 <blockquote>
-<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/50675895/java-lang-classnotfoundexception-com-netflix-discovery-eurekaclientconfig">https://stackoverflow.com/questions/50675895/java-lang-classnotfoundexception-com-netflix-discovery-eurekaclientconfig</a></p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://stackoverflow.com/questions/50675895/java-lang-classnotfoundexception-com-netflix-discovery-eurekaclientconfig" >https://stackoverflow.com/questions/50675895/java-lang-classnotfoundexception-com-netflix-discovery-eurekaclientconfig<i class="fas fa-external-link-alt"></i></a></p>
 <p>You should select only <em>Eureka Server</em> using <em>spring Initializr</em> while creating eureka server project.</p>
 </blockquote>
 <p>…</p>
 <p>试一下重新创建</p>
-<img src="/images/2020/screencapture2020-04-09 PM10.00.26.jpg" width=400>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2020/screencapture2020-04-09 PM10.00.26.jpg"
+                      width=400
+                >
 
 <p>就没有冲突了</p>
 <p>运行</p>
@@ -284,7 +485,12 @@
 
 <p>还是不行</p>
 <p>再翻一下报错发现是getUser函数的问题</p>
-<img src="/images/2020/screencapture2020-04-09 PM10.19.03.jpg">
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2020/screencapture2020-04-09 PM10.19.03.jpg"
+                     
+                >
 
 <p>在里面打印一下路径</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping(&quot;/&#123;id&#125;&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Result <span class="title">getUser</span><span class="params">(<span class="meta">@PathVariable</span> Long id)</span> </span>&#123;</span><br><span class="line">  System.out.println(<span class="string">&quot;【getUser中】userServiceUrl：&quot;</span>+userServiceUrl);</span><br><span class="line">  <span class="keyword">return</span> restTemplate.getForObject(userServiceUrl + <span class="string">&quot;/user/&#123;1&#125;&quot;</span>, Result.class, id);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -299,12 +505,17 @@
 <p>但是注册是hostname</p>
 <p>这里应该是要通过服务名称访问2个Service，似乎不一样</p>
 <p>试试直接用localhost加端口访问</p>
-<img src="/images/2020/screencapture2020-04-09 PM10.33.08.jpg">
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2020/screencapture2020-04-09 PM10.33.08.jpg"
+                     
+                >
 
 <p>单个节点的服务没有问题</p>
 <p>那应该就是在注册服务名称到ip的转换上出了问题</p>
 <blockquote>
-<p><a target="_blank" rel="noopener" href="https://bbs.csdn.net/topics/392414113">https://bbs.csdn.net/topics/392414113</a></p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://bbs.csdn.net/topics/392414113" >https://bbs.csdn.net/topics/392414113<i class="fas fa-external-link-alt"></i></a></p>
 </blockquote>
 <p>把</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> RestTemplate restTemplate;</span><br></pre></td></tr></table></figure>
@@ -314,7 +525,7 @@
 
 <p>不行</p>
 <blockquote>
-<p><a target="_blank" rel="noopener" href="https://www.liangzl.com/get-article-detail-174951.html">https://www.liangzl.com/get-article-detail-174951.html</a></p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://www.liangzl.com/get-article-detail-174951.html" >https://www.liangzl.com/get-article-detail-174951.html<i class="fas fa-external-link-alt"></i></a></p>
 </blockquote>
 <p>对比了一下这个教程，也没找到问题</p>
 <p>网页上的错误信息是</p>
@@ -328,20 +539,45 @@
 <p>漫长的下载依赖</p>
 <p><strong>第二天</strong></p>
 <p>运行源码</p>
-<img src="/images/2020/screencapture2020-04-10 AM10.05.19.jpg">
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2020/screencapture2020-04-10 AM10.05.19.jpg"
+                     
+                >
 
-<img src="/images/2020/screencapture2020-04-10 AM10.05.28.jpg">
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2020/screencapture2020-04-10 AM10.05.28.jpg"
+                     
+                >
 
 <p>没有问题</p>
 <p>而且Maven一个都没红</p>
-<img src="/images/2020/screencapture2020-04-10 AM10.06.09.jpg" width=300>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2020/screencapture2020-04-10 AM10.06.09.jpg"
+                      width=300
+                >
 
 <p>对比一下依赖版本</p>
 <p>源码eureka-server</p>
-<img src="/images/2020/screencapture2020-04-10 AM10.08.50.jpg">
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2020/screencapture2020-04-10 AM10.08.50.jpg"
+                     
+                >
 
 <p>项目eureka-server</p>
-<img src="/images/2020/screencapture2020-04-10 AM10.08.58.jpg">
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2020/screencapture2020-04-10 AM10.08.58.jpg"
+                     
+                >
 
 <p>spring-cloud-starter-netflix-eureka-server版本不一样</p>
 <p>diff一下pom文件</p>
@@ -352,22 +588,37 @@
 <p>修改spring-cloud的版本，Maven的冲突就没有了</p>
 <p>于是把其它pom的版本也改了</p>
 <p>spring-boot-starter-parent的版本暂时没改，保持最新</p>
-<img src="/images/2020/screencapture2020-04-10 AM10.22.11.jpg">
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2020/screencapture2020-04-10 AM10.22.11.jpg"
+                     
+                >
 
 <p>启动</p>
-<img src="/images/2020/screencapture2020-04-10 AM10.22.23.jpg">
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2020/screencapture2020-04-10 AM10.22.23.jpg"
+                     
+                >
 
 <p>注册上了</p>
-<img src="/images/2020/screencapture2020-04-10 AM10.22.18.jpg">
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2020/screencapture2020-04-10 AM10.22.18.jpg"
+                     
+                >
 
 <p>又崩了</p>
 <p>但是这次控制台没有Error了</p>
 <p>错误信息变成了</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">There was an unexpected error (type=Internal Server Error, status=500).</span><br><span class="line">No instances available for user-service</span><br></pre></td></tr></table></figure>
 
-<p>单独访问<a target="_blank" rel="noopener" href="http://localhost:8201/user/1或者http://localhost:8202/user/1都是可以的">http://localhost:8201/user/1或者http://localhost:8202/user/1都是可以的</a></p>
+<p>单独访问<a class="link"   target="_blank" rel="noopener" href="http://localhost:8201/user/1或者http://localhost:8202/user/1都是可以的" >http://localhost:8201/user/1或者http://localhost:8202/user/1都是可以的<i class="fas fa-external-link-alt"></i></a></p>
 <blockquote>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/choice_of_door/article/details/85467105">https://blog.csdn.net/choice_of_door/article/details/85467105</a></p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/choice_of_door/article/details/85467105" >https://blog.csdn.net/choice_of_door/article/details/85467105<i class="fas fa-external-link-alt"></i></a></p>
 </blockquote>
 <p>按照这个加了个依赖</p>
 <p>（源码里并没有 但是可以正常运行，为什么呢？<del>MARK</del> (笔记03中解决)）</p>
@@ -379,348 +630,289 @@
 <p>创建时用Spring Initializer加还是后期在pom.xml中加不重要</p>
 <p>但最好和教程保持一致</p>
 <p>至少检查右边Maven栏中没有红线</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><img src="/images/2020/screencapture2020-04-10 AM10.51.52.jpg">
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2020/screencapture2020-04-10 AM10.51.52.jpg"
+                     
+                >
 
- 
-      <!-- reward -->
-      
-    </div>
-    
 
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/springcloud/" rel="tag">springcloud</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-  <nav class="article-nav">
-    
-      <a href="/2020/04/12/note-springcloud-03/" class="article-nav-link">
-        <strong class="article-nav-caption">previous post</strong>
-        <div class="article-nav-title">
-          
-            SpringCloud笔记03 Hystrix断路器
-          
-        </div>
-      </a>
-    
-    
-      <a href="/2020/04/08/note-springcloud-01/" class="article-nav-link">
-        <strong class="article-nav-caption">next post</strong>
-        <div class="article-nav-title">SpringCloud笔记01 Eureka注册中心</div>
-      </a>
-    
-  </nav>
-
-  
-   
-     
-</article>
-
-</section>
-      <footer class="footer">
-  <div class="outer">
-    <ul class="list-inline">
-      <li>
-        &copy;
-        2020-2021
-        </i> coconutnut
-      </li>
-      
-      <li>
-        
-        
-        <span>
-  <i>PV:<span id="busuanzi_value_page_pv"></span></i>
-  <i>UV:<span id="busuanzi_value_site_uv"></span></i>
-</span>
-        377k
-        
-      </li>
-      
-      <li>
-        
-        Powered by
-        
-        
-        <a href="https://hexo.io" target="_blank">Hexo</a> Theme <a href="https://github.com/Shen-Yu/hexo-theme-ayer" target="_blank">Ayer</a>
-        
-      </li>
-      
-      <li>
-      
-    </li>
-    </ul>
-
-    <ul>
-      
-    </ul>
-    
-    
-    <ul>
-      <li>
-        <!-- cnzz统计 -->
-        
-      </li>
-    </ul>
-    
-  </div>
-</footer>    
-    </main>
-    <div class="float_btns">
-      <div class="totop" id="totop">
-  <i class="ri-arrow-up-line"></i>
-</div>
-
-<div class="todark" id="todark">
-  <i class="ri-moon-line"></i>
-</div>
-
-    </div>
-    <aside class="sidebar on">
-      <button class="navbar-toggle"></button>
-<nav class="navbar">
-  
-  <div class="logo">
-    <a href="/"><img src="/images/1949347-2001.png" alt="CoCoNutNut&#39;s NoteBook"></a>
-  </div>
-  
-  <ul class="nav nav-main">
-    
-    <li class="nav-item">
-      <a class="nav-item-link" href="/">Home</a>
-    </li>
-    
-    <li class="nav-item">
-      <a class="nav-item-link" href="/categories">Categorie</a>
-    </li>
-    
-    <li class="nav-item">
-      <a class="nav-item-link" href="/tags">Tag</a>
-    </li>
-    
-    <li class="nav-item">
-      <a class="nav-item-link" href="/archives">Archive</a>
-    </li>
-    
-    <li class="nav-item">
-      <a class="nav-item-link" href="/about">About</a>
-    </li>
-    
-  </ul>
-</nav>
-<nav class="navbar navbar-bottom">
-  <ul class="nav">
-    <li class="nav-item">
-      
-      <a class="nav-item-link nav-item-search"  title="Search">
-        <i class="ri-search-line"></i>
-      </a>
-      
-      
-    </li>
-  </ul>
-</nav>
-<div class="search-form-wrap">
-  <div class="local-search local-search-plugin">
-  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
-  <div id="local-search-result" class="local-search-result"></div>
-</div>
-</div>
-    </aside>
-    <div id="mask"></div>
-
-<!-- #reward -->
-<div id="reward">
-  <span class="close"><i class="ri-close-line"></i></span>
-  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
-  <div class="reward-box">
-    
-    <div class="reward-item">
-      <img class="reward-img" src="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/alipay.jpg">
-      <span class="reward-type">支付宝</span>
-    </div>
-    
-    
-    <div class="reward-item">
-      <img class="reward-img" src="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/wechat.jpg">
-      <span class="reward-type">微信</span>
-    </div>
-    
-  </div>
-</div>
-    
-<script src="/js/jquery-3.6.0.min.js"></script>
- 
-<script src="/js/lazyload.min.js"></script>
-
-<!-- Tocbot -->
- 
-<script src="/js/tocbot.min.js"></script>
-
-<script>
-  tocbot.init({
-    tocSelector: ".tocbot",
-    contentSelector: ".article-entry",
-    headingSelector: "h1, h2, h3, h4, h5, h6",
-    hasInnerContainers: true,
-    scrollSmooth: true,
-    scrollContainer: "main",
-    positionFixedSelector: ".tocbot",
-    positionFixedClass: "is-position-fixed",
-    fixedSidebarOffset: "auto",
-  });
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
-<link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css"
-/>
-<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
-
-<script src="/dist/main.js"></script>
-
-<!-- ImageViewer -->
- <!-- Root element of PhotoSwipe. Must have class pswp. -->
-<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-
-    <!-- Background of PhotoSwipe. 
-         It's a separate element as animating opacity is faster than rgba(). -->
-    <div class="pswp__bg"></div>
-
-    <!-- Slides wrapper with overflow:hidden. -->
-    <div class="pswp__scroll-wrap">
-
-        <!-- Container that holds slides. 
-            PhotoSwipe keeps only 3 of them in the DOM to save memory.
-            Don't modify these 3 pswp__item elements, data is added later on. -->
-        <div class="pswp__container">
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
         </div>
 
-        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
-        <div class="pswp__ui pswp__ui--hidden">
+        
 
-            <div class="pswp__top-bar">
-
-                <!--  Controls are self-explanatory. Order can be changed. -->
-
-                <div class="pswp__counter"></div>
-
-                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-
-                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
-
-                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-
-                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-
-                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
-                <!-- element will get class pswp__preloader--active when preloader is running -->
-                <div class="pswp__preloader">
-                    <div class="pswp__preloader__icn">
-                        <div class="pswp__preloader__cut">
-                            <div class="pswp__preloader__donut"></div>
-                        </div>
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2020/04/12/note-springcloud-03/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">SpringCloud笔记03 Hystrix断路器</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
                     </div>
-                </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2020/04/08/note-springcloud-01/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">SpringCloud笔记01 Eureka注册中心</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
             </div>
+        
 
-            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                <div class="pswp__share-tooltip"></div>
-            </div>
+        
+    </div>
+</div>
 
-            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-            </button>
 
-            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-            </button>
-
-            <div class="pswp__caption">
-                <div class="pswp__caption__center"></div>
+                
             </div>
 
         </div>
 
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span>&nbsp;-&nbsp;
+            
+            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">coconutnut</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        Visitor Count&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        Totalview&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.3</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
     </div>
 
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
 </div>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css">
-<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="fas fa-arrow-up"></i>
+            </li>
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#user-service%E6%A8%A1%E5%9D%97"><span class="nav-number">1.</span> <span class="nav-text">user-service模块</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ribbon-service%E6%A8%A1%E5%9D%97"><span class="nav-number">2.</span> <span class="nav-text">ribbon-service模块</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E5%8A%9F%E8%83%BD%E6%BC%94%E7%A4%BA"><span class="nav-number">3.</span> <span class="nav-text">负载均衡功能演示</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#DEBUG%EF%BC%9A%E8%BF%90%E8%A1%8C%E5%90%8E%E6%B2%A1%E6%9C%89%E6%B3%A8%E5%86%8C"><span class="nav-number">3.1.</span> <span class="nav-text">DEBUG：运行后没有注册</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DEBUG%EF%BC%9A%E8%B0%83%E7%94%A8%E6%8E%A5%E5%8F%A3%E8%B0%83%E8%AF%95%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">3.2.</span> <span class="nav-text">DEBUG：调用接口调试的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93"><span class="nav-number">3.3.</span> <span class="nav-text">问题总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/header-shrink.js"></script>
+
+<script src="/js/back2top.js"></script>
+
+<script src="/js/dark-light-toggle.js"></script>
+
+
+
+    
+<script src="/js/local-search.js"></script>
+
+
+
+
+    
+<script src="/js/code-copy.js"></script>
+
+
+
+
+    
+<script src="/js/lazyload.js"></script>
+
+
+
+<div class="post-scripts pjax">
+    
+        
+<script src="/js/left-side-toggle.js"></script>
+
+<script src="/js/libs/anime.min.js"></script>
+
+<script src="/js/toc.js"></script>
+
+    
+</div>
+
+
+    
+<script src="/js/libs/pjax.min.js"></script>
 
 <script>
-    function viewer_init() {
-        let pswpElement = document.querySelectorAll('.pswp')[0];
-        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
 
-        $imgArr.forEach(($em, i) => {
-            $em.onclick = () => {
-                // slider展开状态
-                // todo: 这样不好，后面改成状态
-                if (document.querySelector('.left-col.show')) return
-                let items = []
-                $imgArr.forEach(($em2, i2) => {
-                    let img = $em2.getAttribute('data-idx', i2)
-                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
-                    let title = $em2.getAttribute('alt')
-                    // 获得原图尺寸
-                    const image = new Image()
-                    image.src = src
-                    items.push({
-                        src: src,
-                        w: image.width || $em2.width,
-                        h: image.height || $em2.height,
-                        title: title
-                    })
-                })
-                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
-                    index: parseInt(i)
-                });
-                gallery.init()
-            }
-        })
-    }
-    viewer_init()
-</script> 
-<!-- MathJax -->
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
 
-<!-- Katex -->
-
-<!-- busuanzi  -->
- 
-<script src="/js/busuanzi-2.3.pure.min.js"></script>
- 
-<!-- ClickLove -->
-
-<!-- ClickBoom1 -->
-
-<!-- ClickBoom2 -->
-
-<!-- CodeCopy -->
-
-<!-- CanvasBackground -->
-
-<script>
-  if (window.mermaid) {
-    mermaid.initialize({ theme: "forest" });
-  }
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
 </script>
 
 
-    
-    
 
-  </div>
 </body>
-
 </html>
