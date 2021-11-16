@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2021-11-13T09:26:37.000Z</updated>
+  <updated>2021-11-16T11:01:22.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>更改主题记录</title>
+    <link href="http://yoursite.com/2021/11/16/algolia/"/>
+    <id>http://yoursite.com/2021/11/16/algolia/</id>
+    <published>2021-11-16T11:01:22.000Z</published>
+    <updated>2021-11-16T11:01:22.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>之前一直用的<a href="https://github.com/Shen-Yu/hexo-theme-ayer">Ayer</a>主题，突然发现搜索不能用，debug了一早上解决不了，决定干脆换个主题，试试<a href="https://github.com/lh1me/hexo-theme-aomori">Aomori</a></p><p>安装参考：</p><p><a href="https://linhong.me/2020/01/27/hexo-theme-aomori/#%E5%BC%80%E5%A7%8B%E4%BD%BF%E7%94%A8">Aomori</a></p><p>过程中搜索API有点小bug，解决参考：</p><p><a href="https://www.npmjs.com/package/hexo-algolia#security-concerns">hexo-algolia</a></p><p><a href="https://hyandou.github.io/2018/06/13/hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%EF%BC%88%E5%9B%9B%EF%BC%89/">hexo搭建博客（四）</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;之前一直用的&lt;a href=&quot;https://github.com/Shen-Yu/hexo-theme-ayer&quot;&gt;Ayer&lt;/a&gt;主题，突然发现搜索不能用，debug了一早上解决不了，决定干脆换个主题，试试&lt;a href=&quot;https://github.com/lh1m
+      
+    
+    </summary>
+    
+    
+      <category term="Memo" scheme="http://yoursite.com/categories/Memo/"/>
+    
+    
+      <category term="tool" scheme="http://yoursite.com/tags/tool/"/>
+    
+  </entry>
   
   <entry>
     <title>sync example note2：memory order</title>
@@ -549,33 +575,6 @@
     
     
       <category term="tool" scheme="http://yoursite.com/tags/tool/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Unity笔记 Project05 地形&amp;Asset</title>
-    <link href="http://yoursite.com/2020/12/02/unity-note-3/"/>
-    <id>http://yoursite.com/2020/12/02/unity-note-3/</id>
-    <published>2020-12-02T20:54:21.000Z</published>
-    <updated>2020-12-02T20:54:21.000Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p><a href="https://www.youtube.com/watch?v=ddy12WHqt-M&amp;ab_channel=UGuruz">https://www.youtube.com/watch?v=ddy12WHqt-M&amp;ab_channel=UGuruz</a></p></blockquote><p>试了试地形</p><img src="/images/2020/screencapture2020-12-02 PM8.19.30.jpg"><p>加入人物，按Project04的方式移动</p><img src="/images/2020/screencapture2020-12-02 PM8.20.05.jpg"><p>找了一组模型，能用！</p><img src="/images/2020/screencapture2020-12-02 PM9.53.36.jpg"><p>感觉要起飞了🤩</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;blockquote&gt;
-&lt;p&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=ddy12WHqt-M&amp;amp;ab_channel=UGuruz&quot;&gt;https://www.youtube.com/watch?v=ddy12WHqt-M&amp;amp;
-      
-    
-    </summary>
-    
-    
-      <category term="Note" scheme="http://yoursite.com/categories/Note/"/>
-    
-    
-      <category term="unity" scheme="http://yoursite.com/tags/unity/"/>
     
   </entry>
   
