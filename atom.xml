@@ -5,9 +5,9 @@
   
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://yoursite.com/"/>
+  <link href="https://coconutnutx.github.io/"/>
   <updated>2021-11-16T11:01:22.000Z</updated>
-  <id>http://yoursite.com/</id>
+  <id>https://coconutnutx.github.io/</id>
   
   <author>
     <name>coconutnut</name>
@@ -18,34 +18,35 @@
   
   <entry>
     <title>更改主题记录</title>
-    <link href="http://yoursite.com/2021/11/16/algolia/"/>
-    <id>http://yoursite.com/2021/11/16/algolia/</id>
+    <link href="https://coconutnutx.github.io/2021/11/16/algolia/"/>
+    <id>https://coconutnutx.github.io/2021/11/16/algolia/</id>
     <published>2021-11-16T11:01:22.000Z</published>
     <updated>2021-11-16T11:01:22.000Z</updated>
     
-    <content type="html"><![CDATA[<p>之前一直用的<a href="https://github.com/Shen-Yu/hexo-theme-ayer">Ayer</a>主题，突然发现搜索不能用，debug了一早上解决不了，决定干脆换个主题，试试<a href="https://github.com/lh1me/hexo-theme-aomori">Aomori</a></p><p>安装参考：</p><p><a href="https://linhong.me/2020/01/27/hexo-theme-aomori/#%E5%BC%80%E5%A7%8B%E4%BD%BF%E7%94%A8">Aomori</a></p><p>过程中搜索API有点小bug，解决参考：</p><p><a href="https://www.npmjs.com/package/hexo-algolia#security-concerns">hexo-algolia</a></p><p><a href="https://hyandou.github.io/2018/06/13/hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%EF%BC%88%E5%9B%9B%EF%BC%89/">hexo搭建博客（四）</a></p>]]></content>
+    <content type="html"><![CDATA[<p>之前一直用的<a href="https://github.com/Shen-Yu/hexo-theme-ayer">Ayer</a>主题，突然发现搜索不能用，debug了一早上解决不了，决定干脆换个主题</p><h1 id="1"><a href="#1" class="headerlink" title="1"></a>1</h1><p>试试<a href="https://github.com/lh1me/hexo-theme-aomori">Aomori</a></p><p>安装参考：</p><p><a href="https://linhong.me/2020/01/27/hexo-theme-aomori/#%E5%BC%80%E5%A7%8B%E4%BD%BF%E7%94%A8">Aomori</a></p><p>过程中搜索API有点小bug，解决参考：</p><p><a href="https://www.npmjs.com/package/hexo-algolia#security-concerns">hexo-algolia</a></p><p><a href="https://hyandou.github.io/2018/06/13/hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%EF%BC%88%E5%9B%9B%EF%BC%89/">hexo搭建博客（四）</a></p><h1 id="2"><a href="#2" class="headerlink" title="2"></a>2</h1><p>换了一个<a href="https://github.com/SukkaW/hexo-theme-suka">suka</a></p><h1 id="3"><a href="#3" class="headerlink" title="3"></a>3</h1><p>还发现<a href="https://github.com/XPoet/hexo-theme-keep">keep</a>也挺好看，备用</p>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;p&gt;之前一直用的&lt;a href=&quot;https://github.com/Shen-Yu/hexo-theme-ayer&quot;&gt;Ayer&lt;/a&gt;主题，突然发现搜索不能用，debug了一早上解决不了，决定干脆换个主题，试试&lt;a href=&quot;https://github.com/lh1m
+        &lt;p&gt;之前一直用的&lt;a href=&quot;https://github.com/Shen-Yu/hexo-theme-ayer&quot;&gt;Ayer&lt;/a&gt;主题，突然发现搜索不能用，debug了一早上解决不了，决定干脆换个主题&lt;/p&gt;
+&lt;h1 id=&quot;1&quot;&gt;&lt;a href=&quot;#1&quot; class=
       
     
     </summary>
     
     
-      <category term="Memo" scheme="http://yoursite.com/categories/Memo/"/>
+      <category term="Memo" scheme="https://coconutnutx.github.io/categories/Memo/"/>
     
     
-      <category term="tool" scheme="http://yoursite.com/tags/tool/"/>
+      <category term="tool" scheme="https://coconutnutx.github.io/tags/tool/"/>
     
   </entry>
   
   <entry>
     <title>sync example note2：memory order</title>
-    <link href="http://yoursite.com/2021/11/13/concurrent2/"/>
-    <id>http://yoursite.com/2021/11/13/concurrent2/</id>
+    <link href="https://coconutnutx.github.io/2021/11/13/concurrent2/"/>
+    <id>https://coconutnutx.github.io/2021/11/13/concurrent2/</id>
     <published>2021-11-13T09:26:37.000Z</published>
     <updated>2021-11-13T09:26:37.000Z</updated>
     
@@ -62,17 +63,17 @@
     </summary>
     
     
-      <category term="Note" scheme="http://yoursite.com/categories/Note/"/>
+      <category term="Note" scheme="https://coconutnutx.github.io/categories/Note/"/>
     
     
-      <category term="concurrent_algorithm" scheme="http://yoursite.com/tags/concurrent-algorithm/"/>
+      <category term="concurrent_algorithm" scheme="https://coconutnutx.github.io/tags/concurrent-algorithm/"/>
     
   </entry>
   
   <entry>
     <title>sync example note1</title>
-    <link href="http://yoursite.com/2021/11/13/concurrent/"/>
-    <id>http://yoursite.com/2021/11/13/concurrent/</id>
+    <link href="https://coconutnutx.github.io/2021/11/13/concurrent/"/>
+    <id>https://coconutnutx.github.io/2021/11/13/concurrent/</id>
     <published>2021-11-13T08:53:44.000Z</published>
     <updated>2021-11-13T08:53:44.000Z</updated>
     
@@ -89,17 +90,17 @@
     </summary>
     
     
-      <category term="Note" scheme="http://yoursite.com/categories/Note/"/>
+      <category term="Note" scheme="https://coconutnutx.github.io/categories/Note/"/>
     
     
-      <category term="concurrent_algorithm" scheme="http://yoursite.com/tags/concurrent-algorithm/"/>
+      <category term="concurrent_algorithm" scheme="https://coconutnutx.github.io/tags/concurrent-algorithm/"/>
     
   </entry>
   
   <entry>
     <title>Summary on basic register reductions</title>
-    <link href="http://yoursite.com/2021/10/31/register/"/>
-    <id>http://yoursite.com/2021/10/31/register/</id>
+    <link href="https://coconutnutx.github.io/2021/10/31/register/"/>
+    <id>https://coconutnutx.github.io/2021/10/31/register/</id>
     <published>2021-10-31T17:01:49.000Z</published>
     <updated>2021-10-31T17:01:49.000Z</updated>
     
@@ -116,17 +117,17 @@
     </summary>
     
     
-      <category term="Note" scheme="http://yoursite.com/categories/Note/"/>
+      <category term="Note" scheme="https://coconutnutx.github.io/categories/Note/"/>
     
     
-      <category term="distributed_algorithm" scheme="http://yoursite.com/tags/distributed-algorithm/"/>
+      <category term="distributed_algorithm" scheme="https://coconutnutx.github.io/tags/distributed-algorithm/"/>
     
   </entry>
   
   <entry>
     <title>CountSketch Matrix</title>
-    <link href="http://yoursite.com/2021/10/27/countsketch/"/>
-    <id>http://yoursite.com/2021/10/27/countsketch/</id>
+    <link href="https://coconutnutx.github.io/2021/10/27/countsketch/"/>
+    <id>https://coconutnutx.github.io/2021/10/27/countsketch/</id>
     <published>2021-10-27T20:58:59.000Z</published>
     <updated>2021-10-27T20:58:59.000Z</updated>
     
@@ -144,17 +145,17 @@
     </summary>
     
     
-      <category term="Note" scheme="http://yoursite.com/categories/Note/"/>
+      <category term="Note" scheme="https://coconutnutx.github.io/categories/Note/"/>
     
     
-      <category term="sublinear_algorithm" scheme="http://yoursite.com/tags/sublinear-algorithm/"/>
+      <category term="sublinear_algorithm" scheme="https://coconutnutx.github.io/tags/sublinear-algorithm/"/>
     
   </entry>
   
   <entry>
     <title>DA project0 test record</title>
-    <link href="http://yoursite.com/2021/10/19/DA-project-test/"/>
-    <id>http://yoursite.com/2021/10/19/DA-project-test/</id>
+    <link href="https://coconutnutx.github.io/2021/10/19/DA-project-test/"/>
+    <id>https://coconutnutx.github.io/2021/10/19/DA-project-test/</id>
     <published>2021-10-19T16:28:01.000Z</published>
     <updated>2021-10-19T16:28:01.000Z</updated>
     
@@ -172,17 +173,17 @@
     </summary>
     
     
-      <category term="Memo" scheme="http://yoursite.com/categories/Memo/"/>
+      <category term="Memo" scheme="https://coconutnutx.github.io/categories/Memo/"/>
     
     
-      <category term="distributed_algorithm" scheme="http://yoursite.com/tags/distributed-algorithm/"/>
+      <category term="distributed_algorithm" scheme="https://coconutnutx.github.io/tags/distributed-algorithm/"/>
     
   </entry>
   
   <entry>
     <title>记录anki卡片</title>
-    <link href="http://yoursite.com/2021/04/21/anki/"/>
-    <id>http://yoursite.com/2021/04/21/anki/</id>
+    <link href="https://coconutnutx.github.io/2021/04/21/anki/"/>
+    <id>https://coconutnutx.github.io/2021/04/21/anki/</id>
     <published>2021-04-21T09:45:17.000Z</published>
     <updated>2021-04-21T09:45:17.000Z</updated>
     
@@ -202,17 +203,17 @@
     </summary>
     
     
-      <category term="Memo" scheme="http://yoursite.com/categories/Memo/"/>
+      <category term="Memo" scheme="https://coconutnutx.github.io/categories/Memo/"/>
     
     
-      <category term="tool" scheme="http://yoursite.com/tags/tool/"/>
+      <category term="tool" scheme="https://coconutnutx.github.io/tags/tool/"/>
     
   </entry>
   
   <entry>
     <title>Unity Debug WebGL播放视频</title>
-    <link href="http://yoursite.com/2021/04/02/unity-debug/"/>
-    <id>http://yoursite.com/2021/04/02/unity-debug/</id>
+    <link href="https://coconutnutx.github.io/2021/04/02/unity-debug/"/>
+    <id>https://coconutnutx.github.io/2021/04/02/unity-debug/</id>
     <published>2021-04-02T07:53:07.000Z</published>
     <updated>2021-04-02T07:53:07.000Z</updated>
     
@@ -229,17 +230,17 @@
     </summary>
     
     
-      <category term="Note" scheme="http://yoursite.com/categories/Note/"/>
+      <category term="Note" scheme="https://coconutnutx.github.io/categories/Note/"/>
     
     
-      <category term="unity" scheme="http://yoursite.com/tags/unity/"/>
+      <category term="unity" scheme="https://coconutnutx.github.io/tags/unity/"/>
     
   </entry>
   
   <entry>
     <title>Unity Project 版本记录</title>
-    <link href="http://yoursite.com/2021/03/21/unity-project-memo/"/>
-    <id>http://yoursite.com/2021/03/21/unity-project-memo/</id>
+    <link href="https://coconutnutx.github.io/2021/03/21/unity-project-memo/"/>
+    <id>https://coconutnutx.github.io/2021/03/21/unity-project-memo/</id>
     <published>2021-03-21T16:35:47.000Z</published>
     <updated>2021-03-21T16:35:47.000Z</updated>
     
@@ -255,17 +256,17 @@
     </summary>
     
     
-      <category term="Memo" scheme="http://yoursite.com/categories/Memo/"/>
+      <category term="Memo" scheme="https://coconutnutx.github.io/categories/Memo/"/>
     
     
-      <category term="unity" scheme="http://yoursite.com/tags/unity/"/>
+      <category term="unity" scheme="https://coconutnutx.github.io/tags/unity/"/>
     
   </entry>
   
   <entry>
     <title>Project V0.2 Record</title>
-    <link href="http://yoursite.com/2021/03/16/unity/"/>
-    <id>http://yoursite.com/2021/03/16/unity/</id>
+    <link href="https://coconutnutx.github.io/2021/03/16/unity/"/>
+    <id>https://coconutnutx.github.io/2021/03/16/unity/</id>
     <published>2021-03-16T09:15:39.000Z</published>
     <updated>2021-03-16T09:15:39.000Z</updated>
     
@@ -283,17 +284,17 @@
     </summary>
     
     
-      <category term="Note" scheme="http://yoursite.com/categories/Note/"/>
+      <category term="Note" scheme="https://coconutnutx.github.io/categories/Note/"/>
     
     
-      <category term="unity" scheme="http://yoursite.com/tags/unity/"/>
+      <category term="unity" scheme="https://coconutnutx.github.io/tags/unity/"/>
     
   </entry>
   
   <entry>
     <title>Project V0.1.2 Record</title>
-    <link href="http://yoursite.com/2021/03/09/unity/"/>
-    <id>http://yoursite.com/2021/03/09/unity/</id>
+    <link href="https://coconutnutx.github.io/2021/03/09/unity/"/>
+    <id>https://coconutnutx.github.io/2021/03/09/unity/</id>
     <published>2021-03-09T16:15:34.000Z</published>
     <updated>2021-03-09T16:15:34.000Z</updated>
     
@@ -311,17 +312,17 @@
     </summary>
     
     
-      <category term="Note" scheme="http://yoursite.com/categories/Note/"/>
+      <category term="Note" scheme="https://coconutnutx.github.io/categories/Note/"/>
     
     
-      <category term="unity" scheme="http://yoursite.com/tags/unity/"/>
+      <category term="unity" scheme="https://coconutnutx.github.io/tags/unity/"/>
     
   </entry>
   
   <entry>
     <title>Unity Note - Project11 Wave2</title>
-    <link href="http://yoursite.com/2021/03/08/unity/"/>
-    <id>http://yoursite.com/2021/03/08/unity/</id>
+    <link href="https://coconutnutx.github.io/2021/03/08/unity/"/>
+    <id>https://coconutnutx.github.io/2021/03/08/unity/</id>
     <published>2021-03-08T11:03:50.000Z</published>
     <updated>2021-03-08T11:03:50.000Z</updated>
     
@@ -341,17 +342,17 @@
     </summary>
     
     
-      <category term="Note" scheme="http://yoursite.com/categories/Note/"/>
+      <category term="Note" scheme="https://coconutnutx.github.io/categories/Note/"/>
     
     
-      <category term="unity" scheme="http://yoursite.com/tags/unity/"/>
+      <category term="unity" scheme="https://coconutnutx.github.io/tags/unity/"/>
     
   </entry>
   
   <entry>
     <title>Unity Note - Project10 Wave</title>
-    <link href="http://yoursite.com/2021/02/21/unity/"/>
-    <id>http://yoursite.com/2021/02/21/unity/</id>
+    <link href="https://coconutnutx.github.io/2021/02/21/unity/"/>
+    <id>https://coconutnutx.github.io/2021/02/21/unity/</id>
     <published>2021-02-21T13:49:27.000Z</published>
     <updated>2021-02-21T13:49:27.000Z</updated>
     
@@ -372,17 +373,17 @@
     </summary>
     
     
-      <category term="Note" scheme="http://yoursite.com/categories/Note/"/>
+      <category term="Note" scheme="https://coconutnutx.github.io/categories/Note/"/>
     
     
-      <category term="unity" scheme="http://yoursite.com/tags/unity/"/>
+      <category term="unity" scheme="https://coconutnutx.github.io/tags/unity/"/>
     
   </entry>
   
   <entry>
     <title>Project V0.1.1 Record - UI,Event</title>
-    <link href="http://yoursite.com/2021/02/17/unity/"/>
-    <id>http://yoursite.com/2021/02/17/unity/</id>
+    <link href="https://coconutnutx.github.io/2021/02/17/unity/"/>
+    <id>https://coconutnutx.github.io/2021/02/17/unity/</id>
     <published>2021-02-17T14:59:43.000Z</published>
     <updated>2021-02-17T14:59:43.000Z</updated>
     
@@ -399,17 +400,17 @@
     </summary>
     
     
-      <category term="Note" scheme="http://yoursite.com/categories/Note/"/>
+      <category term="Note" scheme="https://coconutnutx.github.io/categories/Note/"/>
     
     
-      <category term="unity" scheme="http://yoursite.com/tags/unity/"/>
+      <category term="unity" scheme="https://coconutnutx.github.io/tags/unity/"/>
     
   </entry>
   
   <entry>
     <title>Project V0.1 Record</title>
-    <link href="http://yoursite.com/2021/02/16/unity/"/>
-    <id>http://yoursite.com/2021/02/16/unity/</id>
+    <link href="https://coconutnutx.github.io/2021/02/16/unity/"/>
+    <id>https://coconutnutx.github.io/2021/02/16/unity/</id>
     <published>2021-02-16T17:24:56.000Z</published>
     <updated>2021-02-16T17:24:56.000Z</updated>
     
@@ -426,17 +427,17 @@
     </summary>
     
     
-      <category term="Note" scheme="http://yoursite.com/categories/Note/"/>
+      <category term="Note" scheme="https://coconutnutx.github.io/categories/Note/"/>
     
     
-      <category term="unity" scheme="http://yoursite.com/tags/unity/"/>
+      <category term="unity" scheme="https://coconutnutx.github.io/tags/unity/"/>
     
   </entry>
   
   <entry>
     <title>Unity Note - Project09 Movement</title>
-    <link href="http://yoursite.com/2021/02/15/unity-09/"/>
-    <id>http://yoursite.com/2021/02/15/unity-09/</id>
+    <link href="https://coconutnutx.github.io/2021/02/15/unity-09/"/>
+    <id>https://coconutnutx.github.io/2021/02/15/unity-09/</id>
     <published>2021-02-15T19:17:07.000Z</published>
     <updated>2021-02-15T19:17:07.000Z</updated>
     
@@ -461,17 +462,17 @@
     </summary>
     
     
-      <category term="Note" scheme="http://yoursite.com/categories/Note/"/>
+      <category term="Note" scheme="https://coconutnutx.github.io/categories/Note/"/>
     
     
-      <category term="unity" scheme="http://yoursite.com/tags/unity/"/>
+      <category term="unity" scheme="https://coconutnutx.github.io/tags/unity/"/>
     
   </entry>
   
   <entry>
     <title>Unity Note - Project08 Gallery</title>
-    <link href="http://yoursite.com/2021/02/15/unity/"/>
-    <id>http://yoursite.com/2021/02/15/unity/</id>
+    <link href="https://coconutnutx.github.io/2021/02/15/unity/"/>
+    <id>https://coconutnutx.github.io/2021/02/15/unity/</id>
     <published>2021-02-15T16:59:21.000Z</published>
     <updated>2021-02-15T16:59:21.000Z</updated>
     
@@ -488,17 +489,17 @@
     </summary>
     
     
-      <category term="Note" scheme="http://yoursite.com/categories/Note/"/>
+      <category term="Note" scheme="https://coconutnutx.github.io/categories/Note/"/>
     
     
-      <category term="unity" scheme="http://yoursite.com/tags/unity/"/>
+      <category term="unity" scheme="https://coconutnutx.github.io/tags/unity/"/>
     
   </entry>
   
   <entry>
     <title>Unity Note - Project07 Scroll</title>
-    <link href="http://yoursite.com/2021/02/14/unity/"/>
-    <id>http://yoursite.com/2021/02/14/unity/</id>
+    <link href="https://coconutnutx.github.io/2021/02/14/unity/"/>
+    <id>https://coconutnutx.github.io/2021/02/14/unity/</id>
     <published>2021-02-14T19:09:34.000Z</published>
     <updated>2021-02-14T19:09:34.000Z</updated>
     
@@ -514,17 +515,17 @@
     </summary>
     
     
-      <category term="Note" scheme="http://yoursite.com/categories/Note/"/>
+      <category term="Note" scheme="https://coconutnutx.github.io/categories/Note/"/>
     
     
-      <category term="unity" scheme="http://yoursite.com/tags/unity/"/>
+      <category term="unity" scheme="https://coconutnutx.github.io/tags/unity/"/>
     
   </entry>
   
   <entry>
     <title>Unity Note - Project06 DoTween</title>
-    <link href="http://yoursite.com/2021/02/14/unity-note/"/>
-    <id>http://yoursite.com/2021/02/14/unity-note/</id>
+    <link href="https://coconutnutx.github.io/2021/02/14/unity-note/"/>
+    <id>https://coconutnutx.github.io/2021/02/14/unity-note/</id>
     <published>2021-02-14T15:31:45.000Z</published>
     <updated>2021-02-14T15:31:45.000Z</updated>
     
@@ -541,17 +542,17 @@
     </summary>
     
     
-      <category term="Note" scheme="http://yoursite.com/categories/Note/"/>
+      <category term="Note" scheme="https://coconutnutx.github.io/categories/Note/"/>
     
     
-      <category term="unity" scheme="http://yoursite.com/tags/unity/"/>
+      <category term="unity" scheme="https://coconutnutx.github.io/tags/unity/"/>
     
   </entry>
   
   <entry>
     <title>Notion Offline记录</title>
-    <link href="http://yoursite.com/2021/02/12/notionn/"/>
-    <id>http://yoursite.com/2021/02/12/notionn/</id>
+    <link href="https://coconutnutx.github.io/2021/02/12/notionn/"/>
+    <id>https://coconutnutx.github.io/2021/02/12/notionn/</id>
     <published>2021-02-12T22:29:15.000Z</published>
     <updated>2021-02-12T22:29:15.000Z</updated>
     
@@ -571,10 +572,10 @@
     </summary>
     
     
-      <category term="Memo" scheme="http://yoursite.com/categories/Memo/"/>
+      <category term="Memo" scheme="https://coconutnutx.github.io/categories/Memo/"/>
     
     
-      <category term="tool" scheme="http://yoursite.com/tags/tool/"/>
+      <category term="tool" scheme="https://coconutnutx.github.io/tags/tool/"/>
     
   </entry>
   
