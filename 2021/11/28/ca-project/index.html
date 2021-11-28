@@ -9,7 +9,7 @@
     
     <title>
         
-            Category: Memo |
+            CA project 思路笔记 |
         
         CoCoNutNut&#39;s NoteBook
     </title>
@@ -81,7 +81,7 @@
                         </li>
                     
                         <li class="menu-item">
-                            <a class="active"
+                            <a class=""
                                href="/categories"
                             >
                                 CATEGORIES
@@ -128,7 +128,7 @@
                 </li>
             
                 <li class="drawer-menu-item flex-center">
-                    <a class="active"
+                    <a class=""
                        href="/categories">CATEGORIES</a>
                 </li>
             
@@ -153,192 +153,171 @@
 
                 
                     <div class="fade-in-down-animation">
-    <div class="category-container">
-        <div class="category-name">
-            <i class="fas fa-folder"></i>&nbsp;Memo
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">CA project 思路笔记</span>
         </div>
-        <div class="category-post-list">
-            
-<div class="archive-list-container">
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">coconutnut</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2021-11-28 14:33:12
+    </span>
     
-        <section class="archive-item">
-            <div class="archive-item-header">
-                <span class="archive-year">2021</span>
-                <span class="archive-year-post-count">[5]</span>
-            </div>
-            <ul class="article-list">
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
                 
-                    <li class="article-item">
-                        <a class="article-title"
+                    <li>
+                        <a href="/categories/Note/">Note</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/concurrent-algorithm/">concurrent_algorithm</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <p>看Project description里给的Dual-versioned transactional memory的一些记录</p>
+<h1 id="关于access-set"><a href="#关于access-set" class="headerlink" title="关于access set"></a>关于access set</h1><h2 id="情况分析"><a href="#情况分析" class="headerlink" title="情况分析"></a>情况分析</h2><p>假设当前A是readable copy，B是writable copy，某一个位置可能出现的一些情况：</p>
+<ol>
+<li>小明读，成功，加入set<ol>
+<li>张三读，成功，加入set<ol>
+<li>小明写，发现张三也在set，失败 <font color="red">只要set里有别人，就不能写了</font></li>
+</ol>
+</li>
+<li>张三写，发现小明已经在set，失败 <font color="red">只要set里有别人，就不能写了</font></li>
+<li>小明写，set里只有自己，成功<ol>
+<li>小明读，发现已经被写过了，自己在set里，成功，读B</li>
+<li>张三读，发现已经被写过了，自己不在set里，失败</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="什么时候可以加入？"><a href="#什么时候可以加入？" class="headerlink" title="什么时候可以加入？"></a>什么时候可以加入？</h2><ol>
+<li>读成功的时候<br> 什么时候可以读？<ol>
+<li>没人写过，随便读，读A</li>
+<li>自己写过，可以读，读B <font color="red">如果是别人写的，自己不可能在set里，不能读</font></li>
+</ol>
+</li>
+<li>写成功的时候<br> 什么时候可以写？<ol>
+<li>没人写过，且set里没别人 <font color="red">只可能有一个人是通过写加入set的</font></li>
+<li>自己写过</li>
+</ol>
+</li>
+</ol>
+<p>从而保证：</p>
+<ol>
+<li>只可能有一个人写</li>
+<li>写过的地方只有写的人能读</li>
+<li>没写过的地方都可以读</li>
+</ol>
+<h2 id="set可以只记第一个"><a href="#set可以只记第一个" class="headerlink" title="set可以只记第一个"></a>set可以只记第一个</h2><p>set里可以只记录第一个加入set的人，因为：</p>
+<ol>
+<li>如果第一个加入set是通过写加入的<ol>
+<li>后面可以通过set判断自己写过，可以继续读写</li>
+<li>其他人发现写过，且不是自己写的，读写都不可以</li>
+</ol>
+</li>
+<li>如果第一个加入set是通过读加入的，<ol>
+<li>别人不能写，因为虽然没人写过，但set里已经有人了</li>
+<li>别人可以读</li>
+<li>自己可以写，自己写过之后，别人也不可以读了<br>这个第一个加入set的，可以视为所有者</li>
+</ol>
+</li>
+</ol>
+<p>🧐project description里面说不要implement an actual set，那么按这个逻辑，只存一个值应该就足够了</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>也就是说，一个位置是否可以读写有以下几种状态：<br><img src="/images/2021/screencapture2021-11-28 PM2.36.51.jpg"></p>
+<p>以上都是针对读写事务，只读事务可以直接读，不影响</p>
+<h2 id="其它问题"><a href="#其它问题" class="headerlink" title="其它问题"></a>其它问题</h2><p>Q：可能有写成功的，但后续操作失败，如何处理？<br>A：这样的TX不会到commit()，而只有在commit()中可以更改valid copy，因此下一轮中有效的仍是旧的值</p>
+<h1 id="关于batcher"><a href="#关于batcher" class="headerlink" title="关于batcher"></a>关于batcher</h1><p>什么时候调？</p>
+<pre><code>1. 事务开始，调enter() -&gt; 即在tm_begin()中
+2. 最后一个操作结束时，调leave() -&gt; 即在tm_end()中</code></pre><h2 id="情况分析-1"><a href="#情况分析-1" class="headerlink" title="情况分析"></a>情况分析</h2><ol>
+<li>初始时，remaining=0</li>
+<li>第一个人enter()，remaining变成1</li>
+<li>后面的人enter()，都被挂到blocked</li>
+<li>第一个人leave()，remaining变成0</li>
+<li>counter+1  <font color="red">相当于进入下一轮</font><ul>
+<li>remaining重设为blocked的长度</li>
+<li>叫醒所有blocked里的线程</li>
+<li>清空blocked</li>
+</ul>
+</li>
+<li>此时上一轮中被blocked的线程，在这一轮中一起开始工作。当有新线程调enter()，又会被挂到blocked里，等待下一轮</li>
+</ol>
+<h2 id="遗留问题"><a href="#遗留问题" class="headerlink" title="遗留问题"></a>遗留问题</h2><p>Q：为什么commit()中交换valid copy要推迟到两轮交替的间隙进行？</p>
+<p>Q：get_epoch()什么时候用到？是干什么用的？</p>
+<h1 id="关于tx-t"><a href="#关于tx-t" class="headerlink" title="关于tx_t"></a>关于tx_t</h1><p>一个事务需要记录的东西：</p>
+<ul>
+<li>boolean 是否成功 <font color="red">如果已经失败了，后面读写的时候可以直接返回</font></li>
+<li>boolean 是否只读 <font color="red">读的时候可以直接读</font></li>
+</ul>
+
+        </div>
+
+        
+
+        
+            <div class="article-nav">
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
                            href="/2021/11/16/theme/"
-                        >更改主题记录</a>
-                        <span class="article-date">11-16</span>
-                    </li>
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">更改主题记录</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
                 
-                    <li class="article-item">
-                        <a class="article-title"
-                           href="/2021/10/19/DA-project-test/"
-                        >DA project0 test record</a>
-                        <span class="article-date">10-19</span>
-                    </li>
-                
-                    <li class="article-item">
-                        <a class="article-title"
-                           href="/2021/04/21/anki/"
-                        >记录anki卡片</a>
-                        <span class="article-date">04-21</span>
-                    </li>
-                
-                    <li class="article-item">
-                        <a class="article-title"
-                           href="/2021/03/21/unity-project-memo/"
-                        >Unity Project 版本记录</a>
-                        <span class="article-date">03-21</span>
-                    </li>
-                
-                    <li class="article-item">
-                        <a class="article-title"
-                           href="/2021/02/12/notionn/"
-                        >Notion Offline记录</a>
-                        <span class="article-date">02-12</span>
-                    </li>
-                
-            </ul>
-        </section>
-    
-        <section class="archive-item">
-            <div class="archive-item-header">
-                <span class="archive-year">2020</span>
-                <span class="archive-year-post-count">[16]</span>
             </div>
-            <ul class="article-list">
-                
-                    <li class="article-item">
-                        <a class="article-title"
-                           href="/2020/07/25/brain/"
-                        >读书笔记 大脑修复术</a>
-                        <span class="article-date">07-25</span>
-                    </li>
-                
-                    <li class="article-item">
-                        <a class="article-title"
-                           href="/2020/06/24/memo-python/"
-                        >记录服务器安装Anaconda</a>
-                        <span class="article-date">06-24</span>
-                    </li>
-                
-                    <li class="article-item">
-                        <a class="article-title"
-                           href="/2020/05/31/memo/"
-                        >五月每日一题打卡完工纪念</a>
-                        <span class="article-date">05-31</span>
-                    </li>
-                
-                    <li class="article-item">
-                        <a class="article-title"
-                           href="/2020/05/12/memo/"
-                        >Anki也太优秀了吧！</a>
-                        <span class="article-date">05-12</span>
-                    </li>
-                
-                    <li class="article-item">
-                        <a class="article-title"
-                           href="/2020/05/07/memo-server/"
-                        >记录服务器部署</a>
-                        <span class="article-date">05-07</span>
-                    </li>
-                
-                    <li class="article-item">
-                        <a class="article-title"
-                           href="/2020/05/02/deepwork/"
-                        >读书笔记 深度工作</a>
-                        <span class="article-date">05-02</span>
-                    </li>
-                
-                    <li class="article-item">
-                        <a class="article-title"
-                           href="/2020/04/30/memo/"
-                        >四月每日一题打卡完工纪念</a>
-                        <span class="article-date">04-30</span>
-                    </li>
-                
-                    <li class="article-item">
-                        <a class="article-title"
-                           href="/2020/04/08/memo/"
-                        >刷题阶段一完工纪念！</a>
-                        <span class="article-date">04-08</span>
-                    </li>
-                
-                    <li class="article-item">
-                        <a class="article-title"
-                           href="/2020/04/06/excerpt/"
-                        >Underwelming</a>
-                        <span class="article-date">04-06</span>
-                    </li>
-                
-                    <li class="article-item">
-                        <a class="article-title"
-                           href="/2020/03/19/note-spring/"
-                        >学习Spring的一点感想</a>
-                        <span class="article-date">03-19</span>
-                    </li>
-                
-                    <li class="article-item">
-                        <a class="article-title"
-                           href="/2020/03/18/aha/"
-                        >记录几个让我心动的设计</a>
-                        <span class="article-date">03-18</span>
-                    </li>
-                
-                    <li class="article-item">
-                        <a class="article-title"
-                           href="/2020/03/10/hello-hexo/"
-                        >来到Hexo的第一天！</a>
-                        <span class="article-date">03-10</span>
-                    </li>
-                
-                    <li class="article-item">
-                        <a class="article-title"
-                           href="/2020/03/10/bookmark/"
-                        >一些有趣的网站</a>
-                        <span class="article-date">03-10</span>
-                    </li>
-                
-                    <li class="article-item">
-                        <a class="article-title"
-                           href="/2020/02/22/mindmap/"
-                        >课程总结 民事诉讼法</a>
-                        <span class="article-date">02-22</span>
-                    </li>
-                
-                    <li class="article-item">
-                        <a class="article-title"
-                           href="/2020/02/22/mindmap-stress/"
-                        >课程总结 压力与情绪管理</a>
-                        <span class="article-date">02-22</span>
-                    </li>
-                
-                    <li class="article-item">
-                        <a class="article-title"
-                           href="/2020/02/22/mindmap-paper/"
-                        >课程总结 信息素养与实践</a>
-                        <span class="article-date">02-22</span>
-                    </li>
-                
-            </ul>
-        </section>
-    
-</div>
+        
 
-        </div>
-    </div>
-    <div class="category-paginator">
-        <div class="paginator">
-    
-
-    
-</div>
-
+        
     </div>
 </div>
 
@@ -384,6 +363,23 @@
     </div>
 
     
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
 
     <div class="right-bottom-side-tools">
         <div class="side-tools-container">
@@ -428,6 +424,14 @@
 
     </div>
 
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B3%E4%BA%8Eaccess-set"><span class="nav-number">1.</span> <span class="nav-text">关于access set</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%83%85%E5%86%B5%E5%88%86%E6%9E%90"><span class="nav-number">1.1.</span> <span class="nav-text">情况分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E5%8F%AF%E4%BB%A5%E5%8A%A0%E5%85%A5%EF%BC%9F"><span class="nav-number">1.2.</span> <span class="nav-text">什么时候可以加入？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#set%E5%8F%AF%E4%BB%A5%E5%8F%AA%E8%AE%B0%E7%AC%AC%E4%B8%80%E4%B8%AA"><span class="nav-number">1.3.</span> <span class="nav-text">set可以只记第一个</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA"><span class="nav-number">1.4.</span> <span class="nav-text">结论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E5%AE%83%E9%97%AE%E9%A2%98"><span class="nav-number">1.5.</span> <span class="nav-text">其它问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B3%E4%BA%8Ebatcher"><span class="nav-number">2.</span> <span class="nav-text">关于batcher</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%83%85%E5%86%B5%E5%88%86%E6%9E%90-1"><span class="nav-number">2.1.</span> <span class="nav-text">情况分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%97%E7%95%99%E9%97%AE%E9%A2%98"><span class="nav-number">2.2.</span> <span class="nav-text">遗留问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B3%E4%BA%8Etx-t"><span class="nav-number">3.</span> <span class="nav-text">关于tx_t</span></a></li></ol>
+    </div>
+</div>
+        </aside>
     
 
     <div class="image-viewer-container">
@@ -497,6 +501,14 @@
 
 
 <div class="post-scripts pjax">
+    
+        
+<script src="/js/left-side-toggle.js"></script>
+
+<script src="/js/libs/anime.min.js"></script>
+
+<script src="/js/toc.js"></script>
+
     
 </div>
 

@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://coconutnutx.github.io/"/>
-  <updated>2021-11-16T11:01:22.000Z</updated>
+  <updated>2021-11-28T13:33:12.000Z</updated>
   <id>https://coconutnutx.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>CA project 思路笔记</title>
+    <link href="https://coconutnutx.github.io/2021/11/28/ca-project/"/>
+    <id>https://coconutnutx.github.io/2021/11/28/ca-project/</id>
+    <published>2021-11-28T13:33:12.000Z</published>
+    <updated>2021-11-28T13:33:12.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>看Project description里给的Dual-versioned transactional memory的一些记录</p><h1 id="关于access-set"><a href="#关于access-set" class="headerlink" title="关于access set"></a>关于access set</h1><h2 id="情况分析"><a href="#情况分析" class="headerlink" title="情况分析"></a>情况分析</h2><p>假设当前A是readable copy，B是writable copy，某一个位置可能出现的一些情况：</p><ol><li>小明读，成功，加入set<ol><li>张三读，成功，加入set<ol><li>小明写，发现张三也在set，失败 <font color="red">只要set里有别人，就不能写了</font></li></ol></li><li>张三写，发现小明已经在set，失败 <font color="red">只要set里有别人，就不能写了</font></li><li>小明写，set里只有自己，成功<ol><li>小明读，发现已经被写过了，自己在set里，成功，读B</li><li>张三读，发现已经被写过了，自己不在set里，失败</li></ol></li></ol></li></ol><h2 id="什么时候可以加入？"><a href="#什么时候可以加入？" class="headerlink" title="什么时候可以加入？"></a>什么时候可以加入？</h2><ol><li>读成功的时候<br> 什么时候可以读？<ol><li>没人写过，随便读，读A</li><li>自己写过，可以读，读B <font color="red">如果是别人写的，自己不可能在set里，不能读</font></li></ol></li><li>写成功的时候<br> 什么时候可以写？<ol><li>没人写过，且set里没别人 <font color="red">只可能有一个人是通过写加入set的</font></li><li>自己写过</li></ol></li></ol><p>从而保证：</p><ol><li>只可能有一个人写</li><li>写过的地方只有写的人能读</li><li>没写过的地方都可以读</li></ol><h2 id="set可以只记第一个"><a href="#set可以只记第一个" class="headerlink" title="set可以只记第一个"></a>set可以只记第一个</h2><p>set里可以只记录第一个加入set的人，因为：</p><ol><li>如果第一个加入set是通过写加入的<ol><li>后面可以通过set判断自己写过，可以继续读写</li><li>其他人发现写过，且不是自己写的，读写都不可以</li></ol></li><li>如果第一个加入set是通过读加入的，<ol><li>别人不能写，因为虽然没人写过，但set里已经有人了</li><li>别人可以读</li><li>自己可以写，自己写过之后，别人也不可以读了<br>这个第一个加入set的，可以视为所有者</li></ol></li></ol><p>🧐project description里面说不要implement an actual set，那么按这个逻辑，只存一个值应该就足够了</p><h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>也就是说，一个位置是否可以读写有以下几种状态：<br><img src="/images/2021/screencapture2021-11-28 PM2.36.51.jpg"></p><p>以上都是针对读写事务，只读事务可以直接读，不影响</p><h2 id="其它问题"><a href="#其它问题" class="headerlink" title="其它问题"></a>其它问题</h2><p>Q：可能有写成功的，但后续操作失败，如何处理？<br>A：这样的TX不会到commit()，而只有在commit()中可以更改valid copy，因此下一轮中有效的仍是旧的值</p><h1 id="关于batcher"><a href="#关于batcher" class="headerlink" title="关于batcher"></a>关于batcher</h1><p>什么时候调？</p><pre><code>1. 事务开始，调enter() -&gt; 即在tm_begin()中2. 最后一个操作结束时，调leave() -&gt; 即在tm_end()中</code></pre><h2 id="情况分析-1"><a href="#情况分析-1" class="headerlink" title="情况分析"></a>情况分析</h2><ol><li>初始时，remaining=0</li><li>第一个人enter()，remaining变成1</li><li>后面的人enter()，都被挂到blocked</li><li>第一个人leave()，remaining变成0</li><li>counter+1  <font color="red">相当于进入下一轮</font><ul><li>remaining重设为blocked的长度</li><li>叫醒所有blocked里的线程</li><li>清空blocked</li></ul></li><li>此时上一轮中被blocked的线程，在这一轮中一起开始工作。当有新线程调enter()，又会被挂到blocked里，等待下一轮</li></ol><h2 id="遗留问题"><a href="#遗留问题" class="headerlink" title="遗留问题"></a>遗留问题</h2><p>Q：为什么commit()中交换valid copy要推迟到两轮交替的间隙进行？</p><p>Q：get_epoch()什么时候用到？是干什么用的？</p><h1 id="关于tx-t"><a href="#关于tx-t" class="headerlink" title="关于tx_t"></a>关于tx_t</h1><p>一个事务需要记录的东西：</p><ul><li>boolean 是否成功 <font color="red">如果已经失败了，后面读写的时候可以直接返回</font></li><li>boolean 是否只读 <font color="red">读的时候可以直接读</font></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;看Project description里给的Dual-versioned transactional memory的一些记录&lt;/p&gt;
+&lt;h1 id=&quot;关于access-set&quot;&gt;&lt;a href=&quot;#关于access-set&quot; class=&quot;headerlink&quot; titl
+      
+    
+    </summary>
+    
+    
+      <category term="Note" scheme="https://coconutnutx.github.io/categories/Note/"/>
+    
+    
+      <category term="concurrent_algorithm" scheme="https://coconutnutx.github.io/tags/concurrent-algorithm/"/>
+    
+  </entry>
   
   <entry>
     <title>更改主题记录</title>
@@ -548,36 +575,6 @@
     
     
       <category term="unity" scheme="https://coconutnutx.github.io/tags/unity/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Notion Offline记录</title>
-    <link href="https://coconutnutx.github.io/2021/02/12/notionn/"/>
-    <id>https://coconutnutx.github.io/2021/02/12/notionn/</id>
-    <published>2021-02-12T22:29:15.000Z</published>
-    <updated>2021-02-12T22:29:15.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>Notion的app突然Offline了</p><p>直接访问显示DNS_PROBE_FINISHED_NXDOMAIN</p><p>根据↓尝试</p><blockquote><p><a class="link"   href="https://linmi.cc/6133.html" >https://linmi.cc/6133.html<i class="fas fa-external-link-alt"></i></a></p></blockquote><p>1.加host<br>cmd中 open /etc<br>host中加一行 104.18.23.110 notion.so<br>此时可以ping通notion.so，但app仍是offline</p><p>2.改DNS<br>加119.29.29.29<br>114.114.114.114<br>没有用，改回默认</p><p>暂时还是不能用，等修复吧<br>哎，失去notion仿佛失去了半个脑子</p><p>更新：<br>然后发现github.io也访问不了了，是运营商的问题<br>DNS改成114.114.114.114后解决</p><p>再更新：<br>notion好了！我活了！</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;Notion的app突然Offline了&lt;/p&gt;
-&lt;p&gt;直接访问显示DNS_PROBE_FINISHED_NXDOMAIN&lt;/p&gt;
-&lt;p&gt;根据↓尝试&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;a class=&quot;link&quot;   href=&quot;https://linmi.cc/6
-      
-    
-    </summary>
-    
-    
-      <category term="Memo" scheme="https://coconutnutx.github.io/categories/Memo/"/>
-    
-    
-      <category term="tool" scheme="https://coconutnutx.github.io/tags/tool/"/>
     
   </entry>
   
