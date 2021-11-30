@@ -218,6 +218,7 @@
             <p>为了测试submission2(Localized Causal Broadcast)的输出写了个简陋工具，仅<strong>有限情况</strong>下<strong>测试</strong>用<br>仅！供！参！考！不！保！证！对！</p>
 <h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>如，process 1依赖2、3，和4、5没关系，会找出1的输出里所有1、2、3deliver的消息，作为参考。然后遍历其它process的输出，也找到1、2、3deliver的消息，二者完全一样视为正确。</p>
 <p>1的输出可以比其它多，此时多的不考虑，只比较前面的部分。</p>
+<p>可能的bug：按照定义，如果某条来自1的消息之前，有1条来自2的和1条来自3的，另一个process在deliver这条1的消息之前，也需要2和3的消息各一条，但是2和3的顺序可以不一样。测试没有处理这个问题，但是目前跑的时候结果没毛病，可能是测试环境的reorder还没有导致这种问题。</p>
 <h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><p>基本和给的validate_fifo.py差不多<br>把代码、config、output放在同一个文件夹内（即stress.py的所有输出，有多余的没关系）<br>带参数–proc_num运行</p>
 <h2 id="流程示例"><a href="#流程示例" class="headerlink" title="流程示例"></a>流程示例</h2><ol>
 <li>cd到tools</li>
