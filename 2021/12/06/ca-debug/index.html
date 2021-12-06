@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="coconutnut">
+    
+    <title>
+        
+            CA project debug记录 |
+        
+        CoCoNutNut&#39;s NoteBook
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/avatar.png">
+    
+<link rel="stylesheet" href="/css/font-awesome.min.css">
+
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"coconutnutx.github.io","root":"/","language":"en","path":"search.json"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"rgb(70,179,119)","avatar":"/images/avatar.jpg","favicon":"/images/avatar.png","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":false,"background_img":"/images/panorama1.jpg","description":"The cave you fear to enter holds the treasure you seek."},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":false}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":true},"version":"3.4.3"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="CoCoNutNut's NoteBook" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                CoCoNutNut&#39;s NoteBook
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                HOME
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                ARCHIVES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                CATEGORIES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                TAGS
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">ARCHIVES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">CATEGORIES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">TAGS</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">CA project debug记录</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">coconutnut</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2021-12-06 11:09:23
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/Debug/">Debug</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/concurrent-algorithm/">concurrent_algorithm</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h1 id="阶段一"><a href="#阶段一" class="headerlink" title="阶段一"></a>阶段一</h1><p>写完read、write等基础操作，先加了个全局锁，放到虚拟机里测一下逻辑。</p>
+<h2 id="atomic-load时segmentation-fault"><a href="#atomic-load时segmentation-fault" class="headerlink" title="atomic_load时segmentation fault"></a>atomic_load时segmentation fault</h2><p>本地跑没问题，但是虚拟机里make build-libs run就Segmentation fault。一番折腾后，定位到是atomic interger的问题。用atomic_store或者atomic_load的时候就会报错。</p>
+<h3 id="尝试1"><a href="#尝试1" class="headerlink" title="尝试1"></a>尝试1</h3><p>在计算control structure的偏移量时，第一个segment没转(void*)，于是取地址出了问题，atomic_load时就崩了</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="keyword">void</span>*)segment+segment-&gt;offset_control+CONTROL_SIZE*index</span><br></pre></td></tr></table></figure>
+<p>改成这样本地跑又取不到了，就离谱</p>
+<h3 id="尝试2（关于结构体指针）"><a href="#尝试2（关于结构体指针）" class="headerlink" title="尝试2（关于结构体指针）"></a>尝试2（关于结构体指针）</h3><p>怀疑是结构体指针的问题，打印了一下相关的值</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">struct segment* segment;</span><br><span class="line"></span><br><span class="line">DEBUG segment=0x7fb229405a30</span><br><span class="line">DEBUG (uint8_t*)segment=0x7fb229405a30</span><br><span class="line">DEBUG (void*)segment=0x7fb229405a30</span><br><span class="line">DEBUG &amp;segment=0x7ffedfedf530</span><br></pre></td></tr></table></figure>
+<p>前三个是一样的，符合预期。那么计算偏移量的时候是否也一样？</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">DEBUG offset=208</span><br><span class="line"></span><br><span class="line">DEBUG segment+offset=0x7fb22940b530</span><br><span class="line">DEBUG (uint8_t*)segment+offset=0x7fb229405b00</span><br><span class="line">DEBUG (void*)segment+offset=0x7fb229405b00</span><br></pre></td></tr></table></figure>
+<p>这里算出来就不一样了</p>
+<p>b530-5a30 = 0x5b00 = 23296 = 208 * 112<br>而112正好是struct segment的大小，所以不转换直接加，单位是struct size</p>
+<p>5b00-5a30 = 0xd0 = 208<br>这样就是对的，所以应该先转换指针类型</p>
+<p>那么尝试1加了(void*)应该方向是对的</p>
+<h2 id="control修改错误"><a href="#control修改错误" class="headerlink" title="control修改错误"></a>control修改错误</h2><p>接上一个bug，改完之后，发现set control owner出现问题，没有set成功</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[owner=0 v=0 w=0 s=0]</span><br></pre></td></tr></table></figure>
+<p>写内存成功了，在函数内部打印control也是对的，但是结束之后整体print region时，control是空的</p>
+<p>解决：<br>打印发现两次用control时地址不一样。是后面算control起始地址没有改过来，仍是直接算的，没有用定义的宏</p>
+<p>改过来之后顺便检查了一遍，所有计算control地址的位置，都是用宏</p>
+<h2 id="batch间reset-control后segmentation-fault"><a href="#batch间reset-control后segmentation-fault" class="headerlink" title="batch间reset control后segmentation fault"></a>batch间reset control后segmentation fault</h2><p>目前本地测试一轮中的transaction没什么问题，但是tm_end()、调用batcher_cleanup()之后，打印region出错</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">--------segment1--------</span><br><span class="line">[0] 00000000 | 11111111 [owner=0 v=1 w=0 s=0]</span><br><span class="line">[1] 00000000 | 11111111 [owner=0 v=1 w=0 s=0]</span><br><span class="line">[2] 00000000 | 22222222 [owner=0 v=1 w=0 s=0]</span><br><span class="line">[3] 00000000 | 22222222 [owner=0 v=1 w=0 s=0]</span><br><span class="line">--------segment0--------</span><br><span class="line">zsh: segmentation fault  ./tm.o</span><br></pre></td></tr></table></figure>
+<p>应该是segment2，而不是0</p>
+<h3 id="尝试1-1"><a href="#尝试1-1" class="headerlink" title="尝试1"></a>尝试1</h3><p>在batch_cleanup()中打印了一下segment id</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">while(segment)&#123;</span><br><span class="line">        clean_up_segment(segment);</span><br><span class="line">        segment = segment-&gt;next;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>发现第二次是0<br>可能是segment指针的问题<br>但是print_region()里面也有这个循环，没有问题，那边是这样写的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">while(segment != NULL)&#123;</span><br><span class="line">        print_segment(segment);</span><br><span class="line">        segment = segment-&gt;next;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>总不能是!=NULL的问题吧<br>试了一下，果然不是</p>
+<h3 id="尝试2"><a href="#尝试2" class="headerlink" title="尝试2"></a>尝试2</h3><p>在batcher_cleanup()的循环里加了强制类型转换，好了一次，再测又不行了</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">segment = (struct segment*)(segment-&gt;next);</span><br></pre></td></tr></table></figure>
+<h3 id="尝试3"><a href="#尝试3" class="headerlink" title="尝试3"></a>尝试3</h3><p>打印region和segment的地址都是对的，但是为什么读出来东西就不对呢？</p>
+<p>仔细看了下两块segment的地址</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">--------segment1-------- addr=0x7f9bc9c05a30</span><br><span class="line">[0] 00000000 | 11111111 [owner=1 v=0 w=1 s=1]</span><br><span class="line">[1] 00000000 | 11111111 [owner=1 v=0 w=1 s=1]</span><br><span class="line">[2] 00000000 | 22222222 [owner=1 v=0 w=1 s=1]</span><br><span class="line">[3] 00000000 | 22222222 [owner=1 v=0 w=1 s=1]</span><br><span class="line">--------segment2-------- addr=0x7f9bc9c05b30</span><br></pre></td></tr></table></figure>
+<p>a30和b30这才隔了256，肯定会撞吧！难道是一开始分配就有问题？</p>
+<p>初始化时的代码是</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">segment</span>* <span class="title">segment</span>;</span></span><br><span class="line">    <span class="keyword">size_t</span> total_size = <span class="keyword">sizeof</span>(struct segment) + size*<span class="number">3</span> + size/align*<span class="keyword">sizeof</span>(<span class="keyword">atomic_uint_least64_t</span>);</span><br><span class="line">    <span class="keyword">if</span> (unlikely(posix_memalign((<span class="keyword">void</span>**)&amp;segment, align, total_size) != <span class="number">0</span>)) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;create_segment failed. cannot align memory.&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>看了下reference代码，先malloc的region，后面才posix_memalign的segment</p>
+<p>改成</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">size_t</span> total_size = <span class="keyword">sizeof</span>(struct segment) + size*<span class="number">3</span> + size/align*<span class="keyword">sizeof</span>(<span class="keyword">atomic_uint_least64_t</span>);</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">segment</span>* <span class="title">segment</span> =</span> (struct segment*) <span class="built_in">malloc</span>(total_size);</span><br><span class="line">    <span class="keyword">if</span> (unlikely(posix_memalign((<span class="keyword">void</span>**)&amp;segment, align, total_size) != <span class="number">0</span>)) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;create_segment failed. cannot align memory.&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p> 成功！</p>
+<p> 现在的地址是<br> <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">--------segment1-------- addr=0x7fde98405b20</span><br><span class="line">[0] 00000000 | 11111111 [owner=0 v=1 w=0 s=0]</span><br><span class="line">[1] 00000000 | 11111111 [owner=0 v=1 w=0 s=0]</span><br><span class="line">[2] 00000000 | 22222222 [owner=0 v=1 w=0 s=0]</span><br><span class="line">[3] 00000000 | 22222222 [owner=0 v=1 w=0 s=0]</span><br><span class="line">--------segment2-------- addr=0x7fde98405d10</span><br><span class="line">[0] 00000000 | 00000000 [owner=0 v=0 w=0 s=0]</span><br><span class="line">[1] 00000000 | 00000000 [owner=0 v=0 w=0 s=0]</span><br><span class="line">[2] 00000000 | 00000000 [owner=0 v=0 w=0 s=0]</span><br><span class="line">[3] 00000000 | 00000000 [owner=0 v=0 w=0 s=0]</span><br></pre></td></tr></table></figure><br>d10-b20 = 0x1f0 = 496</p>
+<h2 id="阶段一测试"><a href="#阶段一测试" class="headerlink" title="阶段一测试"></a>阶段一测试</h2><p>丢进虚拟机跑grading<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2021/screencapture2021-12-06 PM11.54.31.jpg"
+                      width=600
+                ><br>用时太久，正常。但是没有segmentation fault了，应该read write操作也没什么问题了，第一步完成！耶！</p>
+
+        </div>
+
+        
+
+        
+            <div class="article-nav">
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2021/11/30/validate/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">DA project 2 validation tool</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span>&nbsp;-&nbsp;
+            
+            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">coconutnut</a>
+        </div>
+        
+            <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        Visitor Count&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        Totalview&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.3</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="fas fa-arrow-up"></i>
+            </li>
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%98%B6%E6%AE%B5%E4%B8%80"><span class="nav-number">1.</span> <span class="nav-text">阶段一</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#atomic-load%E6%97%B6segmentation-fault"><span class="nav-number">1.1.</span> <span class="nav-text">atomic_load时segmentation fault</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%9D%E8%AF%951"><span class="nav-number">1.1.1.</span> <span class="nav-text">尝试1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%9D%E8%AF%952%EF%BC%88%E5%85%B3%E4%BA%8E%E7%BB%93%E6%9E%84%E4%BD%93%E6%8C%87%E9%92%88%EF%BC%89"><span class="nav-number">1.1.2.</span> <span class="nav-text">尝试2（关于结构体指针）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#control%E4%BF%AE%E6%94%B9%E9%94%99%E8%AF%AF"><span class="nav-number">1.2.</span> <span class="nav-text">control修改错误</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#batch%E9%97%B4reset-control%E5%90%8Esegmentation-fault"><span class="nav-number">1.3.</span> <span class="nav-text">batch间reset control后segmentation fault</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%9D%E8%AF%951-1"><span class="nav-number">1.3.1.</span> <span class="nav-text">尝试1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%9D%E8%AF%952"><span class="nav-number">1.3.2.</span> <span class="nav-text">尝试2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%9D%E8%AF%953"><span class="nav-number">1.3.3.</span> <span class="nav-text">尝试3</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%98%B6%E6%AE%B5%E4%B8%80%E6%B5%8B%E8%AF%95"><span class="nav-number">1.4.</span> <span class="nav-text">阶段一测试</span></a></li></ol></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/header-shrink.js"></script>
+
+<script src="/js/back2top.js"></script>
+
+<script src="/js/dark-light-toggle.js"></script>
+
+
+
+    
+<script src="/js/local-search.js"></script>
+
+
+
+
+    
+<script src="/js/code-copy.js"></script>
+
+
+
+
+    
+<script src="/js/lazyload.js"></script>
+
+
+
+<div class="post-scripts">
+    
+        
+<script src="/js/left-side-toggle.js"></script>
+
+<script src="/js/libs/anime.min.js"></script>
+
+<script src="/js/toc.js"></script>
+
+    
+</div>
+
+
+
+</body>
+</html>
