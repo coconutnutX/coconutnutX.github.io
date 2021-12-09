@@ -160,8 +160,10 @@
 
                 <div class="home-article-content markdown-body">
                     
-                        阶段一写完read、write等基础操作，先加了个全局锁，放到虚拟机里测一下逻辑。
-atomic_load时segmentation fault本地跑没问题，但是虚拟机里make build-libs run就Segmentation fault。一...
+                        惨痛经验：
+
+第一步，加锁，把Transaction Memory的功能写对
+测试报错Transactional library takes too long to process the transactions，是功能就不对，和线程数量、tran...
                     
                 </div>
 
