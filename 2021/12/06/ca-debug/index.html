@@ -212,7 +212,7 @@
         <div class="article-content markdown-body">
             <p>惨痛经验：</p>
 <ol>
-<li>第一步，加锁，把Transaction Memory的功能写对<ul>
+<li>第一步，加锁，把Transaction Memory的功能写对。<ul>
 <li>测试报错Transactional library takes too long to process the transactions，是功能就不对，和线程数量、transaction数量、print没什么关系。</li>
 <li>要把这个报错的阈值调大，修改grading里的slow_factor即可。刚开始可以直接改到1024。</li>
 </ul>
@@ -328,6 +328,21 @@
 
         
             <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2021/12/09/lcb/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">关于Localized Causal Broadcast</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
                 
                 
                     <div class="article-next">

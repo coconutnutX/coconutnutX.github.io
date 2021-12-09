@@ -9,7 +9,7 @@
     
     <title>
         
-            Tag: distributed_algorithm |
+            关于Localized Causal Broadcast |
         
         CoCoNutNut&#39;s NoteBook
     </title>
@@ -84,7 +84,7 @@
                         </li>
                     
                         <li class="menu-item">
-                            <a class="active"
+                            <a class=""
                                href="/tags"
                             >
                                 TAGS
@@ -128,7 +128,7 @@
                 </li>
             
                 <li class="drawer-menu-item flex-center">
-                    <a class="active"
+                    <a class=""
                        href="/tags">TAGS</a>
                 </li>
             
@@ -148,63 +148,127 @@
 
                 
                     <div class="fade-in-down-animation">
-    <div class="tag-container">
-        <div class="tag-name"><i class="fas fa-tag"></i>&nbsp;distributed_algorithm
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">关于Localized Causal Broadcast</span>
         </div>
-        <div class="tag-post-list">
-            
-<div class="archive-list-container">
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">coconutnut</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2021-12-09 13:33:01
+    </span>
     
-        <section class="archive-item">
-            <div class="archive-item-header">
-                <span class="archive-year">2021</span>
-                <span class="archive-year-post-count">[4]</span>
-            </div>
-            <ul class="article-list">
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
                 
-                    <li class="article-item">
-                        <a class="article-title"
-                           href="/2021/12/09/lcb/"
-                        >关于Localized Causal Broadcast</a>
-                        <span class="article-date">12-09</span>
-                    </li>
-                
-                    <li class="article-item">
-                        <a class="article-title"
-                           href="/2021/11/30/validate/"
-                        >DA project 2 validation tool</a>
-                        <span class="article-date">11-30</span>
-                    </li>
-                
-                    <li class="article-item">
-                        <a class="article-title"
-                           href="/2021/10/31/register/"
-                        >Summary on basic register reductions</a>
-                        <span class="article-date">10-31</span>
-                    </li>
-                
-                    <li class="article-item">
-                        <a class="article-title"
-                           href="/2021/10/19/DA-project-test/"
-                        >DA project0 test record</a>
-                        <span class="article-date">10-19</span>
+                    <li>
+                        <a href="/categories/Note/">Note</a>&nbsp;
                     </li>
                 
             </ul>
-        </section>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/distributed-algorithm/">distributed_algorithm</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
     
 </div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <p>DA project submission #2 要求实现Localized Causal Broadcast，具体的定义在project repo的README中</p>
+<blockquote>
+<ul>
+<li>You must implement this on top of uniform reliable broadcast (URB).</li>
+<li>The <code>CONFIG</code> command-line argument for this algorithm consists of a file that contains an integer <code>m</code> in its first line. <code>m</code> defines how many messages each process should broadcast.</li>
+<li>For a system of <code>n</code> processes, there are <code>n</code> more lines in the <code>CONFIG</code> file. Each line <code>i</code> corresponds to process <code>i</code>, and such a line indicates the identities of other processes which can affect process <code>i</code>. See the example below.<ul>
+<li>The FIFO property still needs to be maintained by localized causal broadcast. That is, messages broadcast by the same process must not be delivered in a different order then they were broadcast.</li>
+<li>The output format for localized causal broadcast remains the same as before.<br>Example of <code>CONFIG</code> file for a system of <code>5</code> processes, where each one broadcasts <code>m</code> messages:</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">m</span><br><span class="line">1 4 5</span><br><span class="line">2 1</span><br><span class="line">3 1 2</span><br><span class="line">4</span><br><span class="line">5 3 4</span><br></pre></td></tr></table></figure>
+
+<p><em>Note</em>: Lines should end in <code>\n</code>, and numbers are separated by white-space characters.</p>
+<p>In this example we specify that process <code>1</code> is affected by messages broadcast by processes <code>4</code> and <code>5</code>. Similarly, we specify that process <code>2</code> is only affected by process <code>1</code>. Process <code>4</code> is not affected by any other processes. Process <code>5</code> is affected by processes <code>3</code> and <code>4</code>.</p>
+<p>We say that a process <code>x</code> is affected by a process <code>z</code> if all the messages which process <code>z</code> broadcasts and which process <code>x</code> delivers become dependencies for all future messages broadcast by process <code>x</code>. We call these dependencies <em>localized</em>. If a process is not affected by any other process, messages it broadcasts only depend on its previously broadcast messages (due to the FIFO property).</p>
+<p><em>Note</em>:  In the default causal broadcast (this algorithm will be discussed in one of the lectures) each process affects <code>all</code> processes. In this algorithm we can selectively define which process affects some other process.</p>
+</blockquote>
+<h1 id="关于dependency"><a href="#关于dependency" class="headerlink" title="关于dependency"></a>关于dependency</h1><p>process is affected by other processes，但消息的dependency是对每一条消息而言的。</p>
+<p>（当用书上的vector clock方法实现时）也就是说，每一条LCB层消息在broadcast的时间点，需要拿到这个时间点、当前进程的vector clock，作为自己的dependency clock。可以作为消息内容传给其它process。</p>
+<p>其它process收到消息，判断能否deliver，即判断自己的vector clock是否大于消息的dependency clock。</p>
+<h1 id="关于FIFO"><a href="#关于FIFO" class="headerlink" title="关于FIFO"></a>关于FIFO</h1><p>根据sequence number可以保证FIFO。</p>
+<p>基于vector clock也可以保证FIFO。</p>
+<p>对于其它进程，都是在deliver消息时，增加该进程对应的vector clock值。</p>
+<p>对于当前进程，可以做一些调整，在broadcast消息时就修改对应的vector clock值。</p>
+<p>🌰：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># in process 1</span><br><span class="line">b 1 [0 . .]</span><br><span class="line">b 2 [1 . .]</span><br></pre></td></tr></table></figure>
+
+<p>那么其它进程收到2时，必须先deliver 1。</p>
+<p>可以保证当前进程广播的每一条消息，都有不同的vector clock（即使当前进程没有affected by任何进程），从而保证FIFO。</p>
+<p>这样在deliver的时候，可以统一处理vector clock，而不用管sequence number。</p>
 
         </div>
-    </div>
 
-    <div class="tag-paginator">
-        <div class="paginator">
-    
+        
 
-    
-</div>
+        
+            <div class="article-nav">
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2021/12/06/ca-debug/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">CA project debug记录</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
 
+        
     </div>
 </div>
 
@@ -250,6 +314,23 @@
     </div>
 
     
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
 
     <div class="right-bottom-side-tools">
         <div class="side-tools-container">
@@ -294,6 +375,14 @@
 
     </div>
 
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B3%E4%BA%8Edependency"><span class="nav-number">1.</span> <span class="nav-text">关于dependency</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B3%E4%BA%8EFIFO"><span class="nav-number">2.</span> <span class="nav-text">关于FIFO</span></a></li></ol>
+    </div>
+</div>
+        </aside>
     
 
     <div class="image-viewer-container">
@@ -367,6 +456,14 @@
 
 
 <div class="post-scripts">
+    
+        
+<script src="/js/left-side-toggle.js"></script>
+
+<script src="/js/libs/anime.min.js"></script>
+
+<script src="/js/toc.js"></script>
+
     
 </div>
 
