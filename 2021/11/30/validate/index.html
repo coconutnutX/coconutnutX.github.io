@@ -212,6 +212,7 @@
         <div class="article-content markdown-body">
             <h1 id="Update"><a href="#Update" class="headerlink" title="Update"></a>Update</h1><p>‼️ Dependency bug fixed. (10/12)</p>
 <p>‼️ 不测试FIFO</p>
+<p>‼️ 最多9个线程（若要测10+可修改拼接文件名代码）</p>
 <hr>
 <p>为了测试submission2(Localized Causal Broadcast)的输出写了个简陋工具，仅<strong>有限情况</strong>下<strong>测试</strong>用<br>仅！供！参！考！不！保！证！对！</p>
 <h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>如，process 1依赖2、3，和4、5没关系，先找出所有process输出中关于1、2、3的消息，然后统计1 broadcast每条消息时的vector clock，以及其它process deliver每条消息时的vector clock，后者的&gt;=前者。1的输出可以比其它多，此时多的不考虑，只比较前面的部分。</p>
