@@ -154,7 +154,7 @@
 
                 <h3 class="home-article-title">
                     <a href="/2021/12/16/ca-condition/">
-                        CA project 状态分析
+                        CA project 状态分析&amp;debug
                     </a>
                 </h3>
 
@@ -163,9 +163,9 @@
                         上次CA project 思路笔记分析一个位置是否可以读写的状态：
 
 
-在写project的过程中发现会有问题。
-read_align中按照这个思路判断Written==0时，如果没有owner、或者owner是自己，可以写。
-123456789if...
+但是在project测试过程中发现有问题。
+问题按照Atomic control的逻辑写了read_align()和write_align()。
+read_align中判断Wri...
                     
                 </div>
 
@@ -178,7 +178,7 @@ read_align中按照这个思路判断Written==0时，如果没有owner、或者o
                     
                         <li>
                             
-                            <a href="/categories/Note/">Note</a>&nbsp;
+                            <a href="/categories/Debug/">Debug</a>&nbsp;
                         </li>
                     
                     

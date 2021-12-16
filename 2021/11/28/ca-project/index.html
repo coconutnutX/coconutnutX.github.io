@@ -268,7 +268,7 @@
                 ></p>
 <p>且1状态中，如果没有其他人读过，占有者可写。如果有人读过，则不可写了。</p>
 <p>以上都是针对读写事务，只读事务可以直接读，不影响</p>
-<p>更新<a href="">CA project 状态分析</a></p>
+<p>更新<a href="https://coconutnutx.github.io/2021/12/16/ca-condition/">CA project 状态分析</a></p>
 <h2 id="其它问题"><a href="#其它问题" class="headerlink" title="其它问题"></a>其它问题</h2><p>Q：可能有写成功的，但后续操作失败，如何处理？<br>A：这样的TX不会到commit()，而只有在commit()中可以更改valid copy，因此下一轮中有效的仍是旧的值</p>
 <h1 id="关于batcher"><a href="#关于batcher" class="headerlink" title="关于batcher"></a>关于batcher</h1><p>什么时候调？</p>
 <pre><code>1. 事务开始，调enter() -&gt; 即在tm_begin()中

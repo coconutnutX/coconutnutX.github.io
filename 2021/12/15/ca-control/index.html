@@ -254,16 +254,22 @@
 </li>
 <li><p>If 没有被写过</p>
 <ol>
-<li><p>If 没有被占有，尝试抢占（可能会出现竞争而失败）</p>
+<li><p>If owner==0，尝试抢占（可能会出现竞争而失败）</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Expected: Owner==0;  Epoch==epoch; Other==0; Written==0; Valid==valid</span><br><span class="line">Desired:  Owner==id; Epoch==epoch; Other==0; Written==0; Valid==valid</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>Else if 已经被占有，尝试设Other（要么是已经有owner，要么是上面的交换没抢到）</p>
+<li><p>Else if owner==自己，直接读（owner不会被修改，也只有自己可能写）</p>
+</li>
+<li><p>Else if owner==别人</p>
+<ol>
+<li><p>If 尝试设Other</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Expected: Owner==owner; Epoch==epoch; Other==0; Written==0; Valid==valid</span><br><span class="line">Desired:  Owner==owner; Epoch==epoch; Other==1; Written==0; Valid==valid</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>Else if 读到已经被设了Other（要么被别人设了Other，要么被owner写过了）</p>
+<li><p>Else if 读到已经被设了Other</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Expected: Owner==owner; Epoch==epoch; Other==1; Written==0; Valid==valid</span><br></pre></td></tr></table></figure>
 
-<p>如果读到Other为1，owner也不能再写这个align了，所以可以放心读</p>
+<p>如果读到Other为1，owner也不能再写这个align了，所以可以放心读。</p>
+</li>
+</ol>
 </li>
 </ol>
 </li>
@@ -302,7 +308,7 @@
                               <i class="fas fa-chevron-left"></i>
                             </span>
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">CA project 状态分析</span>
+                                <span class="post-nav-title-item">CA project 状态分析&amp;debug</span>
                                 <span class="post-nav-item">Prev posts</span>
                             </span>
                         </a>

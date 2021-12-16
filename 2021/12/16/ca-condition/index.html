@@ -9,7 +9,7 @@
     
     <title>
         
-            CA project 状态分析 |
+            CA project 状态分析&amp;debug |
         
         CoCoNutNut&#39;s NoteBook
     </title>
@@ -151,7 +151,7 @@
     <div class="article-content-container">
 
         <div class="article-title">
-            <span class="title-hover-animation">CA project 状态分析</span>
+            <span class="title-hover-animation">CA project 状态分析&amp;debug</span>
         </div>
 
         
@@ -175,7 +175,7 @@
             <ul>
                 
                     <li>
-                        <a href="/categories/Note/">Note</a>&nbsp;
+                        <a href="/categories/Debug/">Debug</a>&nbsp;
                     </li>
                 
             </ul>
@@ -218,14 +218,103 @@
                      
                 >
 
-<p>在写project的过程中发现会有问题。</p>
-<p>read_align中按照这个思路判断Written==0时，如果没有owner、或者owner是自己，可以写。</p>
+<p>但是在project测试过程中发现有问题。</p>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>按照<a class="link"   target="_blank" rel="noopener" href="http://localhost:4000/2021/12/15/ca-control/" >Atomic control<i class="fas fa-external-link-alt"></i></a>的逻辑写了read_align()和write_align()。</p>
+<p>read_align中判断Written==0时，如果没有owner、或者owner是自己，可以写。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(owner==<span class="number">0</span> || owner==tr-&gt;id)&#123;</span><br><span class="line">  <span class="keyword">uint_least64_t</span> not_written = owner &lt;&lt; <span class="number">32</span> | epoch | valid;</span><br><span class="line">  <span class="keyword">if</span>(atomic_compare_exchange_strong(cur_control, &amp;not_written, written_and_is_owner))&#123;</span><br><span class="line">    <span class="comment">// write the content at source into the writable copy;</span></span><br><span class="line">    write_writable_copy(source, segment, index);</span><br><span class="line">    <span class="comment">// return the transaction can continue;</span></span><br><span class="line">    flag = <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>但是测试时，transaction量一两千还能过，10000就过不了了。</p>
 <p>反而↓这样可以过：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(atomic_compare_exchange_strong(cur_control, &amp;load_control, written_and_is_owner))&#123;</span><br><span class="line">  <span class="comment">// write the content at source into the writable copy;</span></span><br><span class="line">  write_writable_copy(source, segment, index);</span><br><span class="line">  <span class="comment">// return the transaction can continue;</span></span><br><span class="line">  flag = <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<p>但是它并不符合原本的思路，因为可能会将第一个读成功的owner覆盖。就很奇怪。</p>
+<h1 id="重读"><a href="#重读" class="headerlink" title="重读"></a>重读</h1><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2021/screencapture2021-12-16 PM8.58.31.jpg"
+                      width=600
+                >
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2021/screencapture2021-12-16 PM8.59.01.jpg"
+                      width=600
+                >
+
+<p>感觉会有问题的很可能是access set，上次分析只用记录第一个读或写成功的id，但是为什么实际中即使写覆盖了读也可以成功呢？</p>
+<p>假设在某一个align，tr1、tr2读了旧值，此时如果tr3写了新值，tr1、tr2以及任何除tr3以外的transaction都不能再读。也就是说，写过的位置，只有写者可读。这其实是符合read_word()伪代码的。并且，如果tr1、tr2后面不再读这个值，可以提交并linearize到tr3开始之前；反之，如果它们后面还要读这个值，就会读失败，进而被abort。所以也是符合linearizable的。</p>
+<p>难道access set只用记录第一个写成功的？上次跟TA确认了一下，access set只用记一个id，似乎确实没仔细问是第一个读成功、还是写成功。</p>
+<p>那么按照新的逻辑分析，第一个读或写成功，还是都记入owner，只不过读成功的owner可以被覆盖。</p>
+<p>可如果能够覆盖，read owner和other还有什么用呢？（其实现在这版代码里面也压根没用到other）如果直接把read_align中设置owner和other的代码注释掉，还能跑吗？</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">⎪ #worker threads:     4</span><br><span class="line">⎪ #TX per worker:      10000</span><br><span class="line">⎪ #repetitions:        7</span><br><span class="line">⎪ Initial #accounts:   128</span><br><span class="line">⎪ Expected #accounts:  1024</span><br></pre></td></tr></table></figure>
+
+<p>…用↑参数测了几次，多数能过，少数Violated isolation or atomicity。也就是说other还是有用的。</p>
+<p>再看下project description中对access set的描述：</p>
+<blockquote>
+<p>The “access set” of read-write transaction(s) which have accessed the word in the current epoch. Do not implement an actual set in any (optimized) implementation: this set will only be used to tell whether a transaction can write to the word. Namely, if at least one other transaction has accessed (i.e. read or written) this word in the same epoch, the write cannot happen. Said differently, if two transactions are in the access set, it doesn’t matter which one they are.</p>
+</blockquote>
+<p>现在迷惑的点就是：</p>
+<ol>
+<li>如果有另一个transaction也访问过，还能不能写？</li>
+<li>现在的代码里到底判断了other没？</li>
+</ol>
+<p>2应该是没有的，加个输出可以发现，即使有other还是有时写成功了。那为什么可以过呢？难道是意外？多测几次还真偶尔有Violated isolation or atomicity！</p>
+<p>好吧，虽然project又变成了未完成状态，但至少没有逻辑错的代码能跑对、逻辑(以为)对的代码跑不通的尴尬情况了。</p>
+<p>那么接下来的问题就是，为什么逻辑(以为)对的代码跑不通？更准确的是，为什么在transaction量较大时跑不通？</p>
+<h1 id="Debug"><a href="#Debug" class="headerlink" title="Debug"></a>Debug</h1><h2 id="CAS-fail-when-equal"><a href="#CAS-fail-when-equal" class="headerlink" title="CAS fail when equal"></a>CAS fail when equal</h2><p>打印了一些tm_begin和tm_end的信息，发现当transaction进行了很多、id很大之后，只有tm_begin没有tm_end了，也就是说后面的都没有commit。并且都是一些read/write transaction，它们的write都没有成功。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">[304850 write align] seg_id=8 index=1 flag=0</span><br><span class="line">[304851 tm_begin] is_ro=0</span><br><span class="line">[304821 write align] seg_id=8 index=1 flag=0</span><br><span class="line">[304852 tm_begin] is_ro=0</span><br><span class="line">[304833 write align] seg_id=8 index=1 flag=0</span><br><span class="line">[304853 tm_begin] is_ro=0</span><br><span class="line">[304836 write align] seg_id=8 index=1 flag=0</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>发现有一个CAS中，明明expected值和control中的值是一样的，但是没有换成功。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">atomic_compare_exchange_strong(cur_control, &amp;not_written, written_and_is_owner)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">not_written=5e0cb00000005 load_control=5e0cb00000005 cur_control=5e0cb00000005 equal=1</span><br></pre></td></tr></table></figure>
+
+<p>这可就太离谱了！</p>
+<blockquote>
+<p><a class="link"   target="_blank" rel="noopener" href="https://stackoverflow.com/questions/35534305/compare-exchange-strong-failing-despite-data-matching-expected-value" >compare_exchange_strong failing despite data matching expected value<i class="fas fa-external-link-alt"></i></a></p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://stackoverflow.com/questions/66566810/why-does-compare-exchange-strong-fail-with-stdatomicdouble-stdatomicfloa" >Why does compare_exchange_strong fail with std::atomic, std::atomic in C++?<i class="fas fa-external-link-alt"></i></a></p>
+</blockquote>
+<p>可能是由padding导致的。这就很尴尬了。</p>
+<h3 id="尝试1"><a href="#尝试1" class="headerlink" title="尝试1"></a>尝试1</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uint_least64_t not_written = owner &lt;&lt; 32 | valid;</span><br></pre></td></tr></table></figure>
+
+<p>改成</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uint_least64_t not_written = load_control &amp; 0xFFFFFFFFFFFFFFF9;</span><br></pre></td></tr></table></figure>
+
+<p>不行</p>
+<h3 id="尝试2"><a href="#尝试2" class="headerlink" title="尝试2"></a>尝试2</h3><p>这是真的很离谱啊！打印出来的判断就是相等啊！这换不了能怎么办啊？？？</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;DEBUG4 not_written=%lx load_control=%lx cur_control=%lx equal=%d test=%d\n&quot;</span>, not_written, load_control, load, not_written==load, atomic_load(cur_control)==not_written);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">DEBUG4 not_written=3e1a300000005 load_control=3e1a300000005 cur_control=3e1a300000005 equal=1 test=1</span><br><span class="line">[254371 write align] seg_id=8 index=1 flag=0 cond=4</span><br><span class="line">[254373 tm_begin] is_ro=0</span><br><span class="line">DEBUG4 not_written=3e1a400000005 load_control=3e1a400000005 cur_control=3e1a400000005 equal=1 test=1</span><br><span class="line">[254372 write align] seg_id=8 index=1 flag=0 cond=4</span><br><span class="line">[254374 tm_begin] is_ro=0</span><br><span class="line">DEBUG4 not_written=3e1a500000005 load_control=3e1a500000005 cur_control=3e1a500000005 equal=1 test=1</span><br></pre></td></tr></table></figure>
+
+<p>难道是uint_least64_t的问题？它和memcpy的比较方法不一样？</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">size_t a = (size_t)not_written;</span><br></pre></td></tr></table></figure>
+
+<p>强制转成size_t然后比就好了？？？那之前担心位数不对，还特地搞个uint_least64_t，简直是离了个大谱。</p>
+<h2 id="too-long"><a href="#too-long" class="headerlink" title="too long"></a>too long</h2><p>改好上面这个离谱的bug之后，当transaction太多还是会跑不完。打印输出看还是write_align不成功。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[370371 tm_begin] is_ro=0</span><br><span class="line">[370371 write align] seg_id=8 index=1 flag=0 cond=4 lc=5a6c300000005, cc=5a6c300000005</span><br><span class="line">[370372 tm_begin] is_ro=0</span><br><span class="line">[370372 write align] seg_id=8 index=1 flag=0 cond=4 lc=5a6c400000005, cc=5a6c400000005</span><br><span class="line">[370373 tm_begin] is_ro=0</span><br><span class="line">[370373 write align] seg_id=8 index=1 flag=0 cond=4 lc=5a6c500000005, cc=5a6c500000005</span><br><span class="line">[370374 tm_begin] is_ro=0</span><br><span class="line">[370374 write align] seg_id=8 index=1 flag=0 cond=4 lc=5a6c600000005, cc=5a6c600000005</span><br><span class="line">[370375 tm_begin] is_ro=0</span><br><span class="line">[370375 write align] seg_id=8 index=1 flag=0 cond=4 lc=5a6c700000005, cc=5a6c700000005</span><br></pre></td></tr></table></figure>
+
+<p>全部都是有other read冲突</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[215647 read align] seg_id=7 index=0 lc=0 cc=34a5f00000000</span><br><span class="line">[215647 read align] seg_id=7 index=1 lc=1 cc=34a5f00000001</span><br><span class="line">[215647 read align] seg_id=8 index=0 lc=0 cc=34a5f00000000</span><br><span class="line">[215647 read align] seg_id=8 index=1 lc=1 cc=34a5f00000001</span><br><span class="line">[215647 read align] seg_id=9 index=0 lc=1 cc=34a5f00000001</span><br><span class="line">[215647 read align] seg_id=9 index=1 lc=0 cc=34a5f00000000</span><br><span class="line">[215647 read align] seg_id=9 index=2 lc=0 cc=34a5f00000000</span><br><span class="line">[215647 read align] seg_id=9 index=3 lc=1 cc=34a5f00000001</span><br><span class="line">[215647 read align] seg_id=8 index=1 lc=34a5f00000001 cc=34a5f00000005</span><br></pre></td></tr></table></figure>
+
+<p>发现一个逻辑错误，owner是自己时仍设了other。</p>
+<p>这下算是修了一个逻辑上的大bug，再上服务器测测。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2021/screencapture2021-12-16 PM10.51.17.jpg"
+                      width=600
+                >
+
+<p>成功！虽然没有变快，但至少逻辑上合理了，不像之前那么虚了。</p>
+<hr>
+<p>所以之前那么大一个bug是怎么过的测试啊就离谱，今天真是满头问号。而且之前逻辑都没对就写优化，那可不是写了个寂寞。幸亏优化的思路现在是很清晰了，毕竟revert、重写都搞了好几遍了。虽然不知道这些优化到底能不能正向优化，但还是想试试，就是很好奇，而且毕竟都花了这么多时间了。</p>
+<p>顺便把<a href="https://coconutnutx.github.io/2021/12/15/ca-control/">Atomic control</a>更新一下。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ol>
+<li>reference的逻辑还是很正确的</li>
+<li>bug确实是自己写的bug</li>
+<li>除了c的atomic_compare_exchange_strong，值较大时，期望值和实际值一样但换不成功，是真的离谱</li>
+</ol>
 
         </div>
 
@@ -364,7 +453,7 @@
         <aside class="page-aside">
             <div class="post-toc-wrap">
     <div class="post-toc">
-        
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%97%AE%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%87%8D%E8%AF%BB"><span class="nav-number">2.</span> <span class="nav-text">重读</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Debug"><span class="nav-number">3.</span> <span class="nav-text">Debug</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CAS-fail-when-equal"><span class="nav-number">3.1.</span> <span class="nav-text">CAS fail when equal</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%9D%E8%AF%951"><span class="nav-number">3.1.1.</span> <span class="nav-text">尝试1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%9D%E8%AF%952"><span class="nav-number">3.1.2.</span> <span class="nav-text">尝试2</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#too-long"><span class="nav-number">3.2.</span> <span class="nav-text">too long</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol>
     </div>
 </div>
         </aside>
