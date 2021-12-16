@@ -9,7 +9,7 @@
     
     <title>
         
-            CA project 思路笔记 |
+            Atomic control |
         
         CoCoNutNut&#39;s NoteBook
     </title>
@@ -151,7 +151,7 @@
     <div class="article-content-container">
 
         <div class="article-title">
-            <span class="title-hover-animation">CA project 思路笔记</span>
+            <span class="title-hover-animation">Atomic control</span>
         </div>
 
         
@@ -167,7 +167,7 @@
                     <div class="meta-info">
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
-        <i class="fas fa-edit"></i>&nbsp;2021-11-28 14:33:12
+        <i class="fas fa-edit"></i>&nbsp;2021-12-15 17:37:29
     </span>
     
         <span class="article-categories article-meta-item">
@@ -210,88 +210,81 @@
         
 
         <div class="article-content markdown-body">
-            <p>看Project description里给的Dual-versioned transactional memory的一些记录</p>
-<h1 id="关于access-set"><a href="#关于access-set" class="headerlink" title="关于access set"></a>关于access set</h1><h2 id="情况分析"><a href="#情况分析" class="headerlink" title="情况分析"></a>情况分析</h2><p>假设当前A是readable copy，B是writable copy，某一个位置可能出现的一些情况：</p>
+            <p>Project中为了标识transactional memory中每一个align的状态，需要一个control structure，这里用了一个64bit的atomic interger来存这些信息。</p>
+<p>通过一次CAS完成对状态的判断和修改，避免加锁。</p>
+<h1 id="Control设计"><a href="#Control设计" class="headerlink" title="Control设计"></a>Control设计</h1><table>
+<thead>
+<tr>
+<th>占用bit</th>
+<th>32</th>
+<th>20</th>
+<th>9</th>
+<th>1</th>
+<th>1</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>名称</td>
+<td>Owner</td>
+<td>Epoch</td>
+<td>留空</td>
+<td>Other</td>
+<td>Written</td>
+<td>Valid</td>
+</tr>
+<tr>
+<td>描述</td>
+<td>本轮第一个read或write成功的transaction的id</td>
+<td>当前轮数</td>
+<td></td>
+<td>是否有其它transaction访问</td>
+<td>是否被写</td>
+<td>A或B哪个有效</td>
+</tr>
+</tbody></table>
+<h1 id="Control-masks"><a href="#Control-masks" class="headerlink" title="Control masks"></a>Control masks</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">size_t</span> VALID_MASK = <span class="number">0x1</span>;         <span class="comment">// 0: A is valid    1: B is valid</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">size_t</span> WRITE_MASK = <span class="number">0x1</span> &lt;&lt; <span class="number">1</span>;    <span class="comment">// 0: not written   1: written</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">size_t</span> OTHER_MASK = <span class="number">0x1</span> &lt;&lt; <span class="number">2</span>;    <span class="comment">// 0: no other read 1: has other read</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">size_t</span> EPOCH_MASK = <span class="number">0xFFFFF000</span>;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Control-macros"><a href="#Control-macros" class="headerlink" title="Control macros"></a>Control macros</h1><p>有时需要直接读atomic interger。其他时候，先读一次，然后直接对读到的值进行操作，可以减少atomic_load()次数。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> GET_FLAG_SIGN(control, flag) ((atomic_load(control) &amp; flag) != 0)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> GET_FLAG_SIGN_LOADED(load_control, flag) ((load_control &amp; flag) != 0)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> GET_FLAG_LOADED(load_control, flag) (load_control &amp; flag)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> GET_EPOCH_LOADED(load_control) (load_control &amp; EPOCH_FLAG)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> GET_OWNER(control) ((atomic_load(control)) &gt;&gt; 32)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> GET_OWNER_LOADED(load_control) (load_control &gt;&gt; 32)</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="read-align逻辑"><a href="#read-align逻辑" class="headerlink" title="read_align逻辑"></a>read_align逻辑</h1><ol>
+<li><p>If 已经被写过，只有owner可以读（且Other应该为空，因为Other和Written不肯能同时为1）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Expected: Owner==id; Epoch==epoch; Other==0; Written==1; Valid==valid</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>If 没有被写过</p>
 <ol>
-<li>小明读，成功，加入set<ol>
-<li>张三读，成功，加入set<ol>
-<li>小明写，发现张三也在set，失败 <font color="red">只要set里有别人，就不能写了</font></li>
-</ol>
+<li><p>If 没有被占有，尝试抢占（可能会出现竞争而失败）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Expected: Owner==0;  Epoch==epoch; Other==0; Written==0; Valid==valid</span><br><span class="line">Desired:  Owner==id; Epoch==epoch; Other==0; Written==0; Valid==valid</span><br></pre></td></tr></table></figure>
 </li>
-<li>张三写，发现小明已经在set，失败 <font color="red">只要set里有别人，就不能写了</font></li>
-<li>小明写，set里只有自己，成功<ol>
-<li>小明读，发现已经被写过了，自己在set里，成功，读B</li>
-<li>张三读，发现已经被写过了，自己不在set里，失败</li>
-</ol>
+<li><p>Else if 已经被占有，尝试设Other（要么是已经有owner，要么是上面的交换没抢到）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Expected: Owner==owner; Epoch==epoch; Other==0; Written==0; Valid==valid</span><br><span class="line">Desired:  Owner==owner; Epoch==epoch; Other==1; Written==0; Valid==valid</span><br></pre></td></tr></table></figure>
 </li>
-</ol>
+<li><p>Else if 读到已经被设了Other（要么被别人设了Other，要么被owner写过了）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Expected: Owner==owner; Epoch==epoch; Other==1; Written==0; Valid==valid</span><br></pre></td></tr></table></figure>
+
+<p>如果读到Other为1，owner也不能再写这个align了，所以可以放心读</p>
 </li>
-</ol>
-<h2 id="什么时候可以加入？"><a href="#什么时候可以加入？" class="headerlink" title="什么时候可以加入？"></a>什么时候可以加入？</h2><ol>
-<li>读成功的时候<br> 什么时候可以读？<ol>
-<li>没人写过，随便读，读A</li>
-<li>自己写过，可以读，读B <font color="red">如果是别人写的，自己不可能在set里，不能读</font></li>
-</ol>
-</li>
-<li>写成功的时候<br> 什么时候可以写？<ol>
-<li>没人写过，且set里没别人 <font color="red">只可能有一个人是通过写加入set的</font></li>
-<li>自己写过</li>
 </ol>
 </li>
 </ol>
-<p>从而保证：</p>
+<h1 id="write-align逻辑"><a href="#write-align逻辑" class="headerlink" title="write_align逻辑"></a>write_align逻辑</h1><ol>
+<li><p>If 已经被写过，只有owner可以写，且不能有other</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Expected: Owner==id; Epoch==epoch; Other==0; Written==1; Valid==valid</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>If 没有被写过</p>
 <ol>
-<li>只可能有一个人写</li>
-<li>写过的地方只有写的人能读</li>
-<li>没写过的地方都可以读</li>
-</ol>
-<h2 id="set可以只记第一个"><a href="#set可以只记第一个" class="headerlink" title="set可以只记第一个"></a>set可以只记第一个</h2><p>set里可以只记录第一个加入set的人，因为：</p>
-<ol>
-<li>如果第一个加入set是通过写加入的<ol>
-<li>后面可以通过set判断自己写过，可以继续读写</li>
-<li>其他人发现写过，且不是自己写的，读写都不可以</li>
-</ol>
+<li><p>已经是owner可以写</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Expected: Owner==id; Epoch==epoch; Other==0; Written==0; Valid==valid</span><br><span class="line">Desired:  Owner==id; Epoch==epoch; Other==0; Written==1; Valid==valid</span><br></pre></td></tr></table></figure>
 </li>
-<li>如果第一个加入set是通过读加入的，<ol>
-<li>别人不能写，因为虽然没人写过，但set里已经有人了</li>
-<li>别人可以读</li>
-<li>自己可以写，自己写过之后，别人也不可以读了<br>这个第一个加入set的，可以视为所有者</li>
+<li><p>抢到owner可以写</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Expected: Owner==0;  Epoch==epoch; Other==0; Written==0; Valid==valid</span><br><span class="line">Desired:  Owner==id; Epoch==epoch; Other==0; Written==1; Valid==valid</span><br></pre></td></tr></table></figure>
+
+</li>
 </ol>
 </li>
 </ol>
-<p>🧐project description里面说不要implement an actual set，那么按这个逻辑，只存一个值应该就足够了</p>
-<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>也就是说，一个位置是否可以读写有以下几种状态：<br><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/images/2021/screencapture2021-11-28 PM2.36.51.jpg"
-                     
-                ></p>
-<p>且1状态中，如果没有其他人读过，占有者可写。如果有人读过，则不可写了。</p>
-<p>以上都是针对读写事务，只读事务可以直接读，不影响</p>
-<p>更新<a href="">CA project 状态分析</a></p>
-<h2 id="其它问题"><a href="#其它问题" class="headerlink" title="其它问题"></a>其它问题</h2><p>Q：可能有写成功的，但后续操作失败，如何处理？<br>A：这样的TX不会到commit()，而只有在commit()中可以更改valid copy，因此下一轮中有效的仍是旧的值</p>
-<h1 id="关于batcher"><a href="#关于batcher" class="headerlink" title="关于batcher"></a>关于batcher</h1><p>什么时候调？</p>
-<pre><code>1. 事务开始，调enter() -&gt; 即在tm_begin()中
-2. 最后一个操作结束时，调leave() -&gt; 即在tm_end()中</code></pre><h2 id="情况分析-1"><a href="#情况分析-1" class="headerlink" title="情况分析"></a>情况分析</h2><ol>
-<li>初始时，remaining=0</li>
-<li>第一个人enter()，remaining变成1</li>
-<li>后面的人enter()，都被挂到blocked</li>
-<li>第一个人leave()，remaining变成0</li>
-<li>counter+1  <font color="red">相当于进入下一轮</font><ul>
-<li>remaining重设为blocked的长度</li>
-<li>叫醒所有blocked里的线程</li>
-<li>清空blocked</li>
-</ul>
-</li>
-<li>此时上一轮中被blocked的线程，在这一轮中一起开始工作。当有新线程调enter()，又会被挂到blocked里，等待下一轮</li>
-</ol>
-<h2 id="遗留问题"><a href="#遗留问题" class="headerlink" title="遗留问题"></a>遗留问题</h2><p>Q：为什么commit()中交换valid copy要推迟到两轮交替的间隙进行？<br>A：保证atomicity</p>
-<p>Q：get_epoch()什么时候用到？是干什么用的？<br>A：优化的时候用</p>
-<h1 id="关于tx-t"><a href="#关于tx-t" class="headerlink" title="关于tx_t"></a>关于tx_t</h1><p>一个事务需要记录的东西：</p>
-<ul>
-<li>boolean 是否成功 <font color="red">如果已经失败了，后面读写的时候可以直接返回</font></li>
-<li>boolean 是否只读 <font color="red">读的时候可以直接读</font></li>
-</ul>
+<p>Note：如果写成功了，本轮中control的值将不会再发生改变</p>
 
         </div>
 
@@ -303,13 +296,13 @@
                     <div class="article-prev">
                         <a class="prev"
                            rel="prev"
-                           href="/2021/11/30/validate/"
+                           href="/2021/12/16/ca-condition/"
                         >
                             <span class="left arrow-icon flex-center">
                               <i class="fas fa-chevron-left"></i>
                             </span>
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">DA project 2 validation tool</span>
+                                <span class="post-nav-title-item">CA project 状态分析</span>
                                 <span class="post-nav-item">Prev posts</span>
                             </span>
                         </a>
@@ -319,10 +312,10 @@
                     <div class="article-next">
                         <a class="next"
                            rel="next"
-                           href="/2021/11/16/theme/"
+                           href="/2021/12/12/ca-project/"
                         >
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">更改主题记录</span>
+                                <span class="post-nav-title-item">CA project 常用操作</span>
                                 <span class="post-nav-item">Next posts</span>
                             </span>
                             <span class="right arrow-icon flex-center">
@@ -445,7 +438,7 @@
         <aside class="page-aside">
             <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B3%E4%BA%8Eaccess-set"><span class="nav-number">1.</span> <span class="nav-text">关于access set</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%83%85%E5%86%B5%E5%88%86%E6%9E%90"><span class="nav-number">1.1.</span> <span class="nav-text">情况分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E5%8F%AF%E4%BB%A5%E5%8A%A0%E5%85%A5%EF%BC%9F"><span class="nav-number">1.2.</span> <span class="nav-text">什么时候可以加入？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#set%E5%8F%AF%E4%BB%A5%E5%8F%AA%E8%AE%B0%E7%AC%AC%E4%B8%80%E4%B8%AA"><span class="nav-number">1.3.</span> <span class="nav-text">set可以只记第一个</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA"><span class="nav-number">1.4.</span> <span class="nav-text">结论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E5%AE%83%E9%97%AE%E9%A2%98"><span class="nav-number">1.5.</span> <span class="nav-text">其它问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B3%E4%BA%8Ebatcher"><span class="nav-number">2.</span> <span class="nav-text">关于batcher</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%83%85%E5%86%B5%E5%88%86%E6%9E%90-1"><span class="nav-number">2.1.</span> <span class="nav-text">情况分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%97%E7%95%99%E9%97%AE%E9%A2%98"><span class="nav-number">2.2.</span> <span class="nav-text">遗留问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B3%E4%BA%8Etx-t"><span class="nav-number">3.</span> <span class="nav-text">关于tx_t</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Control%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.</span> <span class="nav-text">Control设计</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Control-masks"><span class="nav-number">2.</span> <span class="nav-text">Control masks</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Control-macros"><span class="nav-number">3.</span> <span class="nav-text">Control macros</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#read-align%E9%80%BB%E8%BE%91"><span class="nav-number">4.</span> <span class="nav-text">read_align逻辑</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#write-align%E9%80%BB%E8%BE%91"><span class="nav-number">5.</span> <span class="nav-text">write_align逻辑</span></a></li></ol>
     </div>
 </div>
         </aside>

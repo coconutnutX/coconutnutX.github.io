@@ -153,6 +153,116 @@
                 
 
                 <h3 class="home-article-title">
+                    <a href="/2021/12/16/ca-condition/">
+                        CA project 状态分析
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        上次CA project 思路笔记分析一个位置是否可以读写的状态：
+
+
+在写project的过程中发现会有问题。
+read_align中按照这个思路判断Written==0时，如果没有owner、或者owner是自己，可以写。
+123456789if...
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Thu Dec 16 2021 20:49:38 GMT+0100">2021-12-16</span></span>
+        
+            <span class="home-article-category"><i class="fas fa-folder"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/categories/Note/">Note</a>&nbsp;
+                        </li>
+                    
+                    
+                </ul>
+            </span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/concurrent-algorithm/">concurrent_algorithm</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/2021/12/16/ca-condition/">Read more&nbsp;<i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
+                    <a href="/2021/12/15/ca-control/">
+                        Atomic control
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        Project中为了标识transactional memory中每一个align的状态，需要一个control structure，这里用了一个64bit的atomic interger来存这些信息。
+通过一次CAS完成对状态的判断和修改，避免加锁...
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Wed Dec 15 2021 17:37:29 GMT+0100">2021-12-15</span></span>
+        
+            <span class="home-article-category"><i class="fas fa-folder"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/categories/Note/">Note</a>&nbsp;
+                        </li>
+                    
+                    
+                </ul>
+            </span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/concurrent-algorithm/">concurrent_algorithm</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/2021/12/15/ca-control/">Read more&nbsp;<i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
                     <a href="/2021/12/12/ca-project/">
                         CA project 常用操作
                     </a>
@@ -1161,127 +1271,6 @@ strip做成Prefab
     </div>
 
     <a href="/2021/02/21/unity/">Read more&nbsp;<i class="fas fa-angle-right"></i></a>
-</div>
-
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                <h3 class="home-article-title">
-                    <a href="/2021/02/17/unity/">
-                        Project V0.1.1 Record - UI,Event
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        Canvas大小
-https://www.youtube.com/watch?v=OKK69bmjmJE&amp;ab_channel=Creagines
-
-Canvas Scaler-&gt; 缩放模式 -&gt; 屏幕大小缩放
-解决了上次文字飞掉...
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Wed Feb 17 2021 15:59:43 GMT+0100">2021-02-17</span></span>
-        
-            <span class="home-article-category"><i class="fas fa-folder"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/categories/Note/">Note</a>&nbsp;
-                        </li>
-                    
-                    
-                </ul>
-            </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fas fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/unity/">unity</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
-    </div>
-
-    <a href="/2021/02/17/unity/">Read more&nbsp;<i class="fas fa-angle-right"></i></a>
-</div>
-
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                <h3 class="home-article-title">
-                    <a href="/2021/02/16/unity/">
-                        Project V0.1 Record
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        做了个初版试试水~😃
-功能点击寻路
-
-靠近显示介绍
-
-鼠标滚动前后平移
-
-键盘前后左右平移
-
-鼠标拖拽旋转视角
-
-项目结构
-
-代码PlayerController1234567891011121314151617181920212223242526...
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Tue Feb 16 2021 18:24:56 GMT+0100">2021-02-16</span></span>
-        
-            <span class="home-article-category"><i class="fas fa-folder"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/categories/Note/">Note</a>&nbsp;
-                        </li>
-                    
-                    
-                </ul>
-            </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fas fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/unity/">unity</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
-    </div>
-
-    <a href="/2021/02/16/unity/">Read more&nbsp;<i class="fas fa-angle-right"></i></a>
 </div>
 
             </li>

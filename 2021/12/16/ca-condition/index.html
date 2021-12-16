@@ -9,7 +9,7 @@
     
     <title>
         
-            Tags |
+            CA project 状态分析 |
         
         CoCoNutNut&#39;s NoteBook
     </title>
@@ -84,7 +84,7 @@
                         </li>
                     
                         <li class="menu-item">
-                            <a class="active"
+                            <a class=""
                                href="/tags"
                             >
                                 TAGS
@@ -128,7 +128,7 @@
                 </li>
             
                 <li class="drawer-menu-item flex-center">
-                    <a class="active"
+                    <a class=""
                        href="/tags">TAGS</a>
                 </li>
             
@@ -147,15 +147,115 @@
             <div class="main-content">
 
                 
-                    
-    <div class="fade-in-down-animation">
-        <div class="tagcloud-container">
-            <div class="tagcloud-content">
-                <a href="/tags/algorithm/" style="font-size: 1.27rem;">algorithm</a> <a href="/tags/ar/" style="font-size: 1.2rem;">ar</a> <a href="/tags/bioinformatics/" style="font-size: 1.07rem;">bioinformatics</a> <a href="/tags/concurrent-algorithm/" style="font-size: 1.33rem;">concurrent_algorithm</a> <a href="/tags/distributed-algorithm/" style="font-size: 1.13rem;">distributed_algorithm</a> <a href="/tags/mindmap/" style="font-size: 1.27rem;">mindmap</a> <a href="/tags/mybatis/" style="font-size: 1.47rem;">mybatis</a> <a href="/tags/mybatis-plus/" style="font-size: 1.27rem;">mybatis_plus</a> <a href="/tags/spring/" style="font-size: 1.53rem;">spring</a> <a href="/tags/springcloud/" style="font-size: 1.33rem;">springcloud</a> <a href="/tags/springmvc/" style="font-size: 1.33rem;">springmvc</a> <a href="/tags/sublinear-algorithm/" style="font-size: 1rem;">sublinear_algorithm</a> <a href="/tags/tool/" style="font-size: 1.33rem;">tool</a> <a href="/tags/unity/" style="font-size: 1.6rem;">unity</a> <a href="/tags/vue/" style="font-size: 1.4rem;">vue</a>
-            </div>
-        </div>
-    </div>
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
 
+        <div class="article-title">
+            <span class="title-hover-animation">CA project 状态分析</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">coconutnut</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2021-12-16 20:49:38
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/Note/">Note</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/concurrent-algorithm/">concurrent_algorithm</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <p>上次<a href="https://coconutnutx.github.io/2021/11/28/ca-project/">CA project 思路笔记</a>分析一个位置是否可以读写的状态：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2021/screencapture2021-12-16 PM8.49.01.jpg"
+                     
+                >
+
+<p>在写project的过程中发现会有问题。</p>
+<p>read_align中按照这个思路判断Written==0时，如果没有owner、或者owner是自己，可以写。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(owner==<span class="number">0</span> || owner==tr-&gt;id)&#123;</span><br><span class="line">  <span class="keyword">uint_least64_t</span> not_written = owner &lt;&lt; <span class="number">32</span> | epoch | valid;</span><br><span class="line">  <span class="keyword">if</span>(atomic_compare_exchange_strong(cur_control, &amp;not_written, written_and_is_owner))&#123;</span><br><span class="line">    <span class="comment">// write the content at source into the writable copy;</span></span><br><span class="line">    write_writable_copy(source, segment, index);</span><br><span class="line">    <span class="comment">// return the transaction can continue;</span></span><br><span class="line">    flag = <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但是测试时，transaction量一两千还能过，10000就过不了了。</p>
+<p>反而↓这样可以过：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(atomic_compare_exchange_strong(cur_control, &amp;load_control, written_and_is_owner))&#123;</span><br><span class="line">  <span class="comment">// write the content at source into the writable copy;</span></span><br><span class="line">  write_writable_copy(source, segment, index);</span><br><span class="line">  <span class="comment">// return the transaction can continue;</span></span><br><span class="line">  flag = <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+        </div>
+
+        
+
+        
+            <div class="article-nav">
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2021/12/15/ca-control/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Atomic control</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
 
 
                 
@@ -198,6 +298,23 @@
         </div>
     </div>
 
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
     
 
     <div class="right-bottom-side-tools">
@@ -243,6 +360,14 @@
 
     </div>
 
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        
+    </div>
+</div>
+        </aside>
     
 
     <div class="image-viewer-container">
@@ -316,6 +441,14 @@
 
 
 <div class="post-scripts">
+    
+        
+<script src="/js/left-side-toggle.js"></script>
+
+<script src="/js/libs/anime.min.js"></script>
+
+<script src="/js/toc.js"></script>
+
     
 </div>
 
