@@ -251,6 +251,8 @@
 <li>每一部分debug输出用参数控制，可以很方便的开关。</li>
 <li>经常commit。避免debug变成写bug时，回退都无处可退。</li>
 </ol>
+<hr>
+<p>备注：下文所有TM指的是Transactional Memory，不是口吐芬芳。</p>
 <h1 id="阶段一"><a href="#阶段一" class="headerlink" title="阶段一"></a>阶段一</h1><p>写完read、write等基础操作，先加了个全局锁，放到虚拟机里测一下逻辑。</p>
 <h2 id="atomic-load时segmentation-fault"><a href="#atomic-load时segmentation-fault" class="headerlink" title="atomic_load时segmentation fault"></a>atomic_load时segmentation fault</h2><p>本地跑没问题，但是虚拟机里make build-libs run就Segmentation fault。一番折腾后，定位到是atomic interger的问题。用atomic_store或者atomic_load的时候就会报错。</p>
 <h3 id="尝试1"><a href="#尝试1" class="headerlink" title="尝试1"></a>尝试1</h3><p>在计算control structure的偏移量时，第一个segment没转(void*)，于是取地址出了问题，atomic_load时就崩了</p>
