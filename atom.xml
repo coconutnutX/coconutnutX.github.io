@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://coconutnutx.github.io/"/>
-  <updated>2021-12-16T19:49:38.000Z</updated>
+  <updated>2022-01-12T08:56:00.000Z</updated>
   <id>https://coconutnutx.github.io/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Obsidian使用感受</title>
+    <link href="https://coconutnutx.github.io/2022/01/12/note/"/>
+    <id>https://coconutnutx.github.io/2022/01/12/note/</id>
+    <published>2022-01-12T08:56:00.000Z</published>
+    <updated>2022-01-12T08:56:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>想要试试带关系图的双链笔记，10月开始尝试Obsidian，到现在差不多三个月，没想到已经这么多了。</p><img                       lazyload                     src="/images/loading.svg"                     data-src="/images/2022/Obsedian2021.jpg"                                     ><p>一开始只是记了些课程笔记，蓝色是Machine Learning，粉色是Sublinear Algorithms，紫色和黄色是Distributed和Concurrent Algorithms。后来又把一些其它的、包括读书笔记都加了进来。看着整个图一点点长大、不同的部分开始有了联系，有种集卡游戏的满足感。</p><p>Obsidian+Github真是太棒了！</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;想要试试带关系图的双链笔记，10月开始尝试Obsidian，到现在差不多三个月，没想到已经这么多了。&lt;/p&gt;
+&lt;img  
+                     lazyload
+                     src=&quot;/images/loading.svg
+      
+    
+    </summary>
+    
+    
+      <category term="Memo" scheme="https://coconutnutx.github.io/categories/Memo/"/>
+    
+    
+      <category term="tool" scheme="https://coconutnutx.github.io/tags/tool/"/>
+    
+  </entry>
   
   <entry>
     <title>CA project 状态分析&amp;debug</title>
@@ -532,36 +561,6 @@
 &lt;li&gt;&lt;p&gt;PerlinNoise生成波浪&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;a class=&quot;link&quot;   href=&quot;https://docs.unity3d.com/cn/current/ScriptReference/
-      
-    
-    </summary>
-    
-    
-      <category term="Note" scheme="https://coconutnutx.github.io/categories/Note/"/>
-    
-    
-      <category term="unity" scheme="https://coconutnutx.github.io/tags/unity/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Unity Note - Project10 Wave</title>
-    <link href="https://coconutnutx.github.io/2021/02/21/unity/"/>
-    <id>https://coconutnutx.github.io/2021/02/21/unity/</id>
-    <published>2021-02-21T13:49:27.000Z</published>
-    <updated>2021-02-21T13:49:27.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>尝试做个波浪动画，最后效果：</p><img                       lazyload                     src="/images/loading.svg"                     data-src="/images/2021/Feb-21-2021 15-51-45.gif"                                     ><hr><p>strip做成Prefab</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">using System.Collections;</span><br><span class="line">using System.Collections.Generic;</span><br><span class="line">using UnityEngine;</span><br><span class="line">using DG.Tweening;</span><br><span class="line"></span><br><span class="line">public class Strip : MonoBehaviour</span><br><span class="line">&#123;</span><br><span class="line">    public void Activate(float waitSecond, float moveDistance, float moveDuration)</span><br><span class="line">    &#123;</span><br><span class="line">        StartCoroutine(ActivateMovement(waitSecond, moveDistance, moveDuration));</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    private IEnumerator ActivateMovement(float waitSecond, float moveDistance, float moveDuration)</span><br><span class="line">    &#123;</span><br><span class="line">        // wait for some time</span><br><span class="line">        yield return new WaitForSeconds(waitSecond);</span><br><span class="line">        </span><br><span class="line">        // set movement</span><br><span class="line">        DOTween.Sequence()</span><br><span class="line">            .Append(transform.DOMoveY(moveDistance, moveDuration).SetEase(Ease.InOutSine))</span><br><span class="line">            .SetLoops(-1,LoopType.Yoyo);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>加一个controller</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">using System.Collections;</span><br><span class="line">using System.Collections.Generic;</span><br><span class="line">using UnityEngine;</span><br><span class="line"></span><br><span class="line">public class StripController : MonoBehaviour</span><br><span class="line">&#123;</span><br><span class="line">    // object setting</span><br><span class="line">    [SerializeField] private int stripNum = 10;</span><br><span class="line">    [SerializeField] private Vector3 stripScale = new Vector3(0.2f,5,0.01f);</span><br><span class="line">    [SerializeField] private Vector3 stripInterval = new Vector3(0.25f,0,0);</span><br><span class="line"></span><br><span class="line">    // movement setting</span><br><span class="line">    [SerializeField] private float moveDistance = 2f;</span><br><span class="line">    [SerializeField] private float moveDuration = 2f;</span><br><span class="line">    [SerializeField] private float moveInterval = 0.1f;</span><br><span class="line"></span><br><span class="line">    private Strip stripPrefab;</span><br><span class="line">    private Strip[] strips;</span><br><span class="line">    </span><br><span class="line">    void Start()</span><br><span class="line">    &#123;</span><br><span class="line">        stripPrefab = Resources.Load&lt;Strip&gt;(&quot;strip&quot;);</span><br><span class="line">        CreateStrips();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private void CreateStrips()</span><br><span class="line">    &#123;</span><br><span class="line">        strips = new Strip[stripNum];</span><br><span class="line">        for(int i=0; i&lt;stripNum; i++)&#123;</span><br><span class="line">            // create cube</span><br><span class="line">            Strip obj = Instantiate(stripPrefab);</span><br><span class="line">            // set position</span><br><span class="line">            obj.transform.position = transform.position + stripInterval * i;</span><br><span class="line">            obj.transform.localScale = stripScale;</span><br><span class="line">            // activate movement</span><br><span class="line">            obj.Activate(moveInterval*(i+5), moveDistance, moveDuration);</span><br><span class="line">            // add to array</span><br><span class="line">            strips[i] = obj;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>奇怪的一点，前几个条的起始时间总是有点问题，暂时找不出来为什么，先把所有起始时间往后挪一点 MARK</p><img                       lazyload                     src="/images/loading.svg"                     data-src="/images/2021/screencapture2021-02-21 PM3.21.01.jpg"                                     ><p>这样就没问题了</p><img                       lazyload                     src="/images/loading.svg"                     data-src="/images/2021/screencapture2021-02-21 PM3.23.48.jpg"                                     ><hr><p>关于WaitForSeconds()</p><blockquote><p><a class="link"   href="https://forum.unity.com/threads/waitforseconds-in-c.75411/" >https://forum.unity.com/threads/waitforseconds-in-c.75411/<i class="fas fa-external-link-alt"></i></a></p></blockquote><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">private void executeWait()</span><br><span class="line">&#123;</span><br><span class="line">  Debug.Log(&quot;wait start&quot;);</span><br><span class="line">  StartCoroutine(Wait(20.0f));</span><br><span class="line">  Debug.Log(&quot;This gets called after starting the Coroutine&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private IEnumerator Wait(float seconds)</span><br><span class="line">&#123;</span><br><span class="line">  Debug.Log(&quot;waiting&quot;);</span><br><span class="line">  yield return new WaitForSeconds(seconds);</span><br><span class="line">  Debug.Log(&quot;wait end&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><hr><p>现在这个波浪效果一个问题是DOTWeen消耗太大</p><img                       lazyload                     src="/images/loading.svg"                     data-src="/images/2021/screencapture2021-02-21 PM3.56.56.jpg"                                     ><p>也许还是直接用波浪形物体平移？</p><hr><p>一个很喜欢的chrome插件几枝是用noise做的波浪，试一下Mathf.PerlinNoise()</p><p>参考：</p><blockquote><p><a class="link"   href="https://blog.csdn.net/FumikiSAMA/article/details/80212432" >https://blog.csdn.net/FumikiSAMA/article/details/80212432<i class="fas fa-external-link-alt"></i></a></p><p><a class="link"   href="https://docs.unity3d.com/ScriptReference/Mathf.PerlinNoise.html" >https://docs.unity3d.com/ScriptReference/Mathf.PerlinNoise.html<i class="fas fa-external-link-alt"></i></a></p></blockquote><p>网格拓扑绘制图形</p><blockquote><p><a class="link"   href="https://www.jianshu.com/p/1f79e33308a6" >https://www.jianshu.com/p/1f79e33308a6<i class="fas fa-external-link-alt"></i></a></p></blockquote><p>试着画了一个四面体</p><img                       lazyload                     src="/images/loading.svg"                     data-src="/images/2021/screencapture2021-02-21 PM5.09.05.jpg"                                     ><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">Vector3[] vertices = new Vector3[4];</span><br><span class="line">vertices[0] = new Vector3(0, 0, 0);</span><br><span class="line">vertices[1] = new Vector3((float)System.Math.Sqrt(3), 1, 0);</span><br><span class="line">vertices[2] = new Vector3(0, 2, 0);</span><br><span class="line">vertices[3] = new Vector3((float)System.Math.Sqrt(1/3), 1, (float)System.Math.Sqrt(8/3));</span><br><span class="line"></span><br><span class="line">int[] triangle = new int[12] &#123;0,2,1,0,1,3,1,2,3,2,0,3&#125;;</span><br><span class="line"></span><br><span class="line">// get mesh</span><br><span class="line">Mesh mesh = GetComponent&lt;MeshFilter&gt;().mesh;</span><br><span class="line"></span><br><span class="line">// clear original mesh</span><br><span class="line">mesh.Clear();</span><br><span class="line"></span><br><span class="line">// set new vertices</span><br><span class="line">mesh.vertices = vertices;</span><br><span class="line"></span><br><span class="line">// set new triangles</span><br><span class="line">mesh.triangles = triangle;</span><br><span class="line"></span><br><span class="line">// calculate mesh</span><br><span class="line">mesh.RecalculateNormals();</span><br></pre></td></tr></table></figure><p>下次用这个画波浪试试</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;尝试做个波浪动画，最后效果：&lt;/p&gt;
-&lt;img  
-                     lazyload
-                     src=&quot;/images/loading.svg&quot;
-                     data-src=&quot;/im
       
     
     </summary>
