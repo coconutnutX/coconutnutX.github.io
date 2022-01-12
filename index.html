@@ -154,16 +154,19 @@
 
                 <h3 class="home-article-title">
                     <a href="/2022/01/12/snapshot/">
-                        Snapshot总结
+                        Snapshot的timestamp
                     </a>
                 </h3>
 
                 <div class="home-article-content markdown-body">
                     
-                        CS-453 Concurrent algorithms中，关于Snapshot
-Atomic snapshot关于Snapshot包含一个长度为N的array x（底层是N个Atomic Register）
-需实现两个功能
-12345678// 返...
+                        CS-453 Concurrent algorithms，slide: The Power of Registers
+Atomic Snapshot实现的基本思路：
+
+两次扫描，得到相同的结果
+加timestamp避免ABA情况
+
+不加timesta...
                     
                 </div>
 
