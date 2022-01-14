@@ -229,7 +229,7 @@
                      
                 >
 
-<p>思路：通过两个相同的collect，确保这两次操作期间没有更新，从而找到一个serialization point</p>
+<p>思路：通过两个相同的collect，确保这两次操作期间没有更新，从而找到一个linearization point</p>
 <p>注意：“相同的collect”不仅指值相同，还需要timestamp相同，否则反例见<a href="https://coconutnutx.github.io/2022/01/12/snapshot/">Snapshot的timestamp</a></p>
 <h1 id="实现Wait-free"><a href="#实现Wait-free" class="headerlink" title="实现Wait-free"></a>实现Wait-free</h1><p>上面的算法不是wait-free，因为当有多个进程同步调用scan时，可能发生这样的情况：</p>
 <ul>
@@ -347,7 +347,7 @@
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>判断能否用自己collect的结果，需要比较两个collect是否相同（包括值和timestamp），当timestamp可能重复时，还需要排除重复情况。</p>
 <p>判断能否抄别人的结果，需要确保产生这个结果的scan发生在自己开始之后，根据timestamp获取方式的不同（local和shared weak counter），比较时大多少也有所区别。</p>
 <h1 id="附"><a href="#附" class="headerlink" title="附"></a>附</h1><p>TA的解释</p>
-<p>关于Atomic，和实现linearizable的思</p>
+<p>关于Atomic，和实现linearizable的思路</p>
 <blockquote>
 <p>Weak counter facts (perspective of an individual process):</p>
 <p>- After I get a value (return) from the weak counter by calling wInc(), at most N-1 other processes can <em>still</em> obtain a value less or equal to that.</p>
