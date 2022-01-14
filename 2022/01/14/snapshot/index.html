@@ -9,7 +9,7 @@
     
     <title>
         
-            Snapshot的timestamp |
+            Wait-free Snapshot |
         
         CoCoNutNut&#39;s NoteBook
     </title>
@@ -151,7 +151,7 @@
     <div class="article-content-container">
 
         <div class="article-title">
-            <span class="title-hover-animation">Snapshot的timestamp</span>
+            <span class="title-hover-animation">Wait-free Snapshot</span>
         </div>
 
         
@@ -167,7 +167,7 @@
                     <div class="meta-info">
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
-        <i class="fas fa-edit"></i>&nbsp;2022-01-12 11:44:01
+        <i class="fas fa-edit"></i>&nbsp;2022-01-14 17:26:21
     </span>
     
         <span class="article-categories article-meta-item">
@@ -210,30 +210,115 @@
         
 
         <div class="article-content markdown-body">
-            <p>CS-453 Concurrent algorithms，slide: The Power of Registers</p>
-<p>Atomic Snapshot实现的基本思路：</p>
+            <p>重点：关于实现Wait-free Atomic Snapshot时，为什么要判断2次/n次更新</p>
+<p>相关slides: The Power of Registers, Computing with anonymous processes</p>
+<h1 id="实现Snapshot"><a href="#实现Snapshot" class="headerlink" title="实现Snapshot"></a>实现Snapshot</h1><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2022/screencapture2022-01-14 PM5.34.04.jpg"
+                     
+                >
+
+<p>当无同步更新时，scan返回的是当前所有寄存器中的值</p>
+<p>当有同步更新时，返回的是last written value或concurrent update value</p>
+<p>类似于regular</p>
+<h1 id="实现Atomic"><a href="#实现Atomic" class="headerlink" title="实现Atomic"></a>实现Atomic</h1><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2022/screencapture2022-01-14 PM5.32.39.jpg"
+                     
+                >
+
+<p>思路：通过两个相同的collect，确保这两次操作期间没有更新，从而找到一个serialization point</p>
+<p>注意：“相同的collect”不仅指值相同，还需要timestamp相同，否则反例见<a href="https://coconutnutx.github.io/2022/01/12/snapshot/">Snapshot的timestamp</a></p>
+<h1 id="实现Wait-free"><a href="#实现Wait-free" class="headerlink" title="实现Wait-free"></a>实现Wait-free</h1><p>上面的算法不是wait-free，因为当有多个进程同步调用scan时，可能发生这样的情况：</p>
 <ul>
-<li>两次扫描，得到相同的结果</li>
-<li>加timestamp避免ABA情况</li>
+<li>p1特别快，不停地更新</li>
+<li>p2很慢，想要scan，但每次由于p1的更新，temp1总不等于temp2，无法返回</li>
 </ul>
-<p>不加timestamp的反例（p19）</p>
+<p>解决思路通常是，让快的进程多做点事。这里如果让p1每次更新时，还要scan，那么p2即使自己无法完成scan，但可以直接抄p1 scan的结果，就有机会返回，从而达到整体的wait-free。具体算法如下：</p>
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/images/2022/screencapture2022-01-12 PM12.20.20.jpg"
+                     data-src="/images/2022/screencapture2022-01-14 PM5.43.28.jpg"
                      
                 >
 
-<p>写了一下具体步骤：</p>
+<p>这里 if( t3=t2 ) 比较的是自己这次和上次的结果，如果一样，可以返回</p>
+<p>而 if( t3[j,2] ≥ t1[j,2]+2 ) 比较的是其它进程，它这次的结果有没有比第一次新？如果是，则说明这两个时间点之间有过一次完整的scan，可以抄过来直接用</p>
+<h2 id="为什么≥2（一个反例）"><a href="#为什么≥2（一个反例）" class="headerlink" title="为什么≥2（一个反例）"></a>为什么≥2（一个反例）</h2><p>如果将( t3[j,2] ≥ t1[j,2]+2 )变成( t3[j,2] ≥ t1[j,2]+1 )，无法保证一次完整的scan，可能发生这样的情况：</p>
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/images/2022/IMG_A6C8CC987C90-1.jpeg"
+                     data-src="/images/2022/IMG_FA11786ABCC8-1.jpeg"
                      
                 >
 
-<p>可以发现，两次collect得到的都是[0,0,2]，最后返回[0,0,2]<br>但是实际上，并没有一个时间点，寄存器中实际的值是[0,0,2]<br>也就是说，虽然collect了同样的值，但这个值从未存在过</p>
-<p>所以不仅值要相同，还需要timestamp来保证没有发生过更新</p>
+<p>即，虽然有一次更新，但这个更新可能开始于很久很久以前。如果是≥2，则可以避免。</p>
+<h1 id="实现Anonymous"><a href="#实现Anonymous" class="headerlink" title="实现Anonymous"></a>实现Anonymous</h1><p>几个不同：</p>
+<ul>
+<li>上面是一个process对应一个Reg（如process1只会更新Reg1）；这里不必一一对应，从而保证anonymous</li>
+<li>上面每个process有自己的local timestamp，每次加1；这里用一个共享的weak counter</li>
+</ul>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2022/screencapture2022-01-14 PM6.36.08.jpg"
+                     
+                >
+
+<p>（这里写的是n+1，后来TA说其实n就够了）</p>
+<h1 id="比较"><a href="#比较" class="headerlink" title="比较"></a>比较</h1><p><strong>非Anonymous情况：</strong></p>
+<ol>
+<li><p>process和Reg一一对应</p>
+</li>
+<li><p>非weak counter，每次操作都有唯一的timestamp</p>
+</li>
+<li><p>判断自己的collect是否可以返回 (连续2次collect相同)</p>
+<ul>
+<li><p>连续2次collect，所有值相同，所有timestamp相同</p>
+</li>
+<li><p>即可保证这两次collect之间有一次完整的scan</p>
+</li>
+</ul>
+</li>
+<li><p>判断能否抄别人的scan (某人的ts ≥ 自己开始时的ts+2)</p>
+<ul>
+<li>ts是每个process本地的，至少2才能保证没有“睡了很久刚醒”的情况</li>
+</ul>
+</li>
+</ol>
+<p><strong>Anonymous情况：</strong></p>
+<ol>
+<li><p>process和Reg并非一一对应，一个Reg可能同时被N个process更新</p>
+</li>
+<li><p>weak counter，N个process可能同时获得相同的timestamp</p>
+</li>
+<li><p>判断自己的collect是否可以返回 (连续n次collect相同)</p>
+<ul>
+<li><p>连续n次collect，所有值相同，所有timestamp相同</p>
+</li>
+<li><p>为什么是n？极限情况：</p>
+<ul>
+<li>所有N个process拿到了相同的timestamp，写相同值，写到同一个Reg中</li>
+<li>除自己以外，最多可能有N-1个一模一样的更新</li>
+<li>但如果读到了N个相同的结果，说明剩余N-1个process中，至少有一个更新了两次。这两次之间是一个完整的scan</li>
+</ul>
+</li>
+<li><p>What If…?</p>
+<ul>
+<li>把Weak counter改成Strong counter，不会拿到相同的timestamp -&gt; 2次连续collect相同即可</li>
+<li>仍是Weak counter，但最多10个process拿到相同的timestamp -&gt; 10次连续collect相同即可</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>判断能否抄别人的scan ( 某处的ts ≥ 自己开始时的ts+1 )</p>
+<ul>
+<li>Weak counter的性质保证，如果ts更大，该操作一定更晚发生，不会有“睡了很久刚醒”的情况</li>
+</ul>
+</li>
+</ol>
 
         </div>
 
@@ -242,29 +327,14 @@
         
             <div class="article-nav">
                 
-                    <div class="article-prev">
-                        <a class="prev"
-                           rel="prev"
-                           href="/2022/01/14/snapshot/"
-                        >
-                            <span class="left arrow-icon flex-center">
-                              <i class="fas fa-chevron-left"></i>
-                            </span>
-                            <span class="title flex-center">
-                                <span class="post-nav-title-item">Wait-free Snapshot</span>
-                                <span class="post-nav-item">Prev posts</span>
-                            </span>
-                        </a>
-                    </div>
-                
                 
                     <div class="article-next">
                         <a class="next"
                            rel="next"
-                           href="/2022/01/12/note/"
+                           href="/2022/01/12/snapshot/"
                         >
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">Obsidian使用感受</span>
+                                <span class="post-nav-title-item">Snapshot的timestamp</span>
                                 <span class="post-nav-item">Next posts</span>
                             </span>
                             <span class="right arrow-icon flex-center">
@@ -387,7 +457,7 @@
         <aside class="page-aside">
             <div class="post-toc-wrap">
     <div class="post-toc">
-        
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0Snapshot"><span class="nav-number">1.</span> <span class="nav-text">实现Snapshot</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0Atomic"><span class="nav-number">2.</span> <span class="nav-text">实现Atomic</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0Wait-free"><span class="nav-number">3.</span> <span class="nav-text">实现Wait-free</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E2%89%A52%EF%BC%88%E4%B8%80%E4%B8%AA%E5%8F%8D%E4%BE%8B%EF%BC%89"><span class="nav-number">3.1.</span> <span class="nav-text">为什么≥2（一个反例）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0Anonymous"><span class="nav-number">4.</span> <span class="nav-text">实现Anonymous</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AF%94%E8%BE%83"><span class="nav-number">5.</span> <span class="nav-text">比较</span></a></li></ol>
     </div>
 </div>
         </aside>

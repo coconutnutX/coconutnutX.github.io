@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://coconutnutx.github.io/"/>
-  <updated>2022-01-12T10:44:01.000Z</updated>
+  <updated>2022-01-14T16:26:21.000Z</updated>
   <id>https://coconutnutx.github.io/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Wait-free Snapshot</title>
+    <link href="https://coconutnutx.github.io/2022/01/14/snapshot/"/>
+    <id>https://coconutnutx.github.io/2022/01/14/snapshot/</id>
+    <published>2022-01-14T16:26:21.000Z</published>
+    <updated>2022-01-14T16:26:21.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>重点：关于实现Wait-free Atomic Snapshot时，为什么要判断2次/n次更新</p><p>相关slides: The Power of Registers, Computing with anonymous processes</p><h1 id="实现Snapshot"><a href="#实现Snapshot" class="headerlink" title="实现Snapshot"></a>实现Snapshot</h1><img                       lazyload                     src="/images/loading.svg"                     data-src="/images/2022/screencapture2022-01-14 PM5.34.04.jpg"                                     ><p>当无同步更新时，scan返回的是当前所有寄存器中的值</p><p>当有同步更新时，返回的是last written value或concurrent update value</p><p>类似于regular</p><h1 id="实现Atomic"><a href="#实现Atomic" class="headerlink" title="实现Atomic"></a>实现Atomic</h1><img                       lazyload                     src="/images/loading.svg"                     data-src="/images/2022/screencapture2022-01-14 PM5.32.39.jpg"                                     ><p>思路：通过两个相同的collect，确保这两次操作期间没有更新，从而找到一个serialization point</p><p>注意：“相同的collect”不仅指值相同，还需要timestamp相同，否则反例见<a href="https://coconutnutx.github.io/2022/01/12/snapshot/">Snapshot的timestamp</a></p><h1 id="实现Wait-free"><a href="#实现Wait-free" class="headerlink" title="实现Wait-free"></a>实现Wait-free</h1><p>上面的算法不是wait-free，因为当有多个进程同步调用scan时，可能发生这样的情况：</p><ul><li>p1特别快，不停地更新</li><li>p2很慢，想要scan，但每次由于p1的更新，temp1总不等于temp2，无法返回</li></ul><p>解决思路通常是，让快的进程多做点事。这里如果让p1每次更新时，还要scan，那么p2即使自己无法完成scan，但可以直接抄p1 scan的结果，就有机会返回，从而达到整体的wait-free。具体算法如下：</p><img                       lazyload                     src="/images/loading.svg"                     data-src="/images/2022/screencapture2022-01-14 PM5.43.28.jpg"                                     ><p>这里 if( t3=t2 ) 比较的是自己这次和上次的结果，如果一样，可以返回</p><p>而 if( t3[j,2] ≥ t1[j,2]+2 ) 比较的是其它进程，它这次的结果有没有比第一次新？如果是，则说明这两个时间点之间有过一次完整的scan，可以抄过来直接用</p><h2 id="为什么≥2（一个反例）"><a href="#为什么≥2（一个反例）" class="headerlink" title="为什么≥2（一个反例）"></a>为什么≥2（一个反例）</h2><p>如果将( t3[j,2] ≥ t1[j,2]+2 )变成( t3[j,2] ≥ t1[j,2]+1 )，无法保证一次完整的scan，可能发生这样的情况：</p><img                       lazyload                     src="/images/loading.svg"                     data-src="/images/2022/IMG_FA11786ABCC8-1.jpeg"                                     ><p>即，虽然有一次更新，但这个更新可能开始于很久很久以前。如果是≥2，则可以避免。</p><h1 id="实现Anonymous"><a href="#实现Anonymous" class="headerlink" title="实现Anonymous"></a>实现Anonymous</h1><p>几个不同：</p><ul><li>上面是一个process对应一个Reg（如process1只会更新Reg1）；这里不必一一对应，从而保证anonymous</li><li>上面每个process有自己的local timestamp，每次加1；这里用一个共享的weak counter</li></ul><img                       lazyload                     src="/images/loading.svg"                     data-src="/images/2022/screencapture2022-01-14 PM6.36.08.jpg"                                     ><p>（这里写的是n+1，后来TA说其实n就够了）</p><h1 id="比较"><a href="#比较" class="headerlink" title="比较"></a>比较</h1><p><strong>非Anonymous情况：</strong></p><ol><li><p>process和Reg一一对应</p></li><li><p>非weak counter，每次操作都有唯一的timestamp</p></li><li><p>判断自己的collect是否可以返回 (连续2次collect相同)</p><ul><li><p>连续2次collect，所有值相同，所有timestamp相同</p></li><li><p>即可保证这两次collect之间有一次完整的scan</p></li></ul></li><li><p>判断能否抄别人的scan (某人的ts ≥ 自己开始时的ts+2)</p><ul><li>ts是每个process本地的，至少2才能保证没有“睡了很久刚醒”的情况</li></ul></li></ol><p><strong>Anonymous情况：</strong></p><ol><li><p>process和Reg并非一一对应，一个Reg可能同时被N个process更新</p></li><li><p>weak counter，N个process可能同时获得相同的timestamp</p></li><li><p>判断自己的collect是否可以返回 (连续n次collect相同)</p><ul><li><p>连续n次collect，所有值相同，所有timestamp相同</p></li><li><p>为什么是n？极限情况：</p><ul><li>所有N个process拿到了相同的timestamp，写相同值，写到同一个Reg中</li><li>除自己以外，最多可能有N-1个一模一样的更新</li><li>但如果读到了N个相同的结果，说明剩余N-1个process中，至少有一个更新了两次。这两次之间是一个完整的scan</li></ul></li><li><p>What If…?</p><ul><li>把Weak counter改成Strong counter，不会拿到相同的timestamp -&gt; 2次连续collect相同即可</li><li>仍是Weak counter，但最多10个process拿到相同的timestamp -&gt; 10次连续collect相同即可</li></ul></li></ul></li><li><p>判断能否抄别人的scan ( 某处的ts ≥ 自己开始时的ts+1 )</p><ul><li>Weak counter的性质保证，如果ts更大，该操作一定更晚发生，不会有“睡了很久刚醒”的情况</li></ul></li></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;重点：关于实现Wait-free Atomic Snapshot时，为什么要判断2次/n次更新&lt;/p&gt;
+&lt;p&gt;相关slides: The Power of Registers, Computing with anonymous processes&lt;/p&gt;
+&lt;h1 id=&quot;实
+      
+    
+    </summary>
+    
+    
+      <category term="Note" scheme="https://coconutnutx.github.io/categories/Note/"/>
+    
+    
+      <category term="concurrent_algorithm" scheme="https://coconutnutx.github.io/tags/concurrent-algorithm/"/>
+    
+  </entry>
   
   <entry>
     <title>Snapshot的timestamp</title>
@@ -533,34 +561,6 @@
         &lt;p&gt;重新搭建了场景，unity中运行没问题&lt;/p&gt;
 &lt;h1 id=&quot;Debug&quot;&gt;&lt;a href=&quot;#Debug&quot; class=&quot;headerlink&quot; title=&quot;Debug&quot;&gt;&lt;/a&gt;Debug&lt;/h1&gt;&lt;p&gt;构建后遇到一些bug&lt;/p&gt;
 &lt;h2 id=&quot;按钮文字缺失&quot;&gt;
-      
-    
-    </summary>
-    
-    
-      <category term="Note" scheme="https://coconutnutx.github.io/categories/Note/"/>
-    
-    
-      <category term="unity" scheme="https://coconutnutx.github.io/tags/unity/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Project V0.1.2 Record</title>
-    <link href="https://coconutnutx.github.io/2021/03/09/unity/"/>
-    <id>https://coconutnutx.github.io/2021/03/09/unity/</id>
-    <published>2021-03-09T16:15:34.000Z</published>
-    <updated>2021-03-09T16:15:34.000Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="描述部分"><a href="#描述部分" class="headerlink" title="描述部分"></a>描述部分</h1><p>给导航栏加了一个按钮，点击显示描述</p><p>以及一个查看大图的按钮，打开一个新页面</p><h1 id="查看大图"><a href="#查看大图" class="headerlink" title="查看大图"></a>查看大图</h1><p>关于图画细节的浏览，设想过几种方案：</p><ul><li><p>在Unity内放大图，通过移动人物或滚动图片来查看细节</p><p>但是移动的操作会比较复杂，和现有的控制冲突</p><p>滚动图片的话，各张图的大小差别太大，也不好放</p><p>还有一个是图片的版权问题，下载大图放在工程里感觉还是不太好</p></li><li><p>内嵌网页</p><p>寻找了一些实现方式，但是都比较局限，没有官方的解决方案</p></li><li><p>打开新页面</p><p>简单粗暴，虽然要跳出一下，但是专业的网站看图也好操作</p></li></ul><p>于是暂且就这样了</p><h1 id="图画信息和展板管理"><a href="#图画信息和展板管理" class="headerlink" title="图画信息和展板管理"></a>图画信息和展板管理</h1><p>以前是直接把文字信息放在展板的Object上</p><p>但是随着以后展厅的引入，会很麻烦</p><p>于是将主要信息存到了csv里，并且新增了一个单例的ArtManager，用于管理所有的文本信息和模型中展板的引用。其它Board以及GuideBar中要用到这些信息时，直接通过ArtManager获得。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">using System.Collections;</span><br><span class="line">using System.Collections.Generic;</span><br><span class="line">using UnityEngine;</span><br><span class="line"></span><br><span class="line">public class ArtManager : MonoBehaviour</span><br><span class="line">&#123;</span><br><span class="line">    public static ArtManager instance;</span><br><span class="line"></span><br><span class="line">    // reference to each board in each hall</span><br><span class="line">    [SerializeField] private Board[] boardsInHall0 = null;</span><br><span class="line">    [SerializeField] private Board[] boardsInHall1 = null;</span><br><span class="line"></span><br><span class="line">    // number of halls</span><br><span class="line">    private int numOfHalls = 2;</span><br><span class="line"></span><br><span class="line">    // store art info in each hall</span><br><span class="line">    private Dictionary&lt;int, ArtInfo&gt;[] artInfoStore;</span><br><span class="line"></span><br><span class="line">    void Start()</span><br><span class="line">    &#123;</span><br><span class="line">        if(instance != null)&#123;</span><br><span class="line">            GameObject.Destroy(this.gameObject);</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        instance = this;</span><br><span class="line"></span><br><span class="line">        // load art info</span><br><span class="line">        artInfoStore = new Dictionary&lt;int, ArtInfo&gt;[numOfHalls];</span><br><span class="line">        for(int i=0; i&lt;artInfoStore.Length; i++)&#123;</span><br><span class="line">            artInfoStore[i] = new Dictionary&lt;int, ArtInfo&gt;();</span><br><span class="line">        &#125;</span><br><span class="line">        ArtInfoLoader.LoadArtInfo(artInfoStore);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // ---------- Functions for Board &amp; GuidBar ----------</span><br><span class="line">    public ArtInfo GetArtInfo(int hall, int index)&#123;</span><br><span class="line">        return artInfoStore[hall][index];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // ---------- Functions for GuideBar ----------</span><br><span class="line">    public string getGuideMenuText(int hall, int index)&#123;</span><br><span class="line">        return artInfoStore[hall][index].title;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public int getBoardNumInHall(int hall)&#123;</span><br><span class="line">        return artInfoStore[hall].Count;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public Vector3[] getDestination(int hall, int index)&#123;</span><br><span class="line">        Vector3[] ret = null;</span><br><span class="line"></span><br><span class="line">        if(hall == 0)&#123;</span><br><span class="line">            ret = boardsInHall0[index - 1].GetDesitination(); // index begin with 1</span><br><span class="line">        &#125;else if(hall == 1)&#123;</span><br><span class="line">            ret = boardsInHall1[index - 1].GetDesitination();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return ret;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>这里不同展厅的展板分了不同的数组，因为二维数组没法在Unity里拖引用，只好退而求其次了</p><p>还有一个细节是，画的index都是从1开始，这个也统一在ArtManager中处理了，其它类中就不用管了</p><h1 id="生成构建Debug"><a href="#生成构建Debug" class="headerlink" title="生成构建Debug"></a>生成构建Debug</h1><p>生成WebGL后，部分文字显示不全</p><p>查到一种解决方式：把颜色空间改成Linear，有错误提示，然后又把自动API取消勾选了。Graphics API变成了WebGL2.0。没用</p><p>popup和按钮中的中文都没有了，难道是字体的问题？</p><p>改了字体，重新生成，可以显示</p><p>但是，每次第一次打开总是没有？要先点过一次左或者右，后续才有显示。也许是加载顺序的问题？</p><p>调了几次顺序，还是不行</p><p>不仅是文字显示，有时刚开始滚动条也没有，后面慢慢解决吧</p><p>MARK 未解决的Bug：</p><p>新加载后，第一次点更多，无文字</p><p>点一次左/右后，有文字，但无法显示滚动条</p><p>重新点开更多，有滚动条</p><h1 id="寻路转向Debug"><a href="#寻路转向Debug" class="headerlink" title="寻路转向Debug"></a>寻路转向Debug</h1><p>有的时候寻路到了终点不会自动转向</p><p>发现设置GuideStatus为Ready后，有时Agent的remainingDistance仍是0（也许是有延迟），于是就直接到了stop状态</p><p>于是改成在Update()中修改状态，当前为Ready且remainingDistance!=0，状态改为On</p><p>当前为On且remainingDistance==0，设置转向，状态改为Static</p><p>但是这样又出现一个问题，即在原地点击寻路，状态无法变成On</p><p>于是在SetNewDestination()中先做一次判断，如果当前位置已经是目的位置，直接将状态设置成On</p><p>之前Ready和On状态是为了处理鼠标点击的一些问题，目前关于鼠标：</p><ul><li>途中 OK</li><li>原地（已经到达，测试转向）<ul><li>导航栏 OK</li><li>展板<ul><li>快点【被打断】</li><li>慢点 OK</li></ul></li></ul></li></ul><p>就很迷惑，先这样吧</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;描述部分&quot;&gt;&lt;a href=&quot;#描述部分&quot; class=&quot;headerlink&quot; title=&quot;描述部分&quot;&gt;&lt;/a&gt;描述部分&lt;/h1&gt;&lt;p&gt;给导航栏加了一个按钮，点击显示描述&lt;/p&gt;
-&lt;p&gt;以及一个查看大图的按钮，打开一个新页面&lt;/p&gt;
-&lt;h1 id=&quot;查看大图&quot;
       
     
     </summary>
