@@ -268,6 +268,27 @@
                 >
 
 <p>（这里写的是n+1，后来TA说其实n就够了）</p>
+<h2 id="为什么n（一个反例）"><a href="#为什么n（一个反例）" class="headerlink" title="为什么n（一个反例）"></a>为什么n（一个反例）</h2><p>如果2个相同的collect就返回，假设：</p>
+<ul>
+<li><p>N个process同时开始，都拿到了相同的timestamp t1</p>
+</li>
+<li><p>process N想要scan</p>
+</li>
+<li><p>process 1 ~ N-1想要update（在write之前，都进行了scan，记为s1。s1=s0）</p>
+</li>
+</ul>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2022/IMG_B1316757EE80-1.jpeg"
+                     
+                >
+
+<ul>
+<li>PN两次扫描得到了相同的[0,1]，会返回这个值</li>
+<li>但是观察整个过程中X和Y位置的值，从来没有出现过[0,1]。这个scan无法linearize到一个时间点，违背Atomic</li>
+<li>如果等N次相同的更新，可以避免该问题（因为其它N-1个process相同的timestamp已经用完了）</li>
+</ul>
 <h1 id="比较"><a href="#比较" class="headerlink" title="比较"></a>比较</h1><p><strong>非Anonymous情况：</strong></p>
 <ol>
 <li><p>process和Reg一一对应</p>
@@ -315,10 +336,15 @@
 </li>
 <li><p>判断能否抄别人的scan ( 某处的ts ≥ 自己开始时的ts+1 )</p>
 <ul>
-<li>Weak counter的性质保证，如果ts更大，该操作一定更晚发生，不会有“睡了很久刚醒”的情况</li>
+<li>Weak counter的性质保证，如果ts更大，该操作一定更晚发生，不会有“睡了很久刚醒”的情况<ul>
+<li>甚至可以是 ( 某处的ts ≥ 自己开始时的ts )，只要不小于即可，Weak counter的性质可保证完整的scan（Exercise 8 Problem 2）</li>
+</ul>
+</li>
 </ul>
 </li>
 </ol>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>判断能否用自己collect的结果，需要比较两个collect是否相同（包括值和timestamp），当timestamp可能重复时，还需要排除重复情况。</p>
+<p>判断能否抄别人的结果，需要确保产生这个结果的scan发生在自己开始之后，根据timestamp获取方式的不同（local和shared weak counter），比较时大多少也有所区别。</p>
 
         </div>
 
@@ -457,7 +483,7 @@
         <aside class="page-aside">
             <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0Snapshot"><span class="nav-number">1.</span> <span class="nav-text">实现Snapshot</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0Atomic"><span class="nav-number">2.</span> <span class="nav-text">实现Atomic</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0Wait-free"><span class="nav-number">3.</span> <span class="nav-text">实现Wait-free</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E2%89%A52%EF%BC%88%E4%B8%80%E4%B8%AA%E5%8F%8D%E4%BE%8B%EF%BC%89"><span class="nav-number">3.1.</span> <span class="nav-text">为什么≥2（一个反例）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0Anonymous"><span class="nav-number">4.</span> <span class="nav-text">实现Anonymous</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AF%94%E8%BE%83"><span class="nav-number">5.</span> <span class="nav-text">比较</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0Snapshot"><span class="nav-number">1.</span> <span class="nav-text">实现Snapshot</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0Atomic"><span class="nav-number">2.</span> <span class="nav-text">实现Atomic</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0Wait-free"><span class="nav-number">3.</span> <span class="nav-text">实现Wait-free</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E2%89%A52%EF%BC%88%E4%B8%80%E4%B8%AA%E5%8F%8D%E4%BE%8B%EF%BC%89"><span class="nav-number">3.1.</span> <span class="nav-text">为什么≥2（一个反例）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0Anonymous"><span class="nav-number">4.</span> <span class="nav-text">实现Anonymous</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88n%EF%BC%88%E4%B8%80%E4%B8%AA%E5%8F%8D%E4%BE%8B%EF%BC%89"><span class="nav-number">4.1.</span> <span class="nav-text">为什么n（一个反例）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AF%94%E8%BE%83"><span class="nav-number">5.</span> <span class="nav-text">比较</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">6.</span> <span class="nav-text">总结</span></a></li></ol>
     </div>
 </div>
         </aside>
