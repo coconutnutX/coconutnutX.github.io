@@ -336,12 +336,13 @@
 </ul>
 </li>
 <li><p>判断能否抄别人的scan ( 某处的ts ≥ 自己开始时的ts+1 )</p>
-<ul>
+<ol>
+<li>细节：这里开始时的ts也是从Weak counter获得的，而不是collect()得到的（即，不是update()写入的）</li>
 <li>Weak counter的性质保证，如果ts更大，该操作一定更晚发生，不会有“睡了很久刚醒”的情况<ul>
 <li>甚至可以是 ( 某处的ts ≥ 自己开始时的ts )，只要不小于即可，Weak counter的性质可保证完整的scan（Exercise 8 Problem 2）</li>
 </ul>
 </li>
-</ul>
+</ol>
 </li>
 </ol>
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>判断能否用自己collect的结果，需要比较两个collect是否相同（包括值和timestamp），当timestamp可能重复时，还需要排除重复情况。</p>
