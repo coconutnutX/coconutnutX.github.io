@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://coconutnutx.github.io/"/>
-  <updated>2022-05-01T20:59:08.000Z</updated>
+  <updated>2022-05-03T18:59:17.000Z</updated>
   <id>https://coconutnutx.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>记录vue项目deploy到github page</title>
+    <link href="https://coconutnutx.github.io/2022/05/03/vue-deploy/"/>
+    <id>https://coconutnutx.github.io/2022/05/03/vue-deploy/</id>
+    <published>2022-05-03T18:59:17.000Z</published>
+    <updated>2022-05-03T18:59:17.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>记录一下Data Visualization课程project 初版skeleton部署过程</p><h1 id="创建vue工程"><a href="#创建vue工程" class="headerlink" title="创建vue工程"></a>创建vue工程</h1><p>参考<a class="link"   href="https://www.panziye.com/java/web/974.html" >Vue系列入门教程（6）——vue-cli脚手架<i class="fas fa-external-link-alt"></i></a></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vue create dataviz</span><br><span class="line">cd dataviz</span><br><span class="line">npm install</span><br><span class="line">npm run serve</span><br></pre></td></tr></table></figure><p>遇到的坑：因为要插图片，打算用plotly生成的html，在vue3中遇到一些奇奇怪怪的问题，最后还是用vue2</p><h1 id="发布vue到github-page"><a href="#发布vue到github-page" class="headerlink" title="发布vue到github page"></a>发布vue到github page</h1><p>参考<a class="link"   href="https://learnvue.co/2020/09/how-to-deploy-your-vue-app-to-github-pages/#how-does-github-pages-work" >How To Deploy Your Vue App to Github Pages<i class="fas fa-external-link-alt"></i></a></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br><span class="line">git remote add origin ...</span><br><span class="line"></span><br><span class="line">npm run build</span><br><span class="line">git checkout -b gh-pages</span><br><span class="line">git add -f dist</span><br><span class="line">git commit -m &#x27;first commit&#x27;</span><br><span class="line">git subtree push --prefix dist origin gh-pages</span><br></pre></td></tr></table></figure><p>遇到的坑：</p><ol><li><p>一开始用vue run build产生dist文件，index.html本地打开会有跨域bug。但是发布之后就可以了</p></li><li><p>路径问题众说纷纭，最后成功的是</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">publicPath: process.env.NODE_ENV === &quot;production&quot; ? &quot;/datavis-project-2022-nomorebugs/&quot; : &quot;/&quot;,</span><br></pre></td></tr></table></figure></li></ol><h1 id="Bug-github-page上plotly生成的html不显示"><a href="#Bug-github-page上plotly生成的html不显示" class="headerlink" title="Bug: github page上plotly生成的html不显示"></a>Bug: github page上plotly生成的html不显示</h1><p>原本的资源放在/public/static/world.html</p><p>引用时</p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">src</span>=<span class="string">&quot;/static/world.html&quot;</span> <span class="attr">scrolling</span>=<span class="string">&quot;auto&quot;</span> <span class="attr">frameborder</span>=<span class="string">&quot;0&quot;</span> <span class="attr">style</span>=<span class="string">&quot;width: 100%; height: 500px;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></span><br></pre></td></tr></table></figure><p>本地跑没问题，但是放到github page上之后404了</p><p>尝试改成</p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">src</span>=<span class="string">&quot;static/world.html&quot;</span> <span class="attr">scrolling</span>=<span class="string">&quot;auto&quot;</span> <span class="attr">frameborder</span>=<span class="string">&quot;0&quot;</span> <span class="attr">style</span>=<span class="string">&quot;width: 100%; height: 500px;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></span><br></pre></td></tr></table></figure><p> 本地可以跑</p><p>发布，搞定！✌️</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;记录一下Data Visualization课程project 初版skeleton部署过程&lt;/p&gt;
+&lt;h1 id=&quot;创建vue工程&quot;&gt;&lt;a href=&quot;#创建vue工程&quot; class=&quot;headerlink&quot; title=&quot;创建vue工程&quot;&gt;&lt;/a&gt;创建vue工程&lt;/h1
+      
+    
+    </summary>
+    
+    
+      <category term="vue" scheme="https://coconutnutx.github.io/categories/vue/"/>
+    
+    
+      <category term="Note" scheme="https://coconutnutx.github.io/tags/Note/"/>
+    
+  </entry>
   
   <entry>
     <title>Unity一些杂七杂八的笔记</title>
@@ -539,37 +566,6 @@
     
     
       <category term="distributed_algorithm" scheme="https://coconutnutx.github.io/tags/distributed-algorithm/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>记录anki卡片</title>
-    <link href="https://coconutnutx.github.io/2021/04/21/anki/"/>
-    <id>https://coconutnutx.github.io/2021/04/21/anki/</id>
-    <published>2021-04-21T09:45:17.000Z</published>
-    <updated>2021-04-21T09:45:17.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>打算用anki背法语单词，用Fast Word Query加发音</p><p>字段：</p><img                       lazyload                     src="/images/loading.svg"                     data-src="/images/2021/screencapture2021-04-21 AM11.48.55.jpg"                      width="400px"                ><p>卡片：</p><p>正面模板</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;/br&gt;</span><br><span class="line">&lt;center&gt;</span><br><span class="line">&lt;div class=&quot;background&quot;&gt;</span><br><span class="line">&lt;div&gt;&#123;&#123;word&#125;&#125;&lt;/div&gt;&lt;/br&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;/center&gt;</span><br></pre></td></tr></table></figure><p>背面模板</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;center&gt;</span><br><span class="line">&lt;div class=&quot;background&quot;&gt;</span><br><span class="line">&#123;&#123;FrontSide&#125;&#125;</span><br><span class="line">&lt;hr id=answer&gt;</span><br><span class="line">&lt;div&gt;&#123;&#123;pronunciation&#125;&#125;&lt;/div&gt;</span><br><span class="line">&lt;div&gt;&#123;&#123;explanation&#125;&#125;&lt;/div&gt;</span><br><span class="line">&lt;div&gt;&#123;&#123;example&#125;&#125;&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;/center&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;var initVoice = function () &#123;</span><br><span class="line">    var player = document.getElementById(&#x27;dictVoice&#x27;);</span><br><span class="line">    document.addEventListener(&#x27;click&#x27;, function (e) &#123;</span><br><span class="line">        var target = e.target;</span><br><span class="line">        if (target.hasAttribute(&#x27;role&#x27;) &amp;&amp; target.getAttribute(&#x27;role&#x27;).indexOf(&#x27;dict_audio_js&#x27;) &gt;= 0) &#123;</span><br><span class="line">            var url = target.getAttribute(&#x27;data-rel&#x27;);</span><br><span class="line">            player.setAttribute(&#x27;src&#x27;, url);</span><br><span class="line">            player.volume = 1;</span><br><span class="line">            player.play();</span><br><span class="line">            e.preventDefault();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;, false);</span><br><span class="line">&#125;;</span><br><span class="line">initVoice();&lt;/script&gt;</span><br></pre></td></tr></table></figure><p>Fast Word Query配置：</p><img                       lazyload                     src="/images/loading.svg"                     data-src="/images/2021/screencapture2021-04-21 AM11.47.38.jpg"                                     ><p>试了一下法语助手只能查到发音，没有解释，于是解释用了有道</p><p>此时效果：</p><img                       lazyload                     src="/images/loading.svg"                     data-src="/images/2021/screencapture2021-04-21 AM11.51.40.jpg"                                     ><p>翻面自动发音，例句的语音也可以点</p><p>但有个问题是，查到的例句是白色，背景也是白色</p><p>选中example框，在编辑html中找到了这几个div的class，卡片中改样式</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">.card &#123;</span><br><span class="line">font-family: arial;</span><br><span class="line">font-size: 20px;</span><br><span class="line">&#125;</span><br><span class="line">.background&#123;</span><br><span class="line">max-width: 800px;</span><br><span class="line">&#125;</span><br><span class="line">.mcols-layout&#123;</span><br><span class="line"> background-color:#333335</span><br><span class="line">&#125;</span><br><span class="line">.trans-container&#123;</span><br><span class="line">background-color: #333335;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>搞定~</p><img                       lazyload                     src="/images/loading.svg"                     data-src="/images/2021/screencapture2021-04-21 PM12.22.46.jpg"                                     ><hr><p>又加了个pre字段，可以放le la之类的，显示时在word之前 </p><p>查的时候忽略（在Fast Word Query中Ignore掉），仍只查word，避免查不到解释</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;打算用anki背法语单词，用Fast Word Query加发音&lt;/p&gt;
-&lt;p&gt;字段：&lt;/p&gt;
-&lt;img  
-                     lazyload
-                     src=&quot;/images/loading.svg&quot;
-     
-      
-    
-    </summary>
-    
-    
-      <category term="Memo" scheme="https://coconutnutx.github.io/categories/Memo/"/>
-    
-    
-      <category term="tool" scheme="https://coconutnutx.github.io/tags/tool/"/>
     
   </entry>
   

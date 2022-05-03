@@ -9,7 +9,7 @@
     
     <title>
         
-            Categories |
+            记录vue项目deploy到github page |
         
         CoCoNutNut&#39;s NoteBook
     </title>
@@ -76,7 +76,7 @@
                         </li>
                     
                         <li class="menu-item">
-                            <a class="active"
+                            <a class=""
                                href="/categories"
                             >
                                 CATEGORIES
@@ -123,7 +123,7 @@
                 </li>
             
                 <li class="drawer-menu-item flex-center">
-                    <a class="active"
+                    <a class=""
                        href="/categories">CATEGORIES</a>
                 </li>
             
@@ -148,13 +148,123 @@
 
                 
                     <div class="fade-in-down-animation">
-    <div class="category-list-container">
-        <div class="category-list-content">
-            <ul class="all-category-list"><li class="all-category-list-item"><a class="all-category-list-link" href="/categories/Debug/">Debug</a><span class="all-category-list-count">8</span></li><li class="all-category-list-item"><a class="all-category-list-link" href="/categories/Memo/">Memo</a><span class="all-category-list-count">19</span></li><li class="all-category-list-item"><a class="all-category-list-link" href="/categories/Note/">Note</a><span class="all-category-list-count">98</span></li><li class="all-category-list-item"><a class="all-category-list-link" href="/categories/unity/">unity</a><span class="all-category-list-count">1</span></li><li class="all-category-list-item"><a class="all-category-list-link" href="/categories/vue/">vue</a><span class="all-category-list-count">1</span></li></ul>
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">记录vue项目deploy到github page</span>
         </div>
-        <div class="category-comments">
-            
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">coconutnut</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2022-05-03 20:59:17
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/vue/">vue</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/Note/">Note</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <p>记录一下Data Visualization课程project 初版skeleton部署过程</p>
+<h1 id="创建vue工程"><a href="#创建vue工程" class="headerlink" title="创建vue工程"></a>创建vue工程</h1><p>参考<a class="link"   target="_blank" rel="noopener" href="https://www.panziye.com/java/web/974.html" >Vue系列入门教程（6）——vue-cli脚手架<i class="fas fa-external-link-alt"></i></a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vue create dataviz</span><br><span class="line">cd dataviz</span><br><span class="line">npm install</span><br><span class="line">npm run serve</span><br></pre></td></tr></table></figure>
+
+<p>遇到的坑：因为要插图片，打算用plotly生成的html，在vue3中遇到一些奇奇怪怪的问题，最后还是用vue2</p>
+<h1 id="发布vue到github-page"><a href="#发布vue到github-page" class="headerlink" title="发布vue到github page"></a>发布vue到github page</h1><p>参考<a class="link"   target="_blank" rel="noopener" href="https://learnvue.co/2020/09/how-to-deploy-your-vue-app-to-github-pages/#how-does-github-pages-work" >How To Deploy Your Vue App to Github Pages<i class="fas fa-external-link-alt"></i></a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br><span class="line">git remote add origin ...</span><br><span class="line"></span><br><span class="line">npm run build</span><br><span class="line">git checkout -b gh-pages</span><br><span class="line">git add -f dist</span><br><span class="line">git commit -m &#x27;first commit&#x27;</span><br><span class="line">git subtree push --prefix dist origin gh-pages</span><br></pre></td></tr></table></figure>
+
+<p>遇到的坑：</p>
+<ol>
+<li><p>一开始用vue run build产生dist文件，index.html本地打开会有跨域bug。但是发布之后就可以了</p>
+</li>
+<li><p>路径问题众说纷纭，最后成功的是</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">publicPath: process.env.NODE_ENV === &quot;production&quot; ? &quot;/datavis-project-2022-nomorebugs/&quot; : &quot;/&quot;,</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h1 id="Bug-github-page上plotly生成的html不显示"><a href="#Bug-github-page上plotly生成的html不显示" class="headerlink" title="Bug: github page上plotly生成的html不显示"></a>Bug: github page上plotly生成的html不显示</h1><p>原本的资源放在/public/static/world.html</p>
+<p>引用时</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">src</span>=<span class="string">&quot;/static/world.html&quot;</span> <span class="attr">scrolling</span>=<span class="string">&quot;auto&quot;</span> <span class="attr">frameborder</span>=<span class="string">&quot;0&quot;</span> <span class="attr">style</span>=<span class="string">&quot;width: 100%; height: 500px;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>本地跑没问题，但是放到github page上之后404了</p>
+<p>尝试改成</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">src</span>=<span class="string">&quot;static/world.html&quot;</span> <span class="attr">scrolling</span>=<span class="string">&quot;auto&quot;</span> <span class="attr">frameborder</span>=<span class="string">&quot;0&quot;</span> <span class="attr">style</span>=<span class="string">&quot;width: 100%; height: 500px;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p> 本地可以跑</p>
+<p>发布，搞定！✌️</p>
+
         </div>
+
+        
+
+        
+            <div class="article-nav">
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2022/05/01/unity-note/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Unity一些杂七杂八的笔记</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
     </div>
 </div>
 
@@ -200,6 +310,23 @@
     </div>
 
     
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
 
     <div class="right-bottom-side-tools">
         <div class="side-tools-container">
@@ -244,6 +371,14 @@
 
     </div>
 
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%9B%E5%BB%BAvue%E5%B7%A5%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">创建vue工程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%91%E5%B8%83vue%E5%88%B0github-page"><span class="nav-number">2.</span> <span class="nav-text">发布vue到github page</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Bug-github-page%E4%B8%8Aplotly%E7%94%9F%E6%88%90%E7%9A%84html%E4%B8%8D%E6%98%BE%E7%A4%BA"><span class="nav-number">3.</span> <span class="nav-text">Bug: github page上plotly生成的html不显示</span></a></li></ol>
+    </div>
+</div>
+        </aside>
     
 
     <div class="image-viewer-container">
@@ -317,6 +452,14 @@
 
 
 <div class="post-scripts">
+    
+        
+<script src="/js/left-side-toggle.js"></script>
+
+<script src="/js/libs/anime.min.js"></script>
+
+<script src="/js/toc.js"></script>
+
     
 </div>
 
