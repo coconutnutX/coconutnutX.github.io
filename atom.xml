@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://coconutnutx.github.io/"/>
-  <updated>2022-07-30T12:11:51.000Z</updated>
+  <updated>2023-01-08T15:57:24.000Z</updated>
   <id>https://coconutnutx.github.io/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>TCP/IP复习</title>
+    <link href="https://coconutnutx.github.io/2023/01/08/tcpip/"/>
+    <id>https://coconutnutx.github.io/2023/01/08/tcpip/</id>
+    <published>2023-01-08T15:57:24.000Z</published>
+    <updated>2023-01-08T15:57:24.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>每一年前3题套路都是一样的，重点：</p><ol><li>IP地址&amp;路由（包的souce/dest、经过NAT/proxy的变化）</li><li>BGP（E-BGP和I-BGP，OSPF）</li><li>拥塞控制3种分配流量的方法</li></ol><p>第四题每年有些变化</p><h1 id="五层体系结构"><a href="#五层体系结构" class="headerlink" title="五层体系结构"></a>五层体系结构</h1><ul><li>application：HTTP、DNS</li><li>transport：TCP、IP</li><li>network：IP</li><li>link<ul><li>MAC：ARP</li></ul></li><li>physical</li></ul><h1 id="缩写和概念"><a href="#缩写和概念" class="headerlink" title="缩写和概念"></a>缩写和概念</h1><ul><li>DNS<ul><li>A/AAAA record：前者用于将域名映射到IPv4地址，后者IPv6<ul><li>如果有一个网站不知道用v4还是v6，可以用DNS，根据收到的record类型分辨</li></ul></li></ul></li><li>TCP<ul><li>MSS：Maximum Segment Size，指每个数据报所能携带的最大数据量</li><li>ECN：Explicit Congestion Notification，在数据包中添加特殊的标记，表示数据包可能会在传输过程中丢失，源端收到后，降低发送速率，从而减轻网络拥塞</li><li>TCP Cubic：less sensitive to RTT than Reno</li></ul></li><li>ARP：根据IP地址查询MAC地址<ul><li>Proxy ARP：主机A和B位于不同局域网（通常需要通过路由进行通信），可以用Proxy ARP设置路由器作为代理，接收ARP请求并返回虚拟的MAC地址</li></ul></li><li>路由<ul><li>IGP：Interior Gateway Protocol，AS内使用<ul><li>RIP：Routing Information Protocol，基于距离向量</li><li>OSPF：用Dijkstra计算最短路径</li></ul></li><li>EGP：Exterior Gateway Protocol，AS间使用<ul><li>BGP：Border Gateway Protocol</li></ul></li><li>距离向量路由算法<ul><li>route poisoning：当一个路由器发现某条路径不可用时，向相邻路由器发送带有较大距离的路由信息，表示该路径不可用</li></ul></li></ul></li></ul><h1 id="IP"><a href="#IP" class="headerlink" title="IP"></a>IP</h1><h2 id="6to4和NAT64"><a href="#6to4和NAT64" class="headerlink" title="6to4和NAT64"></a>6to4和NAT64</h2><p>6to4和NAT64都是用于在IPv6和IPv4之间建立连接的技术。区别：</p><ul><li>连接方式不同<ul><li>6to4：直接将IPv4地址转换为IPv6地址，并在前面添加一段特殊的前缀<code>2002::/16</code></li><li>NAT64：利用NAT表，在IPv4和IPv6之间建立地址映射关系</li></ul></li><li>连接方向不同<ul><li>6to4只能用于从IPv4到IPv6的连接</li><li>NAT64支持双向转换</li></ul></li></ul><h2 id="NAT64转发"><a href="#NAT64转发" class="headerlink" title="NAT64转发"></a>NAT64转发</h2><p>收到IPv6包后，转发给只支持IPv4的主机，步骤：</p><ol><li>检查NAT64转换表，看是否已经为该IPv6地址分配了IPv4地址</li><li>如果没有，分配地址，将该地址添加到表中，并使用该地址转发IPv4包给目标主机</li></ol><p>*不能用NAT64设备自己的IPv4地址</p><h2 id="Multicast"><a href="#Multicast" class="headerlink" title="Multicast"></a>Multicast</h2><p>当receiver想加入一个multicast  group，它需要发送MLD消息。其它receiver和server不需要任何操作。</p><h2 id="分片"><a href="#分片" class="headerlink" title="分片"></a>分片</h2><p>IPv4：主机/路由器都可以对数据报进行分片</p><p>IPv6：只有主机可以对数据报进行分片</p><p>但是，路由器不会重新组装数据报。这意味着，如果数据报在网络中被分片，则接收方必须自己重新组装数据报。</p><h1 id="OSPF"><a href="#OSPF" class="headerlink" title="OSPF"></a>OSPF</h1><p>Q：当有多条equal-cost最短路径时，会有什么负面影响？</p><p>A：所有用Dijkstra算法计算出的最短路径都会出现在路由表中。The router then does per-flow load balancing to ensure that packets of the same flow (e.g. same TCP connection) are sent to the same next hop. This is done to improve TCP performance by avoiding reordering of packets at the destination. It is typically achieved using hash functions on flow identifiers (source and destination IP’s and port numbers).</p><h1 id="套路"><a href="#套路" class="headerlink" title="套路"></a>套路</h1><h2 id="第一题：IP、路由"><a href="#第一题：IP、路由" class="headerlink" title="第一题：IP、路由"></a>第一题：IP、路由</h2><h2 id="IP-1"><a href="#IP-1" class="headerlink" title="IP"></a>IP</h2><p>分配地址、划分子网</p><h3 id="内网路由"><a href="#内网路由" class="headerlink" title="内网路由"></a>内网路由</h3><p>都是问IP source/dest，MAC source/dest，没什么变化</p><p>*只有过router才减少TTL/HC，bridge不减</p><p>*内网有loop时，要先用spanning tree algorithm</p><h3 id="NAT-proxy转发"><a href="#NAT-proxy转发" class="headerlink" title="NAT/proxy转发"></a>NAT/proxy转发</h3><p>（2018.1，2019.1）</p><p>A/B都用端口4567通过HTTP从服务器S下载文件，经过X</p><ol><li><p>当X是NAT</p><ul><li><p>A/B到X段观察（内网）</p><ul><li><p>A/B发送的包（仿佛没有X，直接发给S一样）</p><table><thead><tr><th>IP source</th><th>IP dest</th><th>protocol</th><th>source port</th><th>dest port</th></tr></thead><tbody><tr><td>A/B</td><td>S</td><td>TCP</td><td>4567</td><td>80</td></tr></tbody></table></li><li><p>S发送的包（仿佛没有经过X，直接发给A/B一样）</p><table><thead><tr><th>IP source</th><th>IP dest</th><th>protocol</th><th>source port</th><th>dest port</th></tr></thead><tbody><tr><td>S</td><td>A/B</td><td>TCP</td><td>80</td><td>4567</td></tr></tbody></table></li><li><p>X到S段观察（外网，NAT转换后）</p><ul><li><p>A/B发送的包</p><table><thead><tr><th>IP source</th><th>IP dest</th><th>protocol</th><th>source port</th><th>dest port</th></tr></thead><tbody><tr><td>X</td><td>S</td><td>TCP</td><td>23456/23457</td><td>80</td></tr></tbody></table></li><li><p>S发送的包（先发给X，用X的IP，和不同的端口号）</p><table><thead><tr><th>IP source</th><th>IP dest</th><th>protocol</th><th>source port</th><th>dest port</th></tr></thead><tbody><tr><td>S</td><td>X</td><td>TCP</td><td>80</td><td>23456/23457</td></tr></tbody></table></li></ul></li></ul></li></ul></li></ol><p>​    实际上就是在NAT处做了一个地址映射，将A,4567换成X,23456，将B:4567换成X,23457</p><p>​    从A/B的视角，没有X，以为是直接和S通信</p><p>​    从S的视角，没有A/B</p><ol start="2"><li><p>当X是application layer gateway, acting as web proxy</p><ul><li><p>A/B到X段观察（内网）</p><ul><li><p>A/B发送的包</p><table><thead><tr><th>IP source</th><th>IP dest</th><th>protocol</th><th>source port</th><th>dest port</th></tr></thead><tbody><tr><td>A/B</td><td>X的内网IP</td><td>TCP</td><td>4678</td><td>8080</td></tr></tbody></table></li></ul></li><li><p>X到S段观察（外网）</p><ul><li><p>A/B发送的包</p><table><thead><tr><th>IP source</th><th>IP dest</th><th>protocol</th><th>source port</th><th>dest port</th></tr></thead><tbody><tr><td>X的外网IP</td><td>S</td><td>TCP</td><td>8923/8924</td><td>80</td></tr></tbody></table></li></ul></li></ul></li></ol><p>​    从A/B的视角，没有S（以为X就是S）</p><p>​    X收到A/B的请求后，从不同端口转发给S</p><p>​    从S的视角，没有A/B</p><h2 id="第二题：BGP-OSPF"><a href="#第二题：BGP-OSPF" class="headerlink" title="第二题：BGP/OSPF"></a>第二题：BGP/OSPF</h2><h2 id="第三题：拥塞控制"><a href="#第三题：拥塞控制" class="headerlink" title="第三题：拥塞控制"></a>第三题：拥塞控制</h2><p>max-min fairness</p><p>propotional fairness</p><pre><code>- 计算propotional fair的分配- 判断分配是否propotional fair</code></pre><p>TCP with ECN</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;每一年前3题套路都是一样的，重点：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;IP地址&amp;amp;路由（包的souce/dest、经过NAT/proxy的变化）&lt;/li&gt;
+&lt;li&gt;BGP（E-BGP和I-BGP，OSPF）&lt;/li&gt;
+&lt;li&gt;拥塞控制3种分配流量的方法&lt;/li&gt;
+&lt;/ol&gt;
+
+      
+    
+    </summary>
+    
+    
+      <category term="Note" scheme="https://coconutnutx.github.io/categories/Note/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>Obsidian使用感受2</title>
@@ -538,35 +568,6 @@
     
     
       <category term="distributed_algorithm" scheme="https://coconutnutx.github.io/tags/distributed-algorithm/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>CountSketch Matrix</title>
-    <link href="https://coconutnutx.github.io/2021/10/27/countsketch/"/>
-    <id>https://coconutnutx.github.io/2021/10/27/countsketch/</id>
-    <published>2021-10-27T20:58:59.000Z</published>
-    <updated>2021-10-27T20:58:59.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>Drew a simple example to help understanding what I learned in class.</p><img                       lazyload                     src="/images/loading.svg"                     data-src="/images/2021/2021-10-27-225725.png"                                     ><img                       lazyload                     src="/images/loading.svg"                     data-src="/images/2021/2021-10-27-225726.png"                                     >]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;Drew a simple example to help understanding what I learned in class.&lt;/p&gt;
-&lt;img  
-                     lazyload
-                     src=&quot;/
-      
-    
-    </summary>
-    
-    
-      <category term="Note" scheme="https://coconutnutx.github.io/categories/Note/"/>
-    
-    
-      <category term="sublinear_algorithm" scheme="https://coconutnutx.github.io/tags/sublinear-algorithm/"/>
     
   </entry>
   
