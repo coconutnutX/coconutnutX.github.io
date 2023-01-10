@@ -201,7 +201,7 @@
         <div class="article-content markdown-body">
             <p>每一年前3题套路都是一样的，重点：</p>
 <ol>
-<li>IP地址&amp;路由（包的souce/dest、经过NAT/proxy的变化）</li>
+<li>IP地址&amp;路由（问请求的souce/dest、配置network box为NAT/proxy/VLAN switch后的变化）</li>
 <li>BGP（E-BGP和I-BGP，OSPF）</li>
 <li>拥塞控制3种分配流量的方法</li>
 </ol>
@@ -217,24 +217,33 @@
 <li>physical</li>
 </ul>
 <h1 id="缩写和概念"><a href="#缩写和概念" class="headerlink" title="缩写和概念"></a>缩写和概念</h1><ul>
-<li>DNS<ul>
+<li><p>DNS</p>
+<ul>
 <li>A/AAAA record：前者用于将域名映射到IPv4地址，后者IPv6<ul>
 <li>如果有一个网站不知道用v4还是v6，可以用DNS，根据收到的record类型分辨</li>
 </ul>
 </li>
 </ul>
 </li>
-<li>TCP<ul>
+<li><p>TCP</p>
+<ul>
 <li>MSS：Maximum Segment Size，指每个数据报所能携带的最大数据量</li>
 <li>ECN：Explicit Congestion Notification，在数据包中添加特殊的标记，表示数据包可能会在传输过程中丢失，源端收到后，降低发送速率，从而减轻网络拥塞</li>
 <li>TCP Cubic：less sensitive to RTT than Reno</li>
 </ul>
 </li>
-<li>ARP：根据IP地址查询MAC地址<ul>
+<li><p>IP</p>
+<ul>
+<li>address prefix delegation through DHCPv6：在 IPv6 网络中，地址分配由 DHCPv6 服务器完成。当一个客户端连接到网络时，它会发送一个 Solicit 消息给 DHCPv6 服务器，请求获取一个地址前缀。如果 DHCPv6 服务器认为该请求是合法的，它会向该客户端发送一个 Advertise 消息，提供一个地址前缀。客户端收到的地址前缀可以用于分配其他地址。</li>
+</ul>
+</li>
+<li><p>ARP：根据IP地址查询MAC地址</p>
+<ul>
 <li>Proxy ARP：主机A和B位于不同局域网（通常需要通过路由进行通信），可以用Proxy ARP设置路由器作为代理，接收ARP请求并返回虚拟的MAC地址</li>
 </ul>
 </li>
-<li>路由<ul>
+<li><p>路由</p>
+<ul>
 <li>IGP：Interior Gateway Protocol，AS内使用<ul>
 <li>RIP：Routing Information Protocol，基于距离向量</li>
 <li>OSPF：用Dijkstra计算最短路径</li>
@@ -276,12 +285,89 @@
 <p>但是，路由器不会重新组装数据报。这意味着，如果数据报在网络中被分片，则接收方必须自己重新组装数据报。</p>
 <h1 id="OSPF"><a href="#OSPF" class="headerlink" title="OSPF"></a>OSPF</h1><p>Q：当有多条equal-cost最短路径时，会有什么负面影响？</p>
 <p>A：所有用Dijkstra算法计算出的最短路径都会出现在路由表中。The router then does per-flow load balancing to ensure that packets of the same flow (e.g. same TCP connection) are sent to the same next hop. This is done to improve TCP performance by avoiding reordering of packets at the destination. It is typically achieved using hash functions on flow identifiers (source and destination IP’s and port numbers).</p>
-<h1 id="套路"><a href="#套路" class="headerlink" title="套路"></a>套路</h1><h2 id="第一题：IP、路由"><a href="#第一题：IP、路由" class="headerlink" title="第一题：IP、路由"></a>第一题：IP、路由</h2><h2 id="IP-1"><a href="#IP-1" class="headerlink" title="IP"></a>IP</h2><p>分配地址、划分子网</p>
-<h3 id="内网路由"><a href="#内网路由" class="headerlink" title="内网路由"></a>内网路由</h3><p>都是问IP source/dest，MAC source/dest，没什么变化</p>
-<p>*只有过router才减少TTL/HC，bridge不减</p>
-<p>*内网有loop时，要先用spanning tree algorithm</p>
-<h3 id="NAT-proxy转发"><a href="#NAT-proxy转发" class="headerlink" title="NAT/proxy转发"></a>NAT/proxy转发</h3><p>（2018.1，2019.1）</p>
-<p>A/B都用端口4567通过HTTP从服务器S下载文件，经过X</p>
+<h1 id="套路"><a href="#套路" class="headerlink" title="套路"></a>套路</h1><h2 id="第一题：IP、路由"><a href="#第一题：IP、路由" class="headerlink" title="第一题：IP、路由"></a>第一题：IP、路由</h2><h3 id="subnet-mask"><a href="#subnet-mask" class="headerlink" title="subnet mask"></a>subnet mask</h3><ul>
+<li><p>不能太长：保证同一LAN内前缀相同</p>
+</li>
+<li><p>不能太短：避免不同LAN内前缀相同</p>
+<ul>
+<li>不同LAN前缀相同的问题：The hosts will think that other hosts are on the same LAN, and will try using ARP to get their MAC addresses. To solve this, one solution is to use proxy ARP in all routers X1, X2, X3, X4 .</li>
+</ul>
+</li>
+<li><p>不同LAN中，长度可以不同</p>
+</li>
+</ul>
+<h3 id="ping-request-ARP"><a href="#ping-request-ARP" class="headerlink" title="ping request/ARP"></a>ping request/ARP</h3><ul>
+<li><p>ping的过程</p>
+<ol>
+<li><p>查询本地路由表，看ping的是内网还是外网地址</p>
+</li>
+<li><p>如果是内网地址</p>
+<ol>
+<li><p>查询ARP缓存，如果有，直接返回ICMP reply</p>
+</li>
+<li><p>如果缓存没有，用ARP协议在LAN内广播，要求拥有指定IP地址的主机回复自己的MAC地址</p>
+<ul>
+<li><p>ARP的可见范围是LAN内</p>
+</li>
+<li><p>如果收到，加入ARP缓存，返回ICMP reply</p>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>如果是外网地址</p>
+<ol>
+<li><p>ARP请求的IP目的地址是路由器的IP地址</p>
+</li>
+<li><p>路由器转发请求到外网</p>
+<ul>
+<li>路由器可能再次用ARP协议，查找目标主机的MAC地址</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>注意network boxs的配置，是bridge还是router</p>
+<ul>
+<li>只有过router才减少TTL/HC，bridge不减（易错：host和router相连的一段没注意，直接填了64）</li>
+<li>如果是bridge<ul>
+<li>注意内网有没有环，如果有，要先用spanning tree algorithm，禁用部分链接</li>
+<li>内网可以经过多个bridge，直接发给目标MAC地址（易错：把bridge看成router，填了bridge的MAC）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="request经过NAT-proxy-VLAN-switch的变化"><a href="#request经过NAT-proxy-VLAN-switch的变化" class="headerlink" title="request经过NAT/proxy/VLAN switch的变化"></a>request经过NAT/proxy/VLAN switch的变化</h3><ul>
+<li><p>NAT：建立{内网IP和端口，外网IP和端口}的对应</p>
+<ul>
+<li>内网向外发请求时，正常用自己的地址，像没有NAT一样</li>
+<li>外网向内发请求时，用NAT翻译后的地址，像内网的主机不存在一样<ul>
+<li>外网的C想ping内网的A，直接ping翻译后的地址即可</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>application layer gateway, acting as web proxy</p>
+<ul>
+<li>host向server发请求时，发给proxy，像server不存在一样</li>
+<li>server像host发请求时，发给proxy，像host不存在一样</li>
+<li>proxy转发host的请求时，不同的host用不同的端口</li>
+</ul>
+</li>
+<li><p>VLAN switch：将原本相连的网络分成不同的VLAN，通信必须经过路由器</p>
+<ul>
+<li>如果2个VLAN链接到同一个路由，可以：configure the Y1 interface of the router with two different IP addresses, each belonging to a different VLAN</li>
+</ul>
+</li>
+<li><p>题目中有ping request和HTTP两种，地址变化都一样</p>
+<ul>
+<li>HTTP的protocol是TCP</li>
+</ul>
+</li>
+</ul>
+<p>🌰 A/B都用端口4567通过HTTP从服务器S下载文件，经过X</p>
 <ol>
 <li><p>当X是NAT</p>
 <ul>
@@ -382,7 +468,7 @@
 <ol start="2">
 <li><p>当X是application layer gateway, acting as web proxy</p>
 <ul>
-<li><p>A/B到X段观察（内网）</p>
+<li><p>A/B到X段观察</p>
 <ul>
 <li><p>A/B发送的包</p>
 <table>
@@ -406,7 +492,7 @@
 </li>
 </ul>
 </li>
-<li><p>X到S段观察（外网）</p>
+<li><p>X到S段观察</p>
 <ul>
 <li><p>A/B发送的包</p>
 <table>
@@ -436,6 +522,40 @@
 <p>​    从A/B的视角，没有S（以为X就是S）</p>
 <p>​    X收到A/B的请求后，从不同端口转发给S</p>
 <p>​    从S的视角，没有A/B</p>
+<h3 id="路由表配置"><a href="#路由表配置" class="headerlink" title="路由表配置"></a>路由表配置</h3><p>路由器的routing table需要的几列：</p>
+<table>
+<thead>
+<tr>
+<th>Destination Network</th>
+<th>Interface</th>
+<th>Gateway</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>10.1/16</td>
+<td>Xw VLAN A</td>
+<td>onlink</td>
+</tr>
+<tr>
+<td>10.2/16</td>
+<td>Xw VLAN B</td>
+<td>onlink</td>
+</tr>
+<tr>
+<td>9/8</td>
+<td>Xe</td>
+<td>onlink</td>
+</tr>
+</tbody></table>
+<ul>
+<li><p>Interface是该路由器的网络接口</p>
+<ul>
+<li>通常以eth0、eth1、eth2等命名，表示网卡的编号</li>
+</ul>
+</li>
+<li><p>如果需要其它路由器转发，gateway填其它路由器的IP</p>
+</li>
+</ul>
 <h2 id="第二题：BGP-OSPF"><a href="#第二题：BGP-OSPF" class="headerlink" title="第二题：BGP/OSPF"></a>第二题：BGP/OSPF</h2><h2 id="第三题：拥塞控制"><a href="#第三题：拥塞控制" class="headerlink" title="第三题：拥塞控制"></a>第三题：拥塞控制</h2><p>max-min fairness</p>
 <p>propotional fairness</p>
 <pre><code>- 计算propotional fair的分配
@@ -578,7 +698,7 @@
         <aside class="page-aside">
             <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%94%E5%B1%82%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text">五层体系结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%A9%E5%86%99%E5%92%8C%E6%A6%82%E5%BF%B5"><span class="nav-number">2.</span> <span class="nav-text">缩写和概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#IP"><span class="nav-number">3.</span> <span class="nav-text">IP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#6to4%E5%92%8CNAT64"><span class="nav-number">3.1.</span> <span class="nav-text">6to4和NAT64</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NAT64%E8%BD%AC%E5%8F%91"><span class="nav-number">3.2.</span> <span class="nav-text">NAT64转发</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Multicast"><span class="nav-number">3.3.</span> <span class="nav-text">Multicast</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E7%89%87"><span class="nav-number">3.4.</span> <span class="nav-text">分片</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#OSPF"><span class="nav-number">4.</span> <span class="nav-text">OSPF</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A5%97%E8%B7%AF"><span class="nav-number">5.</span> <span class="nav-text">套路</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E9%A2%98%EF%BC%9AIP%E3%80%81%E8%B7%AF%E7%94%B1"><span class="nav-number">5.1.</span> <span class="nav-text">第一题：IP、路由</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IP-1"><span class="nav-number">5.2.</span> <span class="nav-text">IP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E7%BD%91%E8%B7%AF%E7%94%B1"><span class="nav-number">5.2.1.</span> <span class="nav-text">内网路由</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NAT-proxy%E8%BD%AC%E5%8F%91"><span class="nav-number">5.2.2.</span> <span class="nav-text">NAT&#x2F;proxy转发</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E9%A2%98%EF%BC%9ABGP-OSPF"><span class="nav-number">5.3.</span> <span class="nav-text">第二题：BGP&#x2F;OSPF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E9%A2%98%EF%BC%9A%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6"><span class="nav-number">5.4.</span> <span class="nav-text">第三题：拥塞控制</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%94%E5%B1%82%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text">五层体系结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%A9%E5%86%99%E5%92%8C%E6%A6%82%E5%BF%B5"><span class="nav-number">2.</span> <span class="nav-text">缩写和概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#IP"><span class="nav-number">3.</span> <span class="nav-text">IP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#6to4%E5%92%8CNAT64"><span class="nav-number">3.1.</span> <span class="nav-text">6to4和NAT64</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NAT64%E8%BD%AC%E5%8F%91"><span class="nav-number">3.2.</span> <span class="nav-text">NAT64转发</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Multicast"><span class="nav-number">3.3.</span> <span class="nav-text">Multicast</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E7%89%87"><span class="nav-number">3.4.</span> <span class="nav-text">分片</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#OSPF"><span class="nav-number">4.</span> <span class="nav-text">OSPF</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A5%97%E8%B7%AF"><span class="nav-number">5.</span> <span class="nav-text">套路</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E9%A2%98%EF%BC%9AIP%E3%80%81%E8%B7%AF%E7%94%B1"><span class="nav-number">5.1.</span> <span class="nav-text">第一题：IP、路由</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#subnet-mask"><span class="nav-number">5.1.1.</span> <span class="nav-text">subnet mask</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ping-request-ARP"><span class="nav-number">5.1.2.</span> <span class="nav-text">ping request&#x2F;ARP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#request%E7%BB%8F%E8%BF%87NAT-proxy-VLAN-switch%E7%9A%84%E5%8F%98%E5%8C%96"><span class="nav-number">5.1.3.</span> <span class="nav-text">request经过NAT&#x2F;proxy&#x2F;VLAN switch的变化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E8%A1%A8%E9%85%8D%E7%BD%AE"><span class="nav-number">5.1.4.</span> <span class="nav-text">路由表配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E9%A2%98%EF%BC%9ABGP-OSPF"><span class="nav-number">5.2.</span> <span class="nav-text">第二题：BGP&#x2F;OSPF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E9%A2%98%EF%BC%9A%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6"><span class="nav-number">5.3.</span> <span class="nav-text">第三题：拥塞控制</span></a></li></ol></li></ol>
     </div>
 </div>
         </aside>
