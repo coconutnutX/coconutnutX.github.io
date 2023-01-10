@@ -259,6 +259,8 @@
 </li>
 </ul>
 </li>
+<li><p>Stub network：指一种特殊类型的路由器，它只有一条出边（或者说只连向一个直接的邻居）。在这样的网络中，所有的数据包都会通过默认网关转发，而不是进行多跳转发</p>
+</li>
 </ul>
 <h1 id="IP"><a href="#IP" class="headerlink" title="IP"></a>IP</h1><h2 id="6to4和NAT64"><a href="#6to4和NAT64" class="headerlink" title="6to4和NAT64"></a>6to4和NAT64</h2><p>6to4和NAT64都是用于在IPv6和IPv4之间建立连接的技术。区别：</p>
 <ul>
@@ -556,7 +558,102 @@
 <li><p>如果需要其它路由器转发，gateway填其它路由器的IP</p>
 </li>
 </ul>
-<h2 id="第二题：BGP-OSPF"><a href="#第二题：BGP-OSPF" class="headerlink" title="第二题：BGP/OSPF"></a>第二题：BGP/OSPF</h2><h2 id="第三题：拥塞控制"><a href="#第三题：拥塞控制" class="headerlink" title="第三题：拥塞控制"></a>第三题：拥塞控制</h2><p>max-min fairness</p>
+<h2 id="第二题：BGP-OSPF"><a href="#第二题：BGP-OSPF" class="headerlink" title="第二题：BGP/OSPF"></a>第二题：BGP/OSPF</h2><p>注意：BGP next hop是外部AS的端口，不一定相连，而OSPF next hop是相连的端口</p>
+<p>注意：题目给定的OSPF cost是一个常数，还是cost to BGP next hop加一个常数</p>
+<h3 id="Adj-RIB-in-out"><a href="#Adj-RIB-in-out" class="headerlink" title="Adj-RIB-in/out"></a>Adj-RIB-in/out</h3><p>当运行BGP的路由器收到更新时，会更新这两个表</p>
+<p>Adj-RIB-in的列：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Destination network</th>
+<th>AS path</th>
+<th>Next hop</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>from C1</td>
+<td>66.66/16</td>
+<td>C E F</td>
+<td>30.20.0.3</td>
+<td>best</td>
+</tr>
+<tr>
+<td>from C1</td>
+<td>66.66.0/17</td>
+<td>C E F</td>
+<td>30.20.0.3</td>
+<td>best</td>
+</tr>
+</tbody></table>
+<p>Adj-RIB-out包含best的几行</p>
+<h3 id="BGP"><a href="#BGP" class="headerlink" title="BGP"></a>BGP</h3><p>BGP如何选择最优路线的Decision process（详见Exam booklet）：</p>
+<ol>
+<li>Shortest AS-PATH</li>
+<li>E-BGP&gt;I-BGP</li>
+<li>Shortest path to NEXT-HOP, according to IGP</li>
+</ol>
+<p>Q：假设一个AS中只有部分路由器运行BGP，它们不re-distribute BGP into the interior routing protocol，如何让其他路由器也能知道外部的路径？</p>
+<p>A：方法一：By configuring default gateway on all other routers. Drawback: Can not cope with link-failures. 方法二：By running BGP on all routers. Drawback: Expensive</p>
+<h3 id="Distance-vector-routing"><a href="#Distance-vector-routing" class="headerlink" title="Distance vector routing"></a>Distance vector routing</h3><p>🌰 关于更新</p>
+<p>假设有连接A-B-net1-C-net2，原本cost都是1</p>
+<p>原本A的路由表中有：</p>
+<table>
+<thead>
+<tr>
+<th>Destination network</th>
+<th>Next hop</th>
+<th>Distance</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>net1</td>
+<td>IP of B</td>
+<td>2</td>
+</tr>
+<tr>
+<td>net2</td>
+<td>IP of B</td>
+<td>3</td>
+</tr>
+</tbody></table>
+<p>此时B告诉A：B到直接相连的net1的cost变成了6，A的路由表变成：</p>
+<table>
+<thead>
+<tr>
+<th>Destination network</th>
+<th>Next hop</th>
+<th>Distance</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>net1</td>
+<td>IP of B</td>
+<td>7</td>
+</tr>
+<tr>
+<td>net2</td>
+<td>IP of B</td>
+<td>3</td>
+</tr>
+</tbody></table>
+<p>由于routing protocol还没有converge，其它暂时不变</p>
+<h3 id="OSPF-1"><a href="#OSPF-1" class="headerlink" title="OSPF"></a>OSPF</h3><p>🌰 关于获得路径的过程</p>
+<p>假设有3个area：</p>
+<ul>
+<li>Area 1：A，B1</li>
+<li>Area 2：B1，B2</li>
+<li>Area 3：B2，C</li>
+</ul>
+<p>C如何获得到A的路径？</p>
+<p>过程：</p>
+<ol>
+<li>B1在area 1内用Dijkstra计算到A的最短路径，然后inject the route into area 2</li>
+<li>B2在area 2内用Dijkstra计算到A的最短路径，然后inject the route into area 3</li>
+<li>C在area 3内用Dijkstra计算到A的最短路径</li>
+</ol>
+<h2 id="第三题：拥塞控制"><a href="#第三题：拥塞控制" class="headerlink" title="第三题：拥塞控制"></a>第三题：拥塞控制</h2><p>max-min fairness</p>
 <p>propotional fairness</p>
 <pre><code>- 计算propotional fair的分配
 - 判断分配是否propotional fair</code></pre><p>TCP with ECN</p>
@@ -698,7 +795,7 @@
         <aside class="page-aside">
             <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%94%E5%B1%82%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text">五层体系结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%A9%E5%86%99%E5%92%8C%E6%A6%82%E5%BF%B5"><span class="nav-number">2.</span> <span class="nav-text">缩写和概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#IP"><span class="nav-number">3.</span> <span class="nav-text">IP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#6to4%E5%92%8CNAT64"><span class="nav-number">3.1.</span> <span class="nav-text">6to4和NAT64</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NAT64%E8%BD%AC%E5%8F%91"><span class="nav-number">3.2.</span> <span class="nav-text">NAT64转发</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Multicast"><span class="nav-number">3.3.</span> <span class="nav-text">Multicast</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E7%89%87"><span class="nav-number">3.4.</span> <span class="nav-text">分片</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#OSPF"><span class="nav-number">4.</span> <span class="nav-text">OSPF</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A5%97%E8%B7%AF"><span class="nav-number">5.</span> <span class="nav-text">套路</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E9%A2%98%EF%BC%9AIP%E3%80%81%E8%B7%AF%E7%94%B1"><span class="nav-number">5.1.</span> <span class="nav-text">第一题：IP、路由</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#subnet-mask"><span class="nav-number">5.1.1.</span> <span class="nav-text">subnet mask</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ping-request-ARP"><span class="nav-number">5.1.2.</span> <span class="nav-text">ping request&#x2F;ARP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#request%E7%BB%8F%E8%BF%87NAT-proxy-VLAN-switch%E7%9A%84%E5%8F%98%E5%8C%96"><span class="nav-number">5.1.3.</span> <span class="nav-text">request经过NAT&#x2F;proxy&#x2F;VLAN switch的变化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E8%A1%A8%E9%85%8D%E7%BD%AE"><span class="nav-number">5.1.4.</span> <span class="nav-text">路由表配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E9%A2%98%EF%BC%9ABGP-OSPF"><span class="nav-number">5.2.</span> <span class="nav-text">第二题：BGP&#x2F;OSPF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E9%A2%98%EF%BC%9A%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6"><span class="nav-number">5.3.</span> <span class="nav-text">第三题：拥塞控制</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%94%E5%B1%82%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text">五层体系结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%A9%E5%86%99%E5%92%8C%E6%A6%82%E5%BF%B5"><span class="nav-number">2.</span> <span class="nav-text">缩写和概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#IP"><span class="nav-number">3.</span> <span class="nav-text">IP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#6to4%E5%92%8CNAT64"><span class="nav-number">3.1.</span> <span class="nav-text">6to4和NAT64</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NAT64%E8%BD%AC%E5%8F%91"><span class="nav-number">3.2.</span> <span class="nav-text">NAT64转发</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Multicast"><span class="nav-number">3.3.</span> <span class="nav-text">Multicast</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E7%89%87"><span class="nav-number">3.4.</span> <span class="nav-text">分片</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#OSPF"><span class="nav-number">4.</span> <span class="nav-text">OSPF</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A5%97%E8%B7%AF"><span class="nav-number">5.</span> <span class="nav-text">套路</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E9%A2%98%EF%BC%9AIP%E3%80%81%E8%B7%AF%E7%94%B1"><span class="nav-number">5.1.</span> <span class="nav-text">第一题：IP、路由</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#subnet-mask"><span class="nav-number">5.1.1.</span> <span class="nav-text">subnet mask</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ping-request-ARP"><span class="nav-number">5.1.2.</span> <span class="nav-text">ping request&#x2F;ARP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#request%E7%BB%8F%E8%BF%87NAT-proxy-VLAN-switch%E7%9A%84%E5%8F%98%E5%8C%96"><span class="nav-number">5.1.3.</span> <span class="nav-text">request经过NAT&#x2F;proxy&#x2F;VLAN switch的变化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E8%A1%A8%E9%85%8D%E7%BD%AE"><span class="nav-number">5.1.4.</span> <span class="nav-text">路由表配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E9%A2%98%EF%BC%9ABGP-OSPF"><span class="nav-number">5.2.</span> <span class="nav-text">第二题：BGP&#x2F;OSPF</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Adj-RIB-in-out"><span class="nav-number">5.2.1.</span> <span class="nav-text">Adj-RIB-in&#x2F;out</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BGP"><span class="nav-number">5.2.2.</span> <span class="nav-text">BGP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Distance-vector-routing"><span class="nav-number">5.2.3.</span> <span class="nav-text">Distance vector routing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OSPF-1"><span class="nav-number">5.2.4.</span> <span class="nav-text">OSPF</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E9%A2%98%EF%BC%9A%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6"><span class="nav-number">5.3.</span> <span class="nav-text">第三题：拥塞控制</span></a></li></ol></li></ol>
     </div>
 </div>
         </aside>
