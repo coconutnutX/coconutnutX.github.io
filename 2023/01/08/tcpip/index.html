@@ -557,7 +557,8 @@
 </tr>
 </tbody></table>
 <p>Adj-RIB-out包含best的几行</p>
-<p>*如果上面的路由B1转发给另一个路由B2，仍是from C1，而不是from B1</p>
+<p>*如果上面的路由B1转发给另一个路由B2，next hop不变，仍是AS外的地址</p>
+<p>*out只转发通过E-BGP得到的路径（不转发I-GBP得到的）</p>
 <h3 id="BGP"><a href="#BGP" class="headerlink" title="BGP"></a>BGP</h3><p>BGP如何选择最优路线的Decision process（详见Exam booklet）：</p>
 <ol>
 <li>Shortest AS-PATH</li>
