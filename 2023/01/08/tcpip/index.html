@@ -317,6 +317,7 @@
 <li>外网的C想ping内网的A，直接ping翻译后的地址即可</li>
 </ul>
 </li>
+<li>TCP，丢包，source负责重发，NAT不负责</li>
 </ul>
 </li>
 <li><p>application layer gateway, acting as web proxy</p>
@@ -559,11 +560,12 @@
 <p>Adj-RIB-out包含best的几行</p>
 <p>*如果上面的路由B1转发给另一个路由B2，next hop不变，仍是AS外的地址</p>
 <p>*out只转发通过E-BGP得到的路径（不转发I-GBP得到的）</p>
-<h3 id="BGP"><a href="#BGP" class="headerlink" title="BGP"></a>BGP</h3><p>BGP如何选择最优路线的Decision process（详见Exam booklet）：</p>
+<h3 id="BGP"><a href="#BGP" class="headerlink" title="BGP"></a>BGP</h3><p>BGP如何选择最优路线的Decision process，几项常用的（详见Exam booklet）：</p>
 <ol>
 <li>Shortest AS-PATH</li>
 <li>E-BGP&gt;I-BGP</li>
 <li>Shortest path to NEXT-HOP, according to IGP</li>
+<li>Lowest BGP identifier</li>
 </ol>
 <p>Q：假设一个AS中只有部分路由器运行BGP，它们不re-distribute BGP into the interior routing protocol，如何让其他路由器也能知道外部的路径？</p>
 <p>A：方法一：By configuring default gateway on all other routers. Drawback: Can not cope with link-failures. 方法二：By running BGP on all routers. Drawback: Expensive</p>
@@ -610,7 +612,9 @@
 </tr>
 </tbody></table>
 <p>由于routing protocol还没有converge，其它暂时不变</p>
-<h3 id="OSPF"><a href="#OSPF" class="headerlink" title="OSPF"></a>OSPF</h3><p>Q：当有多条equal-cost最短路径时，会有什么负面影响？</p>
+<h3 id="OSPF"><a href="#OSPF" class="headerlink" title="OSPF"></a>OSPF</h3><p>在某一节点，对某一目的地，BGP会根据Decision process选出最优路径，但OSPF可能会算出多条equal-cost的路径</p>
+<p>如果有大量packet发到该目的地，一般选择每条路径的可能性相同</p>
+<p>Q：当有多条equal-cost最短路径时，会有什么负面影响？</p>
 <p>A：所有用Dijkstra算法计算出的最短路径都会出现在路由表中。The router then does per-flow load balancing to ensure that packets of the same flow (e.g. same TCP connection) are sent to the same next hop. This is done to improve TCP performance by avoiding reordering of packets at the destination. It is typically achieved using hash functions on flow identifiers (source and destination IP’s and port numbers).</p>
 <p>🌰 关于获得路径的过程</p>
 <p>假设有3个area：</p>
@@ -658,7 +662,10 @@
 <p>multicast MAC 地址：</p>
 <ul>
 <li>IPv4：01-00-5e-XX-XX-XX（后23bit）</li>
-<li>IPv6：33-33-XX-XX-XX-XX（后32bit）</li>
+<li>IPv6：33-33-XX-XX-XX-XX（后32bit）<ul>
+<li>🌰 <code>ff35::6:7</code> -&gt; <code>33-33-00-06-00-07</code></li>
+</ul>
+</li>
 </ul>
 <h3 id="分片"><a href="#分片" class="headerlink" title="分片"></a>分片</h3><p>IPv4：主机/路由器都可以对数据报进行分片</p>
 <p>IPv6：只有主机可以对数据报进行分片</p>
