@@ -682,6 +682,9 @@
 <p>R1-B1-B4 R1-B2-B3都跑BGP</p>
 <p>R1 peers with all BGP routers inside AS B</p>
 <p>B4、B3的路线直接I-BGP发给R1，而不是通过B1、B2（不转发I-BGP学到的路径），所以在R1的表里，路径是来自BGP peer B4、B3的</p>
+<p><strong>ARP</strong></p>
+<p>The first ARP packet is broadcast and is sent to all bridges along the tree（MAC dest <code>ff-ff-ff-ff-ff-ff</code>）</p>
+<p>The ARP reply is unicast from dest to source</p>
 
         </div>
 
