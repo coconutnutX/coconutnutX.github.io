@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="coconutnut">
+    
+    <title>
+        
+            Switch lock debug |
+        
+        CoCoNutNut&#39;s NoteBook
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/avatar.png">
+    
+<link rel="stylesheet" href="/css/font-awesome.min.css">
+
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"coconutnutx.github.io","root":"/","language":"en","path":"search.json"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"rgb(70,179,119)","avatar":"/images/avatar.jpg","favicon":"/images/avatar.png","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":false,"background_img":"/images/panorama1.jpg","description":"The cave you fear to enter holds the treasure you seek."},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":false}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":true},"version":"3.4.3"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="CoCoNutNut's NoteBook" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                CoCoNutNut&#39;s NoteBook
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                HOME
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                ARCHIVES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                CATEGORIES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                TAGS
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">ARCHIVES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">CATEGORIES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">TAGS</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">Switch lock debug</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">coconutnut</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2023-10-02 18:24:40
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/Note/">Note</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/lock/">lock</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <p>I’m using 2 locks: TAS &amp; TCLock, I want to maintain a counter of how many times the locks are called, and switch lock when it hits some threshold.</p>
+<p>Basic structure:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">slock_struct</span> &#123;</span></span><br><span class="line">	<span class="comment">// Lock implementations</span></span><br><span class="line">  <span class="keyword">atomic_t</span> tas;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">orig_qspinlock</span> <span class="title">komb</span>;</span></span><br><span class="line">	<span class="comment">// Lock switching</span></span><br><span class="line">	<span class="class"><span class="keyword">enum</span> <span class="title">LockType</span> <span class="title">type</span>;</span></span><br><span class="line">	<span class="keyword">atomic_t</span> count;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h1 id="1st-try"><a href="#1st-try" class="headerlink" title="1st try"></a>1st try</h1><p>Initially I tried using a counter:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">slock_lock</span><span class="params">(struct slock_struct *lock)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">int</span> count = atomic_read(&amp;lock-&gt;count);</span><br><span class="line">      	<span class="comment">// Stop when threshold reached (might be switching)</span></span><br><span class="line">        <span class="keyword">if</span> (count &lt; SWITCH_THRESHOLD) &#123;</span><br><span class="line">            <span class="keyword">if</span> (atomic_cmpxchg_acquire(&amp;lock-&gt;count, count, count + <span class="number">1</span>) == count) &#123;</span><br><span class="line">                <span class="comment">// Underlaying lock</span></span><br><span class="line">                slock_lock_chosen(lock);</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">slock_unlock</span><span class="params">(struct slock_struct *lock)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    slock_unlock_chosen(lock);</span><br><span class="line">    <span class="keyword">if</span>(atomic_read(&amp;lock-&gt;count) == SWITCH_THRESHOLD)&#123;</span><br><span class="line">				<span class="comment">// Switch lock</span></span><br><span class="line">				<span class="keyword">if</span>(lock-&gt;type == TAS)&#123;</span><br><span class="line">					lock-&gt;type = KOMB;</span><br><span class="line">				&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">					lock-&gt;type = TAS;</span><br><span class="line">				&#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">int</span> count = atomic_cmpxchg_release(&amp;lock-&gt;count, SWITCH_THRESHOLD, <span class="number">0</span>);</span><br><span class="line">      <span class="keyword">if</span> (count != SWITCH_THRESHOLD)&#123;</span><br><span class="line">        print_debug(<span class="string">&quot;!!!!!!!!!!!!!RESET COUNT ERROR, current_count=%d&quot;</span>, count);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>When running rcuhashtable test, I sometimes get error with current_count==1 (or 2, 8…)</p>
+<p>and something like:</p>
+<p> BUG: soft Lockup CPU#0 stuck for 26s</p>
+<h1 id="Bug-example"><a href="#Bug-example" class="headerlink" title="Bug example"></a>Bug example</h1><p>The above code crashes in this example (say threshold is 100):</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">T1                T2</span><br><span class="line">---               ---</span><br><span class="line">get count 99</span><br><span class="line">                  get count 100</span><br><span class="line">lock TAS</span><br><span class="line">CS</span><br><span class="line">unlock TAS</span><br><span class="line">									lock TAS</span><br><span class="line">read count 100</span><br><span class="line">change lock</span><br><span class="line">reset count</span><br><span class="line">---</span><br><span class="line">									unlock TCLock [BOOM!]</span><br></pre></td></tr></table></figure>
+
+<h1 id="2nd-try"><a href="#2nd-try" class="headerlink" title="2nd try"></a>2nd try</h1><p>I changed to 2 counters, one for threads entering, one for leaving</p>
+<p>Now it’s passing the test (for a few times, no bug yet)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">slock_lock</span><span class="params">(struct slock_struct *lock)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">		<span class="keyword">int</span> count = atomic_read(&amp;lock-&gt;count_in);</span><br><span class="line">        <span class="keyword">if</span>(count &lt; SWITCH_THRESHOLD) &#123;</span><br><span class="line">            <span class="keyword">if</span>(atomic_cmpxchg_acquire(&amp;lock-&gt;count_in, count, count+<span class="number">1</span>) == count) &#123;</span><br><span class="line">                <span class="comment">// Underlaying lock</span></span><br><span class="line">                slock_lock_chosen(lock);</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">slock_unlock</span><span class="params">(struct slock_struct *lock)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    slock_unlock_chosen(lock);</span><br><span class="line">    <span class="comment">// Try increase counter</span></span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">        <span class="keyword">int</span> count = atomic_read(&amp;lock-&gt;count_out);</span><br><span class="line">        <span class="keyword">if</span>(atomic_cmpxchg_acquire(&amp;lock-&gt;count_out, count, count+<span class="number">1</span>) == count)&#123;</span><br><span class="line">          	<span class="comment">// Hit threshold</span></span><br><span class="line">            <span class="keyword">if</span>(count == SWITCH_THRESHOLD<span class="number">-1</span>) &#123;</span><br><span class="line">                <span class="comment">// Switch lock</span></span><br><span class="line">                <span class="keyword">if</span>(lock-&gt;type == TAS)&#123;</span><br><span class="line">                    lock-&gt;type = KOMB;</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    lock-&gt;type = TAS;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="comment">// Reset count</span></span><br><span class="line">                <span class="keyword">int</span> count_out = atomic_cmpxchg_release(&amp;lock-&gt;count_out, SWITCH_THRESHOLD, <span class="number">0</span>);</span><br><span class="line">                <span class="keyword">if</span> (count_out != SWITCH_THRESHOLD)&#123;</span><br><span class="line">                  	print_debug(<span class="string">&quot;!!!!!!!!!!!!!RESET COUNT ERROR, count_in=%d&quot;</span>, count_out);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">int</span> count_in = atomic_cmpxchg_release(&amp;lock-&gt;count_in, SWITCH_THRESHOLD, <span class="number">0</span>);</span><br><span class="line">                <span class="keyword">if</span> (count_in != SWITCH_THRESHOLD)&#123;</span><br><span class="line">                  	print_debug(<span class="string">&quot;!!!!!!!!!!!!!RESET COUNT ERROR, count_in=%d&quot;</span>, count_in);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+        </div>
+
+        
+
+        
+            <div class="article-nav">
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2023/09/14/tclocks-note/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">TCLocks Note</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span>&nbsp;-&nbsp;
+            
+            2023&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">coconutnut</a>
+        </div>
+        
+            <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        Visitor Count&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        Totalview&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.3</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="fas fa-arrow-up"></i>
+            </li>
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1st-try"><span class="nav-number">1.</span> <span class="nav-text">1st try</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Bug-example"><span class="nav-number">2.</span> <span class="nav-text">Bug example</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2nd-try"><span class="nav-number">3.</span> <span class="nav-text">2nd try</span></a></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/header-shrink.js"></script>
+
+<script src="/js/back2top.js"></script>
+
+<script src="/js/dark-light-toggle.js"></script>
+
+
+
+    
+<script src="/js/local-search.js"></script>
+
+
+
+
+    
+<script src="/js/code-copy.js"></script>
+
+
+
+
+    
+<script src="/js/lazyload.js"></script>
+
+
+
+<div class="post-scripts">
+    
+        
+<script src="/js/left-side-toggle.js"></script>
+
+<script src="/js/libs/anime.min.js"></script>
+
+<script src="/js/toc.js"></script>
+
+    
+</div>
+
+
+
+</body>
+</html>
