@@ -153,6 +153,59 @@
                 
 
                 <h3 class="home-article-title">
+                    <a href="/2023/10/10/switch-lock/">
+                        Switch lock design
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        Lock structureCAS, qspinlock and kmob can share the same lock structure:
+12345678910111213struct qspinlock &#123;	union &#123...
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Tue Oct 10 2023 10:37:07 GMT+0200">2023-10-10</span></span>
+        
+            <span class="home-article-category"><i class="fas fa-folder"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/categories/Note/">Note</a>&nbsp;
+                        </li>
+                    
+                    
+                </ul>
+            </span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/lock/">lock</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/2023/10/10/switch-lock/">Read more&nbsp;<i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
                     <a href="/2023/10/02/lock-debug/">
                         Switch lock debug
                     </a>
@@ -1171,59 +1224,6 @@ P...
     </div>
 
     <a href="/2021/11/16/theme/">Read more&nbsp;<i class="fas fa-angle-right"></i></a>
-</div>
-
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                <h3 class="home-article-title">
-                    <a href="/2021/11/13/concurrent2/">
-                        sync example note2：memory order
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        Producer consumer example
-There might be conflict on buffer[], but consumed_until and produced_until prevent that (if used co...
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Sat Nov 13 2021 10:26:37 GMT+0100">2021-11-13</span></span>
-        
-            <span class="home-article-category"><i class="fas fa-folder"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/categories/Note/">Note</a>&nbsp;
-                        </li>
-                    
-                    
-                </ul>
-            </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fas fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/concurrent-algorithm/">concurrent_algorithm</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
-    </div>
-
-    <a href="/2021/11/13/concurrent2/">Read more&nbsp;<i class="fas fa-angle-right"></i></a>
 </div>
 
             </li>
