@@ -250,9 +250,54 @@
 <h1 id="Lock-amp-Unlock"><a href="#Lock-amp-Unlock" class="headerlink" title="Lock &amp; Unlock"></a>Lock &amp; Unlock</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"># Indicate current lock type</span><br><span class="line"># Currently a helper thread is changing lock type every <span class="number">5</span>s</span><br><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">LockType</span> <span class="title">cur_lock_type</span>;</span></span><br><span class="line"></span><br><span class="line"><span class="function">def <span class="title">slock_lock</span><span class="params">(lock)</span>:</span></span><br><span class="line"><span class="function">	# Fastpath: <span class="keyword">try</span> to acquire the lock</span></span><br><span class="line"><span class="function">	val </span>= CAS(&amp;lock.val, <span class="number">0</span>, _Q_LOCKED_VAL);</span><br><span class="line">	<span class="keyword">if</span> val == <span class="number">0</span>:</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">  </span><br><span class="line">  # Midpath: same <span class="keyword">for</span> qspinlock <span class="keyword">and</span> komb, <span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span> -&gt; <span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span></span><br><span class="line">  # Don<span class="number">&#x27;</span>t need node</span><br><span class="line">  ...</span><br><span class="line">   </span><br><span class="line">  # Slowpath: choose according to lock type</span><br><span class="line">  <span class="keyword">if</span> cur_lock_type==CAS:</span><br><span class="line">			# Spin</span><br><span class="line">			...</span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">			# Get per-CPU sqnode</span><br><span class="line">      sqnode = cst.node </span><br><span class="line">      init_sqnode(sqnode, cur_lock_type)</span><br><span class="line">      # Jump to slowpath</span><br><span class="line">      <span class="keyword">if</span> cur_lock_type==QSPINLOCK:</span><br><span class="line">					# Copy original one <span class="keyword">and</span> modify lines involving nodes</span><br><span class="line">					queued_spin_lock_slowpath(sqnode);</span><br><span class="line">			<span class="keyword">else</span>:</span><br><span class="line">					komb_spin_lock_slowpath(sqnode);</span><br></pre></td></tr></table></figure>
 
 <p>For KOMB phase 4:</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> sqnext is <span class="keyword">not</span> None <span class="keyword">and</span> sqnext.type==KOMB:</span><br><span class="line">		<span class="meta"># combining process</span></span><br></pre></td></tr></table></figure>
+<p>Check if next node is KOMB and next.next is not none</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># <span class="meta-keyword">line</span> 58 in Listing 1</span></span><br><span class="line"><span class="keyword">if</span> qnext.next==None <span class="keyword">or</span> qnext.type!=KOMB:</span><br><span class="line">	notify_next_queue_head(qnext)</span><br><span class="line">  <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line"><span class="meta"># <span class="meta-keyword">line</span> 73 in Listing 1 </span></span><br><span class="line"><span class="keyword">if</span> sqnext is None <span class="keyword">or</span> sqnext.type!=KOMB <span class="keyword">or</span> sqnext.next is None <span class="keyword">or</span></span><br><span class="line">  counter &gt;= WAITERS_TO_COMBINE:</span><br><span class="line">		<span class="keyword">break</span></span><br></pre></td></tr></table></figure>
 
 <p>For qspinlock, waiting on <em>Q</em>LOCKED_PENDING_MASK also implies waiting on <em>Q</em>LOCKED_COMBINER_VAL</p>
+<h1 id="Analysis"><a href="#Analysis" class="headerlink" title="Analysis"></a>Analysis</h1><p>Switching from QSPINLOCK to KOMB</p>
+<p>node A[SPIN] -&gt; node B[SPIN] -&gt; node C[KOMB] -&gt; node D[KOMB] -&gt; node E[KOMB]</p>
+<ol>
+<li><p>A holds the lock</p>
+<ul>
+<li>B spins locked_pending</li>
+<li>C spins on node.locked</li>
+<li>D spins on node.locked</li>
+</ul>
+</li>
+<li><p>A unlock, set locked to 0</p>
+</li>
+<li><p>B gets the lock, (0,1,1)-&gt;(0,1,0)-&gt;(0,0,1)</p>
+</li>
+<li><p>B unlock, notify C by setting C.node.locked to 0</p>
+</li>
+<li><p>C gets the lock, switched</p>
+</li>
+</ol>
+<p>Switching from KOMB to QSPINLOCK</p>
+<p>A[KOMB] -&gt; B[KOMB] -&gt; C[KOMB] -&gt; D[KOMB] -&gt; E[SPIN]</p>
+<ol>
+<li><p>A holds the lock, and doing combining</p>
+<ol>
+<li>execute B’s CS</li>
+<li>execute C’s CS</li>
+<li>notify D</li>
+<li>execute A’s CS</li>
+<li>unlock</li>
+</ol>
+</li>
+<li><p>D spins on D.qsnode.locked</p>
+<ol>
+<li>D gets lock</li>
+<li>notify E</li>
+<li>unlock</li>
+</ol>
+</li>
+<li><p>E spins on E.qsnode.locked</p>
+<ol>
+<li>E gets lock, switched</li>
+</ol>
+</li>
+</ol>
 
         </div>
 
@@ -391,7 +436,7 @@
         <aside class="page-aside">
             <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Lock-structure"><span class="nav-number">1.</span> <span class="nav-text">Lock structure</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Node-structure"><span class="nav-number">2.</span> <span class="nav-text">Node structure</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Lock-amp-Unlock"><span class="nav-number">3.</span> <span class="nav-text">Lock &amp; Unlock</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Lock-structure"><span class="nav-number">1.</span> <span class="nav-text">Lock structure</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Node-structure"><span class="nav-number">2.</span> <span class="nav-text">Node structure</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Lock-amp-Unlock"><span class="nav-number">3.</span> <span class="nav-text">Lock &amp; Unlock</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Analysis"><span class="nav-number">4.</span> <span class="nav-text">Analysis</span></a></li></ol>
     </div>
 </div>
         </aside>
