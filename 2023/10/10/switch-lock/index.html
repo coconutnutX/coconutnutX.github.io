@@ -260,7 +260,7 @@
 <li><p>A holds the lock</p>
 <ul>
 <li>B spins locked_pending</li>
-<li>C spins on node.locked</li>
+<li><del>C spins on node.locked</del> C spins on lock.glock since qprev is None</li>
 <li>D spins on node.locked</li>
 </ul>
 </li>
@@ -268,7 +268,7 @@
 </li>
 <li><p>B gets the lock, (0,1,1)-&gt;(0,1,0)-&gt;(0,0,1)</p>
 </li>
-<li><p>B unlock, notify C by setting C.node.locked to 0</p>
+<li><p><del>B unlock, notify C by setting C.node.locked to 0</del> B unlock, sets val to (0,0,0)</p>
 </li>
 <li><p>C gets the lock, switched</p>
 </li>
