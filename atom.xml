@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://coconutnutx.github.io/"/>
-  <updated>2023-10-10T08:37:07.000Z</updated>
+  <updated>2023-11-06T13:16:37.000Z</updated>
   <id>https://coconutnutx.github.io/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Delegation design</title>
+    <link href="https://coconutnutx.github.io/2023/11/06/delegate-design/"/>
+    <id>https://coconutnutx.github.io/2023/11/06/delegate-design/</id>
+    <published>2023-11-06T13:16:37.000Z</published>
+    <updated>2023-11-06T13:16:37.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Per-CPU-structure"><a href="#Per-CPU-structure" class="headerlink" title="Per-CPU structure"></a>Per-CPU structure</h1><p>For storing request info:</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">delegation_request</span>&#123;</span></span><br><span class="line"><span class="meta"># indicate there is a request, write only by client</span></span><br><span class="line"><span class="meta"># server iterates the array, checks this value, and process request</span></span><br><span class="line"><span class="keyword">bool</span> active;              </span><br><span class="line"><span class="keyword">bool</span> completed;</span><br><span class="line"><span class="keyword">void</span> *client_ptr;</span><br><span class="line"><span class="keyword">void</span> *server_ptr;</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">qspinlock</span> *<span class="title">lock</span>;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h1 id="Client"><a href="#Client" class="headerlink" title="Client"></a>Client</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">swi_lock(lock);   <span class="meta"># reuse spin_lock()</span></span><br><span class="line">...</span><br><span class="line"># CS</span><br><span class="line">...</span><br><span class="line">swi_unlock();     <span class="meta"># reuse spin_unlock()</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>Can reuse TCLock code [Marked yellow]</p><img                       lazyload                     src="/images/loading.svg"                     data-src="/images/2023/screencapture2023-11-06 PM2.17.25"                                     ><h1 id="Server"><a href="#Server" class="headerlink" title="Server"></a>Server</h1><p>Reuse parts marked green</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">()</span></span>&#123;</span><br><span class="line"><span class="meta"># init per-CPU delegation_request structure</span></span><br><span class="line">requests = ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> execute_request(cur_request)&#123;</span><br><span class="line"># Get TAS lock</span><br><span class="line">swi_lock(lock, TAS);</span><br><span class="line"># Server<span class="number">&#x27;</span>s <span class="built_in">stack</span> → client<span class="number">&#x27;</span>s <span class="built_in">stack</span> </span><br><span class="line">cur_request.server_ptr = local_ptr</span><br><span class="line">switch_stack(cur_request.server_ptr, cur_request.client_ptr)</span><br><span class="line"># Client<span class="number">&#x27;</span>s critical section execution finished </span><br><span class="line">cur_request.completed = True;</span><br><span class="line"># <span class="function">Release TAS lock</span></span><br><span class="line"><span class="function"><span class="title">swi_unlock</span><span class="params">(lock, TAS)</span></span></span><br><span class="line"><span class="function">&#125;</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">listen_to_request</span><span class="params">()</span></span>&#123;</span><br><span class="line"><span class="keyword">while</span>(!thread_should_stop())&#123;</span><br><span class="line"># Ieterate through client reuqests</span><br><span class="line"><span class="keyword">for</span> i in <span class="meta">#clients&#123;</span></span><br><span class="line">cur_request = requests[i]</span><br><span class="line"># Check <span class="keyword">if</span> has request</span><br><span class="line"><span class="keyword">if</span> cur_request.active&#123;</span><br><span class="line">execute_request(cur_request)</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;Per-CPU-structure&quot;&gt;&lt;a href=&quot;#Per-CPU-structure&quot; class=&quot;headerlink&quot; title=&quot;Per-CPU structure&quot;&gt;&lt;/a&gt;Per-CPU structure&lt;/h1&gt;&lt;p&gt;For storin
+      
+    
+    </summary>
+    
+    
+      <category term="Note" scheme="https://coconutnutx.github.io/categories/Note/"/>
+    
+    
+      <category term="lock" scheme="https://coconutnutx.github.io/tags/lock/"/>
+    
+  </entry>
   
   <entry>
     <title>Switch lock design</title>
@@ -535,32 +561,6 @@
     
     
       <category term="concurrent_algorithm" scheme="https://coconutnutx.github.io/tags/concurrent-algorithm/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>更改主题记录</title>
-    <link href="https://coconutnutx.github.io/2021/11/16/theme/"/>
-    <id>https://coconutnutx.github.io/2021/11/16/theme/</id>
-    <published>2021-11-16T11:01:22.000Z</published>
-    <updated>2021-11-16T11:01:22.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>之前一直用的<a class="link"   href="https://github.com/Shen-Yu/hexo-theme-ayer" >Ayer<i class="fas fa-external-link-alt"></i></a>主题，突然发现搜索不能用，debug了一早上解决不了，决定干脆换个主题</p><p>尝试过三个主题后<br><a class="link"   href="https://github.com/lh1me/hexo-theme-aomori" >Aomori<i class="fas fa-external-link-alt"></i></a><br><a class="link"   href="https://github.com/SukkaW/hexo-theme-suka" >suka<i class="fas fa-external-link-alt"></i></a><br><a class="link"   href="https://github.com/XPoet/hexo-theme-keep" >keep<i class="fas fa-external-link-alt"></i></a></p><p>决定用keep<br>太优雅了，搜索也没有bug，妙</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;之前一直用的&lt;a class=&quot;link&quot;   href=&quot;https://github.com/Shen-Yu/hexo-theme-ayer&quot; &gt;Ayer&lt;i class=&quot;fas fa-external-link-alt&quot;&gt;&lt;/i&gt;&lt;/a&gt;主题，突然发现搜索不能用，d
-      
-    
-    </summary>
-    
-    
-      <category term="Memo" scheme="https://coconutnutx.github.io/categories/Memo/"/>
-    
-    
-      <category term="tool" scheme="https://coconutnutx.github.io/tags/tool/"/>
     
   </entry>
   
