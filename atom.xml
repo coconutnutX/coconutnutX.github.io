@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://coconutnutx.github.io/"/>
-  <updated>2023-11-06T13:16:37.000Z</updated>
+  <updated>2023-11-21T10:20:37.000Z</updated>
   <id>https://coconutnutx.github.io/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Switch policy design</title>
+    <link href="https://coconutnutx.github.io/2023/11/21/switch-policy/"/>
+    <id>https://coconutnutx.github.io/2023/11/21/switch-policy/</id>
+    <published>2023-11-21T10:20:37.000Z</published>
+    <updated>2023-11-21T10:20:37.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>Current swilock components &amp; implementation status</p><ul><li><p>Lock &amp; Unlock APIs✅</p><ul><li>Switch between CAS, qspinlock, TCLock (queue-based)</li></ul></li><li><p>Helper thread✅</p><ul><li>Change lock type every 5s</li></ul></li><li><p>FFWD⭕️</p><ul><li>Server thread: iterate through CPU requests, switch stack and process requests</li><li>Client APIs: delegate() &amp; delegate_finish(), can replace lock() &amp; unlock()</li></ul></li><li><p>Throughput live demo✅</p></li></ul><h1 id="Switch-base-on-contention"><a href="#Switch-base-on-contention" class="headerlink" title="Switch base on contention"></a>Switch base on contention</h1><h2 id="Plan-A"><a href="#Plan-A" class="headerlink" title="Plan A"></a>Plan A</h2><p>Consider how many threads are using the lock.</p><ol><li>Add a global counter</li><li>When calling lock() &amp; unlock(), increase &amp; decrease counter</li><li>Helper thread checks the counter, switch lock base on its value, e.g.<ul><li>(0,1] CAS</li><li>[2,8] qspinlock</li><li>(8,+inf) TCLock</li></ul></li></ol><h2 id="Plan-B"><a href="#Plan-B" class="headerlink" title="Plan B"></a><del>Plan B</del></h2><p><del>Consider how long the threads have been waiting</del></p><ol><li><del>For each thread, calculate time between lock() &amp; unlock()</del></li><li><del>Helper thread maintains recent waiting times (e.g. 32 lateast values)</del></li><li><del>Helper thread switch base on average waiting time?</del></li></ol><p>Can also keep statistics of:</p><ol><li>waiting time</li><li>overall throughput</li></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;Current swilock components &amp;amp; implementation status&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Lock &amp;amp; Unlock APIs✅&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Switch between CAS, qspinlock
+      
+    
+    </summary>
+    
+    
+      <category term="Note" scheme="https://coconutnutx.github.io/categories/Note/"/>
+    
+    
+      <category term="lock" scheme="https://coconutnutx.github.io/tags/lock/"/>
+    
+  </entry>
   
   <entry>
     <title>Delegation design</title>
@@ -534,33 +564,6 @@
     
     
       <category term="distributed_algorithm" scheme="https://coconutnutx.github.io/tags/distributed-algorithm/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>CA project 思路笔记</title>
-    <link href="https://coconutnutx.github.io/2021/11/28/ca-project/"/>
-    <id>https://coconutnutx.github.io/2021/11/28/ca-project/</id>
-    <published>2021-11-28T13:33:12.000Z</published>
-    <updated>2021-11-28T13:33:12.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>看Project description里给的Dual-versioned transactional memory的一些记录</p><h1 id="关于access-set"><a href="#关于access-set" class="headerlink" title="关于access set"></a>关于access set</h1><h2 id="情况分析"><a href="#情况分析" class="headerlink" title="情况分析"></a>情况分析</h2><p>假设当前A是readable copy，B是writable copy，某一个位置可能出现的一些情况：</p><ol><li>小明读，成功，加入set<ol><li>张三读，成功，加入set<ol><li>小明写，发现张三也在set，失败 <font color="red">只要set里有别人，就不能写了</font></li></ol></li><li>张三写，发现小明已经在set，失败 <font color="red">只要set里有别人，就不能写了</font></li><li>小明写，set里只有自己，成功<ol><li>小明读，发现已经被写过了，自己在set里，成功，读B</li><li>张三读，发现已经被写过了，自己不在set里，失败</li></ol></li></ol></li></ol><h2 id="什么时候可以加入？"><a href="#什么时候可以加入？" class="headerlink" title="什么时候可以加入？"></a>什么时候可以加入？</h2><ol><li>读成功的时候<br> 什么时候可以读？<ol><li>没人写过，随便读，读A</li><li>自己写过，可以读，读B <font color="red">如果是别人写的，自己不可能在set里，不能读</font></li></ol></li><li>写成功的时候<br> 什么时候可以写？<ol><li>没人写过，且set里没别人 <font color="red">只可能有一个人是通过写加入set的</font></li><li>自己写过</li></ol></li></ol><p>从而保证：</p><ol><li>只可能有一个人写</li><li>写过的地方只有写的人能读</li><li>没写过的地方都可以读</li></ol><h2 id="set可以只记第一个"><a href="#set可以只记第一个" class="headerlink" title="set可以只记第一个"></a>set可以只记第一个</h2><p>set里可以只记录第一个加入set的人，因为：</p><ol><li>如果第一个加入set是通过写加入的<ol><li>后面可以通过set判断自己写过，可以继续读写</li><li>其他人发现写过，且不是自己写的，读写都不可以</li></ol></li><li>如果第一个加入set是通过读加入的，<ol><li>别人不能写，因为虽然没人写过，但set里已经有人了</li><li>别人可以读</li><li>自己可以写，自己写过之后，别人也不可以读了<br>这个第一个加入set的，可以视为所有者</li></ol></li></ol><p>🧐project description里面说不要implement an actual set，那么按这个逻辑，只存一个值应该就足够了</p><h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>也就是说，一个位置是否可以读写有以下几种状态：<br><img                       lazyload                     src="/images/loading.svg"                     data-src="/images/2021/screencapture2021-11-28 PM2.36.51.jpg"                                     ></p><p>且1状态中，如果没有其他人读过，占有者可写。如果有人读过，则不可写了。</p><p>以上都是针对读写事务，只读事务可以直接读，不影响</p><p>更新<a href="https://coconutnutx.github.io/2021/12/16/ca-condition/">CA project 状态分析</a></p><h2 id="其它问题"><a href="#其它问题" class="headerlink" title="其它问题"></a>其它问题</h2><p>Q：可能有写成功的，但后续操作失败，如何处理？<br>A：这样的TX不会到commit()，而只有在commit()中可以更改valid copy，因此下一轮中有效的仍是旧的值</p><h1 id="关于batcher"><a href="#关于batcher" class="headerlink" title="关于batcher"></a>关于batcher</h1><p>什么时候调？</p><pre><code>1. 事务开始，调enter() -&gt; 即在tm_begin()中2. 最后一个操作结束时，调leave() -&gt; 即在tm_end()中</code></pre><h2 id="情况分析-1"><a href="#情况分析-1" class="headerlink" title="情况分析"></a>情况分析</h2><ol><li>初始时，remaining=0</li><li>第一个人enter()，remaining变成1</li><li>后面的人enter()，都被挂到blocked</li><li>第一个人leave()，remaining变成0</li><li>counter+1  <font color="red">相当于进入下一轮</font><ul><li>remaining重设为blocked的长度</li><li>叫醒所有blocked里的线程</li><li>清空blocked</li></ul></li><li>此时上一轮中被blocked的线程，在这一轮中一起开始工作。当有新线程调enter()，又会被挂到blocked里，等待下一轮</li></ol><h2 id="遗留问题"><a href="#遗留问题" class="headerlink" title="遗留问题"></a>遗留问题</h2><p>Q：为什么commit()中交换valid copy要推迟到两轮交替的间隙进行？<br>A：保证atomicity</p><p>Q：get_epoch()什么时候用到？是干什么用的？<br>A：优化的时候用</p><h1 id="关于tx-t"><a href="#关于tx-t" class="headerlink" title="关于tx_t"></a>关于tx_t</h1><p>一个事务需要记录的东西：</p><ul><li>boolean 是否成功 <font color="red">如果已经失败了，后面读写的时候可以直接返回</font></li><li>boolean 是否只读 <font color="red">读的时候可以直接读</font></li></ul>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;看Project description里给的Dual-versioned transactional memory的一些记录&lt;/p&gt;
-&lt;h1 id=&quot;关于access-set&quot;&gt;&lt;a href=&quot;#关于access-set&quot; class=&quot;headerlink&quot; titl
-      
-    
-    </summary>
-    
-    
-      <category term="Note" scheme="https://coconutnutx.github.io/categories/Note/"/>
-    
-    
-      <category term="concurrent_algorithm" scheme="https://coconutnutx.github.io/tags/concurrent-algorithm/"/>
     
   </entry>
   

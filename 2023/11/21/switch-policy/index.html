@@ -9,7 +9,7 @@
     
     <title>
         
-            Category: Note |
+            Switch policy design |
         
         CoCoNutNut&#39;s NoteBook
     </title>
@@ -76,7 +76,7 @@
                         </li>
                     
                         <li class="menu-item">
-                            <a class="active"
+                            <a class=""
                                href="/categories"
                             >
                                 CATEGORIES
@@ -123,7 +123,7 @@
                 </li>
             
                 <li class="drawer-menu-item flex-center">
-                    <a class="active"
+                    <a class=""
                        href="/categories">CATEGORIES</a>
                 </li>
             
@@ -148,81 +148,139 @@
 
                 
                     <div class="fade-in-down-animation">
-    <div class="category-container">
-        <div class="category-name">
-            <i class="fas fa-folder"></i>&nbsp;Note
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">Switch policy design</span>
         </div>
-        <div class="category-post-list">
-            
-<div class="archive-list-container">
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">coconutnut</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2023-11-21 11:20:37
+    </span>
     
-        <section class="archive-item">
-            <div class="archive-item-header">
-                <span class="archive-year">2020</span>
-                <span class="archive-year-post-count">[6]</span>
-            </div>
-            <ul class="article-list">
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
                 
-                    <li class="article-item">
-                        <a class="article-title"
-                           href="/2020/02/28/note-spring-05/"
-                        >Spring笔记05 IoC</a>
-                        <span class="article-date">02-28</span>
-                    </li>
-                
-                    <li class="article-item">
-                        <a class="article-title"
-                           href="/2020/02/24/note-spring-04/"
-                        >Spring笔记04 应用分层</a>
-                        <span class="article-date">02-24</span>
-                    </li>
-                
-                    <li class="article-item">
-                        <a class="article-title"
-                           href="/2020/02/24/note-spring-03/"
-                        >Spring笔记03 工厂模式</a>
-                        <span class="article-date">02-24</span>
-                    </li>
-                
-                    <li class="article-item">
-                        <a class="article-title"
-                           href="/2020/02/24/note-spring-02/"
-                        >Spring笔记02 Idea运行示例项目的坑</a>
-                        <span class="article-date">02-24</span>
-                    </li>
-                
-                    <li class="article-item">
-                        <a class="article-title"
-                           href="/2020/02/24/note-spring-01/"
-                        >Spring笔记01 jdbc常用操作</a>
-                        <span class="article-date">02-24</span>
-                    </li>
-                
-                    <li class="article-item">
-                        <a class="article-title"
-                           href="/2020/02/24/note-idea/"
-                        >IntelliJ IDEA 笔记</a>
-                        <span class="article-date">02-24</span>
+                    <li>
+                        <a href="/categories/Note/">Note</a>&nbsp;
                     </li>
                 
             </ul>
-        </section>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/lock/">lock</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
     
 </div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <p>Current swilock components &amp; implementation status</p>
+<ul>
+<li><p>Lock &amp; Unlock APIs✅</p>
+<ul>
+<li>Switch between CAS, qspinlock, TCLock (queue-based)</li>
+</ul>
+</li>
+<li><p>Helper thread✅</p>
+<ul>
+<li>Change lock type every 5s</li>
+</ul>
+</li>
+<li><p>FFWD⭕️</p>
+<ul>
+<li>Server thread: iterate through CPU requests, switch stack and process requests</li>
+<li>Client APIs: delegate() &amp; delegate_finish(), can replace lock() &amp; unlock()</li>
+</ul>
+</li>
+<li><p>Throughput live demo✅</p>
+</li>
+</ul>
+<h1 id="Switch-base-on-contention"><a href="#Switch-base-on-contention" class="headerlink" title="Switch base on contention"></a>Switch base on contention</h1><h2 id="Plan-A"><a href="#Plan-A" class="headerlink" title="Plan A"></a>Plan A</h2><p>Consider how many threads are using the lock.</p>
+<ol>
+<li>Add a global counter</li>
+<li>When calling lock() &amp; unlock(), increase &amp; decrease counter</li>
+<li>Helper thread checks the counter, switch lock base on its value, e.g.<ul>
+<li>(0,1] CAS</li>
+<li>[2,8] qspinlock</li>
+<li>(8,+inf) TCLock</li>
+</ul>
+</li>
+</ol>
+<h2 id="Plan-B"><a href="#Plan-B" class="headerlink" title="Plan B"></a><del>Plan B</del></h2><p><del>Consider how long the threads have been waiting</del></p>
+<ol>
+<li><del>For each thread, calculate time between lock() &amp; unlock()</del></li>
+<li><del>Helper thread maintains recent waiting times (e.g. 32 lateast values)</del></li>
+<li><del>Helper thread switch base on average waiting time?</del></li>
+</ol>
+<p>Can also keep statistics of:</p>
+<ol>
+<li>waiting time</li>
+<li>overall throughput</li>
+</ol>
 
         </div>
-    </div>
-    <div class="category-paginator">
-        <div class="paginator">
-    
-        <a class="prev btn"
-           href="/categories/Note/page/2/"
-        >Prev</a>
-    
 
-    
-</div>
+        
 
+        
+            <div class="article-nav">
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2023/11/06/delegate-design/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Delegation design</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
     </div>
 </div>
 
@@ -268,6 +326,23 @@
     </div>
 
     
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
 
     <div class="right-bottom-side-tools">
         <div class="side-tools-container">
@@ -312,6 +387,14 @@
 
     </div>
 
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Switch-base-on-contention"><span class="nav-number">1.</span> <span class="nav-text">Switch base on contention</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Plan-A"><span class="nav-number">1.1.</span> <span class="nav-text">Plan A</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Plan-B"><span class="nav-number">1.2.</span> <span class="nav-text">Plan B</span></a></li></ol></li></ol>
+    </div>
+</div>
+        </aside>
     
 
     <div class="image-viewer-container">
@@ -385,6 +468,14 @@
 
 
 <div class="post-scripts">
+    
+        
+<script src="/js/left-side-toggle.js"></script>
+
+<script src="/js/libs/anime.min.js"></script>
+
+<script src="/js/toc.js"></script>
+
     
 </div>
 
